@@ -1,0 +1,199 @@
+@import '~normalize.css/normalize.css';
+@import 'varibles';
+@import 'mixins';
+@import "typography";
+@import "swiper";
+@import "collapse-icons";
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+:focus {
+  outline: 0;
+}
+
+html,
+body {
+  font-family: 'NimbusSanExtD';
+  font-weight: 300;
+  font-style: normal;
+  color: $defaultTextColor;
+}
+
+main {
+  position: relative;
+  flex: 1 0 auto;
+  display: flex !important;
+  flex-direction: column;
+  z-index: 1;
+}
+
+a {
+  font-family: 'NimbusSanExtD';
+  text-decoration: none;
+  color: $defaultLinkColor;
+
+  &:hover {
+    color: $activeLinkColor;
+  }
+}
+
+ol, ul {
+  list-style: none;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#__next {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: $backgroundColor;
+  overflow: hidden;
+}
+
+.no-pointer{
+  pointer-events: none;
+}
+
+.no-scroll {
+  overflow: hidden !important;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.collapse {
+  overflow: hidden;
+
+  &__visible-content {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.splide {
+  width: 100%;
+
+  &__slide,
+  &__list,
+  &__track {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.before-list-space,
+.after-list-space {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.reset-button {
+  border: none;
+  background-color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-style: normal;
+  font-stretch: normal;
+  white-space: nowrap;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 26px;
+  margin: 0 auto;
+
+  @include respond-above(xxs) {
+    padding: 0 28px;
+  }
+
+  @include respond-above(xs) {
+    padding: 0 32px;
+  }
+
+  @include respond-above(sm) {
+    padding: 0 48px;
+  }
+
+  @include respond-above(md) {
+    padding: 0 70px;
+  }
+
+  @include respond-above(lg) {
+    padding: 0 84px;
+  }
+
+  @include respond-above(mac) {
+    padding: 0 100px;
+  }
+
+  @include respond-above(xlg) {
+    padding: 0 111px;
+  }
+
+  @include respond-above(fhd) {
+    padding: 0 130px;
+  }
+
+  @include respond-above(fhd-plus) {
+    padding: 0 162px;
+  }
+
+  @include respond-above(2k) {
+    padding: 0 177px;
+  }
+}

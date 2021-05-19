@@ -1,0 +1,30 @@
+@import '~swiper/swiper.scss';
+@import '~swiper/components/scrollbar/scrollbar.scss';
+
+.swiper-scrollbar {
+  width: calc(100% - 30px) !important;
+  left: 32px !important;
+  height: 1px !important;
+  background: #000000;
+}
+
+.swiper-scrollbar-drag {
+  width: 100%;
+  height: 4px;
+  top: -1px;
+  background: #000000;
+}
+
+.swiper-container {
+  width: 100%;
+}
+
+.swiper-slide {
+  width: auto;
+}
+
+.section-profile-swiper {
+  .swiper-scrollbar-drag {
+    background: #938AE0;
+  }
+}
