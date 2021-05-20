@@ -1,16 +1,16 @@
-import Meta from "../components/Meta";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import Meta from "../src/components/Meta";
+import Login from "../src/components/Login";
+import AuthForm from "../src/components/Auth";
 
 function Home() {
   return (
     <>
-      <Meta />
-      <Header />
+      <Meta/>
       <main className="home">
-
+        <Login>
+          <AuthForm/>
+        </Login>
       </main>
-      <Footer />
     </>
   )
 }

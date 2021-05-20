@@ -1,6 +1,6 @@
-@import '~normalize.css/normalize.css';
+@import '../node_modules/normalize.css/normalize.css';
 @import 'varibles';
-@import 'mixins';
+@import 'mixins/index';
 @import "typography";
 @import "swiper";
 @import "collapse-icons";
