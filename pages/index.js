@@ -1,6 +1,7 @@
 import Meta from "../src/components/Meta";
 import Login from "../src/components/Login";
 import AuthForm from "../src/components/Auth";
+import CodeConfirmation from "../src/components/CodeConfirmation";
 
 function Home() {
   return (
@@ -8,7 +9,8 @@ function Home() {
       <Meta/>
       <main className="home">
         <Login>
-          <AuthForm/>
+          <CodeConfirmation/>
+          {/*<AuthForm/>*/}
         </Login>
       </main>
     </>
