@@ -2,6 +2,7 @@ import Meta from "../src/components/Meta";
 import Login from "../src/components/Login";
 import AuthForm from "../src/components/Auth";
 import CodeConfirmation from "../src/components/CodeConfirmation";
+import RegistrationForm from "../src/components/RegistrationForm";
 
 function Home() {
   return (
@@ -9,7 +10,8 @@ function Home() {
       <Meta/>
       <main className="home">
         <Login>
-          <CodeConfirmation/>
+          <RegistrationForm/>
+          {/*<CodeConfirmation/>*/}
           {/*<AuthForm/>*/}
         </Login>
       </main>
