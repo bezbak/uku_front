@@ -11,8 +11,8 @@ function Home() {
       <main className="home">
         <Login>
           <RegistrationForm/>
-          {/*<CodeConfirmation/>*/}
-          {/*<AuthForm/>*/}
+          <CodeConfirmation/>
+          <AuthForm/>
         </Login>
       </main>
     </>
