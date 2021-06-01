@@ -1,0 +1,48 @@
+@import "public/styles/varibles";
+@import "public/styles/mixins";
+
+.root {
+  height: 40px;
+  //position: absolute;
+  width: 100%;
+  top: -60;
+  display: flex;
+  justify-content: left;
+  margin-bottom: 15px;
+
+  div {
+    width: 100%;
+    padding: 8px 8px 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d71d22;
+    box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+
+    & p {
+      color: #fff;
+      line-height: 24px;
+    }
+  & button{
+    color: #fff;
+  }
+  }
+}
+
+@media (max-width: 768px) {
+  .root {
+    height: 52px;
+    top: -78;
+
+    & div {
+      width: 100%;
+
+      p {
+        font-size: 14px;
+        line-height: 18px;
+      }
+    }
+  }
+}
+

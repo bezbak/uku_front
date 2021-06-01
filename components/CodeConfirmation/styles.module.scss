@@ -1,0 +1,92 @@
+@import "../../public/styles/varibles";
+@import "../../public/styles/mixins/index";
+.codeConfirmForm {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  &__codeConfirmFormTitle{
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 29px;
+    color: #201E1E;
+    margin-bottom: 20px;
+  }
+  &__description{
+    font-size: 14px;
+    line-height: 150%;
+    color: #828282;
+    margin-bottom: 16px;
+    &_link{
+      color: #E56366;
+    }
+  }
+  &__input{
+    width: 100%;
+    padding: 10px 12px 10px 16px;
+    height: 44px;
+    background: transparent;
+    border: 1px solid #E6EFF9;
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    &::placeholder{
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+      color: #667689;
+
+    }
+    &:focus{
+      color: #121213;
+    }
+  }
+  &__button {
+    width: 100%;
+    border-radius: 6px;
+    height: 44px;
+    color: #FFFFFF;
+    outline: none;
+    border: none;
+    background: #E56366;
+    //&_confirm {
+    //  background: rgba(229, 99, 102, 0.5);
+    //  text-align: center;
+    //  font-weight: 500;
+    //  font-size: 16px;
+    //  line-height: 19px;
+    //  margin-bottom: 40px;
+    //  &__active{
+    //    background: #E56366;
+    //  }
+    //}
+    &_submitAgain{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: 16px;
+      padding-right: 14px;
+      background: rgba(102, 118, 137, 0.5);
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 17px;
+      text-align: left;
+      &__active{
+        background: #667689;
+      }
+    }
+  }
+  &__button:disabled,
+  button[disabled]{
+    background: rgba(229, 99, 102, 0.5);
+  }
+  &__label{
+    width: 100%;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #989797;
+    margin-bottom: 10px;
+  }
+}
