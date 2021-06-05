@@ -1,0 +1,49 @@
+@import "../../public/styles/varibles";
+@import "../../public/styles/mixins/index";
+
+.search{
+  width: 400px;
+  margin-left: 32px;
+  padding: 12px 0 13px 20px;
+  background: #F8F8F8;
+  border: 1px solid #E0E0E0;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  color: #858F9B;
+}
+@include respond-above(sm) {
+
+}
+
+@include respond-above(md) {
+
+}
+
+@include respond-above(lg) {
+
+}
+
+@include respond-above(mac) {
+
+}
+
+@include respond-above(xlg) {
+
+}
+
+@include respond-above(fhd) {
+
+}
+
+@include respond-above(fhd-plus) {
+
+}
+
+@include respond-above(2k) {
+
+}

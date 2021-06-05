@@ -1,7 +1,7 @@
 const pathnames = {
   login: '/login',
-  index: '/codeConfirmation',
-  registration: '/registration',
+  codeConfirmation: '/codeConfirmation',
+  registration: '/',
   providers: '/dashboard/providers',
   moneytransfers: '/dashboard/moneytransfers',
 };

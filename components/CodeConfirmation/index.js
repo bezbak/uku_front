@@ -7,24 +7,26 @@ import { actions } from '../../public/store/users/slice';
 import style from "./styles.module.scss";
 import pathnames from "../../constants/pathnames";
 import AuthSubmitError from "../Auth/AuthSubmitError";
+import {useRouter} from "next/router";
 
 const CodeConfirmation = () =>{
+  const { push } = useRouter();
   const [isActive, setIsActive] = useState(true)
   const dispatch = useDispatch();
   const userPhone = useSelector((store) => store.auth?.phone, shallowEqual);
   const confCodeRequest = (payload) => dispatch(actions.conformCodeRequestStart(payload));
 
-  const onSubmit = (values) =>
+  const onSubmit = (value) =>
     new Promise((resolve) => {
+      const values = Object.assign(value, userPhone)
       confCodeRequest({
         values,
         callback: (response) => {
-          if (!response) {
-            push(pathnames.login);
-          }
           console.log(response)
+          if (!response) {
+            push(pathnames.registration);
+          }
           resolve(response);
-          console.log(resolve(response))
         },
       });
     })
@@ -74,7 +76,7 @@ const CodeConfirmation = () =>{
                       style.codeConfirmForm__button_submitAgain,
                       // {[style.codeConfirmForm__button_submitAgain__active]: isActive}
                     )}
-                    // disabled={submitting || pristine}
+                    disabled={submitting || pristine}
             >
               <span>Отправить снова</span> <span>0:59</span>
             </button>

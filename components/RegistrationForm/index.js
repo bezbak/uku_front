@@ -3,10 +3,12 @@ import NavLink from "../NavLink";
 import {Field, Form} from "react-final-form";
 import classNames from "classnames";
 import React, {useState} from "react";
+import {shallowEqual, useSelector} from "react-redux";
 
 
 const RegistrationForm = () => {
   const [isActive, setIsActive] = useState(false)
+  const user = useSelector((store) => store.auth?.phone, shallowEqual);
   const onSubmit = async values => {
     window.alert(JSON.stringify(values, 0, 2))
   }
@@ -21,7 +23,7 @@ const RegistrationForm = () => {
       <Form
         onSubmit={onSubmit}
         // validate={validate}
-        render={({handleSubmit}) => (
+        render={({handleSubmit,submitting, form, pristine}) => (
           <form onSubmit={handleSubmit}>
             <div className={style.registrationForm__label}>Номер телефона </div>
             {/*<AuthSubmitError />*/}
@@ -29,7 +31,8 @@ const RegistrationForm = () => {
               name="phone"
               component="input"
               type="text"
-              placeholder="+996 (555) 55-55-55"
+              value={user?.phone}
+              placeholder={user?.phone}
               className={style.registrationForm__input}
 
             />
@@ -86,6 +89,7 @@ const RegistrationForm = () => {
             </div>
 
             <button type="submit"
+                    disabled={submitting || pristine}
                     className={classNames(style.registrationForm__button,{[style.registrationForm__button__active]: isActive})}>Сохранить
             </button>
           </form>

@@ -20,33 +20,14 @@ const AuthForm = () => {
   const [value, setValue] = useState()
   const dispatch = useDispatch();
   const phoneRequest = (payload) => dispatch(actions.phoneRequestStart(payload));
-  // const userPhoneNumber = (payload) => dispatch(actions.userPhoneNumber(payload));
-  // const onSubmit = (value) => {
-  //   userPhoneNumber(value)
-  //   setValue(value.phone)
-  //   push(pathnames.index);
   // }
   const onSubmit = (value) => (
-    // fetch('http://167.71.67.196/api/v1/account/auth/', {
-    //   method: 'POST', // or 'PUT'
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(value),
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log('Success:', data);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error:', error);
-    //   })
     new Promise((resolve) => {
       phoneRequest({
         value,
         callback: (response) => {
           if (!response) {
-            push(pathnames.index);
+            push(pathnames.codeConfirmation);
           }
           resolve(response);
         },

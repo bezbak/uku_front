@@ -1,0 +1,52 @@
+@import "../../public/styles/varibles";
+@import "../../public/styles/mixins/index";
+.main{
+  &__title{
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    color: #121213;
+
+  }
+  &__container {
+    display: grid;
+      grid-template-columns: 32% 32% 32%;
+    justify-content: space-between;
+      //grid-template-rows: auto;
+      //column-gap: 32px;
+      row-gap: 30px;
+    margin-bottom: 27px;
+  }
+}
+
+@include respond-above(sm) {
+
+}
+
+@include respond-above(md) {
+
+}
+
+@include respond-above(lg) {
+
+}
+
+@include respond-above(mac) {
+
+}
+
+@include respond-above(xlg) {
+
+}
+
+@include respond-above(fhd) {
+
+}
+
+@include respond-above(fhd-plus) {
+
+}
+
+@include respond-above(2k) {
+
+}

@@ -1,0 +1,51 @@
+@import "../../public/styles/varibles";
+@import "../../public/styles/mixins/index";
+
+.header{
+  padding: 19px 99px 19px 99px;
+  //padding-top: 19px;
+  //padding-bottom: 19px;
+  box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.05);
+
+  &__list{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    &__link{
+      font-size: 15px;
+      line-height: 18px;
+      color: #4F4F4F;
+    }
+  }
+}
+@include respond-above(sm) {
+
+}
+
+@include respond-above(md) {
+
+}
+
+@include respond-above(lg) {
+
+}
+
+@include respond-above(mac) {
+
+}
+
+@include respond-above(xlg) {
+
+}
+
+@include respond-above(fhd) {
+
+}
+
+@include respond-above(fhd-plus) {
+
+}
+
+@include respond-above(2k) {
+
+}

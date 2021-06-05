@@ -1,0 +1,68 @@
+@import "../../public/styles/varibles";
+@import "../../public/styles/mixins/index";
+
+.swiperCard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  &__slide {
+    width: 100%;
+    height: 190px;
+    img {
+
+    }
+  }
+  &__sliderPagination {
+    background: #FFBE00;
+    padding: 5px 10.5px 0 10.5px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    height: 5px;
+    &_icon {
+      cursor: pointer;
+      margin-left: 6.5px;
+      margin-right: 6.55px;
+      width: 64px;
+      height: 4px;
+      background: #EAEAEA;
+      border-radius: 4px;
+    }
+
+    &_active {
+      background: #E56366;
+    }
+  }
+}
+@include respond-above(sm) {
+
+}
+
+@include respond-above(md) {
+
+}
+
+@include respond-above(lg) {
+
+}
+
+@include respond-above(mac) {
+
+}
+
+@include respond-above(xlg) {
+
+}
+
+@include respond-above(fhd) {
+
+}
+
+@include respond-above(fhd-plus) {
+
+}
+
+@include respond-above(2k) {
+
+}

@@ -1,18 +1,18 @@
 import Meta from "../components/Meta";
 import Login from "../components/Login";
-import AuthForm from "../components/Auth";
+import RegistrationForm from "../components/RegistrationForm";
 
-function Logining() {
+function Registration() {
   return (
     <>
       <Meta/>
       <main className="home">
         <Login>
-          <AuthForm/>
+          <RegistrationForm/>
         </Login>
       </main>
     </>
   )
 }
 
-export default Logining
+export default Registration;

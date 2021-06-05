@@ -2,7 +2,7 @@ import Meta from "../components/Meta";
 import Login from "../components/Login";
 import CodeConfirmation from "../components/CodeConfirmation";
 
-function Home() {
+function CodeConform() {
   return (
     <>
       <Meta/>
@@ -15,4 +15,4 @@ function Home() {
   )
 }
 
-export default Home
+export default CodeConform;

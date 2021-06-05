@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   phone:null,
   isAuthenticated: false,
+  token: '',
+  is_profile_completed: false,
   isStaff: false,
   user: null,
   userBalance: '',
@@ -20,8 +22,13 @@ const userAuthSlice = createSlice({
     phoneRequestFailure() {},
 
     conformCodeRequestStart() {},
-    conformCodeRequestSuccess() {},
-    conformCodeRequestFailure() {},
+    conformCodeRequestSuccess(state,{payload}) {
+      state.is_profile_completed = payload.is_profile_completed
+      state.token = payload.token
+    },
+    conformCodeRequestFailure(payload) {
+      console.log(payload)
+    },
 
     logoutRequestStart() {},
     logoutRequestSuccess(state) {

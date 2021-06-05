@@ -71,16 +71,15 @@ function* phoneRequest({payload}) {
 
 function* conformCodeRequest({payload}) {
   const {values, callback} = payload;
-  const phone = {phone:"+996773383068"}
-  const value = Object.assign(values, phone)
+  console.log(values)
   try {
-    const response = yield call(api.post, 'account/login-confirm/', { data: value });
+    const response = yield call(api.post, 'account/login-confirm/', { data: values });
     yield put(actions.conformCodeRequestSuccess(response));
-    console.log("try")
-
+    console.log(response)
     yield call(callback);
+    console.log("try")
   } catch (e) {
-    console.log("catch")
+    console.log(e)
     yield put(actions.conformCodeRequestFailure(e));
     yield call(callback, parseSubmissionError(e));
   }

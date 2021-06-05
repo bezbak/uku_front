@@ -1,0 +1,83 @@
+@import "../../public/styles/varibles";
+@import "../../public/styles/mixins/index";
+
+.nav {
+  padding: 16px 99px 16px 99px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  //padding-top: 16px;
+  //padding-bottom: 16px;
+  box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.05);
+  &_left{
+    height: 100%;
+    display: flex;
+  }
+  &_right{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 4px 0;
+    &_list{
+      list-style: none;
+      margin-left: 16px;
+      padding-right: 16px;
+      border-right: 1px solid #D3D3D3;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 16px;
+      color: #181818;
+      & a{
+        display: flex;
+        align-items: center;
+      }
+
+      & svg {
+        width: 18px;
+        height: 18px;
+        margin-right: 18px;
+      }
+      & img {
+        width: 24px;
+        height: 24px;
+        margin-right: 18px;
+      }
+    }
+    &_listNoBorder {
+      border-right: none;
+    }
+  }
+}
+
+@include respond-above(sm) {
+
+}
+
+@include respond-above(md) {
+
+}
+
+@include respond-above(lg) {
+
+}
+
+@include respond-above(mac) {
+
+}
+
+@include respond-above(xlg) {
+
+}
+
+@include respond-above(fhd) {
+
+}
+
+@include respond-above(fhd-plus) {
+
+}
+
+@include respond-above(2k) {
+
+}
