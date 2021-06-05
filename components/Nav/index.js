@@ -29,7 +29,7 @@ return(
         </NavLink>
       </li>
       <li className={classNames(styles.nav_right_list,styles.nav_right_listNoBorder)}>
-        <NavLink>
+        <NavLink url="/login">
           <img src="/icons/heart.png"/>
           Вход
         </NavLink>

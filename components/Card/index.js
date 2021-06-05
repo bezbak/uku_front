@@ -2,7 +2,7 @@ import React from "react";
 import styles from './styls.module.scss'
 import SwiperCard from "../Swiper";
 
-const Card = ({name="Фывова Александра", address="Москва",}) =>{
+const Card = ({name="Фывова Александра", address="Москва",sliderData}) =>{
   return(
     <div className={styles.card}>
       <div className={styles.card__headline}>
@@ -17,7 +17,7 @@ const Card = ({name="Фывова Александра", address="Москва",
           </span>
         </div>
       </div>
-      <SwiperCard/>
+      <SwiperCard sliderData={sliderData}/>
       <div className={styles.card__footer}>
         <div className={styles.card__footer__category}>
           <span>Категория/ Подкатегория 1</span>

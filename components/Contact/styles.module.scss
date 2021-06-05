@@ -1,0 +1,101 @@
+@import "../../public/styles/varibles";
+@import "../../public/styles/mixins/index";
+
+.contact {
+  position: relative;
+  padding: 32px  99px 27px 99px ;
+  &__hedline {
+    margin-bottom: 26px;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 39px;
+    color: #181818;
+  }
+  &__content{
+    display: flex;
+    &_left {
+      width: 32vw;
+      margin-right: 32px;
+      background: url(../../public/images/loginBg.png), #C4C4C4   ;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    &_right {
+      width: 51vw;
+      display: flex;
+      flex-direction: column;
+      &__title{
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        color: #181818;
+        margin-bottom: 6px;
+      }
+      &__about {
+        font-size: 14px;
+        line-height: 140%;
+        color: #181818;
+        margin-bottom: 33px;
+      }
+      &__contact{
+        display: flex;
+        justify-content: space-between;
+      }
+      &__list{
+        display: flex;
+        flex-direction: column;
+        &_title {
+          font-size: 17px;
+          line-height: 21px;
+          color: #181818;
+          margin-bottom: 8px;
+        }
+        &_link{
+          display: flex;
+          gap: 8px;
+          font-size: 16px;
+          line-height: 19px;
+          color: #767676;
+          height: 18px;
+          margin-bottom: 12px;
+          img {
+            height: 18px;
+            width: 18px;
+          }
+        }
+      }
+    }
+  }
+}
+@include respond-above(sm) {
+
+}
+
+@include respond-above(md) {
+
+}
+
+@include respond-above(lg) {
+
+}
+
+@include respond-above(mac) {
+
+}
+
+@include respond-above(xlg) {
+
+}
+
+@include respond-above(fhd) {
+
+}
+
+@include respond-above(fhd-plus) {
+
+}
+
+@include respond-above(2k) {
+
+}

@@ -1,11 +1,12 @@
 import React from "react";
+import classNames from 'classnames'
 import NavLink from "../NavLink";
 // import appleIcon from '../../public/icons/apple.png'
 import styles from './styles.module.scss'
 
-const Footer = () => {
+const Footer = ({className}) => {
   return (
-    <div className={styles.footer}>
+    <div className={classNames(styles.footer, className)}>
       <div className={styles.footer_left}>
         <li className={styles.footer_left__list}>
           <NavLink url={"/contact"} children={"Контакты "} className={styles.footer_left__list__link}/>

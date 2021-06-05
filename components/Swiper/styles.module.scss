@@ -13,7 +13,8 @@
     }
   }
   &__sliderPagination {
-    background: #FFBE00;
+    margin-top: 5px;
+    margin-bottom: 6px;
     padding: 5px 10.5px 0 10.5px;
     width: 100%;
     display: flex;
@@ -24,13 +25,14 @@
       cursor: pointer;
       margin-left: 6.5px;
       margin-right: 6.55px;
-      width: 64px;
+      width: 24px;
       height: 4px;
       background: #EAEAEA;
       border-radius: 4px;
     }
 
     &_active {
+      height: 4px;
       background: #E56366;
     }
   }

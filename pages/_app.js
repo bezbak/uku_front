@@ -5,8 +5,10 @@ import { wrapper } from '../public/store/index';
 import { actions } from '../public/store/main/slice';
 import '../public/styles/global.scss'
 import '../public/styles/phoneInput.scss'
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { setCookie } from '../public/lib/utils/auth';
-
+import 'swiper/components/pagination/pagination.scss';
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 function LoadDiffData() {
   const dispatch = useDispatch();
 
