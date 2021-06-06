@@ -1,34 +1,35 @@
 import React from "react";
 import styles from './styles.module.scss'
 import Card from "../Card";
+
 const sliderData = [
   {
-    id : 1,
+    id: 1,
     src: 'images/lenta.png',
-    altInfo : 'shoe',
+    altInfo: 'shoe',
   },
   {
-    id : 2,
+    id: 2,
     src: 'images/lenta.png',
-    altInfo : 'shoe',
+    altInfo: 'shoe',
   },
   {
-    id : 3,
+    id: 3,
     src: 'images/lenta.png',
-    altInfo : 'shoe',
+    altInfo: 'shoe',
   },
   {
-    id : 4,
+    id: 4,
     src: 'images/lenta.png',
-    altInfo : 'shoe',
+    altInfo: 'shoe',
   },
   {
-    id : 5,
+    id: 5,
     src: 'images/lenta.png',
-    altInfo : 'shoe',
+    altInfo: 'shoe',
   }
 ]
-const Main = ({title = "Лента"}) =>{
+const Main = ({title = "Лента"}) => {
   return (
     <div className={styles.main}>
       <div className={styles.main__title}>
@@ -36,8 +37,8 @@ const Main = ({title = "Лента"}) =>{
           {title}
         </span>
         <div className={styles.main__container}>
-          <Card sliderData={sliderData} />
-          <Card sliderData={sliderData} />
+          <Card sliderData={sliderData}/>
+          <Card sliderData={sliderData}/>
           <Card sliderData={sliderData}/>
           <Card sliderData={sliderData}/>
           <Card sliderData={sliderData}/>

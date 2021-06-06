@@ -1,26 +1,31 @@
 @import "../../public/styles/varibles";
 @import "../../public/styles/mixins/index";
+
 .codeConfirmForm {
   display: flex;
   flex-direction: column;
   width: 350px;
-  &__codeConfirmFormTitle{
+
+  &__codeConfirmFormTitle {
     font-weight: bold;
     font-size: 24px;
     line-height: 29px;
     color: #201E1E;
     margin-bottom: 20px;
   }
-  &__description{
+
+  &__description {
     font-size: 14px;
     line-height: 150%;
     color: #828282;
     margin-bottom: 16px;
-    &_link{
+
+    &_link {
       color: #E56366;
     }
   }
-  &__input{
+
+  &__input {
     width: 100%;
     padding: 10px 12px 10px 16px;
     height: 44px;
@@ -29,17 +34,20 @@
     box-sizing: border-box;
     border-radius: 8px;
     margin-bottom: 30px;
-    &::placeholder{
+
+    &::placeholder {
       font-weight: 500;
       font-size: 14px;
       line-height: 17px;
       color: #667689;
 
     }
-    &:focus{
+
+    &:focus {
       color: #121213;
     }
   }
+
   &__button {
     width: 100%;
     border-radius: 6px;
@@ -59,7 +67,7 @@
     //    background: #E56366;
     //  }
     //}
-    &_submitAgain{
+    &_submitAgain {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -71,16 +79,19 @@
       font-size: 14px;
       line-height: 17px;
       text-align: left;
-      &__active{
+
+      &__active {
         background: #667689;
       }
     }
   }
+
   &__button:disabled,
-  button[disabled]{
+  button[disabled] {
     background: rgba(229, 99, 102, 0.5);
   }
-  &__label{
+
+  &__label {
     width: 100%;
     font-weight: 600;
     font-size: 14px;
@@ -90,6 +101,7 @@
     margin-bottom: 10px;
   }
 }
+
 @include respond-above(sm) {
   .button__iconAfter {
     margin-left: 15px;
@@ -160,7 +172,7 @@
   }
 }
 
-@include respond-above(2k) {
+@include respond-above(2 k) {
   .button__iconAfter {
     margin-left: 15px;
   }

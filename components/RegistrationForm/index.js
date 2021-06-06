@@ -23,9 +23,9 @@ const RegistrationForm = () => {
       <Form
         onSubmit={onSubmit}
         // validate={validate}
-        render={({handleSubmit,submitting, form, pristine}) => (
+        render={({handleSubmit, submitting, form, pristine}) => (
           <form onSubmit={handleSubmit}>
-            <div className={style.registrationForm__label}>Номер телефона </div>
+            <div className={style.registrationForm__label}>Номер телефона</div>
             {/*<AuthSubmitError />*/}
             <Field
               name="phone"
@@ -54,15 +54,15 @@ const RegistrationForm = () => {
               required
             />
             <div className={style.registrationForm__wrap}>
-            <div  className={style.registrationForm__wrap_left}>
-              <Field name="gender" component="select"
-                     className={style.registrationForm__select}>
-                <option>Пол</option>
-                <option value="Мужской">Мужской</option>
-                <option value="Женский">Женский</option>
-              </Field>
-            </div>
-              <div  className={style.registrationForm__wrap_right}>
+              <div className={style.registrationForm__wrap_left}>
+                <Field name="gender" component="select"
+                       className={style.registrationForm__select}>
+                  <option>Пол</option>
+                  <option value="Мужской">Мужской</option>
+                  <option value="Женский">Женский</option>
+                </Field>
+              </div>
+              <div className={style.registrationForm__wrap_right}>
                 <Field
                   name="birthday"
                   component="input"
@@ -75,7 +75,7 @@ const RegistrationForm = () => {
             <div>
               <Field name="region" component="select"
                      className={style.registrationForm__select}>
-                <option >Выбор региона</option>
+                <option>Выбор региона</option>
                 <option value="Бишкек">Бишкек</option>
                 <option value="Ош">Ош</option>
                 <option value="Жалал-Абад">Жалал-Абад</option>
@@ -84,13 +84,14 @@ const RegistrationForm = () => {
               </Field>
             </div>
             <div className={style.registrationForm__wrap}>
-              <Field name="employed" component="input" type="checkbox" className={style.registrationForm__checkBox} />
-              <label><span>Принимаю</span> <a className={style.registrationForm__checkBox_link}>правила программы лояльности</a></label>
+              <Field name="employed" component="input" type="checkbox" className={style.registrationForm__checkBox}/>
+              <label><span>Принимаю</span> <a className={style.registrationForm__checkBox_link}>правила программы
+                лояльности</a></label>
             </div>
 
             <button type="submit"
                     disabled={submitting || pristine}
-                    className={classNames(style.registrationForm__button,{[style.registrationForm__button__active]: isActive})}>Сохранить
+                    className={classNames(style.registrationForm__button, {[style.registrationForm__button__active]: isActive})}>Сохранить
             </button>
           </form>
         )}

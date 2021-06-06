@@ -10,16 +10,19 @@
   //padding-top: 16px;
   //padding-bottom: 16px;
   box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.05);
-  &_left{
+
+  &_left {
     height: 100%;
     display: flex;
   }
-  &_right{
+
+  &_right {
     height: 100%;
     display: flex;
     align-items: center;
     padding: 4px 0;
-    &_list{
+
+    &_list {
       list-style: none;
       margin-left: 16px;
       padding-right: 16px;
@@ -28,7 +31,8 @@
       font-size: 18px;
       line-height: 16px;
       color: #181818;
-      & a{
+
+      & a {
         display: flex;
         align-items: center;
       }
@@ -38,12 +42,14 @@
         height: 18px;
         margin-right: 18px;
       }
+
       & img {
         width: 24px;
         height: 24px;
         margin-right: 18px;
       }
     }
+
     &_listNoBorder {
       border-right: none;
     }
@@ -78,6 +84,6 @@
 
 }
 
-@include respond-above(2k) {
+@include respond-above(2 k) {
 
 }

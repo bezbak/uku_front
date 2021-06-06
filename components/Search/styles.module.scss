@@ -1,7 +1,7 @@
 @import "../../public/styles/varibles";
 @import "../../public/styles/mixins/index";
 
-.search{
+.search {
   width: 400px;
   margin-left: 32px;
   padding: 12px 0 13px 20px;
@@ -16,6 +16,7 @@
   align-items: center;
   color: #858F9B;
 }
+
 @include respond-above(sm) {
 
 }
@@ -44,6 +45,6 @@
 
 }
 
-@include respond-above(2k) {
+@include respond-above(2 k) {
 
 }

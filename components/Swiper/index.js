@@ -3,14 +3,15 @@ import classNames from "classnames";
 import {Swiper, SwiperSlide} from 'swiper/react';
 import SwiperCore, {Navigation, Pagination, Scrollbar, A11y} from 'swiper';
 import styles from './styles.module.scss'
+
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
-const SwiperCard = ({sliderData}) =>{
+const SwiperCard = ({sliderData}) => {
   const swiperRef = React.useRef();
   const [activeSlideIndex, setActiveSlideIndex] = React.useState(0);
   const setActiveSlide = (swiper) => setActiveSlideIndex(swiper.activeIndex);
-  return(
-    <div className={styles.swiperCard} >
+  return (
+    <div className={styles.swiperCard}>
       <Swiper
         slidesPerView={1}
         // onSlideChange={setActiveSlide}
@@ -28,7 +29,7 @@ const SwiperCard = ({sliderData}) =>{
           return (
             <SwiperSlide key={slide.id}>
               <div className={classNames(styles.swiperCard__slide)}>
-                      <img src={slide.src}/>
+                <img src={slide.src}/>
               </div>
             </SwiperSlide>
           );

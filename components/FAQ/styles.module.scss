@@ -1,0 +1,66 @@
+.faq {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 60px;
+
+  &__headline {
+    padding-top: 32px;
+    padding-bottom: 24px;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 120%;
+    display: flex;
+    align-items: flex-end;
+    color: #121213;
+  }
+}
+
+.sectionOurAreasOfLegalExpertise {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 260px 32px 130px 32px;
+  background: #243646;
+  color: #000000;
+
+  &__areas {
+    &__list {
+      display: flex;
+      flex-direction: column;
+      color: black;
+    }
+
+    &__item {
+      display: flex;
+      color: #3E3E3E;
+
+      &__visible:hover {
+        color: #E56366;
+      }
+
+      &__title {
+        display: flex;
+        padding: 17px 16px;
+
+        span {
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 140%;
+        }
+      }
+
+      &__description {
+        display: flex;
+        padding: 14px 16px 16px 16px;
+        color: #3E3E3E;
+
+        p,
+        span {
+          font-size: 14px;
+          line-height: 140%;;
+        }
+      }
+    }
+  }
+}

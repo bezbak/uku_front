@@ -1,23 +1,23 @@
 @import "../../public/styles/varibles";
 @import "../../public/styles/mixins/index";
 
-.header{
+.header {
   padding: 19px 99px 19px 99px;
-  //padding-top: 19px;
-  //padding-bottom: 19px;
   box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.05);
 
-  &__list{
+  &__list {
     display: flex;
     flex-direction: row;
     gap: 24px;
-    &__link{
+
+    &__link {
       font-size: 15px;
       line-height: 18px;
       color: #4F4F4F;
     }
   }
 }
+
 @include respond-above(sm) {
 
 }
@@ -46,6 +46,6 @@
 
 }
 
-@include respond-above(2k) {
+@include respond-above(2 k) {
 
 }

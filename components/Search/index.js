@@ -2,13 +2,13 @@ import React from "react";
 import {Field, Form} from "react-final-form";
 import styles from './styles.module.scss'
 
-const Search = ()=> {
+const Search = () => {
   const onSubmit = (value) => (
-   console.log(value)
+    console.log(value)
   );
 
 
-  return(
+  return (
     <div>
       <Form
         onSubmit={onSubmit}
