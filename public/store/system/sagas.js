@@ -1,9 +1,6 @@
 import {put, call, takeEvery} from 'redux-saga/effects';
 import api from '../../lib/api';
-import {parseSubmissionError} from '../../lib/utils/store/sagas';
 import {actions} from './slice';
-import isEmpty from "lodash/isEmpty";
-
 
 
 function* contactRequest() {
@@ -19,36 +16,36 @@ function* faqRequest() {
   try {
     const response = yield call(api.get, 'system/faq/');
     yield put(actions.faqInfoRequestSuccess(response));
-    console.log(response)
   } catch (e) {
-    console.log(e)
     yield put(actions.faqInfoRequestFailure(e));
   }
 
 }
 
-function* logoutRequest({payload}) {
-  const {callback} = payload;
+function* privacyPolicyRequest() {
   try {
-    yield call(api.post, 'account/logout/');
-    yield put(actions.logoutRequestSuccess());
-    yield call(callback);
+    const response = yield call(api.get, 'system/privacy-policy/');
+    yield put(actions.privacyPolicyRequestSuccess(response));
   } catch (e) {
-    yield put(actions.logoutRequestFailure(e));
+    yield put(actions.privacyPolicyRequestFailure(e));
   }
+
 }
 
-function* getStateRequest() {
+
+function* termsOfUseStart() {
   try {
-    const response = yield call(api.get, 'account/get_state/');
-    yield put(actions.getStateRequestSuccess(response));
+    const response = yield call(api.get, 'system/terms-of-use/');
+    yield put(actions.termsOfUseRequestSuccess(response));
   } catch (e) {
-    yield put(actions.getStateRequestFailure(e));
+    yield put(actions.termsOfUseRequestFailure(e));
   }
+
 }
 
 export default function* systemSagas() {
   yield takeEvery(`${actions.contactInfoRequestStart}`, contactRequest);
   yield takeEvery(`${actions.faqInfoRequestStart}`, faqRequest);
-  yield takeEvery(`${actions.privacyPolicyRequestStart}`, logoutRequest);
+  yield takeEvery(`${actions.privacyPolicyRequestStart}`, privacyPolicyRequest);
+  yield takeEvery(`${actions.termsOfUseRequestStart}`, termsOfUseStart);
 }

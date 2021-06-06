@@ -10,10 +10,10 @@ const Header = () => {
           <NavLink url={"/"} className={styles.header__list__link} children={"Главная"}/>
         </li>
         <li>
-          <NavLink url={"/contact"} className={styles.header__list__link} children={"Контакты"}/>
+          <NavLink url={"/system/contact"} className={styles.header__list__link} children={"Контакты"}/>
         </li>
         <li>
-          <NavLink url={"/faq"} className={styles.header__list__link} children={"F.A.Q."}/>
+          <NavLink url={"/system/faq"} className={styles.header__list__link} children={"F.A.Q."}/>
         </li>
       </ul>
     </div>

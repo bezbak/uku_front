@@ -9,15 +9,15 @@ const Footer = ({className}) => {
     <div className={classNames(styles.footer, className)}>
       <div className={styles.footer_left}>
         <li className={styles.footer_left__list}>
-          <NavLink url={"/contact"} children={"Контакты "} className={styles.footer_left__list__link}/>
+          <NavLink url={"/system/contact"} children={"Контакты "} className={styles.footer_left__list__link}/>
         </li>
         <li className={styles.footer_left__list}>
-          <NavLink url={"/faq"} children={"F.A.Q. "} className={styles.footer_left__list__link}/>
+          <NavLink url={"/system/privacy-policy"} children={"F.A.Q. "} className={styles.footer_left__list__link}/>
         </li>
       </div>
       <div className={styles.footer_right}>
         <li className={styles.footer_right__list}>
-          <NavLink url={"/contact"}>
+          <NavLink url={"/system/contact"}>
             <div className={styles.footer_right__list__link}>
               <img src="icons/apple.png"/>
               <div className={styles.footer_right__list__text}>

@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  contact:{},
-  faq:[],
+  contact: {},
+  faq: [],
+  privacyPolicy: {},
+  termsOfUse: {},
 };
 
 const systemSlice = createSlice({
@@ -13,17 +15,32 @@ const systemSlice = createSlice({
     contactInfoRequestSuccess(state, {payload}) {
       state.contact = payload
     },
-    contactInfoRequestFailure() {},
+    contactInfoRequestFailure() {
+    },
 
-    faqInfoRequestStart() {},
+    faqInfoRequestStart() {
+    },
     faqInfoRequestSuccess(state, {payload}) {
       state.faq = payload
     },
-    faqInfoRequestFailure() {},
+    faqInfoRequestFailure() {
+    },
 
-    privacyPolicyRequestStart() {},
-    privacyPolicyRequestSuccess() {},
-    privacyPolicyRequestFailure() {},
+    privacyPolicyRequestStart() {
+    },
+    privacyPolicyRequestSuccess(state, {payload}) {
+      state.privacyPolicy = payload
+    },
+    privacyPolicyRequestFailure() {
+    },
+
+    termsOfUseRequestStart() {
+    },
+    termsOfUseRequestSuccess(state, {payload}) {
+      state.termsOfUse = payload
+    },
+    termsOfUseRequestFailure() {
+    },
 
   },
 });

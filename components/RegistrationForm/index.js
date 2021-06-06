@@ -85,7 +85,8 @@ const RegistrationForm = () => {
             </div>
             <div className={style.registrationForm__wrap}>
               <Field name="employed" component="input" type="checkbox" className={style.registrationForm__checkBox}/>
-              <label><span>Принимаю</span> <a className={style.registrationForm__checkBox_link}>правила программы
+              <label><span>Принимаю</span> <a className={style.registrationForm__checkBox_link}
+                                              href="/system/terms-of-use">правила программы
                 лояльности</a></label>
             </div>
 
