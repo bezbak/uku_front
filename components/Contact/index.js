@@ -1,11 +1,20 @@
-import React from "react";
+import React, {useEffect} from "react";
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import NavLink from "../NavLink";
 import styles from './styles.module.scss'
+import {actions} from "../../public/store/system/slice";
+import {parseMarkdown} from "../../public/lib/parser";
 
 const Contact = () => {
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(actions.contactInfoRequestStart());
+  })
+  const contactInfo = useSelector((store) => store.system.contact);
+  console.log(contactInfo)
   return (
     <div className={styles.contact}>
-      <div className={styles.contact__hedline}>
+      <div className={styles.contact__headline}>
         <span>
           Наши контактные данные
         </span>
@@ -15,60 +24,51 @@ const Contact = () => {
         <div className={styles.contact__content_right}>
           <div className={styles.contact__content_right__title}>
             <span>
-              О нас
+              {parseMarkdown(contactInfo?.title)}
             </span>
           </div>
           <div className={styles.contact__content_right__about}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique
-            nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus
-            consequat tincidunt aliquam enim risus. Est viverraLorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus
-            massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra
+            {parseMarkdown(contactInfo?.description)}
           </div>
           <div className={styles.contact__content_right__contact}>
             <div className={styles.contact__content_right__list}>
               <div className={styles.contact__content_right__list_title}>Наши телефоны:</div>
               <ul>
-                <li>
-                  <NavLink className={styles.contact__content_right__list_link}>
-                    <img src="icons/phone.svg"/>
-                    <span>+996 (555) 55 55 55</span>
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className={styles.contact__content_right__list_link}>
-                    <img src="icons/phone.svg"/>
-                    <span>+996 (555) 55 55 55</span>
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className={styles.contact__content_right__list_link}>
-                    <img src="icons/phone.svg"/>
-                    <span>+996 (555) 55 55 55</span>
-                  </NavLink>
-                </li>
+                {
+                  contactInfo?.phone_numbers?.map ((phoneNumber)=>{
+                    return(
+                      <li key={phoneNumber.id}>
+                        <a className={styles.contact__content_right__list_link} href={`tel:${phoneNumber.phone}`} target="_blank">
+                          <img src="icons/phone.svg"/>
+                          <span>{phoneNumber.phone}</span>
+                        </a>
+                      </li>
+                    )
+                  })
+                }
+
               </ul>
             </div>
             <div className={styles.contact__content_right__list}>
               <div className={styles.contact__content_right__list_title}>Мы в соц. сетях:</div>
               <ul>
                 <li>
-                  <NavLink className={styles.contact__content_right__list_link}>
+                  <a className={styles.contact__content_right__list_link} href={` https://telegram.me/${contactInfo?.telegram}`} target="_blank">
                     <img src="icons/telegram.png"/>
                     <span>Телеграм</span>
-                  </NavLink>
+                  </a>
                 </li>
                 <li>
-                  <NavLink className={styles.contact__content_right__list_link}>
+                  <a className={styles.contact__content_right__list_link} href={contactInfo?.facebook} target="_blank">
                     <img src="icons/whatsApp.png"/>
-                    <span>WhatsApp</span>
-                  </NavLink>
+                    <span>Facebook</span>
+                  </a>
                 </li>
                 <li>
-                  <NavLink className={styles.contact__content_right__list_link}>
+                  <a className={styles.contact__content_right__list_link}  href={contactInfo?.instagram} target="_blank">
                     <img src="icons/instagram.png"/>
                     <span>Instagram</span>
-                  </NavLink>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -76,12 +76,12 @@ const Contact = () => {
               <div className={styles.contact__content_right__list_title}>Наш адрес:</div>
               <ul>
                 <li>
-                  <NavLink className={styles.contact__content_right__list_link}>
+                  <a className={styles.contact__content_right__list_link} href={`http://maps.google.com/?q=${contactInfo?.address}`} target="_blank">
                     <img src="icons/address.png"/>
                     <span>
-                      Бишкек, Ахунбаева 125/66
+                      {contactInfo?.address}
                     </span>
-                  </NavLink>
+                  </a>
                 </li>
               </ul>
             </div>
