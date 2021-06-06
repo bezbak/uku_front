@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  contact:{}
+  contact:{},
+  faq:[],
 };
 
 const systemSlice = createSlice({
@@ -15,7 +16,9 @@ const systemSlice = createSlice({
     contactInfoRequestFailure() {},
 
     faqInfoRequestStart() {},
-    faqInfoRequestSuccess() {},
+    faqInfoRequestSuccess(state, {payload}) {
+      state.faq = payload
+    },
     faqInfoRequestFailure() {},
 
     privacyPolicyRequestStart() {},

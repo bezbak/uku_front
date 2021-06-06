@@ -15,7 +15,7 @@ function FrequentlyAskedQuestion() {
         <Container>
           <FAQ/>
         </Container>
-        <Footer/>
+        <Footer className={"footer"}/>
       </div>
     </>
   )

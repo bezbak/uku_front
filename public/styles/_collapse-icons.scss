@@ -11,19 +11,19 @@
   }
 
   @include respond-above(sm) {
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
 
   }
 
   @include respond-above(md) {
-    width: 28px;
-    height: 28px;
+    width: 17px;
+    height: 17px;
 
   }
 
   @include respond-above(mac) {
-    width: 36px;
-    height: 36px;
+    width: 24px;
+    height: 24px;
   }
 }

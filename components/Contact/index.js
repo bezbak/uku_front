@@ -20,7 +20,9 @@ const Contact = () => {
         </span>
       </div>
       <div className={styles.contact__content}>
-        <div className={styles.contact__content_left}/>
+        <div className={styles.contact__content_left}>
+          <img src={contactInfo?.image}/>
+        </div>
         <div className={styles.contact__content_right}>
           <div className={styles.contact__content_right__title}>
             <span>

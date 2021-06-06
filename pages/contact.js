@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Nav from "../components/Nav";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
+import Container from "../containers";
 
 function ContactPage() {
   return (
@@ -13,7 +14,9 @@ function ContactPage() {
       <div className="home">
         <Header/>
         <Nav/>
-        <Contact/>
+        <Container>
+          <Contact/>
+        </Container>
         <Footer className={"footer"}/>
       </div>
     </>

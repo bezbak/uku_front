@@ -1,32 +1,16 @@
-import React from "react";
-import styles from './styles.module.scss'
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {actions} from "../../public/store/system/slice";
 import Collapse from "../Collapse";
+import styles from './styles.module.scss'
 
-const questionsAnswers = [
-  {
-    question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    answer:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra nunc feugiat ullamcorper. Justo praesent integer elementum tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra nunc feugiat ullamcorper. Justo praesent integer elementum tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra nunc feugiat ullamcorper. Justo praesent integer elementum tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt.",
-  },
-  {
-    question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    answer:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra nunc feugiat ullamcorper. Justo praesent integer elementum tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra nunc feugiat ullamcorper. Justo praesent integer elementum tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra nunc feugiat ullamcorper. Justo praesent integer elementum tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt.",
-  },
-  {
-    question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    answer: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra nunc feugiat ullamcorper. Justo praesent integer elementum tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra nunc feugiat ullamcorper. Justo praesent integer elementum tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra nunc feugiat ullamcorper. Justo praesent integer elementum tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt. `,
-  },
-  {
-    question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    answer: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra nunc feugiat ullamcorper. Justo praesent integer elementum tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra nunc feugiat ullamcorper. Justo praesent integer elementum tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra nunc feugiat ullamcorper. Justo praesent integer elementum tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt.`,
-  },
-  {
-    question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    answer: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra nunc feugiat ullamcorper. Justo praesent integer elementum tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra nunc feugiat ullamcorper. Justo praesent integer elementum tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverra nunc feugiat ullamcorper. Justo praesent integer elementum tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris, faucibus consequat tincidunt .`,
-  },
-];
 const FAQ = () => {
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(actions.faqInfoRequestStart());
+  })
+  const faq = useSelector((store) => store.system.faq);
+  console.log(faq)
   return (
     <div className={styles.faq}>
       <div className={styles.faq__headline}>
@@ -35,12 +19,12 @@ const FAQ = () => {
         </span>
       </div>
       <ul className={styles.sectionOurAreasOfLegalExpertise__areas__list}>
-        {questionsAnswers.map((item, index) => {
+        {faq?.map((faqIn) => {
           return (
             <Collapse
-              key={index}
-              title={item.question}
-              content={item.answer}
+              key={faqIn.question}
+              title={faqIn.question}
+              content={faqIn.answer}
               containerClassName={styles.sectionOurAreasOfLegalExpertise__areas__item__visible}
               titleClassName={styles.sectionOurAreasOfLegalExpertise__areas__item__title}
               descriptionClassName={styles.sectionOurAreasOfLegalExpertise__areas__item__description}
