@@ -23,14 +23,12 @@
     align-items: center;
     justify-content: flex-end;
     padding: 4px 0;
-
     &__profileImg {
       width: 20px;
       height: 20px;
       border-radius: 50%;
       border: 1px solid #D3D3D3;
     }
-
     &_list {
       list-style: none;
       margin-left: 16px;
@@ -40,7 +38,6 @@
       font-size: 18px;
       line-height: 16px;
       color: #181818;
-
       & a {
         display: flex;
         align-items: center;
@@ -54,7 +51,7 @@
     }
 
     &_listNoBorder {
-      padding-right: 0;
+      padding-right: 0 ;
       border-right: none;
     }
 
@@ -62,9 +59,9 @@
 }
 
 @include respond-above(sm) {
-  .nav {
-    display: flex;
-  }
+.nav{
+  display: flex;
+}
 }
 
 @include respond-above(md) {
@@ -72,7 +69,7 @@
 }
 
 @include respond-above(lg) {
-  .nav {
+  .nav{
     height: 76px;
     width: 1168px;
     margin: 0 auto;

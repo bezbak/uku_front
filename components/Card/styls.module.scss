@@ -18,8 +18,11 @@
       margin-right: 8px;
     }
     &__info{
+      height: 100%;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      //align-items: center;
       gap: 4px;
       &_name{
         font-size: 14px;

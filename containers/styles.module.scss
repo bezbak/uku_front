@@ -24,6 +24,7 @@
 @include respond-above(lg) {
 
   .container {
+    display: flex;
     padding: 0;
     width: 1166px;
     margin: 0 auto 91px;
