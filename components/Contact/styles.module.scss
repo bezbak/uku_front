@@ -90,7 +90,13 @@
 }
 
 @include respond-above(lg) {
-
+.contact{
+  width: 1168px;
+  margin: 0 auto;
+  &__headline{
+    margin-top: 32px;
+  }
+}
 }
 
 @include respond-above(mac) {

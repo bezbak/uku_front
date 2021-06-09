@@ -3,6 +3,9 @@ import classNames from 'classnames'
 import Logo from "../Logo";
 import Search from "../Search";
 import NavLink from "../NavLink";
+import SearchIcon from '../../public/icons/searchIcon.svg';
+import HeartIcon from '../../public/icons/heartIcon.svg';
+import LoginIcon from '../../public/icons/loginIcon.svg';
 import styles from './styles.module.scss';
 
 const Nav = () => {
@@ -14,21 +17,20 @@ const Nav = () => {
       </div>
       <div className={styles.nav_right}>
         <li className={styles.nav_right_list}>
-          {/*<SearchIcon/>*/}
           <NavLink>
-            <img src="/icons/search.svg"/>
+            <SearchIcon/>
             Поиск
           </NavLink>
         </li>
         <li className={styles.nav_right_list}>
           <NavLink>
-            <img src="/icons/heart.png"/>
+            <HeartIcon/>
             Избранное
           </NavLink>
         </li>
         <li className={classNames(styles.nav_right_list, styles.nav_right_listNoBorder)}>
           <NavLink url="/login">
-            <img src="/icons/heart.png"/>
+            <LoginIcon/>
             Вход
           </NavLink>
         </li>

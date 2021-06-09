@@ -2,7 +2,6 @@
 @import "../../public/styles/mixins/index";
 
 .card{
-
   display: flex;
   flex-direction: column;
   border: 1px solid #DFDFDF;
@@ -11,6 +10,7 @@
   &__headline {
     width: 100%;
     display: flex;
+    align-items: center;
     padding: 10px 16px;
     img {
       width: 32px;

@@ -15,7 +15,7 @@ function Home() {
         <Container>
           <Main/>
         </Container>
-        <Footer/>
+        <Footer className={"footer"}/>
       </main>
     </>
   )

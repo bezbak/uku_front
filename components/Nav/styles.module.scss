@@ -2,8 +2,9 @@
 @import "../../public/styles/mixins/index";
 
 .nav {
-  padding: 16px 99px 16px 99px;
-  display: flex;
+  display: none;
+  margin: 0 auto;
+  padding: 16px 0;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -20,7 +21,15 @@
     height: 100%;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     padding: 4px 0;
+
+    &__profileImg {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid #D3D3D3;
+    }
 
     &_list {
       list-style: none;
@@ -38,26 +47,24 @@
       }
 
       & svg {
-        width: 18px;
-        height: 18px;
-        margin-right: 18px;
-      }
-
-      & img {
-        width: 24px;
-        height: 24px;
-        margin-right: 18px;
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
       }
     }
 
     &_listNoBorder {
+      padding-right: 0;
       border-right: none;
     }
+
   }
 }
 
 @include respond-above(sm) {
-
+  .nav {
+    display: flex;
+  }
 }
 
 @include respond-above(md) {
@@ -65,6 +72,12 @@
 }
 
 @include respond-above(lg) {
+  .nav {
+    height: 76px;
+    width: 1168px;
+    margin: 0 auto;
+    padding: 16px 0;
+  }
 
 }
 

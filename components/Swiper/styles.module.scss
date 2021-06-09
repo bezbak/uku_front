@@ -9,21 +9,20 @@
   &__slide {
     width: 100%;
     height: 190px;
-
     img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
 
     }
   }
 
   &__sliderPagination {
     margin-top: 5px;
-    margin-bottom: 6px;
-    padding: 5px 10.5px 0 10.5px;
     width: 100%;
     display: flex;
     justify-content: center;
     flex-direction: row;
-    height: 5px;
 
     &_icon {
       cursor: pointer;

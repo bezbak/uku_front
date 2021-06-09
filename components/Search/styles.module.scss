@@ -2,9 +2,11 @@
 @import "../../public/styles/mixins/index";
 
 .search {
+  height: 44px;
   width: 400px;
   margin-left: 32px;
-  padding: 12px 0 13px 20px;
+  margin-right: 244px;
+  padding: 13px 20px 12px 20px;
   background: #F8F8F8;
   border: 1px solid #E0E0E0;
   box-sizing: border-box;
