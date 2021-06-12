@@ -3,7 +3,7 @@ const express = require('express');
 const next = require('next');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-const port = 'http://167.71.67.196/';
+const port = 'http://uku.kg/api/v1/';
 const target = process.env.NEXT_PUBLIC_NODE_TARGET;
 const dev = target === 'development';
 const app = next({
@@ -23,7 +23,7 @@ app
       server.use(
         '/api/v1',
         createProxyMiddleware({
-          target: 'http://167.71.67.196/',
+          target: 'http://uku.kg/api/v1/',
           changeOrigin: true,
           logLevel: 'debug',
         })
@@ -33,7 +33,7 @@ app
     // Default catch-all handler to allow Next.js to handle all other routes
     server.all('*', (req, res) => handle(req, res));
 
-    server.listen('http://167.71.67.196/', (err) => {
+    server.listen('http://uku.kg/api/v1/', (err) => {
       if (err) {
         throw err;
       }

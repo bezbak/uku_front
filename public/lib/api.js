@@ -49,7 +49,7 @@ const parseSettings = ({ method, data, headers, ...otherParams } = {}) => {
   const defaultHeaders = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin':'http://167.71.67.196/',
+    'Access-Control-Allow-Origin':'http://uku.kg/api/v1/',
     'X-CSRFToken': getCookie('csrftoken'),
   };
   //
