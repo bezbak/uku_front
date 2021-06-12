@@ -1,483 +1,148 @@
-@import "public/styles/varibles";
-@import "public/styles/mixins";
-.sectionAuth{
-  width: 350px;
-  height: auto;
-  margin: -35px 0 0 0;
-  padding: 0;
-  & h4 {
-    display: inline-block;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 22px;
-    color: #201E1E;
-    margin-bottom: 26px;
-  }
-  &_cancel{
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    color: #E56366;
-    float: right;
-  }
-  &_input {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid #E0E0E0;
-    box-sizing: border-box;
-    border-radius: 6px;
+@import "../../public/styles/varibles";
+@import "../../public/styles/mixins/index";
+
+.sectionAuth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+
+  &__logo {
     width: 100%;
-    height: 44px;
-    margin-bottom: 8px;
-  }
-  & button {
-    width: 100%;
-    height: 43px;
-    background: #E56366;
-    border-radius: 6px;
-    outline: none;
-    border: none;
-    color: #FFFFFF;
-    font-size: 14px;
-    line-height: 150%;
-  }
-  & button:disabled,
-  button[disabled]{
-    background: rgba(229, 99, 102, 0.5);
-  }
-  &__error {
-    display: block;
-    color: #E56366;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    background: #FFFFFF;
+    box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.11);
     font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
+    font-size: 20px;
+    line-height: 24px;
     text-align: center;
+    color: #374257;
+  }
+
+  &__formContent {
     width: 100%;
-    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px;
+    margin: auto 0;
+
+    &__headline {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 26px;
+
+      &__login {
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 22px;
+        color: #201E1E;
+      }
+
+      &_cancel {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        color: #E56366;
+      }
+    }
+
+    & form {
+      width: 100%;
+    }
+
+    & button {
+      width: 100%;
+      height: 43px;
+      background: #E56366;
+      border-radius: 6px;
+      outline: none;
+      border: none;
+      color: #FFFFFF;
+      font-size: 14px;
+      line-height: 150%;
+    }
+
+    & button:disabled,
+    button[disabled] {
+      background: rgba(229, 99, 102, 0.5);
+    }
+
+    &__error {
+      display: block;
+      color: #D61414;;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+      text-align: center;
+      width: 100%;
+      margin-bottom: 30px;
+
+    }
+  }
+
+}
+
+@include respond-above(xxxxs) {
+  .sectionAuth {
+    &__formContent {
+      width: 320px;
+    }
 
   }
 }
 
 @include respond-above(sm) {
-  .sectionClientQuotes {
-    padding: 20px;
-
-    &__headline {
-      font-size: 20px;
-      line-height: 22px;
+  .sectionAuth {
+    &__logo {
+      height: 56px;
+      font-size: 26px;
+      line-height: 28px;
     }
 
-    &__wordContainer {
-      right: 20px;
-      left: 20px;
-      top: 20px;
-      bottom: 20px;
+    &__formContent {
+      width: 350px;
 
-      &_letter {
-        width: 48px;
-        height: 48px;
-        font-size: 70px;
-
-        &_W {
-          top: calc(38%);
-          left: calc(40%);
+      &__headline {
+        &__login {
+          font-size: 20px;
+          line-height: 24px;
         }
 
-        &_O {
-          top: calc(38%);
-          right: calc(40%);
-        }
-
-        &_R {
-          bottom: calc(30%);
-          left: calc(40%);
-        }
-
-        &_D {
-          bottom: calc(30%);
-          right: calc(40%);
+        &_cancel {
+          font-size: 16px;
+          line-height: 17px;
         }
       }
-    }
-  }
-  .clientQuotesSwiper {
-    margin-top: 40px;
-    width: 400px;
 
-    &__sliderPagination {
-      margin-top: 80px;
-
-      &_icon {
-        margin-left: 6px;
-        margin-right: 6px;
-        width: 28px;
-      }
     }
-  }
-  .clientQuotesSlide {
-    font-size: 20px;
-    line-height: 132%;
   }
 }
 
 @include respond-above(md) {
-  .sectionClientQuotes {
-    padding: 34px;
+  .sectionAuth {
 
-    &__headline {
-      font-size: 22px;
-      line-height: 24px;
-    }
+    &__formContent {
+      width: 350px;
 
-    &__wordContainer {
-      right: 34px;
-      left: 34px;
-      top: 34px;
-      bottom: 34px;
-
-      &_letter {
-        width: 80px;
-        height: 80px;
-        font-size: 102px;
-
-        &_W {
-          top: calc(38%);
-          left: calc(40%);
+      &__headline {
+        &__login {
+          font-size: 18px;
+          line-height: 22px;
         }
 
-        &_O {
-          top: calc(38%);
-          right: calc(40%);
-        }
-
-        &_R {
-          bottom: calc(30%);
-          left: calc(40%);
-        }
-
-        &_D {
-          bottom: calc(30%);
-          right: calc(40%);
+        &_cancel {
+          font-size: 14px;
         }
       }
     }
-  }
-  .clientQuotesSwiper {
-    margin-top: 60px;
-    width: 600px;
-
-    &__sliderPagination {
-      margin-top: 100px;
-
-      &_icon {
-        margin-left: 8px;
-        margin-right: 8px;
-        width: 30px;
-      }
-    }
-  }
-  .clientQuotesSlide {
-    font-size: 22px;
   }
 }
 
-@include respond-above(mac) {
-  .sectionClientQuotes {
-    padding: 38px;
-
-    &__headline {
-      font-size: 18px;
-      line-height: 22px;
-    }
-
-    &__wordContainer {
-      right: 38px;
-      left: 38px;
-      top: 38px;
-      bottom: 38px;
-
-      &_letter {
-        width: 92px;
-        height: 92px;
-        font-size: 92px;
-
-        &_W {
-          top: calc(38%);
-          left: calc(40%);
-        }
-
-        &_O {
-          top: calc(38%);
-          right: calc(40%);
-        }
-
-        &_R {
-          bottom: calc(30%);
-          left: calc(40%);
-        }
-
-        &_D {
-          bottom: calc(30%);
-          right: calc(40%);
-        }
-      }
-    }
-  }
-  .clientQuotesSwiper {
-    width: 600px;
-    margin-top: 40px;
-
-    &__sliderPagination {
-      margin-top: 60px;
-
-      &_icon {
-        width: 40px;
-      }
-    }
-  }
-  .clientQuotesSlide {
-    font-size: 18px;
-  }
-}
-
-@include respond-above(xlg) {
-  .sectionClientQuotes {
-    padding: 40px;
-
-    &__headline {
-      font-size: 20px;
-      line-height: 24px;
-    }
-
-    &__wordContainer {
-      position: absolute;
-      right: 40px;
-      left: 40px;
-      top: 40px;
-      bottom: 40px;
-
-      &_letter {
-        width: 120px;
-        height: 120px;
-        font-size: 120px;
-
-        &_W {
-          top: calc(38%);
-          left: calc(40%);
-        }
-
-        &_O {
-          top: calc(38%);
-          right: calc(40%);
-        }
-
-        &_R {
-          bottom: calc(30%);
-          left: calc(40%);
-        }
-
-        &_D {
-          bottom: calc(30%);
-          right: calc(40%);
-        }
-      }
-    }
-  }
-  .clientQuotesSwiper {
-    margin-top: 45px;
-
-    &__sliderPagination {
-      margin-top: 60px;
-
-      &_icon {
-        margin-left: 10px;
-        margin-right: 10px;
-        width: 50px;
-      }
-    }
-  }
-  .clientQuotesSlide {
-    font-size: 20px;
-  }
-}
-
-@include respond-above(fhd) {
-  .sectionClientQuotes {
-    padding: 48px;
-
-    &__headline {
-      font-weight: 300;
-      font-size: 24px;
-      line-height: 26px;
-    }
-
-    &__wordContainer {
-      right: 48px;
-      left: 48px;
-      top: 48px;
-
-      &_letter {
-        width: 150px;
-        height: 142px;
-        font-size: 142px;
-        line-height: 85.5%;
-
-        &_W {
-          top: calc(38%);
-          left: calc(40%);
-        }
-
-        &_O {
-          top: calc(38%);
-          right: calc(40%);
-        }
-
-        &_R {
-          bottom: calc(30%);
-          left: calc(40%);
-        }
-
-        &_D {
-          bottom: calc(30%);
-          right: calc(40%);
-        }
-      }
-    }
-  }
-  .clientQuotesSwiper {
-    margin-top: 50px;
-    height: 260px;
-    width: 820px;
-
-    &__sliderPagination {
-      margin-top: 82px;
-
-      &_icon {
-        margin-left: 10px;
-        margin-right: 10px;
-        width: 59px;
-      }
-    }
-  }
-  .clientQuotesSlide {
-    height: 100%;
-    width: 100%;
-    font-size: 24px;
-    line-height: 132%;
-  }
-}
-
-@include respond-above(fhd-plus) {
-  .sectionClientQuotes {
-    padding: 52px;
-
-    &__headline {
-      font-size: 28px;
-      line-height: 30px;
-    }
-
-    &__wordContainer {
-      right: 52px;
-      left: 52px;
-      top: 52px;
-      bottom: 52px;
-
-      &_letter {
-        width: 154px;
-        height: 150px;
-        font-size: 150px;
-
-        &_W {
-          top: calc(38%);
-          left: calc(40%);
-        }
-
-        &_O {
-          top: calc(38%);
-          right: calc(40%);
-        }
-
-        &_R {
-          bottom: calc(30%);
-          left: calc(40%);
-        }
-
-        &_D {
-          bottom: calc(30%);
-          right: calc(40%);
-        }
-      }
-    }
-  }
-  .clientQuotesSwiper {
-    margin-top: 60px;
-    width: 820px;
-
-    &__sliderPagination {
-      margin-top: 92px;
-
-      &_icon {
-        margin-left: 10px;
-        margin-right: 10px;
-        width: 65px;
-      }
-    }
-  }
-  .clientQuotesSlide {
-    font-size: 28px;
-  }
-}
-
-@include respond-above(2 k) {
-  .sectionClientQuotes {
-    &__headline {
-      font-weight: 300;
-      font-size: 32px;
-      line-height: 34px;
-    }
-
-    &__wordContainer {
-      &_letter {
-        width: 154px;
-        height: 154px;
-        font-size: 150px;
-
-        &_W {
-          top: calc(38%);
-          left: calc(40%);
-        }
-
-        &_O {
-          top: calc(38%);
-          right: calc(40%);
-        }
-
-        &_R {
-          bottom: calc(30%);
-          left: calc(40%);
-        }
-
-        &_D {
-          bottom: calc(30%);
-          right: calc(40%);
-        }
-      }
-    }
-  }
-  .clientQuotesSwiper {
-    margin-top: 65px;
-    width: 820px;
-
-    &__sliderPagination {
-      margin-top: 100px;
-
-      &_icon {
-        margin-left: 12px;
-        margin-right: 12px;
-        width: 70px;
-      }
-    }
-  }
-  .clientQuotesSlide {
-    font-size: 32px;
-  }
-}

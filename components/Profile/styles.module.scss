@@ -1,0 +1,111 @@
+@import "../../public/styles/varibles";
+@import "../../public/styles/mixins/index";
+
+.profile {
+  width: 303px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 21px;
+  &__avatar{
+    width: 140px;
+    height: 140px;
+    border: 5px solid #D5D5D5;
+    border-radius: 78px;
+    margin: 32px auto 15px auto;
+    & img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &__info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    &_fio{
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 22px;
+      color: #121213;
+      margin-bottom: 6px;
+
+    }
+    &_age{
+      display: flex;
+      gap: 6px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 19px;
+      color: #495360;
+      margin-bottom: 12px;
+    }
+    &_phone{
+      display: flex;
+      gap: 12px;
+      font-size: 16px;
+      line-height: 19px;
+      color: #121213;
+      margin-bottom: 12px;
+    }
+  }
+  &__appInfo{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+    height: 70px;
+    padding: 12px;
+    background: #FFFFFF;
+    border: 1px solid #F0F0F0;
+    box-sizing: border-box;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    &_wrap{
+    display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+  &__socialContact {
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+    & svg {
+      width: 42px;
+      height: 42px;
+    }
+  }
+}
+
+@include respond-above(sm) {
+
+}
+
+@include respond-above(md) {
+
+}
+
+@include respond-above(lg) {
+
+}
+
+@include respond-above(mac) {
+
+}
+
+@include respond-above(xlg) {
+
+}
+
+@include respond-above(fhd) {
+
+}
+
+@include respond-above(fhd-plus) {
+
+}
+
+@include respond-above(2 k) {
+
+}
