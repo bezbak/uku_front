@@ -172,7 +172,7 @@
   }
 }
 
-@include respond-above(2 k) {
+@include respond-above(2k) {
   .button__iconAfter {
     margin-left: 15px;
   }
