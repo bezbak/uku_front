@@ -4,6 +4,7 @@ import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
 import Container from "../../containers";
 import PrivacyPolicy from "../../components/PrivacyPolicy";
+import NavContainer from "../../containers/NavContainer";
 
 function PrivacyPolicyPage() {
   return (
@@ -11,7 +12,9 @@ function PrivacyPolicyPage() {
       <Meta/>
       <div className="home">
         <Header/>
-        <Nav/>
+        <NavContainer>
+          <Nav/>
+        </NavContainer>
         <Container>
           <PrivacyPolicy/>
         </Container>

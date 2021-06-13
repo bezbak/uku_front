@@ -6,6 +6,7 @@ import Nav from "../../components/Nav";
 import Contact from "../../components/Contact";
 import Footer from "../../components/Footer";
 import Container from "../../containers";
+import NavContainer from "../../containers/NavContainer";
 
 function ContactPage() {
   return (
@@ -13,7 +14,9 @@ function ContactPage() {
       <Meta/>
       <div className="home">
         <Header/>
-        <Nav/>
+       <NavContainer>
+         <Nav/>
+       </NavContainer>
         <Container>
           <Contact/>
         </Container>

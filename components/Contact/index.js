@@ -1,9 +1,14 @@
 import React, {useEffect} from "react";
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import NavLink from "../NavLink";
-import styles from './styles.module.scss'
 import {actions} from "../../public/store/system/slice";
 import {parseMarkdown} from "../../public/lib/parser";
+
+import PhoneIcon from '../../public/icons/phone.svg'
+import TelegramIcon from '../../public/icons/telegram.svg'
+import WhatsApp from '../../public/icons/whatsApp.svg'
+import Instagram from '../../public/icons/instagram.svg'
+import AddressIcon from '../../public/icons/address.svg'
+import styles from './styles.module.scss'
 
 const Contact = () => {
   const dispatch = useDispatch()
@@ -41,7 +46,7 @@ const Contact = () => {
                     return(
                       <li key={phoneNumber.id}>
                         <a className={styles.contact__content_right__list_link} href={`tel:${phoneNumber.phone}`} target="_blank">
-                          <img src="icons/phone.svg"/>
+                          <PhoneIcon/>
                           <span>{phoneNumber.phone}</span>
                         </a>
                       </li>
@@ -56,19 +61,19 @@ const Contact = () => {
               <ul>
                 <li>
                   <a className={styles.contact__content_right__list_link} href={` https://telegram.me/${contactInfo?.telegram}`} target="_blank">
-                    <img src="icons/telegram.png"/>
+                    <TelegramIcon/>
                     <span>Телеграм</span>
                   </a>
                 </li>
                 <li>
                   <a className={styles.contact__content_right__list_link} href={contactInfo?.facebook} target="_blank">
-                    <img src="icons/whatsApp.png"/>
+                    <WhatsApp/>
                     <span>Facebook</span>
                   </a>
                 </li>
                 <li>
                   <a className={styles.contact__content_right__list_link}  href={contactInfo?.instagram} target="_blank">
-                    <img src="icons/instagram.png"/>
+                    <Instagram/>
                     <span>Instagram</span>
                   </a>
                 </li>
@@ -79,7 +84,7 @@ const Contact = () => {
               <ul>
                 <li>
                   <a className={styles.contact__content_right__list_link} href={`http://maps.google.com/?q=${contactInfo?.address}`} target="_blank">
-                    <img src="icons/address.png"/>
+                    <AddressIcon/>
                     <span>
                       {contactInfo?.address}
                     </span>

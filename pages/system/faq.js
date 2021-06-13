@@ -4,6 +4,7 @@ import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
 import FAQ from "../../components/FAQ";
 import Container from "../../containers";
+import NavContainer from "../../containers/NavContainer";
 
 function FrequentlyAskedQuestion() {
   return (
@@ -11,7 +12,9 @@ function FrequentlyAskedQuestion() {
       <Meta/>
       <div className="home">
         <Header/>
-        <Nav/>
+        <NavContainer>
+          <Nav/>
+        </NavContainer>
         <Container>
           <FAQ/>
         </Container>

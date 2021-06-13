@@ -1,8 +1,8 @@
 import React from "react";
 import NavLink from "../NavLink";
-import TelegramIcon from '../../public/icons/telegram 1.svg'
+import TelegramIcon from '../../public/icons/telegram.svg'
 // import WhatsAppIcon from '../../public/icons/whatsApp.svg'
-import InstagramIcon from '../../public/icons/instagram 1.svg'
+import InstagramIcon from '../../public/icons/instagram.svg'
 import styles from './styles.module.scss';
 
 const Profile = () => {

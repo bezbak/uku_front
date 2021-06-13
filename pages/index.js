@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Main from "../components/Main";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import NavContainer from "../containers/NavContainer";
 
 function Home() {
   return (
@@ -11,7 +12,9 @@ function Home() {
       <Meta/>
       <main className="home">
         <Header/>
-        <Nav/>
+       <NavContainer>
+         <Nav/>
+       </NavContainer>
         <Container>
           <Main/>
         </Container>

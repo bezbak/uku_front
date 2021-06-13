@@ -10,7 +10,6 @@ const FAQ = () => {
     dispatch(actions.faqInfoRequestStart());
   })
   const faq = useSelector((store) => store.system.faq);
-  console.log(faq)
   return (
     <div className={styles.faq}>
       <div className={styles.faq__headline}>
@@ -18,16 +17,16 @@ const FAQ = () => {
           F.A.Q.
         </span>
       </div>
-      <ul className={styles.sectionOurAreasOfLegalExpertise__areas__list}>
+      <ul className={styles.collapse__list}>
         {faq?.map((faqIn) => {
           return (
             <Collapse
-              key={faqIn.question}
+              key={faqIn.id}
               title={faqIn.question}
               content={faqIn.answer}
-              containerClassName={styles.sectionOurAreasOfLegalExpertise__areas__item__visible}
-              titleClassName={styles.sectionOurAreasOfLegalExpertise__areas__item__title}
-              descriptionClassName={styles.sectionOurAreasOfLegalExpertise__areas__item__description}
+              containerClassName={styles.collapse__item__visible}
+              titleClassName={styles.collapse__item__title}
+              descriptionClassName={styles.collapse__item__description}
             />
           )
         })}

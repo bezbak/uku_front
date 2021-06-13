@@ -35,8 +35,6 @@ const Nav = () => {
           </NavLink>
         </li>
       </div>
-
-
     </div>
   )
 }

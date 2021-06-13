@@ -1,11 +1,16 @@
+@import "../../public/styles/varibles";
+@import "../../public/styles/mixins/index";
+
+
 .faq {
   display: flex;
   flex-direction: column;
   margin-bottom: 60px;
+
   &__headline {
     padding-bottom: 24px;
     font-weight: 500;
-    font-size: 24px;
+    font-size: 16px;
     line-height: 120%;
     display: flex;
     align-items: flex-end;
@@ -13,50 +18,68 @@
   }
 }
 
-.sectionOurAreasOfLegalExpertise {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 260px 32px 130px 32px;
-  background: #243646;
-  color: #000000;
+.collapse {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    color: black;
+  }
 
-  &__areas {
-    &__list {
-      display: flex;
-      flex-direction: column;
-      color: black;
+  &__item {
+    display: flex;
+    color: #3E3E3E;
+
+    &__visible:hover {
+      color: #E56366;
     }
 
-    &__item {
+    &__title {
       display: flex;
+      padding: 16px 16px;
+
+      span {
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 140%;
+      }
+    }
+
+    &__description {
+      display: flex;
+      padding: 14px 16px 16px 16px;
       color: #3E3E3E;
 
-      &__visible:hover {
-        color: #E56366;
+      p,
+      span {
+        font-size: 12px;
+        line-height: 140%;
       }
+    }
+  }
+}
 
+@include respond-above(md) {
+  .faq {
+    &__headline {
+      font-size: 24px;
+    }
+  }
+
+  .collapse {
+
+    &__item {
       &__title {
-        display: flex;
         padding: 17px 16px;
 
         span {
-          font-weight: 500;
           font-size: 16px;
-          line-height: 140%;
         }
       }
 
       &__description {
-        display: flex;
-        padding: 14px 16px 16px 16px;
-        color: #3E3E3E;
-
         p,
         span {
           font-size: 14px;
-          line-height: 140%;;
         }
       }
     }

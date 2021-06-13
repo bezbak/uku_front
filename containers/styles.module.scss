@@ -2,13 +2,13 @@
 @import "../public/styles/mixins/index";
 
 .container {
-  padding: 14px 16px 0 16px;
+  padding: $paddingSm $paddingMb;
 }
 
 @include respond-above(sm) {
 
   .container {
-    //padding: 18px 16px 0 16px;
+    padding: $paddingSm;
 
   }
 }
@@ -16,7 +16,7 @@
 @include respond-above(md) {
 
   .container {
-    //padding: 18px 16px 64px 16px;
+    padding: $paddingMd  ;
 
   }
 }
@@ -25,9 +25,9 @@
 
   .container {
     display: flex;
-    padding: 0;
     width: 1166px;
-    margin: 0 auto 91px;
+    padding: $paddingMd 0;
+    margin: 0 auto;
 
   }
 }
@@ -59,16 +59,8 @@
 
 @include respond-above(fhd-plus) {
 
-  .container {
-    padding: 0 99px 0 99px;
-
-  }
 }
 
 @include respond-above(2k) {
 
-  .container {
-    padding: 0 99px 0 99px;
-
-  }
 }

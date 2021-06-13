@@ -1,10 +1,14 @@
+@import "../../public/styles/varibles";
+@import "../../public/styles/mixins/index";
+
 .privacyPolicy {
   display: flex;
   flex-direction: column;
   margin-bottom: 72px;
+
   &__headline {
     font-weight: 500;
-    font-size: 24px;
+    font-size: 16px;
     line-height: 120%;
     color: #121213;
     margin-bottom: 24px;
@@ -16,5 +20,13 @@
     line-height: 140%;
     color: #3E3E3E;
 
+  }
+}
+
+@include respond-above(md) {
+  .privacyPolicy {
+    &__headline {
+      font-size: 24px;
+    }
   }
 }

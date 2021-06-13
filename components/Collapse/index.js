@@ -1,9 +1,10 @@
 import * as React from 'react';
-import styles from './styles.module.scss';
 import classNames from 'classnames';
 import {gsap, refreshScrollTrigger} from '../../public/lib/gsap';
 import {getHeight} from '../../public/lib/utils';
 import {parseMarkdown} from "../../public/lib/parser";
+import CollapseArrow from '../../public/icons/collapse.svg'
+import styles from './styles.module.scss';
 
 const animatedHeight = (element, height, callback) => {
   gsap.to(element, {
@@ -44,7 +45,7 @@ const Collapse = ({className, containerClassName, titleClassName, descriptionCla
           </span>
         </div>
         <div className={styles.collapse__collapseIcon}>
-          <img src="icons/collapse.svg" className={classNames('collapse-icon-plus', {
+          <CollapseArrow className={classNames('collapse-icon-plus', {
             'collapse-icon-plus_collapsed': !isOpen
           })}/>
 

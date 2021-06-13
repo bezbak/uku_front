@@ -1,0 +1,15 @@
+@import "../../public/styles/varibles";
+@import "../../public/styles/mixins/index";
+
+.navContainer {
+ display: none;
+}
+@include respond-above(md) {
+  .navContainer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 76px;
+    border-bottom: 1px solid #EEEEEE;
+  }
+}

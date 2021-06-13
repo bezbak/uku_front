@@ -1,99 +1,76 @@
 @import "../../public/styles/varibles";
 @import "../../public/styles/mixins/index";
 
-.nav {
-  display: none;
-  margin: 0 auto;
-  padding: 16px 0;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  //padding-top: 16px;
-  //padding-bottom: 16px;
-  box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.05);
+.nav{
+      display: flex;
+      width: 100%;
+      padding: 16px 16px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
 
-  &_left {
-    height: 100%;
-    display: flex;
-  }
-
-  &_right {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 4px 0;
-    &__profileImg {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: 1px solid #D3D3D3;
-    }
-    &_list {
-      list-style: none;
-      margin-left: 16px;
-      padding-right: 16px;
-      border-right: 1px solid #D3D3D3;
-      font-weight: 500;
-      font-size: 18px;
-      line-height: 16px;
-      color: #181818;
-      & a {
+      &_left {
+        height: 100%;
         display: flex;
         align-items: center;
+        justify-content: flex-end;
       }
 
-      & svg {
-        width: 20px;
-        height: 20px;
-        margin-right: 10px;
+      &_right {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        &__profileImg {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          border: 1px solid #D3D3D3;
+        }
+
+        &_list {
+          list-style: none;
+          margin-left: 16px;
+          padding-right: 16px;
+          border-right: 1px solid #D3D3D3;
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 16px;
+          color: #181818;
+
+          & a {
+            display: flex;
+            align-items: center;
+          }
+
+          & svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+          }
+        }
+
+        &_listNoBorder {
+          padding-right: 0;
+          border-right: none;
+        }
+
       }
     }
-
-    &_listNoBorder {
-      padding-right: 0 ;
-      border-right: none;
-    }
-
-  }
-}
 
 @include respond-above(sm) {
-.nav{
-  display: flex;
-}
-}
-
-@include respond-above(md) {
-
+  .nav{
+    width: 1168px;
+    margin: 0 auto;
+    padding: 0 24px ;
+  }
 }
 
 @include respond-above(lg) {
   .nav{
-    height: 76px;
-    width: 1168px;
-    margin: 0 auto;
-    padding: 16px 0;
+      width: 1168px;
+      margin: 0 auto;
+      padding: 16px 0;
+    }
   }
-
-}
-
-@include respond-above(mac) {
-
-}
-
-@include respond-above(xlg) {
-
-}
-
-@include respond-above(fhd) {
-
-}
-
-@include respond-above(fhd-plus) {
-
-}
-
-@include respond-above(2k) {
-
-}

@@ -4,6 +4,7 @@ import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
 import Container from "../../containers";
 import TermsOfUse from "../../components/TermsOfUse";
+import NavContainer from "../../containers/NavContainer";
 
 function TermsOfUsePage() {
   return (
@@ -11,7 +12,9 @@ function TermsOfUsePage() {
       <Meta/>
       <div className="home">
         <Header/>
-        <Nav/>
+       <NavContainer>
+         <Nav/>
+       </NavContainer>
         <Container>
           <TermsOfUse/>
         </Container>

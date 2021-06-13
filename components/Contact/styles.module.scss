@@ -3,23 +3,24 @@
 
 .contact {
   position: relative;
-  margin-bottom: 72px;
+
   &__headline {
-    margin-bottom: 26px;
-    font-weight: 600;
-    font-size: 32px;
-    line-height: 39px;
+    margin-bottom: 24px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
     color: #181818;
   }
 
   &__content {
     display: flex;
+    flex-direction: column;
     margin-bottom: 72px;
+
     &_left {
-      width: 32vw;
-      margin-right: 32px;
+      width: 100%;
+      margin-bottom: 24px;
       img {
-        //background: url(../../public/images/loginBg.png), #C4C4C4;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -27,7 +28,7 @@
     }
 
     &_right {
-      width: 51vw;
+      width: 100%;
       display: flex;
       flex-direction: column;
 
@@ -48,7 +49,7 @@
 
       &__contact {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
       }
 
       &__list {
@@ -86,35 +87,57 @@
 }
 
 @include respond-above(md) {
+  .contact {
+    margin-bottom: 72px;
 
+    &__headline {
+      margin-bottom: 26px;
+      font-weight: 600;
+      font-size: 32px;
+      line-height: 39px;
+    }
+
+    &__content {
+      flex-direction: row;
+
+      &_left {
+        width: 32%;
+        margin-right: 32px;
+        margin-bottom: auto;
+      }
+
+      &_right {
+        width: 78%;
+
+        &__contact {
+          flex-direction: row;
+          gap: 70px;
+        }
+
+        &__list {
+          display: flex;
+          flex-direction: column;
+
+          &_title {
+            font-size: 17px;
+            line-height: 21px;
+            color: #181818;
+            margin-bottom: 8px;
+          }
+        }
+      }
+    }
+  }
 }
 
 @include respond-above(lg) {
-.contact{
-  width: 1168px;
-  margin: 0 auto;
-  &__headline{
-    margin-top: 32px;
+  .contact {
+    width: 1168px;
+    margin: 0 auto;
+
+    &__headline {
+      margin-top: 32px;
+    }
   }
 }
-}
 
-@include respond-above(mac) {
-
-}
-
-@include respond-above(xlg) {
-
-}
-
-@include respond-above(fhd) {
-
-}
-
-@include respond-above(fhd-plus) {
-
-}
-
-@include respond-above(2k) {
-
-}
