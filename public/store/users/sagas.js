@@ -44,7 +44,7 @@ const parseJSON = (response) => {
 };
 function apiPost(url, values) {
   // console.log(values)
-  const res = fetch(`http://167.71.67.196/api/v1/${url}`, {
+  const res = fetch(`http://uku.kg/api/v1/${url}`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(values)

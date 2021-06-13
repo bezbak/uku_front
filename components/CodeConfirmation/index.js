@@ -4,13 +4,15 @@ import classNames from 'classnames'
 import {Field, Form} from "react-final-form";
 import NavLink from "../NavLink";
 import { actions } from '../../public/store/users/slice';
-import style from "./styles.module.scss";
+import styles from "./styles.module.scss";
 import pathnames from "../../constants/pathnames";
 import AuthSubmitError from "../Auth/AuthSubmitError";
 import {useRouter} from "next/router";
+import useIsMobile from "../../public/hooks/useIsMobile";
 
 const CodeConfirmation = () =>{
   const { push } = useRouter();
+  const isMobile =useIsMobile();
   const [isActive, setIsActive] = useState(true)
   const dispatch = useDispatch();
   const userPhone = useSelector((store) => store.auth?.phone, shallowEqual);
@@ -32,18 +34,25 @@ const CodeConfirmation = () =>{
     })
 
   return (
-    <div className={style.codeConfirmForm}>
-      <div className={style.codeConfirmForm__codeConfirmFormTitle}>
+    <div className={styles.codeConfirmForm}>
+      {isMobile &&
+      <div className={styles.codeConfirmForm__logo}>
+        <span>
+          Uku.kg
+        </span>
+      </div>}
+      <div className={styles.codeConfirmForm__formContent}>
+      <div className={styles.codeConfirmForm__codeConfirmFormTitle}>
          <span>
             Подтверждение кода
          </span>
       </div>
-      <div className={style.codeConfirmForm__description}>
+      <div className={styles.codeConfirmForm__description}>
         Код был отправлен на номер <br/>
        <span>
           {userPhone?.phone}
        </span>
-        <NavLink className={style.codeConfirmForm__description_link} url={"login"} as={"login/"}> Неверный номер?</NavLink>
+        <NavLink className={styles.codeConfirmForm__description_link} url={"login"} as={"login/"}> Неверный номер?</NavLink>
       </div>
       <Form
         onSubmit={onSubmit}
@@ -56,12 +65,12 @@ const CodeConfirmation = () =>{
               component="input"
               type="text"
               placeholder="Код"
-              className={style.codeConfirmForm__input}
+              className={styles.codeConfirmForm__input}
 
             />
             <button type="submit"
                     className={
-                      classNames(style.codeConfirmForm__button,
+                      classNames(styles.codeConfirmForm__button,
                       // style.codeConfirmForm__button_confirm,
                       // {[style.codeConfirmForm__button_confirm__active]: isActive}
                       )
@@ -70,10 +79,10 @@ const CodeConfirmation = () =>{
             >
               Подтвердить
             </button>
-            <div className={style.codeConfirmForm__label}>Не пришло SMS сообщение?</div>
+            <div className={styles.codeConfirmForm__label}>Не пришло SMS сообщение?</div>
             <button type="submit"
-                    className={classNames(style.codeConfirmForm__button,
-                      style.codeConfirmForm__button_submitAgain,
+                    className={classNames(styles.codeConfirmForm__button,
+                      styles.codeConfirmForm__button_submitAgain,
                       // {[style.codeConfirmForm__button_submitAgain__active]: isActive}
                     )}
                     disabled={submitting || pristine}
@@ -83,6 +92,7 @@ const CodeConfirmation = () =>{
           </form>
         )}
       />
+      </div>
     </div>
   )
 }
