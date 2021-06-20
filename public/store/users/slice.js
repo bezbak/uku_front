@@ -30,6 +30,15 @@ const userAuthSlice = createSlice({
       console.log(payload)
     },
 
+    registrationRequestStart() {},
+    registrationRequestSuccess(state,{payload}) {
+      state.is_profile_completed = payload.is_profile_completed
+      state.token = payload.token
+    },
+    registrationRequestFailure(payload) {
+      console.log(payload)
+    },
+
     logoutRequestStart() {},
     logoutRequestSuccess(state) {
       state.isAuthenticated = false;

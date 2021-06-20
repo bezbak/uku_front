@@ -1,0 +1,124 @@
+@import "../../public/styles/varibles";
+@import "../../public/styles/mixins/index";
+
+.location {
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 416px;
+  height: 455px;
+  padding: 16px 24px;
+  &__headline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__title {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 22px;
+      color: #272D33;
+    }
+
+    &__closeButton {
+      width: 24px;
+      height: 24px;
+
+      &:active {
+        & svg {
+          path {
+            fill: #E56366;
+          }
+        }
+      }
+
+    }
+  }
+  &__search {
+    display: flex;
+    align-items: center;
+    width: 344px;
+    height: 43px;
+    padding: 13px;
+    margin-top: 38px;
+    margin-bottom: 12px;
+    background: #F8F8F8;
+    border: 1px solid #E0E0E0;
+    box-sizing: border-box;
+    border-radius: 6px;
+    & input {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 17px;
+      color: #161616;
+      background: none;
+      border: none;
+      &::placeholder {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        color: #C9C9C9;
+        background: none;
+      }
+    }
+  }
+  &__swiper {
+    overflow-y: auto;
+    margin: 0 ;
+    width: 344px;
+    max-height: 375px;
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 4px;
+      background: #E0E0E0;
+      border-radius: 2px;
+    }
+
+    & svg {
+      width: 24px;
+      height: 24px;
+      path {
+        stroke: #E56366;
+      }
+    }
+  }
+  &__slide{
+
+    width: 344px;
+    margin-right: 0;
+    &__regionWrap {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      height: 52px;
+      border-bottom: 1px solid #EEEEEE;
+      &_activeRegion {
+        background: #EEEEEE;
+      }
+      &_label {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+        color: #354455;
+      }
+      & svg {
+        width: 24px;
+        height: 24px;
+        path {
+          stroke: #E56366;
+        }
+      }
+      &__arrowRightIcon {
+        margin-left: auto;
+      }
+      &__arrowLeftIcon {
+        margin-right: 10px;
+        transform: rotate(-180deg);
+      }
+    }
+  }
+}

@@ -86,6 +86,24 @@ function* conformCodeRequest({payload}) {
 
 }
 
+
+function* registrationRequest({payload}) {
+  const {values, callback} = payload;
+  console.log(values)
+  try {
+    const response = yield call(api.post, 'account/profile/', { data: values });
+    yield put(actions.conformCodeRequestSuccess(response));
+    console.log(response)
+    yield call(callback);
+    console.log("try")
+  } catch (e) {
+    console.log(e)
+    yield put(actions.conformCodeRequestFailure(e));
+    yield call(callback, parseSubmissionError(e));
+  }
+
+}
+
 function* logoutRequest({payload}) {
   const {callback} = payload;
   try {
@@ -109,6 +127,7 @@ function* getStateRequest() {
 export default function* userAuthSagas() {
   yield takeEvery(`${actions.phoneRequestStart}`, phoneRequest);
   yield takeEvery(`${actions.conformCodeRequestStart}`, conformCodeRequest);
+  yield takeEvery(`${actions.registrationRequestStart}`, registrationRequest);
   yield takeEvery(`${actions.logoutRequestStart}`, logoutRequest);
   yield takeEvery(`${actions.getStateRequestStart}`, getStateRequest);
 }
