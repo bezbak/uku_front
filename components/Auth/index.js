@@ -315,7 +315,7 @@ const a = {
 const AuthForm = () => {
   const {push} = useRouter();
   const [value, setValue] = useState()
-  const isMobile =useIsMobile();
+  const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const phoneRequest = (payload) => dispatch(actions.phoneRequestStart(payload));
   const onSubmit = (value) => (

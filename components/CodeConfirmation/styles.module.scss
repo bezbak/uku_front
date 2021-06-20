@@ -77,7 +77,10 @@
     color: #FFFFFF;
     outline: none;
     border: none;
-    background: #E56366;
+
+    &_submitButton {
+      background: #E56366;
+    }
     &_submitAgain {
       display: flex;
       flex-direction: row;
@@ -85,24 +88,30 @@
       align-items: center;
       padding-left: 16px;
       padding-right: 14px;
-      background: rgba(102, 118, 137, 0.5);
+      background: #667689;
       font-weight: normal;
       font-size: 14px;
       line-height: 17px;
       text-align: left;
 
-      &__active {
-        background: #667689;
+      &_timer {
+        display: none;
       }
     }
   }
 
-  &__button:disabled,
-  button[disabled] {
-    background: rgba(229, 99, 102, 0.5);
+  &__button {
+    &_submitButton:disabled {
+      background: rgba(229, 99, 102, 0.5);
+    }
+
+    &_submitAgain:disabled {
+      background: rgba(102, 118, 137, 0.5);
+    }
   }
 
   &__label {
+    margin-top: 40px;
     width: 100%;
     font-weight: 600;
     font-size: 14px;

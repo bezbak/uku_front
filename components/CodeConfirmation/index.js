@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames'
 import {Field, Form} from "react-final-form";
+import useCountDown from 'react-countdown-hook';
 import NavLink from "../NavLink";
 import { actions } from '../../public/store/users/slice';
 import styles from "./styles.module.scss";
@@ -13,12 +14,31 @@ import useIsMobile from "../../public/hooks/useIsMobile";
 const CodeConfirmation = () =>{
   const { push } = useRouter();
   const isMobile =useIsMobile();
-  const [isActive, setIsActive] = useState(true)
   const dispatch = useDispatch();
+  const initialTime = 60*1000 ; // initial time in milliseconds, defaults to 60000
+  const interval = 1000; // interval to change remaining time amount, defaults to 1000
+  const [timeLeft, { start, pause, resume, reset }] = useCountDown(initialTime, interval);
+  useEffect(()=>{
+    start();
+  }, []);
   const userPhone = useSelector((store) => store.auth?.phone, shallowEqual);
   const confCodeRequest = (payload) => dispatch(actions.conformCodeRequestStart(payload));
-
-  const onSubmit = (value) =>
+  const phoneRequest = (payload) => dispatch(actions.phoneRequestStart(payload));
+  const SendAgain = () => (
+    new Promise((resolve) => {
+      phoneRequest({
+        value:userPhone,
+        callback: (response) => {
+          if (!response) {
+          }
+          resolve(response);
+          const newTime = 60 * 1000;
+          start(newTime);
+        },
+      })
+    })
+  )
+    const onSubmit = (value) =>
     new Promise((resolve) => {
       const values = Object.assign(value, userPhone)
       confCodeRequest({
@@ -71,8 +91,7 @@ const CodeConfirmation = () =>{
             <button type="submit"
                     className={
                       classNames(styles.codeConfirmForm__button,
-                      // style.codeConfirmForm__button_confirm,
-                      // {[style.codeConfirmForm__button_confirm__active]: isActive}
+                        styles.codeConfirmForm__button_submitButton
                       )
                     }
                     disabled={submitting || pristine}
@@ -80,14 +99,14 @@ const CodeConfirmation = () =>{
               Подтвердить
             </button>
             <div className={styles.codeConfirmForm__label}>Не пришло SMS сообщение?</div>
-            <button type="submit"
+            <button type="button"
                     className={classNames(styles.codeConfirmForm__button,
                       styles.codeConfirmForm__button_submitAgain,
-                      // {[style.codeConfirmForm__button_submitAgain__active]: isActive}
                     )}
-                    disabled={submitting || pristine}
+                    onClick={SendAgain}
+                    disabled={timeLeft/1000 ? true:false}
             >
-              <span>Отправить снова</span> <span>0:59</span>
+              <span>Отправить снова</span> <span className={classNames({[styles.codeConfirmForm__button_submitAgain_timer]:!timeLeft/1000})}>0:{timeLeft/1000} </span>
             </button>
           </form>
         )}

@@ -54,6 +54,7 @@ function apiPost(url, values) {
 
 function* phoneRequest({payload}) {
   const {value, callback} = payload;
+  console.log(payload)
   try {
     const data = yield call(apiPost, 'account/auth/', value);
     const response = yield call(() => new Promise(res => res(data.json())));
