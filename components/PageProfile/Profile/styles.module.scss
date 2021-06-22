@@ -1,5 +1,5 @@
-@import "../../public/styles/varibles";
-@import "../../public/styles/mixins/index";
+@import "../../../public/styles/varibles";
+@import "../../../public/styles/mixins/index";
 
 .profile {
   width: 100vw;
@@ -136,12 +136,13 @@
     display: flex;
     flex-direction: column;
     margin: 0 21px  0 0;
+    padding: 0;
     &__avatar{
       width: 140px;
       height: 140px;
       border: 5px solid #D5D5D5;
       border-radius: 78px;
-      margin: 32px auto 15px auto;
+      margin:0 auto 15px auto;
       & img {
         object-fit: cover;
         width: 100%;

@@ -1,0 +1,15 @@
+@import "../../public/styles/varibles";
+@import "../../public/styles/mixins/index";
+.content {
+  display: flex;
+  flex-direction: column;
+}
+@include respond-above(sm) {
+  .content {
+    flex-direction: row;
+  }
+}
+
+@include respond-above(mac) {
+
+}

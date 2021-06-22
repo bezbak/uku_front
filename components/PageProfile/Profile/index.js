@@ -1,11 +1,11 @@
 import React from "react";
-import NavLink from "../NavLink";
-import TelegramIcon from '../../public/icons/telegram.svg'
-import WhatsAppIcon from '../../public/icons/whatsApp.svg'
-import InstagramIcon from '../../public/icons/instagram.svg'
-import UserProfileEdit from '../../public/icons/userProfileEdit.svg'
+import NavLink from "../../NavLink";
+import TelegramIcon from '../../../public/icons/telegram.svg'
+import WhatsAppIcon from '../../../public/icons/whatsApp.svg'
+import InstagramIcon from '../../../public/icons/instagram.svg'
+import UserProfileEdit from '../../../public/icons/userProfileEdit.svg'
 import styles from './styles.module.scss';
-import Button from "../Button";
+import Button from "../../Button";
 
 const Profile = ({user=false}) => {
   return(
