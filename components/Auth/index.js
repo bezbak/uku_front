@@ -15,6 +15,7 @@ import {actions} from '../../public/store/users/slice';
 import AuthSubmitError from "./AuthSubmitError";
 import styles from './styles.module.scss'
 import useIsMobile from "../../public/hooks/useIsMobile";
+import ResponseMessage from "./ResponseMessage";
 const a = {
   "AC": "+247-####",
   "AD": "+376-###-###",
@@ -369,6 +370,7 @@ const AuthForm = () => {
           render={({handleSubmit, values, submitting, form, pristine}) => (
             <form onSubmit={handleSubmit}>
               <AuthSubmitError/>
+              <ResponseMessage/>
               <Field name="phone">
                 {({input, meta}) => (
                   <div>

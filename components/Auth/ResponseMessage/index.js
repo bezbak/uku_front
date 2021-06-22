@@ -2,21 +2,20 @@ import { useForm, useFormState } from 'react-final-form';
 import Button from "../../Button";
 import CloseIcon from '../../../public/icons/CloseIcon.svg'
 import styles from './styles.module.scss'
+import {shallowEqual, useSelector} from "react-redux";
 
-function AuthSubmitError() {
+function ResponseMessage() {
   const { reset } = useForm();
-  const { values, submitError } = useFormState();
-  console.log(values)
-  const isSubmitError = Boolean(submitError);
+  const { values, submitSucceeded } = useFormState();
+  const responseMessage = useSelector((store) => store.auth?.responseMessage, shallowEqual);
 
   const handleCloseClick = () => reset(values);
 
-  if (isSubmitError) {
+  if (responseMessage) {
     return (
       <div className={styles.root}>
         <div>
-          <p>Неверный код.</p>
-          {/* <p>{submitError}</p> */}
+          <p>{responseMessage}</p>
           <Button onClick={handleCloseClick} className={styles.root_closeButton}>
             <CloseIcon/>
           </Button>
@@ -28,4 +27,4 @@ function AuthSubmitError() {
   return null;
 }
 
-export default AuthSubmitError;
+export default ResponseMessage;

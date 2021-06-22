@@ -43,7 +43,6 @@ const parseJSON = (response) => {
   return response.json();
 };
 function apiPost(url, values) {
-  // console.log(values)
   const res = fetch(`http://uku.kg/api/v1/${url}`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -54,12 +53,14 @@ function apiPost(url, values) {
 
 function* phoneRequest({payload}) {
   const {value, callback} = payload;
-  console.log(payload)
+
   try {
     const data = yield call(apiPost, 'account/auth/', value);
     const response = yield call(() => new Promise(res => res(data.json())));
     yield put(actions.userPhoneNumber(value));
+    yield put(actions.successMessage(response.message));
     yield put(actions.phoneRequestSuccess(response));
+    console.log(response)
     // const response = yield call(api.post, 'account/auth/', { data: value });
     // yield put(actions.phoneRequestSuccess(response));
     // yield put(actions.userPhoneNumber(value));
@@ -72,27 +73,21 @@ function* phoneRequest({payload}) {
 
 function* conformCodeRequest({payload}) {
   const {values, callback} = payload;
-  console.log(values)
   try {
     const response = yield call(api.post, 'account/login-confirm/', { data: values });
     yield put(actions.conformCodeRequestSuccess(response));
-    console.log(response)
     yield call(callback);
-    console.log("try")
   } catch (e) {
-    console.log(e)
     yield put(actions.conformCodeRequestFailure(e));
     yield call(callback, parseSubmissionError(e));
   }
 
 }
 
-
 function* registrationRequest({payload}) {
   const {values, callback} = payload;
-  console.log(values)
   try {
-    const response = yield call(api.post, 'account/profile/', { data: values });
+    const response = yield call(api.post, 'account/', { data: values });
     yield put(actions.conformCodeRequestSuccess(response));
     console.log(response)
     yield call(callback);
@@ -104,7 +99,14 @@ function* registrationRequest({payload}) {
   }
 
 }
-
+function* avatarRequest() {
+  try {
+    const response = yield call(api.get, 'account/avatar/');
+    yield put(actions.getStateRequestSuccess(response));
+  } catch (e) {
+    yield put(actions.getStateRequestFailure(e));
+  }
+}
 function* logoutRequest({payload}) {
   const {callback} = payload;
   try {
@@ -129,6 +131,7 @@ export default function* userAuthSagas() {
   yield takeEvery(`${actions.phoneRequestStart}`, phoneRequest);
   yield takeEvery(`${actions.conformCodeRequestStart}`, conformCodeRequest);
   yield takeEvery(`${actions.registrationRequestStart}`, registrationRequest);
+  yield takeEvery(`${actions.avatarRequestStart}`, avatarRequest);
   yield takeEvery(`${actions.logoutRequestStart}`, logoutRequest);
   yield takeEvery(`${actions.getStateRequestStart}`, getStateRequest);
 }

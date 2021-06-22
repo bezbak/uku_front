@@ -50,11 +50,6 @@
       width: 58%;
     }
 
-    & span {
-      color: #667689;
-      font-size: 12px;
-      line-height: 130%;
-    }
   }
 
   &__input {
@@ -81,11 +76,12 @@
   }
 
   &__select {
+    display: block !important;
     width: 100%;
-    padding: 10px 12px 10px 16px;
+    padding: 10px 12px 10px 16px !important;
     height: 44px;
-    background: transparent;
-    border: 1px solid #E6EFF9;
+    background: #FFFFFF;
+    border: 1px solid #E6EFF9 !important;
     box-sizing: border-box;
     border-radius: 8px;
     margin-bottom: 12px;
@@ -93,18 +89,6 @@
     font-size: 14px;
     line-height: 17px;
     color: #667689;
-
-    &:after {
-      position: absolute;
-      content: "";
-      top: 14px;
-      right: 10px;
-      width: 0;
-      height: 0;
-      border: 6px solid red;
-      border-color: #fff transparent transparent transparent;
-    }
-
   }
 
   &__button {
@@ -142,6 +126,11 @@
     border: 1.6px solid #667689;
     box-sizing: border-box;
     border-radius: 4px;
+    &__span{
+      font-size: 12px;
+      line-height: 130%;
+      color: #667689;
+    }
 
     &_link {
       color: #E56366;

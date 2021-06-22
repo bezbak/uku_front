@@ -7,7 +7,8 @@ const initialState = {
   is_profile_completed: false,
   isStaff: false,
   user: null,
-  userBalance: '',
+  userProfileImg:'',
+  responseMessage:''
 };
 
 const userAuthSlice = createSlice({
@@ -16,6 +17,9 @@ const userAuthSlice = createSlice({
   reducers: {
     userPhoneNumber (state,{payload}) {
       state.phone = payload
+    },
+    successMessage (state,{payload}) {
+      state.responseMessage = payload
     },
     phoneRequestStart() {},
     phoneRequestSuccess() {},
@@ -36,6 +40,14 @@ const userAuthSlice = createSlice({
       state.token = payload.token
     },
     registrationRequestFailure(payload) {
+      console.log(payload)
+    },
+
+    avatarRequestStart() {},
+    avatarRequestSuccess(state,{payload}) {
+      state.userProfileImg = payload.is_profile_completed
+    },
+    avatarRequestFailure(payload) {
       console.log(payload)
     },
 

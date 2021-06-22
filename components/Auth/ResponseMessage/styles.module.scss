@@ -1,5 +1,5 @@
-@import "public/styles/varibles";
-@import "public/styles/mixins";
+@import "../../../public/styles/varibles";
+@import "../../../public/styles/mixins/index";
 
 .root {
   height: 40px;
@@ -27,6 +27,7 @@
     }
   }
   &_closeButton {
+    background: #FFFFFF !important;
     svg {
       width: 14px;
       height: 14px;

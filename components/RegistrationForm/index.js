@@ -3,10 +3,14 @@ import DatePicker from "react-datepicker";
 import format from 'date-format'
 import classNames from "classnames";
 import {Field, Form} from "react-final-form";
-import {shallowEqual, useSelector} from "react-redux";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import useIsMobile from "../../out/hooks/useIsMobile";
 import style from "./styles.module.scss";
 import Location from "../Location";
+import Select from "../UI/Select";
+import {actions} from "../../public/store/users/slice";
+import pathnames from "../../constants/pathnames";
+import AuthSubmitError from "../Auth/AuthSubmitError";
 
 const RegistrationForm = () => {
   const isMobile = useIsMobile();
@@ -14,9 +18,22 @@ const RegistrationForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [address, setAddress] = useState()
   const [startDate, setStartDate] = useState();
-    const onSubmit = async values => {
-    window.alert(JSON.stringify(values, 0, 2))
-  }
+  const dispatch = useDispatch();
+  const phoneRequest = (payload) => dispatch(actions.registrationRequestStart(payload));
+  const onSubmit = (value) => (
+    new Promise((resolve) => {
+      phoneRequest({
+        value,
+        callback: (response) => {
+          if (!response) {
+            push(pathnames.main);
+          }
+          resolve(response);
+        },
+      });
+    })
+  );
+
 
   const getAddress = ({input, className, ...res}) => {
     input.onChange(address)
@@ -62,8 +79,9 @@ const RegistrationForm = () => {
           // validate={validate}
           render={({handleSubmit, values, submitting, form, pristine}) => (
             <form onSubmit={handleSubmit}>
+              {console.log(values)}
               <div className={style.registrationForm__label}>Номер телефона</div>
-              {/*<AuthSubmitError />*/}
+              <AuthSubmitError />
               <Field
                 name="phone"
                 component="input"
@@ -93,12 +111,13 @@ const RegistrationForm = () => {
               />
               <div className={style.registrationForm__wrap}>
                 <div className={style.registrationForm__wrap_left}>
-                  <Field name="gender" component="select"
-                         className={style.registrationForm__select}>
-                    <option>Пол</option>
-                    <option value="Мужской">Мужской</option>
-                    <option value="Женский">Женский</option>
-                  </Field>
+                  <Field name="gender"
+                         component={Select}
+                         className={style.registrationForm__select}
+                         options={["Мужской","Женский"]}
+                         title={'Пол'}
+                         required
+                 />
                 </div>
                 <div className={style.registrationForm__wrap_right}>
                   <Field
@@ -106,6 +125,7 @@ const RegistrationForm = () => {
                     component={RenderDatePicker}
                     type="date"
                     className={style.registrationForm__input}
+                    required
                   />
                 </div>
               </div>
@@ -113,15 +133,18 @@ const RegistrationForm = () => {
                 <Field name="region" component={getAddress}
                        placeholder="Выбор региона"
                        className={style.registrationForm__input}
+                       required
                 />
 
               </div>
               <div className={style.registrationForm__wrap}>
                 <Field name="employed" component="input"
                        type="checkbox"
-                       className={style.registrationForm__checkBox}/>
+                       className={style.registrationForm__checkBox}
+                       required
+                />
                 <label>
-                  <span>Принимаю </span>
+                  <span className={style.registrationForm__checkBox__span}>Принимаю </span>
                   <a className={style.registrationForm__checkBox_link}
                      href="/system/terms-of-use">
                     правила программы

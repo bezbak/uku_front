@@ -1,0 +1,59 @@
+.select {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  &__button{
+    display: flex ;
+    align-items: center;
+    padding-right: 12px;
+    span{
+      display: flex ;
+      align-items: center;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+      color: #667689;;
+    }
+    svg {
+      transform: rotate(90deg);
+      margin-left: auto;
+      width: 24px;
+      height: 24px;
+    }
+    &__collapsed {
+      svg {
+        transform: rotate(-90deg);
+      }
+    }
+  }
+  &__optionsBox {
+    position: absolute;
+    height: 104px;
+    display: none;
+    padding: 0 8px;
+    border-radius: 8px;
+    background: #FFFFFF;
+    width: 100%;
+    border: 1px solid #E6EFF9 !important;
+    &__isOPen{
+      display: block;
+    }
+    z-index: 2;
+  }
+  &__options{
+    display: flex;
+    align-items: center;
+    height: 52px;
+    padding: 8px;
+    border-bottom: 1px solid #E6EFF9 !important;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #0F335D;
+    &:active {
+      color: white;
+      background: #cad1d4;
+    }
+  }
+}

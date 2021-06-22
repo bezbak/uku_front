@@ -1,4 +1,5 @@
 const pathnames = {
+  main:'/',
   login: '/login',
   codeConfirmation: '/codeConfirmation',
   registration: '/registration',
