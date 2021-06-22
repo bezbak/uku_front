@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from "react";
+import classNames from "classnames";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import {Field, Form} from "react-final-form";
 import DatePicker from "react-datepicker";
 import format from 'date-format'
-import classNames from "classnames";
-import {Field, Form} from "react-final-form";
-import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import {actions} from "../../public/store/users/slice";
 import useIsMobile from "../../out/hooks/useIsMobile";
-import style from "./styles.module.scss";
 import Location from "../Location";
 import Select from "../UI/Select";
-import {actions} from "../../public/store/users/slice";
-import pathnames from "../../constants/pathnames";
 import AuthSubmitError from "../Auth/AuthSubmitError";
+import style from "./styles.module.scss";
 
 const RegistrationForm = () => {
   const isMobile = useIsMobile();

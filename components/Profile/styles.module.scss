@@ -2,16 +2,25 @@
 @import "../../public/styles/mixins/index";
 
 .profile {
-  width: 303px;
+  width: 100vw;
+  margin-left: -16px;
+  margin-top: -24px;
+  padding-top: 24px;
   display: flex;
   flex-direction: column;
   margin-right: 21px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  &__userProfileEdit {
+    float: right;
+    margin-top: -44px !important;
+  }
   &__avatar{
-    width: 140px;
-    height: 140px;
+    width: 84px;
+    height: 84px;
     border: 5px solid #D5D5D5;
     border-radius: 78px;
-    margin: 32px auto 15px auto;
+    margin:auto ;
     & img {
       object-fit: cover;
       width: 100%;
@@ -19,6 +28,7 @@
     }
   }
   &__info{
+    margin-top: 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,28 +62,66 @@
   &__appInfo{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     gap: 20px;
-    width: 100%;
+    width: calc(100% - 52px);
     height: 70px;
-    padding: 12px;
+    margin-left: 36px;
+    padding: 12px 12px 10px 12px;
     background: #FFFFFF;
-    border: 1px solid #F0F0F0;
     box-sizing: border-box;
     border-radius: 6px;
     margin-bottom: 14px;
     &_wrap{
-    display: flex;
+      display: flex;
       flex-direction: column;
-      gap: 12px;
+      align-items: center;
+      gap: 4px;
+      &__list{
+        font-size: 12px;
+        line-height: 15px;
+        color: #7E7E7E;
+        &_cout{
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 17px;
+          /* identical to box height */
+
+
+          /* Font/Balck */
+
+          color: #121213;
+
+        }
+      }
+
     }
   }
   &__socialContact {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
+    margin-left: 36px;
+    margin-right: 16px;
     gap: 12px;
     & svg {
-      width: 42px;
-      height: 42px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+  &__editButton{
+    margin-left: auto !important;
+    height: 32px;
+    width: auto;
+    padding: 8px 24px !important;
+    background: #E56366 !important;
+    border-radius: 6px;
+    &__text{
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 16px;
+      color: #FFFFFF !important;
+
     }
   }
 }
@@ -83,7 +131,89 @@
 }
 
 @include respond-above(md) {
+  .profile {
+    width: 303px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 21px  0 0;
+    &__avatar{
+      width: 140px;
+      height: 140px;
+      border: 5px solid #D5D5D5;
+      border-radius: 78px;
+      margin: 32px auto 15px auto;
+      & img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    }
+    &__info{
+      margin-top: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      &_fio{
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+        color: #121213;
+        margin-bottom: 6px;
 
+      }
+      &_age{
+        display: flex;
+        gap: 6px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        color: #495360;
+        margin-bottom: 12px;
+      }
+      &_phone{
+        display: flex;
+        gap: 12px;
+        font-size: 16px;
+        line-height: 19px;
+        color: #121213;
+        margin-bottom: 12px;
+      }
+    }
+    &__appInfo{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      height: 70px;
+      padding: 12px;
+      background: #FFFFFF;
+      border: 1px solid #F0F0F0;
+      box-sizing: border-box;
+      border-radius: 6px;
+      margin-bottom: 24px;
+      margin-top: 6px;
+      margin-left: 0;
+      &_wrap{
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+    &__socialContact {
+      display: flex;
+      justify-content: flex-start;
+      gap: 12px;
+      margin-left: 0;
+      & svg {
+        width: 42px;
+        height: 42px;
+      }
+    }
+    &__editButton{
+     display: none !important;
+    }
+  }
 }
 
 @include respond-above(lg) {

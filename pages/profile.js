@@ -5,6 +5,7 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import ComponentAds from "../components/Ads";
 import Profile from "../components/Profile";
+import NavContainer from "../containers/NavContainer";
 
 function ProfilePage() {
   return (
@@ -12,7 +13,10 @@ function ProfilePage() {
       <Meta/>
       <main className="home">
         <Header/>
+        <NavContainer>
         <Nav/>
+      </NavContainer>
+
         <Container>
           <Profile/>
           <ComponentAds/>
