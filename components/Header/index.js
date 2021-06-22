@@ -1,24 +1,47 @@
-import React from "react";
+import React, {useEffect, useRef, useState} from "react";
+import classNames from "classnames";
 import NavLink from "../NavLink";
 import useIsMobile from "../../public/hooks/useIsMobile";
+import CloseIcon from '../../public/icons/CloseIcon.svg'
 import Menu from '../../public/icons/menu 1.svg'
 import SearchIcon from '../../public/icons/searchIcon.svg'
 import styles from './styles.module.scss'
+import HeartIcon from "../../public/icons/heartIcon.svg";
+import LoginIcon from "../../public/icons/loginIcon.svg";
+import AppStoreMobileIcon from '../../public/icons/appStoreMpbileIcon.svg'
+import GooglePlayMobileIcon from '../../public/icons/googlePlayMobileIcon.svg'
+function useOutsideAlerter(ref,setIsMobileMenuOpen) {
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setIsMobileMenuOpen(false)
+      }
+    }
 
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
+}
 const Header = () => {
   const isMobile = useIsMobile();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setIsMobileMenuOpen);
   return (
-    <div className={styles.headerContainer}>
+    <div className={styles.headerContainer} ref={wrapperRef}>
       <div className={styles.header}>
         {isMobile &&
         <div className={styles.header__mobileContent}>
-          <button className={styles.header__menuButton}>
-            <Menu/>
+          <button className={styles.header__menuButton} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            {isMobileMenuOpen ? <CloseIcon/> : <Menu/>}
           </button>
+
           <div className={styles.header__mobileLogo}>
             <span>Uku.kg</span>
           </div>
-          <button  className={styles.header__menuButton}>
+          <button className={styles.header__menuButton}>
             <SearchIcon/>
           </button>
         </div>
@@ -34,7 +57,58 @@ const Header = () => {
           <li>
             <NavLink url={"/system/faq"} className={styles.header__list__link} children={"F.A.Q."}/>
           </li>
-        </ul>}
+        </ul>
+        }
+      </div>
+      <div className={classNames(styles.mobileMenu, {[styles.mobileMenu_isOpen]: isMobileMenuOpen})}>
+        <div className={styles.mobileMenu__headerMenu}>
+          <li className={styles.mobileMenu__headerMenu__list}>
+            <NavLink url={"/"}
+                     className={styles.mobileMenu__headerMenu__list_link} children={"Главная"}
+                     onClick={()=>setIsMobileMenuOpen(false)}
+            />
+          </li>
+          <li className={styles.mobileMenu__headerMenu__list}>
+            <NavLink url={"/system/contact"}
+                     className={styles.mobileMenu__headerMenu__list_link} children={"Контакты"}
+                     onClick={()=>setIsMobileMenuOpen(false)}
+            />
+          </li>
+          <li className={styles.mobileMenu__headerMenu__list}>
+            <NavLink url={"/system/faq"}
+                     className={styles.mobileMenu__headerMenu__list_link} children={"F.A.Q."}
+                     onClick={()=>setIsMobileMenuOpen(false)}
+            />
+          </li>
+        </div>
+        <div className={styles.mobileMenu__navMenu}>
+          <li className={styles.mobileMenu__navMenu__list}>
+            <NavLink className={styles.mobileMenu__navMenu__list_link}   onClick={()=>setIsMobileMenuOpen(false)}>
+              <SearchIcon/>
+              Поиск
+            </NavLink>
+          </li>
+          <li className={styles.mobileMenu__navMenu__list}>
+            <NavLink className={styles.mobileMenu__navMenu__list_link}   onClick={()=>setIsMobileMenuOpen(false)}>
+              <HeartIcon/>
+              Избранное
+            </NavLink>
+          </li>
+          <li className={classNames(styles.mobileMenu__navMenu__list)}>
+            <NavLink url="/login" className={styles.mobileMenu__navMenu__list_link}   onClick={()=>setIsMobileMenuOpen(false)}>
+              <LoginIcon/>
+              Вход
+            </NavLink>
+          </li>
+        </div>
+        <div className={styles.mobileMenu__footer}>
+          <NavLink>
+            <AppStoreMobileIcon/>
+          </NavLink>
+          <NavLink>
+            <GooglePlayMobileIcon/>
+          </NavLink>
+        </div>
       </div>
     </div>
   )

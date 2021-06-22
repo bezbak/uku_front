@@ -26,7 +26,7 @@ const RegistrationForm = () => {
         value,
         callback: (response) => {
           if (!response) {
-            push(pathnames.main);
+            push('/');
           }
           resolve(response);
         },
