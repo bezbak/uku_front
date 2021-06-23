@@ -21,14 +21,13 @@ const Location = ({modalOpen, getAddress}) => {
   const slideNext = () => swiperRef.current.slideNext();
   const slidePrev = () => swiperRef.current.slidePrev();
   const locationRequest = () => dispatch(actions.locationRequestStart());
-  useEffect(() => {
     locationRequest()
-  });
   const modalCloseHandle = () => setIsModalOpen(false)
 
+  const region = useSelector((store) => store.location?.location);
   function RegionsInRegion(children, name) {
     setAddress(address => [...address, name])
-    if (children.length > 0) {
+    if (children?.length > 0) {
       const filterArray = slides?.filter(slide => {
         if (
           JSON.stringify(slide) !== JSON.stringify(children)
@@ -39,10 +38,10 @@ const Location = ({modalOpen, getAddress}) => {
     } else {
       getAddress((address.concat(name)).toString())
       setIsModalOpen(false)
+
     }
 
   }
-
   const childRegionFunction = (children, name) => {
     setActiveRegion(name)
     setSearchValue("")
@@ -51,13 +50,12 @@ const Location = ({modalOpen, getAddress}) => {
   }
   const prevSlide = () => {
     slidePrev()
+
     setTimeout(() => {
       slides.pop();
       address.pop()
     }, 500);
-
   }
-  const region = useSelector((store) => store.location?.location);
   return (
 
     <Modal modalOpen={isModalOpen} >
@@ -98,7 +96,7 @@ const Location = ({modalOpen, getAddress}) => {
                          {[styles.location__slide__regionWrap_activeRegion]: reg.name === activeRegion})}
                        onClick={() => childRegionFunction(reg.children, reg.name)}>
                     <label className={styles.location__slide__regionWrap_label}>{reg.name}</label>
-                    {reg.children.length > 0 &&
+                    {reg.children?.length > 0 &&
                     <ArrowIcon className={styles.location__slide__regionWrap__arrowRightIcon}/>}
                   </div>
                 )

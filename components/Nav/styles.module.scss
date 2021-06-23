@@ -38,7 +38,13 @@
           font-size: 18px;
           line-height: 16px;
           color: #181818;
-
+          &__profileImg{
+            width: 22px;
+            height: 22px;
+            margin-right: 10px;
+            border-radius: 78px;
+            border: 1.6px solid #D3D3D3 ;
+          }
           & a {
             display: flex;
             align-items: center;

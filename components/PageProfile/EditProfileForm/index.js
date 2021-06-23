@@ -10,6 +10,8 @@ import {actions} from "../../../public/store/users/slice";
 import BackArrow from '../../../public/icons/backArrow.svg'
 import ImgIcon from '../../../public/icons/img.svg'
 import NavLink from "../../NavLink";
+import Modal from "../../UI/Modal";
+import {useRouter} from "next/router";
 
 const Avatar = ({input})=>{
   const [fileAddress, setFileAddress] =useState();
@@ -45,6 +47,8 @@ const Avatar = ({input})=>{
   )
 }
 const EditProfileForm = ({user=false}) => {
+  const {push} = useRouter();
+  const [isModalOpen, setIsModalOpen] =useState(false );
   const confCodeRequest = (payload) => dispatch(actions.conformCodeRequestStart(payload));
   const userPhone = useSelector((store) => store.auth?.phone, shallowEqual);
   const onSubmit = (value) =>
@@ -64,6 +68,22 @@ const EditProfileForm = ({user=false}) => {
   const onChangeAvatar= (value) => {
     console.log(value)
   }
+  const phoneRequest = (payload) => dispatch(actions.phoneRequestStart(payload));
+  const changePhoneNumber = () => {
+    setIsModalOpen(false)
+    new Promise((resolve) => {
+      phoneRequest({
+        value:userPhone,
+        callback: (response) => {
+          if (!response) {
+            push(pathnames.codeConfirmation);
+          }
+          resolve(response);
+        },
+      });
+    })
+    push(pathnames.codeConfirmation);
+  }
   return(
     <div className={styles.editProfileForm}>
       <Button className={styles.editProfileForm__backButton}   textClassName={styles.editProfileForm__backButton__text}>
@@ -74,7 +94,6 @@ const EditProfileForm = ({user=false}) => {
       </Button>
       <Form
         onSubmit={onChangeAvatar}
-        // validate={validate}
         render={({handleSubmit, values, submitting, form, pristine}) => (
           <form onSubmit={handleSubmit}>
             {console.log(values)}
@@ -85,9 +104,9 @@ const EditProfileForm = ({user=false}) => {
           </form>)
         }
         />
+
       <Form
         onSubmit={onSubmit}
-        // validate={validate}
         render={({handleSubmit, values, submitting, form, pristine}) => (
           <form onSubmit={handleSubmit}>
             <div>
@@ -102,7 +121,7 @@ const EditProfileForm = ({user=false}) => {
                 placeholder={userPhone?.phone}
                 className={styles.editProfileForm__form__input}
               />
-              <Button className={styles.editProfileForm__editUserPhoneButton}>
+              <Button className={styles.editProfileForm__editUserPhoneButton} onClick={()=>setIsModalOpen(true)}>
                 <UserPhoneEdit/>
               </Button>
             </div>
@@ -146,6 +165,27 @@ const EditProfileForm = ({user=false}) => {
           </form>
         )}
       />
+      <Modal modalOpen={isModalOpen} >
+        <div className={styles.editProfileForm__modal}>
+          <div className={styles.editProfileForm__modal__title}>
+            <span>
+              Вы действительно хотите сменить номер?
+            </span>
+          </div>
+         <div className={styles.editProfileForm__modal_buttons}>
+           <Button className={styles.editProfileForm__modal__changeButton}
+                   textClassName={styles.editProfileForm__modal__changeButton_text}
+           onClick={changePhoneNumber}
+           >
+             Сменить
+           </Button>
+           <Button className={styles.editProfileForm__modal__cancelButton}
+                   textClassName={styles.editProfileForm__modal__cancelButton_text}
+                   onClick={()=>setIsModalOpen(false)}
+           >Отмена</Button>
+         </div>
+        </div>
+      </Modal>
     </div>
   )
 }

@@ -4,16 +4,17 @@ const initialState = {
   phone:null,
   isAuthenticated: false,
   token: '',
+  registrationToken: '',
   is_profile_completed: false,
   isStaff: false,
   user: null,
-  userProfileImg:'',
   responseMessage:''
 };
 
 const userAuthSlice = createSlice({
   name: 'auth',
   initialState,
+  phoneToken:'',
   reducers: {
     userPhoneNumber (state,{payload}) {
       state.phone = payload
@@ -25,6 +26,14 @@ const userAuthSlice = createSlice({
     phoneRequestSuccess() {},
     phoneRequestFailure() {},
 
+    changeOldPhoneRequestStart() {},
+    changeOldPhoneRequestSuccess() {},
+    changeOldPhoneRequestFailure() {},
+
+    oldPhoneRequestStart() {},
+    oldPhoneRequestSuccess() {},
+    oldPhoneRequestFailure() {},
+
     conformCodeRequestStart() {},
     conformCodeRequestSuccess(state,{payload}) {
       state.is_profile_completed = payload.is_profile_completed
@@ -34,22 +43,43 @@ const userAuthSlice = createSlice({
       console.log(payload)
     },
 
-    registrationRequestStart() {},
-    registrationRequestSuccess(state,{payload}) {
+    newPhoneConformCodeRequestStart() {},
+    newPhoneCodeRequestSuccess(state,{payload}) {
       state.is_profile_completed = payload.is_profile_completed
       state.token = payload.token
     },
-    registrationRequestFailure(payload) {
+    newPhoneCodeRequestFailure(payload) {
       console.log(payload)
     },
 
-    avatarRequestStart() {},
-    avatarRequestSuccess(state,{payload}) {
-      state.userProfileImg = payload.is_profile_completed
+    oldPhoneConformCodeRequestStart() {},
+    oldPhoneCodeRequestSuccess(state,{payload}) {
+      state.is_profile_completed = payload.is_profile_completed
+      state.token = payload.token
     },
-    avatarRequestFailure(payload) {
+    oldPhoneCodeRequestFailure(payload) {
       console.log(payload)
     },
+
+    registrationRequestStart() {},
+    registrationRequestSuccess(state,{payload}) {
+      state.is_profile_completed = payload.is_profile_completed
+      state.registrationToken = payload.registrationToken
+    },
+    registrationRequestFailure(payload) {},
+
+    favoriteRequestStart() {},
+    favoriteRequestSuccess() {},
+    favoriteRequestFailure() {},
+
+
+    followRequestStart() {},
+    followRequestSuccess() {},
+    followRequestFailure() {},
+
+    searchRequestStart() {},
+    searchRequestSuccess() {},
+    searchRequestFailure() {},
 
     logoutRequestStart() {},
     logoutRequestSuccess(state) {

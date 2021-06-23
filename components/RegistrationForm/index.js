@@ -10,19 +10,24 @@ import Location from "../Location";
 import Select from "../UI/Select";
 import AuthSubmitError from "../Auth/AuthSubmitError";
 import style from "./styles.module.scss";
+import {useRouter} from "next/router";
 
 const RegistrationForm = () => {
+  const {push} = useRouter();
   const isMobile = useIsMobile();
-  const [userInfo, setUserInfo] = useState(useSelector((store) => store.auth?.phone, shallowEqual))
+  const [userInfo, setUserInfo] = useState(useSelector((store) => store.auth?.phone))
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [address, setAddress] = useState()
   const [startDate, setStartDate] = useState();
   const dispatch = useDispatch();
   const phoneRequest = (payload) => dispatch(actions.registrationRequestStart(payload));
-  const onSubmit = (value) => (
-    new Promise((resolve) => {
+  const token= useSelector((store) => store.auth?.token)
+  const onSubmit = (values) => {
+    console.log(values)
+    return new Promise((resolve) => {
       phoneRequest({
-        value,
+        values,
+        token,
         callback: (response) => {
           if (!response) {
             push('/');
@@ -31,7 +36,7 @@ const RegistrationForm = () => {
         },
       });
     })
-  );
+  };
 
 
   const getAddress = ({input, className, ...res}) => {
@@ -53,7 +58,7 @@ const RegistrationForm = () => {
         name={name}
         onChange={value => {
           setStartDate((value));
-          input.onChange(format("dd-MM-yyyy", value));
+          input.onChange(format("yyyy-MM-dd", value));
         }}
       />
     );
@@ -81,18 +86,18 @@ const RegistrationForm = () => {
               {console.log(values)}
               <div className={style.registrationForm__label}>Номер телефона</div>
               <AuthSubmitError />
-              <Field
-                name="phone"
-                component="input"
-                type="input"
-                defaultValue={userInfo?.phone}
-                value={userInfo?.phone}
-                placeholder={userInfo?.phone}
-                className={style.registrationForm__input}
+              {/*<Field*/}
+              {/*  name="phone"*/}
+              {/*  component="input"*/}
+              {/*  type="input"*/}
+              {/*  defaultValue={userInfo?.phone}*/}
+              {/*  value={userInfo?.phone}*/}
+              {/*  placeholder={userInfo?.phone}*/}
+              {/*  className={style.registrationForm__input}*/}
 
-              />
+              {/*/>*/}
               <Field
-                name="lastName"
+                name="last_name"
                 component="input"
                 type="text"
                 placeholder="Фамилия *"
@@ -101,7 +106,7 @@ const RegistrationForm = () => {
 
               />
               <Field
-                name="firstName"
+                name="first_name"
                 component="input"
                 type="text"
                 placeholder="Имя *"
@@ -120,7 +125,7 @@ const RegistrationForm = () => {
                 </div>
                 <div className={style.registrationForm__wrap_right}>
                   <Field
-                    name="birthday"
+                    name="birth_date"
                     component={RenderDatePicker}
                     type="date"
                     className={style.registrationForm__input}
@@ -136,21 +141,21 @@ const RegistrationForm = () => {
                 />
 
               </div>
-              <div className={style.registrationForm__wrap}>
-                <Field name="employed" component="input"
-                       type="checkbox"
-                       className={style.registrationForm__checkBox}
-                       required
-                />
-                <label>
-                  <span className={style.registrationForm__checkBox__span}>Принимаю </span>
-                  <a className={style.registrationForm__checkBox_link}
-                     href="/system/terms-of-use">
-                    правила программы
-                    лояльности
-                  </a>
-                </label>
-              </div>
+              {/*<div className={style.registrationForm__wrap}>*/}
+              {/*  <Field name="employed" component="input"*/}
+              {/*         type="checkbox"*/}
+              {/*         className={style.registrationForm__checkBox}*/}
+              {/*         required*/}
+              {/*  />*/}
+              {/*  <label>*/}
+              {/*    <span className={style.registrationForm__checkBox__span}>Принимаю </span>*/}
+              {/*    <a className={style.registrationForm__checkBox_link}*/}
+              {/*       href="/system/terms-of-use">*/}
+              {/*      правила программы*/}
+              {/*      лояльности*/}
+              {/*    </a>*/}
+              {/*  </label>*/}
+              {/*</div>*/}
 
               <button type="submit"
                       disabled={submitting || pristine}

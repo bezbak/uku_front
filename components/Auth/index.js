@@ -319,8 +319,8 @@ const AuthForm = () => {
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const phoneRequest = (payload) => dispatch(actions.phoneRequestStart(payload));
-  const onSubmit = (value) => (
-    new Promise((resolve) => {
+  const onSubmit = (value) =>{
+   return  new Promise((resolve) => {
       phoneRequest({
         value,
         callback: (response) => {
@@ -331,7 +331,7 @@ const AuthForm = () => {
         },
       });
     })
-  );
+  }
 
 
   return (
@@ -392,7 +392,7 @@ const AuthForm = () => {
                   </div>
                 )}
               </Field>
-              <button type="submit" disabled={submitting || pristine}>Далее</button>
+              <button type="submit" disabled={submitting || pristine} onClick={()=>onSubmit(values)}>Далее</button>
             </form>
           )}
         />
