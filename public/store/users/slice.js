@@ -4,7 +4,6 @@ const initialState = {
   phone:null,
   isAuthenticated: false,
   token: '',
-  registrationToken: '',
   is_profile_completed: false,
   isStaff: false,
   user: null,
@@ -55,7 +54,6 @@ const userAuthSlice = createSlice({
     oldPhoneConformCodeRequestStart() {},
     oldPhoneCodeRequestSuccess(state,{payload}) {
       state.is_profile_completed = payload.is_profile_completed
-      state.token = payload.token
     },
     oldPhoneCodeRequestFailure(payload) {
       console.log(payload)
@@ -64,7 +62,6 @@ const userAuthSlice = createSlice({
     registrationRequestStart() {},
     registrationRequestSuccess(state,{payload}) {
       state.is_profile_completed = payload.is_profile_completed
-      state.registrationToken = payload.registrationToken
     },
     registrationRequestFailure(payload) {},
 

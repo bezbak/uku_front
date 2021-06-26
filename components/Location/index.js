@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Swiper, SwiperSlide} from "swiper/react";
 import classNames from "classnames";
@@ -18,6 +18,7 @@ const Location = ({modalOpen, getAddress}) => {
   const [slides, setSlides] = useState([])
   const [activeRegion, setActiveRegion] = useState()
   const [address, setAddress] = useState([]);
+  const [addressId, setAddressID] = useState([]);
   const slideNext = () => swiperRef.current.slideNext();
   const slidePrev = () => swiperRef.current.slidePrev();
   const locationRequest = () => dispatch(actions.locationRequestStart());
@@ -25,8 +26,9 @@ const Location = ({modalOpen, getAddress}) => {
   const modalCloseHandle = () => setIsModalOpen(false)
 
   const region = useSelector((store) => store.location?.location);
-  function RegionsInRegion(children, name) {
+  function RegionsInRegion(children, name, id) {
     setAddress(address => [...address, name])
+    setAddressID(id)
     if (children?.length > 0) {
       const filterArray = slides?.filter(slide => {
         if (
@@ -36,16 +38,16 @@ const Location = ({modalOpen, getAddress}) => {
       });
       setSlides(() => [...filterArray, children])
     } else {
-      getAddress((address.concat(name)).toString())
+      getAddress({name:(name=address.concat(name)).toString(),id:id})
       setIsModalOpen(false)
 
     }
 
   }
-  const childRegionFunction = (children, name) => {
+  const childRegionFunction = (children, name,id) => {
     setActiveRegion(name)
     setSearchValue("")
-    RegionsInRegion(children, name)
+    RegionsInRegion(children, name, id)
     setTimeout(() => slideNext(), 500);
   }
   const prevSlide = () => {
@@ -94,7 +96,7 @@ const Location = ({modalOpen, getAddress}) => {
                   <div key={key}
                        className={classNames(styles.location__slide__regionWrap,
                          {[styles.location__slide__regionWrap_activeRegion]: reg.name === activeRegion})}
-                       onClick={() => childRegionFunction(reg.children, reg.name)}>
+                       onClick={() => childRegionFunction(reg.children, reg.name, reg.id)}>
                     <label className={styles.location__slide__regionWrap_label}>{reg.name}</label>
                     {reg.children?.length > 0 &&
                     <ArrowIcon className={styles.location__slide__regionWrap__arrowRightIcon}/>}
@@ -119,7 +121,7 @@ const Location = ({modalOpen, getAddress}) => {
                            {[styles.location__slide__regionWrap_activeRegion]: reg.name === address[address.length-1]})}>
                       <ArrowIcon className={styles.location__slide__regionWrap__arrowLeftIcon} onClick={prevSlide}/>
                       <div className={classNames(styles.location__slide__regionWrap)}
-                           onClick={() => childRegionFunction(reg.children, reg.name)}>
+                           onClick={() => childRegionFunction(reg.children, reg.name, reg.id)}>
                         <label className={styles.location__slide__regionWrap_label}>
                           {reg.name}
                         </label>

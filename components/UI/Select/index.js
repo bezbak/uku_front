@@ -9,7 +9,7 @@ const Select = ({input,className,title, options}) => {
   const [selectedValue, setSelectedValue]= useState(title);
   input.onChange(selectedValue);
   const Selected = (optionValue) =>{
-    setSelectedValue(optionValue)
+    optionValue==="Женскиий" ? setSelectedValue('female'): setSelectedValue('male')
     setIsOpen(false);
   }
   return (

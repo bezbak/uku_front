@@ -9,7 +9,9 @@
   display: flex;
   justify-content: left;
   margin-bottom: 15px;
-
+  &_close {
+    display: none;
+  }
   div {
     width: 100%;
     padding: 8px 8px 8px 16px;
@@ -37,6 +39,10 @@
         fill: #D61414;
       }
     }
+    &:active {
+      display: none;
+    }
+
   }
 }
 

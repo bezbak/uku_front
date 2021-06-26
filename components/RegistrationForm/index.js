@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 import classNames from "classnames";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {Field, Form} from "react-final-form";
@@ -17,13 +17,13 @@ const RegistrationForm = () => {
   const isMobile = useIsMobile();
   const [userInfo, setUserInfo] = useState(useSelector((store) => store.auth?.phone))
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [address, setAddress] = useState()
+  const [address, setAddress] = useState({})
   const [startDate, setStartDate] = useState();
   const dispatch = useDispatch();
   const phoneRequest = (payload) => dispatch(actions.registrationRequestStart(payload));
   const token= useSelector((store) => store.auth?.token)
   const onSubmit = (values) => {
-    console.log(values)
+    console.log(token)
     return new Promise((resolve) => {
       phoneRequest({
         values,
@@ -40,10 +40,11 @@ const RegistrationForm = () => {
 
 
   const getAddress = ({input, className, ...res}) => {
-    input.onChange(address)
+    console.log(address);
+    input.onChange(address.id)
     return (
       <input onFocus={() => setIsModalOpen(!isModalOpen)} onChange={() => setIsModalOpen(!isModalOpen)}
-             className={className} {...res} defaultValue={address}/>
+             className={className} {...res} defaultValue={address.name}/>
     )
   };
   const RenderDatePicker = ({name, input, input: {value, onChange}, className}) => {

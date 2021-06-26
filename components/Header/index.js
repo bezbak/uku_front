@@ -10,6 +10,8 @@ import HeartIcon from "../../public/icons/heartIcon.svg";
 import LoginIcon from "../../public/icons/loginIcon.svg";
 import AppStoreMobileIcon from '../../public/icons/appStoreMpbileIcon.svg'
 import GooglePlayMobileIcon from '../../public/icons/googlePlayMobileIcon.svg'
+import {useRouter} from "next/router";
+import {shallowEqual, useSelector} from "react-redux";
 function useOutsideAlerter(ref,setIsMobileMenuOpen) {
   useEffect(() => {
     function handleClickOutside(event) {
@@ -25,10 +27,14 @@ function useOutsideAlerter(ref,setIsMobileMenuOpen) {
   }, [ref]);
 }
 const Header = () => {
+  const wrapperRef = useRef(null);
+  const { pathname } = useRouter();
+  console.log(pathname)
   const isMobile = useIsMobile();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setIsMobileMenuOpen);
+  const userProfile = useSelector((store) => store.profile?.userProfile, shallowEqual);
+  const userImg = useSelector((store) => store.profile?.userAvatar, shallowEqual);
   return (
     <div className={styles.headerContainer} ref={wrapperRef}>
       <div className={styles.header}>
@@ -83,23 +89,40 @@ const Header = () => {
         </div>
         <div className={styles.mobileMenu__navMenu}>
           <li className={styles.mobileMenu__navMenu__list}>
-            <NavLink className={styles.mobileMenu__navMenu__list_link}   onClick={()=>setIsMobileMenuOpen(false)}>
+            <NavLink url='/search'
+                     className={classNames(styles.mobileMenu__navMenu__list_link,
+              {[styles.mobileMenu__navMenu__list_link_active]:pathname==='search'})}
+                     onClick={()=>setIsMobileMenuOpen(false)}>
               <SearchIcon/>
               Поиск
             </NavLink>
           </li>
           <li className={styles.mobileMenu__navMenu__list}>
-            <NavLink className={styles.mobileMenu__navMenu__list_link}   onClick={()=>setIsMobileMenuOpen(false)}>
+            <NavLink url="/ads" className={classNames(styles.mobileMenu__navMenu__list_link,
+              {[styles.mobileMenu__navMenu__list_link_active]:pathname==='ads'})}
+                     onClick={()=>setIsMobileMenuOpen(false)}
+            >
               <HeartIcon/>
               Избранное
             </NavLink>
           </li>
-          <li className={classNames(styles.mobileMenu__navMenu__list)}>
-            <NavLink url="/login" className={styles.mobileMenu__navMenu__list_link}   onClick={()=>setIsMobileMenuOpen(false)}>
-              <LoginIcon/>
-              Вход
-            </NavLink>
-          </li>
+          {userProfile === '' ? <li className={classNames(styles.mobileMenu__navMenu__list)}>
+              <NavLink url="/profile"
+                       className={classNames(styles.mobileMenu__navMenu__list_link,
+                {[styles.mobileMenu__navMenu__list_link_active]: pathname === 'profile'})}
+                       onClick={() => setIsMobileMenuOpen(false)}>
+                <LoginIcon/>
+                Profile
+              </NavLink>
+            </li> :
+            <li className={classNames(styles.mobileMenu__navMenu__list)}>
+              <NavLink url="/login" className={classNames(styles.mobileMenu__navMenu__list_link)}
+                       onClick={() => setIsMobileMenuOpen(false)}>
+                <LoginIcon/>
+                Вход
+              </NavLink>
+            </li>
+          }
         </div>
         <div className={styles.mobileMenu__footer}>
           <NavLink>

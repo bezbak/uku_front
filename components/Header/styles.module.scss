@@ -104,6 +104,14 @@
           width: 18px;
           height: 18px;
         }
+        &_active{
+          color: red;
+          svg {
+            path {
+              stroke: red;
+            }
+          }
+        }
       }
     }
   }

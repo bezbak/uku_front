@@ -57,7 +57,7 @@ function apiPatch(url, values,token) {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': token,
+      'Authorization': 'Token ' + token,
       // 'Authorization': `Bearer ${token}`
       // 'X-CSRFToken': token,
     },
@@ -146,6 +146,7 @@ function* registrationRequest({payload}) {
 
   try {
     const data = yield call(apiPatch, 'account/', values,token);
+    console.log(data)
     const response = yield call(() => new Promise(res => res(data.json())));
     yield put(actions.registrationRequestSuccess(response));
     console.log(response)

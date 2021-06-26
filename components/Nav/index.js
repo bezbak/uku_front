@@ -21,13 +21,13 @@ const Nav = () => {
       </div>
       <div className={styles.nav_right}>
         <li className={styles.nav_right_list}>
-          <NavLink>
+          <NavLink url="/search">
             <SearchIcon/>
             Поиск
           </NavLink>
         </li>
         <li className={styles.nav_right_list}>
-          <NavLink>
+          <NavLink url="ads">
             <HeartIcon/>
             Избранное
           </NavLink>

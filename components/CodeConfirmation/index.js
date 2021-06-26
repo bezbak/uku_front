@@ -10,6 +10,7 @@ import pathnames from "../../constants/pathnames";
 import AuthSubmitError from "../Auth/AuthSubmitError";
 import {useRouter} from "next/router";
 import useIsMobile from "../../public/hooks/useIsMobile";
+import ResponseMessage from "../Auth/ResponseMessage";
 
 const CodeConfirmation = () =>{
   const { push } = useRouter();
@@ -80,10 +81,12 @@ const CodeConfirmation = () =>{
         render={({handleSubmit,values, submitting, form, pristine}) => (
           <form onSubmit={handleSubmit}>
             <AuthSubmitError />
+            <ResponseMessage/>
             <Field
               name="confirmation_code"
               component="input"
-              type="text"
+              type="number
+              "
               placeholder="Код"
               className={styles.codeConfirmForm__input}
 

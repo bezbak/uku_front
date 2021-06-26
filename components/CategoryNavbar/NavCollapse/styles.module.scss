@@ -1,0 +1,74 @@
+@import "../../../public/styles/varibles";
+@import "../../../public/styles/mixins";
+
+.collapse {
+  position: relative;
+  display: flex;
+  flex-direction: column !important;
+  overflow: hidden;
+  background: #FFFFFF;
+
+  &__visible {
+    height:  auto;
+    display: flex;
+    align-items: center;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__collapseIcon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    margin-left: auto;
+    & svg {
+      path{
+        fill: #8C8C8C;
+      }
+    }
+    &_disabled {
+      svg {
+        fill: #DDDDDD;
+      }
+    }
+    &_collapsed{
+      transform: rotate(90deg);
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+  }
+}
+
+@include respond-above(sm) {
+
+}
+
+@include respond-above(md) {
+
+}
+
+@include respond-above(mac) {
+
+}
+
+@include respond-above(xlg) {
+
+}
+
+
+@include respond-above(fhd) {
+
+}
+
+@include respond-above(fhd-plus) {
+
+}
+
+@include respond-above(2k) {
+
+}

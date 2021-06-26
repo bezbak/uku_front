@@ -392,7 +392,10 @@ const AuthForm = () => {
                   </div>
                 )}
               </Field>
-              <button type="submit" disabled={submitting || pristine} onClick={()=>onSubmit(values)}>Далее</button>
+              <button type="submit"
+                      className={styles.sectionAuth__formContent__submitButton}
+                      disabled={submitting || pristine}
+                      onClick={()=>onSubmit(values)}>Далее</button>
             </form>
           )}
         />
