@@ -6,17 +6,13 @@ import styles from './styles.module.scss'
 function AuthSubmitError() {
   const { reset } = useForm();
   const { values, submitError } = useFormState();
-  console.log(values)
   const isSubmitError = Boolean(submitError);
-
   const handleCloseClick = () => reset(values);
-
   if (isSubmitError) {
     return (
       <div className={styles.root}>
         <div>
-          <p>Неверный код.</p>
-          {/* <p>{submitError}</p> */}
+           <p>{submitError}</p>
           <Button onClick={handleCloseClick} className={styles.root_closeButton}>
             <CloseIcon/>
           </Button>

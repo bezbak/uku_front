@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
- location:[]
+ locations:[]
 
 };
 
@@ -11,7 +11,7 @@ const locationSlice = createSlice({
   reducers: {
     locationRequestStart() {},
     locationRequestSuccess(state,{payload}) {
-      state.location = payload
+      state.locations = payload
     },
     locationRequestFailure() {},
 

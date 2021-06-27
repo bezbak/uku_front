@@ -1,7 +1,7 @@
 .select {
   position: relative;
   width: 100%;
-  margin: 0;
+  margin: 0 0 12px 0;
   padding: 0;
   &__button{
     display: flex ;
@@ -13,7 +13,10 @@
       font-weight: 500;
       font-size: 14px;
       line-height: 17px;
-      color: #667689;;
+      color: #667689;
+    }
+    &_selectedColor {
+      color: #121213 !important;
     }
     svg {
       transform: rotate(90deg);

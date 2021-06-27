@@ -1,4 +1,4 @@
-import React, { useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Swiper, SwiperSlide} from "swiper/react";
 import classNames from "classnames";
@@ -8,7 +8,6 @@ import ArrowIcon from '../../public/icons/ArrowIcon.svg'
 import {actions} from "../../public/store/locations/slice";
 import Button from "../Button";
 import styles from './styles.module.scss'
-
 
 const Location = ({modalOpen, getAddress}) => {
   const swiperRef = useRef();
@@ -22,10 +21,10 @@ const Location = ({modalOpen, getAddress}) => {
   const slideNext = () => swiperRef.current.slideNext();
   const slidePrev = () => swiperRef.current.slidePrev();
   const locationRequest = () => dispatch(actions.locationRequestStart());
-    locationRequest()
-  const modalCloseHandle = () => setIsModalOpen(false)
+      locationRequest()
 
-  const region = useSelector((store) => store.location?.location);
+  const modalCloseHandle = () => setIsModalOpen(false)
+  const region = useSelector(state => state.location?.locations);
   function RegionsInRegion(children, name, id) {
     setAddress(address => [...address, name])
     setAddressID(id)
@@ -38,7 +37,7 @@ const Location = ({modalOpen, getAddress}) => {
       });
       setSlides(() => [...filterArray, children])
     } else {
-      getAddress({name:(name=address.concat(name)).toString(),id:id})
+      getAddress({name:(name).toString(),id:id})
       setIsModalOpen(false)
 
     }
@@ -107,7 +106,7 @@ const Location = ({modalOpen, getAddress}) => {
           </SwiperSlide>
 
           {slides?.map((child, index) =>
-            <SwiperSlide>
+            <SwiperSlide key={index}>
               <div className={classNames(styles.location__slide)}>
 
                 {child?.filter(val => {

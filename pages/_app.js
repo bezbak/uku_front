@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import {useDispatch} from 'react-redux';
+import { ToastProvider} from 'react-toast-notifications'
 import {wrapper} from '../public/store/index';
 import {actions} from '../public/store/main/slice';
 import '../public/styles/global.scss'
@@ -31,7 +32,7 @@ function App({Component, pageProps}) {
   }, []);
 
   return (
-    <>
+    <ToastProvider  placement="top-center">
       <Head>
         <title>Ubirator upay</title>
         <meta name="theme-color"/>
@@ -43,7 +44,7 @@ function App({Component, pageProps}) {
       </Head>
       {pageProps?.isAuthenticated && <LoadDiffData/>}
       <Component {...pageProps} />
-    </>
+    </ToastProvider>
   );
 }
 

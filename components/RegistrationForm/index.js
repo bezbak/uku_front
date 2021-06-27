@@ -1,38 +1,44 @@
-import React, { useState} from "react";
-import classNames from "classnames";
-import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import {Field, Form} from "react-final-form";
-import DatePicker from "react-datepicker";
-import format from 'date-format'
-import {actions} from "../../public/store/users/slice";
-import useIsMobile from "../../out/hooks/useIsMobile";
-import Location from "../Location";
-import Select from "../UI/Select";
-import AuthSubmitError from "../Auth/AuthSubmitError";
-import style from "./styles.module.scss";
+import React, {useState} from "react";
 import {useRouter} from "next/router";
+import classNames from "classnames";
+import DatePicker from "react-datepicker";
+import {Field, Form} from "react-final-form";
+import {useDispatch, useSelector} from "react-redux";
+import {useToasts} from 'react-toast-notifications'
+import {parseISO, format} from 'date-fns';
+import Select from "../UI/Select";
+import Location from "../Location";
+import pathnames from "../../constants/pathnames";
+import AuthSubmitError from "../Auth/AuthSubmitError";
+import useIsMobile from "../../out/hooks/useIsMobile";
+import {actions} from "../../public/store/users/slice";
+import style from "./styles.module.scss";
 
 const RegistrationForm = () => {
   const {push} = useRouter();
+  const {addToast} = useToasts();
   const isMobile = useIsMobile();
   const [userInfo, setUserInfo] = useState(useSelector((store) => store.auth?.phone))
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [address, setAddress] = useState({})
   const [startDate, setStartDate] = useState();
   const dispatch = useDispatch();
-  const phoneRequest = (payload) => dispatch(actions.registrationRequestStart(payload));
-  const token= useSelector((store) => store.auth?.token)
+  const registrationRequest = (payload) => dispatch(actions.registrationRequestStart(payload));
+  const token = useSelector((store) => store.auth?.token)
   const onSubmit = (values) => {
-    console.log(token)
     return new Promise((resolve) => {
-      phoneRequest({
+      registrationRequest({
         values,
         token,
         callback: (response) => {
+          console.log("response", response)
           if (!response) {
-            push('/');
+            addToast(response, {appearance: 'success', autoDismiss: true,});
+            push(pathnames.main);
+          } else {
+            addToast(response.Error, {appearance: 'error', autoDismiss: true,});
+            resolve(response);
           }
-          resolve(response);
         },
       });
     })
@@ -52,14 +58,17 @@ const RegistrationForm = () => {
       <DatePicker
         className={className}
         placeholderText="Дата рождения"
-        minDate={'1990/12/12'}
+        minDate={parseISO('1990/12/12')}
         maxDate={new Date()}
         selected={startDate}
         disabledKeyboardNavigation
         name={name}
         onChange={value => {
           setStartDate((value));
-          input.onChange(format("yyyy-MM-dd", value));
+          input.onChange(format(
+            value,
+            'yyyy-MM-dd'
+          ));
         }}
       />
     );
@@ -81,57 +90,99 @@ const RegistrationForm = () => {
 
         <Form
           onSubmit={onSubmit}
-          // validate={validate}
-          render={({handleSubmit, values, submitting, form, pristine}) => (
+          validate={values => {
+            let errors = {}
+            if (!values.last_name) {
+              errors.last_name = 'Напишите свои фамилии'
+            }
+            if (!values.first_name) {
+              errors.first_name = 'Напишите свое имя'
+            }
+            if (!values.gender) {
+              errors.gender = 'Пол не выбран'
+            }
+            if (!values.birth_date) {
+              errors.birth_date = 'Выберите дата рождение'
+            }
+            if (!values.region) {
+              errors.region = 'Регион не выбран'
+            }
+            return errors
+          }}
+          render={({
+                     handleSubmit,
+                     values,
+                     submitting,
+                     form,
+                     pristine,
+                     reset,
+                     errors
+                   }) => (
             <form onSubmit={handleSubmit}>
-              {console.log(values)}
-              <div className={style.registrationForm__label}>Номер телефона</div>
-              <AuthSubmitError />
-              {/*<Field*/}
-              {/*  name="phone"*/}
-              {/*  component="input"*/}
-              {/*  type="input"*/}
-              {/*  defaultValue={userInfo?.phone}*/}
-              {/*  value={userInfo?.phone}*/}
-              {/*  placeholder={userInfo?.phone}*/}
-              {/*  className={style.registrationForm__input}*/}
 
-              {/*/>*/}
+              <AuthSubmitError/>
+
               <Field
                 name="last_name"
-                component="input"
-                type="text"
-                placeholder="Фамилия *"
-                required
-                className={style.registrationForm__input}
+              >
+                {({input, meta}) => (
+                  <div>
+                    <input   {...input}
+                             placeholder="Фамилия *"
+                             type="text"
+                             className={style.registrationForm__input}
+                    />
+                    {meta.error && meta.touched && <span className={style.registrationForm_error}>{meta.error}</span>}
+                  </div>
+                )}
+              </Field>
 
-              />
+
               <Field
                 name="first_name"
-                component="input"
-                type="text"
-                placeholder="Имя *"
-                className={style.registrationForm__input}
-                required
-              />
+              >
+                {({input, meta}) => (
+                  <div>
+                    <input   {...input}
+                             placeholder="Имя *"
+                             type="text"
+                             className={style.registrationForm__input}
+                    />
+                    {meta.error && meta.touched && <span  className={style.registrationForm_error}>{meta.error}</span>}
+                  </div>
+                )}
+              </Field>
+
               <div className={style.registrationForm__wrap}>
                 <div className={style.registrationForm__wrap_left}>
-                  <Field name="gender"
-                         component={Select}
-                         className={style.registrationForm__select}
-                         options={["Мужской","Женский"]}
-                         title={'Пол'}
-                         required
-                 />
+                  <Field name="gender" required>
+                    {({input, meta}) => (
+                      <div>
+                        <Select className={style.registrationForm__select}
+                                input={input} options={["Мужской", "Женский"]}
+                                title={'Пол'}/>
+                        {meta.error && meta.touched && <span  className={style.registrationForm_error}>{meta.error}</span>}
+                      </div>
+                    )}
+                  </Field>
                 </div>
                 <div className={style.registrationForm__wrap_right}>
+
                   <Field
                     name="birth_date"
-                    component={RenderDatePicker}
                     type="date"
                     className={style.registrationForm__input}
                     required
-                  />
+                  >
+                      {({input, meta}) => (
+                        <div>
+                          <RenderDatePicker name={'birth_date'} input={input}
+                                            className={style.registrationForm__input}
+                                            />
+                          {meta.error && meta.touched && <span  className={style.registrationForm_error}>{meta.error}</span>}
+                        </div>
+                      )}
+                  </Field>
                 </div>
               </div>
               <div>
@@ -140,23 +191,7 @@ const RegistrationForm = () => {
                        className={style.registrationForm__input}
                        required
                 />
-
               </div>
-              {/*<div className={style.registrationForm__wrap}>*/}
-              {/*  <Field name="employed" component="input"*/}
-              {/*         type="checkbox"*/}
-              {/*         className={style.registrationForm__checkBox}*/}
-              {/*         required*/}
-              {/*  />*/}
-              {/*  <label>*/}
-              {/*    <span className={style.registrationForm__checkBox__span}>Принимаю </span>*/}
-              {/*    <a className={style.registrationForm__checkBox_link}*/}
-              {/*       href="/system/terms-of-use">*/}
-              {/*      правила программы*/}
-              {/*      лояльности*/}
-              {/*    </a>*/}
-              {/*  </label>*/}
-              {/*</div>*/}
 
               <button type="submit"
                       disabled={submitting || pristine}

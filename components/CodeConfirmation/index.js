@@ -1,19 +1,23 @@
 import React, {useEffect, useState} from "react";
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import {useRouter} from "next/router";
 import classNames from 'classnames'
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import {Field, Form} from "react-final-form";
+import {useToasts} from 'react-toast-notifications'
 import useCountDown from 'react-countdown-hook';
 import NavLink from "../NavLink";
 import { actions } from '../../public/store/users/slice';
-import styles from "./styles.module.scss";
 import pathnames from "../../constants/pathnames";
 import AuthSubmitError from "../Auth/AuthSubmitError";
-import {useRouter} from "next/router";
 import useIsMobile from "../../public/hooks/useIsMobile";
 import ResponseMessage from "../Auth/ResponseMessage";
+import styles from "./styles.module.scss";
+import {isPossiblePhoneNumber, isValidPhoneNumber} from "react-phone-number-input";
 
 const CodeConfirmation = () =>{
   const { push } = useRouter();
+  const {addToast} = useToasts();
+  const [codeLength, setCodeLength]= useState(true)
   const isMobile =useIsMobile();
   const dispatch = useDispatch();
   const initialTime = 60*1000 ; // initial time in milliseconds, defaults to 60000
@@ -31,10 +35,14 @@ const CodeConfirmation = () =>{
         value:userPhone,
         callback: (response) => {
           if (!response) {
+            addToast(response.message, {appearance: 'success', autoDismiss: true,});
+            push(pathnames.codeConfirmation);
+          } else {
+            addToast(response.message, {appearance: 'error', autoDismiss: true,});
+            resolve(response);
+            const newTime = 60 * 1000;
+            start(newTime);
           }
-          resolve(response);
-          const newTime = 60 * 1000;
-          start(newTime);
         },
       })
     })
@@ -47,13 +55,26 @@ const CodeConfirmation = () =>{
         callback: (response) => {
           console.log(response)
           if (!response) {
-            push(pathnames.registration);
+            addToast(response.message, {appearance: 'success', autoDismiss: true,});
+            push(pathnames.codeConfirmation);
+          } else {
+            addToast(response.message, {appearance: 'error', autoDismiss: true,});
+            resolve(response);
           }
-          resolve(response);
         },
       });
     })
 
+  const maxLengthCheck = (object) => {
+    if (object.target.value.length > object.target.maxLength) {
+      object.target.value = object.target.value.slice(0, object.target.maxLength)
+
+    }
+    if(object.target.value.length>5){
+      setCodeLength(false)
+    }
+    else   setCodeLength(true)
+  }
   return (
     <div className={styles.codeConfirmForm}>
       {isMobile &&
@@ -73,11 +94,10 @@ const CodeConfirmation = () =>{
        <span>
           {userPhone?.phone}
        </span>
-        <NavLink className={styles.codeConfirmForm__description_link} url={"login"} as={"login/"}> Неверный номер?</NavLink>
+        <NavLink className={styles.codeConfirmForm__description_link} url={"/login"} > Неверный номер?</NavLink>
       </div>
       <Form
         onSubmit={onSubmit}
-        // validate={validate}
         render={({handleSubmit,values, submitting, form, pristine}) => (
           <form onSubmit={handleSubmit}>
             <AuthSubmitError />
@@ -85,9 +105,10 @@ const CodeConfirmation = () =>{
             <Field
               name="confirmation_code"
               component="input"
-              type="number
-              "
+              type="number"
               placeholder="Код"
+              maxLength = "6"
+              onInput={maxLengthCheck}
               className={styles.codeConfirmForm__input}
 
             />
@@ -97,7 +118,7 @@ const CodeConfirmation = () =>{
                         styles.codeConfirmForm__button_submitButton
                       )
                     }
-                    disabled={submitting || pristine}
+                    disabled={codeLength}
             >
               Подтвердить
             </button>

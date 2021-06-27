@@ -8,6 +8,7 @@ const parseLoginData = (data) => ({
   ...data,
   phone: data.phone.replace(/\D+/g, ''),
 });
+const HTTP_INTERNAL_SERVER_ERROR_CODE = 500;
 const checkStatus = (response) => {
   if (response.ok) return response;
 
@@ -50,28 +51,27 @@ function apiPost(url, values) {
   })
   return res
 }
-function apiPatch(url, values,token) {
-  console.log(token)
-  const res = fetch(`http://uku.kg/api/v1/${url}`, {
+const apiPatch = (url, values,token="16c8b2ab42c3275d24ef16bee49da551b7683f6a") =>
+fetch(`http://uku.kg/api/v1/${url}`, {
     method: 'PATCH',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Token ' + token,
-      // 'Authorization': `Bearer ${token}`
-      // 'X-CSRFToken': token,
+      'Authorization': 'Token' + token,
     },
     body: JSON.stringify(values),
     credentials: 'same-origin'
   })
-  return res
-}
+  .then(checkStatus)
+  .then(checkException)
+  .then(parseJSON);
+
 
 function* phoneRequest({payload}) {
   const {value, callback} = payload;
 console.log(payload)
   try {
-    const data = yield call(apiPost, 'account/auth/', value);
+    const data = yield call(api.post, 'account/auth/', { data: value });
     console.log(data)
     const response = yield call(() => new Promise(res => res(data.json())));
     yield put(actions.userPhoneNumber(value));
@@ -82,8 +82,9 @@ console.log(payload)
     // yield put(actions.userPhoneNumber(value));
     yield call(callback);
   } catch (e) {
+    console.log(e)
     yield put(actions.phoneRequestFailure(e));
-    yield call(callback, parseSubmissionError(e));
+    yield call(callback,e);
   }
 }
 
@@ -143,19 +144,13 @@ function* changeOldPhoneRequest({payload}) {
 
 function* registrationRequest({payload}) {
   const {values,token, callback} = payload;
-
   try {
     const data = yield call(apiPatch, 'account/', values,token);
-    console.log(data)
-    const response = yield call(() => new Promise(res => res(data.json())));
-    yield put(actions.registrationRequestSuccess(response));
-    console.log(response)
+    yield put(actions.registrationRequestSuccess(data));
     yield call(callback);
-    console.log("try")
   } catch (e) {
-    console.log(e)
     yield put(actions.registrationRequestFailure(e));
-    yield call(callback, parseSubmissionError(e));
+    yield call(callback, e);
   }
 
 }
