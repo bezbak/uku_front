@@ -12,7 +12,7 @@ import EditIcon from '../../public/icons/Edit.svg'
 import DeleteIcon from '../../public/icons/CloseIcon.svg'
 import styles from './styls.module.scss'
 
-const Card = ({slideData, publication}) => {
+const Card = ({slideData, publication,setToEditPublicationId,setEditPublication}) => {
   const {addToast} = useToasts();
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -42,6 +42,13 @@ const Card = ({slideData, publication}) => {
       });
     })
   }
+  const callEditContent = (id) =>{
+    // setIdPublication(idPublication)
+    console.log('djfjkdvjfbgvb')
+    setToEditPublicationId (id);
+    setEditPublication(true)
+    setIsModalOpen(true)
+  }
   return (
     <>
     <div className={styles.card} onClick={()=>setIdPublication(slideData.id)}>
@@ -59,7 +66,7 @@ const Card = ({slideData, publication}) => {
         </div>
       </div>}
       <div className={styles.userPublication}>
-        <Button className={styles.userPublication__edit}>
+        <Button className={styles.userPublication__edit} onClick={()=>callEditContent(slideData.id)}>
           <EditIcon/>
         </Button>
         <Button className={styles.userPublication__delete} onClick={()=>AskToDeletePublication(slideData.id)}>

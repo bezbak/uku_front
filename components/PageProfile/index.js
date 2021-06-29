@@ -12,6 +12,7 @@ import useIsMobile from "../../public/hooks/useIsMobile";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {actions} from "../../public/store/profile/slice";
 import EditProfileForm from "./EditProfileForm";
+import UserEditProfile from "./UserEditProfile";
 
 const sliderData = [
   {
@@ -115,10 +116,8 @@ const sliderData = [
 ]
 function PageProfile() {
   const {push} = useRouter();
-  const {addToast} = useToasts();
-  const [value, setValue] = useState()
-  const [privacyChecked, setPrivacyChecked] = useState(true)
-  const isMobile = useIsMobile();
+  const [editPublication, setEditPublication] = useState(false)
+  const [toEditPublicationId, setToEditPublicationId] = useState()
   const dispatch = useDispatch();
   const profileRequest = (token) => dispatch(actions.profileRequestStart(token));
   const publicationRequest= (token) => dispatch(actions.publicationRequestStart(token));
@@ -132,7 +131,7 @@ function PageProfile() {
   const userProfile = useSelector((store) => store.profile?.userProfile, shallowEqual);
   const userPublication = useSelector((store) => store.profile.userPublications,shallowEqual);
   const userPublicationFeed = useSelector((store) => store.profile.feed,shallowEqual);
- console.log(userPublicationFeed)
+ // console.log(userPublicationFeed)
   return (
     <>
       <NavContainer>
@@ -142,6 +141,8 @@ function PageProfile() {
         <div className={styles.profile__content}>
           {/*<EditProfileForm/>*/}
           <Profile user={userProfile}/>
+          {editPublication && <UserEditProfile setEditPublication={setEditPublication} editPublicationId={toEditPublicationId}/>}
+          {!editPublication &&
           <div className={styles.profile__publication}>
             <div className={styles.profile__publication__title}>
               <span>
@@ -150,15 +151,16 @@ function PageProfile() {
             </div>
             <div className={styles.profile__publication__container}>
               {
-                userPublicationFeed?.results?.map((user,index) =>
-                  <Card slideData={user} key={index} publication={true}/>
+                userPublicationFeed?.results?.map((user, index) =>
+                  <Card slideData={user} key={index} publication={true}
+                        setToEditPublicationId={setToEditPublicationId}
+                        setEditPublication={setEditPublication}
+                />
                 )
               }
             </div>
-          </div>
+          </div>}
         </div>
-
-
       </Container>
       <Footer className={"footer"}/>
     </>

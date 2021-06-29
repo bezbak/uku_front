@@ -37,7 +37,6 @@ const userProfileSlice = createSlice({
     publicationRequestStart() {},
     publicationRequestSuccess(state,{payload}) {
       state.userPublications = payload
-      console.log('ddd')
     },
     publicationRequestFailure() {},
 

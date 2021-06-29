@@ -12,9 +12,10 @@ const Profile = ({user}) => {
     <div className={styles.profile}>
       <div className={styles.profile__avatar}>
           <img src={user.avatar}/>
-        {!user && <Button className={styles.profile__userProfileEdit}>
+        {user &&
+        <Button className={styles.profile__userProfileEdit}>
           <UserProfileEdit/>
-        </Button>}
+        </Button >}
       </div>
       <div className={styles.profile__info}>
         <div className={styles.profile__info_fio}>
