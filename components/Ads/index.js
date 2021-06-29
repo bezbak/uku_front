@@ -103,7 +103,7 @@ const sliderData = [
     ]
   }
 ]
-const ComponentAds = ({title = "Объявления"}) => {
+const ComponentAds = ({title, data, publication}) => {
   return (
     <div className={styles.ads}>
       <div className={styles.ads__title}>
@@ -114,7 +114,7 @@ const ComponentAds = ({title = "Объявления"}) => {
       <div className={styles.ads__container}>
         {
           sliderData.map(slide =>
-            <Card slideData={slide} key={slide.id}/>
+            <Card slideData={slide} key={slide.id} publication/>
           )
         }
       </div>

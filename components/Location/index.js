@@ -76,7 +76,7 @@ const Location = ({modalOpen, getAddress}) => {
         </div>
         <Swiper
           className={styles.location__swiper}
-          slidesPerView={'auto'}
+          slidesPerView={1}
           allowSlidePrev={false}
           noSwiping={false}
           centeredSlides={true}

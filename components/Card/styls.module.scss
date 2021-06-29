@@ -2,17 +2,20 @@
 @import "../../public/styles/mixins/index";
 
 .card{
+  position: relative;
   display: flex;
   flex-direction: column;
   border: 1px solid #DFDFDF;
   box-sizing: border-box;
   border-radius: 6px 6px 0px 0px;
+  z-index: 1;
   &__headline {
     width: 100%;
     display: flex;
     align-items: center;
     padding: 10px 16px;
     img {
+      border-radius: 78%;
       width: 32px;
       height: 32px;
       margin-right: 8px;
@@ -26,7 +29,7 @@
       gap: 4px;
       &_name{
         font-size: 14px;
-        line-height: 17px;
+        line-height: 14px;
         color: #121213;
       }
       &_address{
@@ -40,7 +43,6 @@
       font-size: 14px;
       line-height: 17px;
       color: #E56366;
-
     }
   }
   &__footer{
@@ -66,6 +68,8 @@
       color: #A5A5A5;
     }
     &__timeAndView{
+      display: flex;
+      justify-content: space-between;
       margin-top: 15.5px;
       width: 100%;
       font-size: 14px;
@@ -77,13 +81,93 @@
       &_view {
         float: right;
         & svg {
-          margin-right: 7px;
+          margin-right: 4px;
         }
       }
     }
   }
 }
+.userPublication {
+  position: absolute;
+  display: flex;
+  float: right;
+  width: 56px;
+  height: 24px;
+  top: 12px;
+  right: 12px;
+  z-index: 2  ;
+  //pointer-events: none;
+  &__edit{
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    & svg {
+      path{
+        stroke: #F8F8F8;
+      }
+    }
+  }
+  &__delete{
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    & svg {
+      path{
+        fill: #F8F8F8;
+      }
+    }
+  }
+}
+.modal {
+  width: 390px;
+  height: 150px;
+  padding: 16px 24px;
+  background: #FFFFFF;
+  &__title{
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    color: #272D33;
+    margin-bottom: 24px;
+  }
+  &_buttons{
+    display: flex;
+    justify-content: space-between;
+  }
+  &__changeButton {
+    height: 44px;
+    width: 165px;
+    background: #E56366;
+    border: 1px solid #E56366;
+    box-sizing: border-box;
+    border-radius: 6px;
+    &_text{
+      font-size: 14px;
+      line-height: 150%;
+      display: flex;
+      align-items: flex-end;
+      text-align: center;
+      color: #FFFFFF;
+    }
+  }
+  &__cancelButton{
+    height: 44px;
+    width: 165px;
+    border: 1px solid #E56366;
+    box-sizing: border-box;
+    border-radius: 6px;
+    &_text{
+      font-size: 14px;
+      line-height: 150%;
+      display: flex;
+      align-items: flex-end;
+      text-align: center;
+      color: #E56366;
 
+    }
+  }
+}
 @include respond-above(sm) {
 
 }

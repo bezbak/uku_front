@@ -98,7 +98,7 @@ const Header = () => {
             </NavLink>
           </li>
           <li className={styles.mobileMenu__navMenu__list}>
-            <NavLink url="/ads" className={classNames(styles.mobileMenu__navMenu__list_link,
+            <NavLink url="/" className={classNames(styles.mobileMenu__navMenu__list_link,
               {[styles.mobileMenu__navMenu__list_link_active]:pathname==='ads'})}
                      onClick={()=>setIsMobileMenuOpen(false)}
             >

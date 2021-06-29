@@ -30,7 +30,7 @@ const SwiperCard = ({data}) => {
           return (
             <SwiperSlide key={index}>
               <div className={classNames(styles.swiperCard__slide)}>
-                <img src={slide.src}/>
+                <img src={slide.image}/>
               </div>
             </SwiperSlide>
           );

@@ -7,18 +7,18 @@ import UserProfileEdit from '../../../public/icons/userProfileEdit.svg'
 import styles from './styles.module.scss';
 import Button from "../../Button";
 
-const Profile = ({user=false}) => {
+const Profile = ({user}) => {
   return(
     <div className={styles.profile}>
       <div className={styles.profile__avatar}>
-          <img src="icons/whatsApp.png"/>
+          <img src={user.avatar}/>
         {!user && <Button className={styles.profile__userProfileEdit}>
           <UserProfileEdit/>
         </Button>}
       </div>
       <div className={styles.profile__info}>
         <div className={styles.profile__info_fio}>
-          <span>Фывова Александра</span>
+          <span>{user.first_name} {user.last_name}</span>
         </div>
         {user && <div className={styles.profile__info_age}>
           <span>Женщина</span>
@@ -26,7 +26,7 @@ const Profile = ({user=false}) => {
         </div>}
         {user &&  <div className={styles.profile__info_phone}>
           <span>Тел:</span>
-          <span>+996 (700) 12 34 56</span>
+          <span>{user.phone}</span>
         </div>}
       </div>
       <div className={styles.profile__appInfo}>
@@ -35,7 +35,7 @@ const Profile = ({user=false}) => {
             Подписчики
           </span>
           <span className={styles.profile__appInfo_wrap__list_cout}>
-            40
+            {user.followers_count}
           </span>
         </div>
         <div className={styles.profile__appInfo_wrap}>
@@ -43,7 +43,7 @@ const Profile = ({user=false}) => {
             Подписки
           </span>
           <span  className={styles.profile__appInfo_wrap__list_cout}>
-            59
+           {user.following_count}
           </span>
         </div>
         <div className={styles.profile__appInfo_wrap}>
@@ -51,21 +51,21 @@ const Profile = ({user=false}) => {
             Публикации
           </span>
           <span className={styles.profile__appInfo_wrap__list_cout}>
-            43
+            {user.publications_count}
           </span>
         </div>
 
       </div>
       <div className={styles.profile__socialContact}>
-        <NavLink>
+        <a href={`https://telegram.me/${user?.telegram}`} target="_blank">
           <TelegramIcon/>
-        </NavLink>
-        <NavLink>
+        </a>
+        <a href={`https://wa.me/${user.whatsapp}`} target="_blank">
           <WhatsAppIcon/>
-        </NavLink>
-        <NavLink>
+        </a>
+        <a href={`https://www.instagram.com/${user.instagram}`} target="_blank">
           <InstagramIcon/>
-      </NavLink>
+      </a>
         {!user && <Button className={styles.profile__editButton} textClassName={styles.profile__editButton__text}>
           Редактировать
         </Button>}

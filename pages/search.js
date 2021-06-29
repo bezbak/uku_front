@@ -12,7 +12,7 @@ function Search() {
         <Header/>
         <Nav/>
         <PageSearch/>
-        <Footer className={"footer"}/>
+        <Footer />
       </main>
     </>
   )

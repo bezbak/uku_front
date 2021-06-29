@@ -3,6 +3,17 @@ const withPlugins = require('next-compose-plugins');
 
 const nextConfig = {
   webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.node = {
+        fs: 'empty',
+        net :'empty',
+        // express: "empty"
+      }
+    }
+    config.node = {
+      fs: 'empty',
+      net :'empty',
+    };
     config.module.rules.push({
       test: /\.svg$/,
       issuer: {

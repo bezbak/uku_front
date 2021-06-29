@@ -4,7 +4,7 @@ const initialState = {
  userProfile:{},
   feed:{},
   userAvatar:'',
-  publication:{}
+  userPublications:{}
 };
 
 const userProfileSlice = createSlice({
@@ -18,7 +18,7 @@ const userProfileSlice = createSlice({
 
     profileRequestStart() {},
     profileRequestSuccess(state,{payload}) {
-      state.profile = payload
+      state.userProfile = payload
     },
     profileRequestFailure() {},
 
@@ -36,9 +36,16 @@ const userProfileSlice = createSlice({
 
     publicationRequestStart() {},
     publicationRequestSuccess(state,{payload}) {
-      state.publication = payload
+      state.userPublications = payload
+      console.log('ddd')
     },
     publicationRequestFailure() {},
+
+    deletePublicationRequestStart() {},
+    deletePublicationRequestSuccess(state,{payload}) {
+      state.userPublications = payload
+    },
+    deletePublicationRequestFailure() {},
 
 
 

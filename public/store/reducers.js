@@ -11,7 +11,7 @@ import locationSlice from '../store/locations/slice';
 const rootReducer = combineReducers({
   main: mainReducer,
   auth: authReducer,
-  profile:userReducer,
+  profile: userReducer,
   publication:publicationReducer,
   category:categoryReducer,
   system:systemReducer,
