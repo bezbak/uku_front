@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
-import classNames from 'classnames'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import {Field, Form} from "react-final-form";
-import {useToasts} from 'react-toast-notifications'
 import useCountDown from 'react-countdown-hook';
+import {useToasts} from 'react-toast-notifications'
+import classNames from 'classnames'
 import NavLink from "../NavLink";
 import { actions } from '../../public/store/users/slice';
 import pathnames from "../../constants/pathnames";
@@ -12,7 +12,7 @@ import AuthSubmitError from "../Auth/AuthSubmitError";
 import useIsMobile from "../../public/hooks/useIsMobile";
 import ResponseMessage from "../Auth/ResponseMessage";
 import styles from "./styles.module.scss";
-import {isPossiblePhoneNumber, isValidPhoneNumber} from "react-phone-number-input";
+import {actions as toastAction} from "../../public/store/toast/slice";
 
 const CodeConfirmation = () =>{
   const { push } = useRouter();
@@ -20,14 +20,22 @@ const CodeConfirmation = () =>{
   const [codeLength, setCodeLength]= useState(true)
   const isMobile =useIsMobile();
   const dispatch = useDispatch();
-  const initialTime = 60*1000 ; // initial time in milliseconds, defaults to 60000
-  const interval = 1000; // interval to change remaining time amount, defaults to 1000
+  const initialTime = 60*1000 ;
+  const interval = 1000;
   const [timeLeft, { start, pause, resume, reset }] = useCountDown(initialTime, interval);
+  const removeToast = () => dispatch(toastAction.removeSnackbar());
+  const toast = useSelector((store) => store.toast, shallowEqual);
+  useEffect(() => {
+    if (toast.open) {
+      addToast(toast.message, {appearance: toast.variant, autoDismiss: true,});
+      removeToast()
+    }
+  }, [toast])
   useEffect(()=>{
     start();
   }, []);
   const userPhone = useSelector((store) => store.auth?.phone, shallowEqual);
-  const confCodeRequest = (payload) => dispatch(actions.conformCodeRequestStart(payload));
+  const conformCodeRequest = (payload) => dispatch(actions.conformCodeRequestStart(payload));
   const phoneRequest = (payload) => dispatch(actions.phoneRequestStart(payload));
   const SendAgain = () => (
     new Promise((resolve) => {
@@ -35,10 +43,8 @@ const CodeConfirmation = () =>{
         value:userPhone,
         callback: (response) => {
           if (!response) {
-            addToast(response.message, {appearance: 'success', autoDismiss: true,});
             push(pathnames.codeConfirmation);
           } else {
-            addToast(response.message, {appearance: 'error', autoDismiss: true,});
             resolve(response);
             const newTime = 60 * 1000;
             start(newTime);
@@ -50,15 +56,19 @@ const CodeConfirmation = () =>{
     const onSubmit = (value) =>
     new Promise((resolve) => {
       const values = Object.assign(value, userPhone)
-      confCodeRequest({
+      conformCodeRequest({
         values,
         callback: (response) => {
-          console.log(response)
-          if (!response) {
-            addToast(response.message, {appearance: 'success', autoDismiss: true,});
-            push(pathnames.codeConfirmation);
+          if (response.token) {
+           if(response.is_profile_completed) {
+             console.log(response.is_profile_completed)
+             push(pathnames.main)
+           }
+           else {
+             console.log(response.is_profile_completed)
+             push(pathnames.registration)
+           }
           } else {
-            addToast(response.message, {appearance: 'error', autoDismiss: true,});
             resolve(response);
           }
         },

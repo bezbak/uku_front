@@ -1,19 +1,23 @@
 import React from "react";
+import {shallowEqual, useSelector} from "react-redux";
 import NavLink from "../../NavLink";
+import useNavigationMenu from "../../../public/hooks/useNavigationMenu";
+import Button from "../../Button";
 import TelegramIcon from '../../../public/icons/telegram.svg'
 import WhatsAppIcon from '../../../public/icons/whatsApp.svg'
 import InstagramIcon from '../../../public/icons/instagram.svg'
 import UserProfileEdit from '../../../public/icons/userProfileEdit.svg'
 import styles from './styles.module.scss';
-import Button from "../../Button";
 
 const Profile = ({user}) => {
+  const [state, actions] = useNavigationMenu();
   return(
     <div className={styles.profile}>
       <div className={styles.profile__avatar}>
           <img src={user.avatar}/>
         {user &&
-        <Button className={styles.profile__userProfileEdit}>
+        <Button className={styles.profile__userProfileEdit}
+                onClick={() => actions.update(!state.isOpened)}>
           <UserProfileEdit/>
         </Button >}
       </div>
@@ -23,7 +27,7 @@ const Profile = ({user}) => {
         </div>
         {user && <div className={styles.profile__info_age}>
           <span>Женщина</span>
-          <span>23 года</span>
+          <span>23 </span>
         </div>}
         {user &&  <div className={styles.profile__info_phone}>
           <span>Тел:</span>

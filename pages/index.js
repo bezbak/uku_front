@@ -5,15 +5,18 @@ import Main from "../components/Main";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import NavContainer from "../containers/NavContainer";
-import {useDispatch} from "react-redux";
-import {actions} from "../public/store/locations/slice";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import {actions as profileAction} from "../public/store/profile/slice";
 import {useEffect} from "react";
 
 function Home() {
   const dispatch = useDispatch();
-  const locationRequest = () => dispatch(actions.locationRequestStart());
+  const is_profile_completed = useSelector((store) => store.auth.is_profile_completed, shallowEqual);
+  const profileRequest = () => dispatch(profileAction.profileRequestStart());
+  const avatarRequest = () => dispatch(profileAction.avatarGetRequestStart());
   useEffect(()=>{
-    locationRequest()
+    if(is_profile_completed)profileRequest()
+    avatarRequest()
   })
   return (
     <>

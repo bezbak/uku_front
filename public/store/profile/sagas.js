@@ -1,12 +1,12 @@
-import {put, call, takeEvery} from 'redux-saga/effects';
+import {put, call, select, takeEvery} from 'redux-saga/effects';
 import api from '../../lib/api';
 import {actions} from './slice';
 import isEmpty from "lodash/isEmpty";
+import {useSelector} from "react-redux";
 
-const parseLoginData = (data) => ({
-  ...data,
-  phone: data.phone.replace(/\D+/g, ''),
-});
+
+const getToken = (state) => state.auth
+
 const checkStatus = (response) => {
   if (response.ok) return response;
 
@@ -25,6 +25,7 @@ const checkStatus = (response) => {
     throwError: true,
   }));
 };
+
 const checkException = (response) => {
   if (response.throwError === true) {
     const errorMessage = Object.keys(response.json).map((key) => response.json[key]);
@@ -41,24 +42,27 @@ const parseJSON = (response) => {
   if (contentTypeResponseMapping[contentType]) return response;
   return response.json();
 };
-function apiGet (url, token='b618209303d5acb9f96914939d18d17fb455ee47') {
+
+function apiGet (url, token) {
+  console.log(token)
   const res = fetch(`http://uku.kg/api/v1/${url}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Token ' + 'b618209303d5acb9f96914939d18d17fb455ee47',
+      'Authorization': 'Token ' + token,
     },
   }) .then(response => response.json())
 return res
 }
 
 
-function* profileRequest(token) {
-  const {payload} = token
-
+function* profileRequest() {
   try {
-    const response = yield call(apiGet, 'account/profile/', payload);
+    const auth = yield select(getToken)
+    console.log(auth.token)
+    const response = yield call(apiGet, 'account/profile/', auth.token);
+    console.log(response)
     yield put(actions.profileRequestSuccess(response));
   } catch (e) {
     yield put(actions.profileRequestFailure(e));
@@ -75,7 +79,9 @@ function* updateProfileRequest() {
 
 function* avatarRequest() {
   try {
-    const response = yield call(api.get, 'account/avatar/');
+    const auth = yield select(getToken)
+    console.log(auth.token)
+    const response = yield call(apiGet, 'account/avatar/',auth.token);
     yield put(actions.avatarGetRequestSuccess(response));
   } catch (e) {
     yield put(actions.avatarGetRequestFailure(e));
@@ -93,7 +99,9 @@ function* updateAvatarRequest() {
 
 function* feedRequest() {
   try {
-    const response = yield call(apiGet, 'account/profile/feed/');
+    const auth = yield select(getToken)
+    console.log(auth.token)
+    const response = yield call(apiGet, 'account/profile/feed/',auth.token);
     yield put(actions.feedRequestSuccess(response));
   } catch (e) {
     yield put(actions.feedRequestFailure(e));
@@ -103,7 +111,9 @@ function* publicationRequest(token) {
   const {payload} = token
 
   try {
-    const response = yield call(apiGet, 'account/profile/publication/', payload);
+    const auth = yield select(getToken)
+    console.log(auth.token)
+    const response = yield call(apiGet, 'account/profile/publication/', auth.token);
     yield put(actions.publicationRequestSuccess(response));
   } catch (e) {
     yield put(actions.publicationRequestFailure(e));

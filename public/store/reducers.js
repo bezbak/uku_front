@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import toastReducer from '../store/toast/slice';
 import mainReducer from '../store/main/slice';
 import authReducer from '../store/users/slice';
 import userReducer from '../store/profile/slice';
@@ -9,6 +10,7 @@ import locationSlice from '../store/locations/slice';
 // import extraReducer from '@store/extra/slice';
 
 const rootReducer = combineReducers({
+  toast:toastReducer,
   main: mainReducer,
   auth: authReducer,
   profile: userReducer,

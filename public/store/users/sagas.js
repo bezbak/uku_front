@@ -1,6 +1,7 @@
 import {put, call, takeEvery} from 'redux-saga/effects';
 import api from '../../lib/api';
 import {parseSubmissionError} from '../../lib/utils/store/sagas';
+import { actions as toast } from '../toast/slice';
 import {actions} from './slice';
 import isEmpty from "lodash/isEmpty";
 
@@ -51,7 +52,7 @@ function apiPost(url, values) {
   })
   return res
 }
-const apiPatch = (url, values,token="16c8b2ab42c3275d24ef16bee49da551b7683f6a") =>
+const apiPatch = (url, values,token) =>
 fetch(`http://uku.kg/api/v1/${url}`, {
     method: 'PATCH',
     headers: {
@@ -69,20 +70,21 @@ fetch(`http://uku.kg/api/v1/${url}`, {
 
 function* phoneRequest({payload}) {
   const {value, callback} = payload;
-console.log(payload)
   try {
-    const data = yield call(api.post, 'account/auth/', { data: value });
-    console.log(data)
-    const response = yield call(() => new Promise(res => res(data.json())));
+    const response = yield call(api.post, 'account/auth/', { data: value });
+    console.log(response)
     yield put(actions.userPhoneNumber(value));
     yield put(actions.successMessage(response.message));
     yield put(actions.phoneRequestSuccess(response));
-    // const response = yield call(api.post, 'account/auth/', { data: value });
-    // yield put(actions.phoneRequestSuccess(response));
-    // yield put(actions.userPhoneNumber(value));
-    yield call(callback);
+    if (response.message === "Сообщение отправлено"  || response.message === "User создан! Сообщение отправлено")
+    {
+      yield put(toast.openRequestStatusSuccessSnackbar(`${response.message} на номеру ${value.phone}`))
+      yield call(callback);
+    } else { yield put(toast.openRequestStatusSuccessSnackbar(response.message))
+    }
   } catch (e) {
     console.log(e)
+    yield put(toast.openRequestStatusErrorSnackbar(`${e.message}  Повторите через минут`))
     yield put(actions.phoneRequestFailure(e));
     yield call(callback,e);
   }
@@ -94,8 +96,14 @@ function* conformCodeRequest({payload}) {
     const response = yield call(api.post, 'account/login-confirm/', { data: values });
     console.log(response)
     yield put(actions.conformCodeRequestSuccess(response));
-    yield call(callback);
-  } catch (e) {
+    yield call(callback,response);
+  } catch (e){
+    console.log(e)
+    if(e.message==="Неверный код"){
+      yield put(toast.openRequestStatusErrorSnackbar(e.message))
+
+    }
+    yield put(toast.openRequestStatusErrorSnackbar(`Не правильной номер телефона или не заполнено поля номер телефона `))
     yield put(actions.conformCodeRequestFailure(e));
     yield call(callback, parseSubmissionError(e));
   }
@@ -144,6 +152,7 @@ function* changeOldPhoneRequest({payload}) {
 
 function* registrationRequest({payload}) {
   const {values,token, callback} = payload;
+
   try {
     const data = yield call(apiPatch, 'account/', values,token);
     yield put(actions.registrationRequestSuccess(data));

@@ -3,6 +3,7 @@ import styles from './styles.module.scss'
 import Card from "../Card";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {actions} from "../../public/store/profile/slice";
+import {actions as toastAction} from "../../public/store/toast/slice";
 
 const sliderData = [
   {
@@ -106,13 +107,7 @@ const sliderData = [
   }
 ]
 const Main = ({title = "Лента"}) => {
-  const dispatch = useDispatch();
-  const confCodeRequest = () => dispatch(actions.profileRequestStart());
-  const avatarGetRequest = () => dispatch(actions.avatarGetRequestStart());
-  useEffect(()=>{
-    confCodeRequest()
-    avatarGetRequest()
-  })
+
   return (
     <div className={styles.main}>
       <div className={styles.main__title}>

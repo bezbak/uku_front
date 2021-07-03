@@ -12,7 +12,7 @@ import {shallowEqual, useSelector} from "react-redux";
 const Nav = () => {
   const userProfile = useSelector((store) => store.profile?.userProfile, shallowEqual);
   const userImg = useSelector((store) => store.profile?.userAvatar, shallowEqual);
-
+  console.log(userProfile)
   return (
     <div className={styles.nav}>
       <div className={styles.nav_left}>
@@ -27,22 +27,22 @@ const Nav = () => {
           </NavLink>
         </li>
         <li className={styles.nav_right_list}>
-          <NavLink url="ads">
+          <NavLink url="/ads">
             <HeartIcon/>
             Избранное
           </NavLink>
         </li>
         <li className={classNames(styles.nav_right_list, styles.nav_right_listNoBorder)}>
-          {userProfile==='' ?
-          <NavLink url="/profile">
-            <img src={userImg} className={styles.nav_right_list__profileImg}/>
-            Профиль
-          </NavLink> :
+          {userProfile?.first_name ?
+            <NavLink url="/profile">
+              <img src={userProfile?.avatar} className={styles.nav_right_list__profileImg}/>
+              Профиль
+            </NavLink>:
             <NavLink url="/login">
             <LoginIcon/>
-            Вход
-            </NavLink>
-          }
+             Вход
+             </NavLink>
+           }
         </li>
       </div>
     </div>

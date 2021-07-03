@@ -24,7 +24,7 @@ const ImageSelectInput = ({input,setSelectedImages})=>{
     </label>
   )
 }
-const UserEditProfile = ({setEditPublication,editPublicationId}) => {
+const UserPublicationEdit = ({setEditPublication,editPublicationId}) => {
   const [selectedImages, setSelectedImages] = useState([])
 
   const onSubmit = ( values)=>{
@@ -80,4 +80,4 @@ const UserEditProfile = ({setEditPublication,editPublicationId}) => {
     </div>
   )
 }
-export default UserEditProfile;
+export default UserPublicationEdit;

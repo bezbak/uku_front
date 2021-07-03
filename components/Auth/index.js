@@ -1,34 +1,41 @@
-import React, {useState} from "react";
-import {useDispatch} from 'react-redux';
-import {Form, Field, useFormState} from 'react-final-form'
+import React, {useEffect, useState} from "react";
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import {Form, Field} from 'react-final-form'
 import {useToasts} from 'react-toast-notifications'
 import {useRouter} from 'next/router';
 import PhoneInput, {
-  formatPhoneNumber,
-  formatPhoneNumberIntl,
   isValidPhoneNumber,
   isPossiblePhoneNumber
 } from 'react-phone-number-input'
 import pathnames from "../../constants/pathnames";
 import {actions} from '../../public/store/users/slice';
+import {actions as toastAction} from '../../public/store/toast/slice';
 
 
 import AuthSubmitError from "./AuthSubmitError";
-import styles from './styles.module.scss'
 import useIsMobile from "../../public/hooks/useIsMobile";
 import ResponseMessage from "./ResponseMessage";
 import NavLink from "../NavLink";
 import CheckedIcon from '../../public/icons/checked.svg'
 import CheckBoxIcon from '../../public/icons/checkBox.svg'
+import styles from './styles.module.scss'
 
 const AuthForm = () => {
   const {push} = useRouter();
   const {addToast} = useToasts();
-  const [value, setValue] = useState()
   const [privacyChecked, setPrivacyChecked] = useState(true)
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const phoneRequest = (payload) => dispatch(actions.phoneRequestStart(payload));
+  const removeToast = () => dispatch(toastAction.removeSnackbar());
+  const toast = useSelector((store) => store.toast, shallowEqual);
+  useEffect(() => {
+    if (toast.open) {
+      addToast(toast.message, {appearance: toast.variant, autoDismiss: true,});
+      removeToast()
+    }
+  }, [toast])
+  console.log(toast)
   const onSubmit = (value) => {
     return new Promise((resolve) => {
       phoneRequest({
@@ -36,10 +43,8 @@ const AuthForm = () => {
         callback: (response) => {
           console.log(response);
           if (!response) {
-            addToast(response.message, {appearance: 'success', autoDismiss: true,});
-            push(pathnames.registration);
+            push(pathnames.codeConfirmation);
           } else {
-            addToast(response.message, {appearance: 'error', autoDismiss: true,});
             resolve(response);
           }
         }
@@ -68,7 +73,7 @@ const AuthForm = () => {
 
           <input type="checkbox" id="privacy-checkbox" onChange={() => setPrivacyChecked(!privacyChecked)}/>
           <label htmlFor="privacy-checkbox">
-                 { privacyChecked ? <CheckBoxIcon/>:<CheckedIcon/>}
+            {privacyChecked ? <CheckBoxIcon/> : <CheckedIcon/>}
           </label>
           <span>
             Принимаю условия конфиденциальности и политику безопасности
@@ -102,15 +107,12 @@ const AuthForm = () => {
                     <PhoneInput
                       initialValueFormat="national"
                       placeholder="Номер"
-                      useNationalFormatForDefaultCountryValue={true}
                       international
                       defaultCountry="KG"
                       value={input.value.value}
                       onChange={value => {
                         input.onChange(value)
                       }}
-                      error={!value ? (isValidPhoneNumber(`${value}`) ? undefined : 'Invalid phone number') :
-                        'Phone number required'}
                     />
                     <span>{isValidPhoneNumber(`${values.phone}`)}</span>
                     {meta.error && meta.touched && meta.submitError &&
@@ -120,8 +122,7 @@ const AuthForm = () => {
               </Field>
               <button type="submit"
                       className={styles.sectionAuth__formContent__submitButton}
-                      disabled={(!isValidPhoneNumber(`${values.phone}`) || privacyChecked)}
-                      onClick={() => onSubmit(values)}>Далее
+                      disabled={(!isValidPhoneNumber(`${values.phone}`) || privacyChecked)}>Далее
               </button>
             </form>
           )}

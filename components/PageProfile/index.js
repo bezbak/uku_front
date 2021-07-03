@@ -1,137 +1,33 @@
 import React, {useEffect, useState} from "react";
+import {useRouter} from "next/router";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import {actions as profileAction, actions} from "../../public/store/profile/slice";
 import Container from "../../containers";
 import Nav from "../Nav";
 import Footer from "../Footer";
 import Profile from "../PageProfile/Profile";
 import NavContainer from "../../containers/NavContainer";
-import styles from './styles.module.scss'
 import Card from "../Card";
-import {useRouter} from "next/router";
-import {useToasts} from "react-toast-notifications";
-import useIsMobile from "../../public/hooks/useIsMobile";
-import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import {actions} from "../../public/store/profile/slice";
 import EditProfileForm from "./EditProfileForm";
-import UserEditProfile from "./UserEditProfile";
+import UserPublicationEdit from "./UserPublicationEdit";
+import styles from './styles.module.scss'
 
-const sliderData = [
-  {
-    id: 1,
-    name:"Фывова Александра",
-    description:'height: 34px;\n' +
-      'width: 336px;\n' +
-      'left: 0px;\n' +
-      'top: 24px;\n' +
-      'border-radius: nullpx;\n',
-    src: 'images/lenta.png',
-    commentCount: 1,
-    data:8,
-    altInfo: 'shoe',
-    slider :[
-      {
-        id: 2,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 3,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 4,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 5,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      }
-    ]
-  },
-  {
-    id: 2,
-    src: 'images/lenta.png',
-    altInfo: 'shoe',
-  },
-  {
-    id: 3,
-    src: 'images/lenta.png',
-    altInfo: 'shoe',
-  },
-  {
-    id: 4,
-    src: 'images/lenta.png',
-    altInfo: 'shoe',  slider :[
-      {
-        id: 2,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 3,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 4,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 5,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      }
-    ]
-  },
-  {
-    id: 5,
-    src: 'images/lenta.png',
-    altInfo: 'shoe',
-    slider :[
-      {
-        id: 2,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 3,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 4,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 5,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      }
-    ]
-  }
-]
 function PageProfile() {
-  const {push} = useRouter();
   const [editPublication, setEditPublication] = useState(false)
   const [toEditPublicationId, setToEditPublicationId] = useState()
   const dispatch = useDispatch();
-  const profileRequest = (token) => dispatch(actions.profileRequestStart(token));
-  const publicationRequest= (token) => dispatch(actions.publicationRequestStart(token));
-  const feedRequestStart= (token) => dispatch(actions.feedRequestStart(token));
+  // const profileRequest = () => dispatch(profileAction.profileRequestStart());
+  const publicationRequest= () => dispatch(actions.publicationRequestStart());
+  const feedRequestStart= () => dispatch(actions.feedRequestStart());
 
   useEffect(()=>{
-    profileRequest("LIvrcoHeWF2H3dJ1jRY3KamaFmezJOCzZwK2N0xGDq6oLRhsH7tIP7RcxiheXzOY")
-    publicationRequest("LIvrcoHeWF2H3dJ1jRY3KamaFmezJOCzZwK2N0xGDq6oLRhsH7tIP7RcxiheXzOY")
-    feedRequestStart("LIvrcoHeWF2H3dJ1jRY3KamaFmezJOCzZwK2N0xGDq6oLRhsH7tIP7RcxiheXzOY")
+    // profileRequest()
+    publicationRequest()
+    feedRequestStart()
   })
   const userProfile = useSelector((store) => store.profile?.userProfile, shallowEqual);
   const userPublication = useSelector((store) => store.profile.userPublications,shallowEqual);
   const userPublicationFeed = useSelector((store) => store.profile.feed,shallowEqual);
- // console.log(userPublicationFeed)
   return (
     <>
       <NavContainer>
@@ -139,9 +35,9 @@ function PageProfile() {
       </NavContainer>
       <Container>
         <div className={styles.profile__content}>
-          {/*<EditProfileForm/>*/}
           <Profile user={userProfile}/>
-          {editPublication && <UserEditProfile setEditPublication={setEditPublication} editPublicationId={toEditPublicationId}/>}
+          <EditProfileForm/>
+          {editPublication && <UserPublicationEdit setEditPublication={setEditPublication} editPublicationId={toEditPublicationId}/>}
           {!editPublication &&
           <div className={styles.profile__publication}>
             <div className={styles.profile__publication__title}>
@@ -162,7 +58,7 @@ function PageProfile() {
           </div>}
         </div>
       </Container>
-      <Footer className={"footer"}/>
+      <Footer />
     </>
   )
 }

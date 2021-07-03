@@ -22,6 +22,7 @@ const SwiperCard = ({data}) => {
           clickable: true,
           el: `.${styles.swiperCard__sliderPagination}`,
           type: 'bullets',
+          // loop:true,
           bulletActiveClass: styles.swiperCard__sliderPagination_active,
           bulletClass: styles.swiperCard__sliderPagination_icon
         }}

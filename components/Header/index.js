@@ -1,17 +1,18 @@
 import React, {useEffect, useRef, useState} from "react";
+import {useRouter} from "next/router";
+import {shallowEqual, useSelector} from "react-redux";
 import classNames from "classnames";
 import NavLink from "../NavLink";
 import useIsMobile from "../../public/hooks/useIsMobile";
-import CloseIcon from '../../public/icons/CloseIcon.svg'
-import Menu from '../../public/icons/menu 1.svg'
-import SearchIcon from '../../public/icons/searchIcon.svg'
-import styles from './styles.module.scss'
+import CloseIcon from '../../public/icons/CloseIcon.svg';
+import Menu from '../../public/icons/menu 1.svg';
+import SearchIcon from '../../public/icons/searchIcon.svg';
 import HeartIcon from "../../public/icons/heartIcon.svg";
 import LoginIcon from "../../public/icons/loginIcon.svg";
-import AppStoreMobileIcon from '../../public/icons/appStoreMpbileIcon.svg'
-import GooglePlayMobileIcon from '../../public/icons/googlePlayMobileIcon.svg'
-import {useRouter} from "next/router";
-import {shallowEqual, useSelector} from "react-redux";
+import AppStoreMobileIcon from '../../public/icons/appStoreMpbileIcon.svg';
+import GooglePlayMobileIcon from '../../public/icons/googlePlayMobileIcon.svg';
+import styles from './styles.module.scss';
+
 function useOutsideAlerter(ref,setIsMobileMenuOpen) {
   useEffect(() => {
     function handleClickOutside(event) {
@@ -29,7 +30,6 @@ function useOutsideAlerter(ref,setIsMobileMenuOpen) {
 const Header = () => {
   const wrapperRef = useRef(null);
   const { pathname } = useRouter();
-  console.log(pathname)
   const isMobile = useIsMobile();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   useOutsideAlerter(wrapperRef, setIsMobileMenuOpen);
@@ -99,7 +99,7 @@ const Header = () => {
           </li>
           <li className={styles.mobileMenu__navMenu__list}>
             <NavLink url="/" className={classNames(styles.mobileMenu__navMenu__list_link,
-              {[styles.mobileMenu__navMenu__list_link_active]:pathname==='ads'})}
+              {[styles.mobileMenu__navMenu__list_link_active]:pathname==='/'})}
                      onClick={()=>setIsMobileMenuOpen(false)}
             >
               <HeartIcon/>

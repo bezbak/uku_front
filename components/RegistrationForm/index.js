@@ -25,7 +25,17 @@ const RegistrationForm = () => {
   const dispatch = useDispatch();
   const registrationRequest = (payload) => dispatch(actions.registrationRequestStart(payload));
   const token = useSelector((store) => store.auth?.token)
-  const onSubmit = (values) => {
+  const onSubmit = (value) => {
+    const values= {
+      last_name:value.last_name,
+      first_name: value.first_name,
+      region:value.region.id,
+      // region_detail:value.region.name,
+      gender:value.gender,
+      birth_date:value.birth_date
+
+    }
+    console.log(values)
     return new Promise((resolve) => {
       registrationRequest({
         values,
@@ -47,7 +57,7 @@ const RegistrationForm = () => {
 
   const getAddress = ({input, className, ...res}) => {
     console.log(address);
-    input.onChange(address.id)
+    input.onChange(address)
     return (
       <input onFocus={() => setIsModalOpen(!isModalOpen)} onChange={() => setIsModalOpen(!isModalOpen)}
              className={className} {...res} defaultValue={address.name}/>

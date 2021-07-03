@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   phone:null,
   isAuthenticated: false,
-  token: '',
-  is_profile_completed: false,
+  is_profile_completed:true,
+  token:'',
   isStaff: false,
   user: null,
   responseMessage:''
