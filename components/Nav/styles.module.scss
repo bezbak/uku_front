@@ -1,90 +1,95 @@
 @import "../../public/styles/varibles";
 @import "../../public/styles/mixins/index";
 
-.nav{
-      display: flex;
-      width: 100%;
-      padding: 16px 16px;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
+.nav {
+  top: 56px;
+  display: flex;
+  width: 100%;
+  padding: 16px 16px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 
-      &_left {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
+  &_left {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &_right {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    &__profileImg {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid #D3D3D3;
+    }
+
+    &_list {
+      list-style: none;
+      margin-left: 16px;
+      padding-right: 16px;
+      border-right: 1px solid #D3D3D3;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 16px;
+      color: #181818;
+
+      &_active {
+        color: red;
+
+        & svg {
+          path {
+            stroke: red;
+          }
+        }
       }
 
-      &_right {
-        height: 100%;
+      &__profileImg {
+        width: 22px;
+        height: 22px;
+        margin-right: 10px;
+        border-radius: 78px;
+        border: 1.6px solid #D3D3D3;
+      }
+
+      & a {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
+      }
 
-        &__profileImg {
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          border: 1px solid #D3D3D3;
-        }
-
-        &_list {
-          list-style: none;
-          margin-left: 16px;
-          padding-right: 16px;
-          border-right: 1px solid #D3D3D3;
-          font-weight: 500;
-          font-size: 18px;
-          line-height: 16px;
-          color: #181818;
-          &_active {
-            color: red;
-            & svg {
-              path {
-                stroke: red;
-              }
-            }
-          }
-          &__profileImg{
-            width: 22px;
-            height: 22px;
-            margin-right: 10px;
-            border-radius: 78px;
-            border: 1.6px solid #D3D3D3 ;
-          }
-          & a {
-            display: flex;
-            align-items: center;
-          }
-
-          & svg {
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
-          }
-        }
-
-        &_listNoBorder {
-          padding-right: 0;
-          border-right: none;
-        }
-
+      & svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
       }
     }
 
+    &_listNoBorder {
+      padding-right: 0;
+      border-right: none;
+    }
+
+  }
+}
+
 @include respond-above(sm) {
-  .nav{
+  .nav {
     width: 1168px;
     margin: 0 auto;
-    padding: 0 24px ;
+    padding: 0 24px;
   }
 }
 
 @include respond-above(lg) {
-  .nav{
-      width: 1168px;
-      margin: 0 auto;
-      padding: 16px 0;
-    }
+  .nav {
+    width: 1168px;
+    margin: 0 auto;
+    padding: 16px 0;
   }
+}

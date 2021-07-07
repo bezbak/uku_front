@@ -14,18 +14,20 @@ function Home() {
   const is_profile_completed = useSelector((store) => store.auth.is_profile_completed, shallowEqual);
   const profileRequest = () => dispatch(profileAction.profileRequestStart());
   const avatarRequest = () => dispatch(profileAction.avatarGetRequestStart());
-  useEffect(()=>{
-    if(is_profile_completed)profileRequest()
-    avatarRequest()
+  useEffect(() => {
+    if (is_profile_completed) {
+      profileRequest()
+      avatarRequest()
+    }
   })
   return (
     <>
       <Meta/>
       <main className="home">
         <Header/>
-       <NavContainer>
-         <Nav/>
-       </NavContainer>
+        <NavContainer>
+          <Nav/>
+        </NavContainer>
         <Container>
           <Main/>
         </Container>

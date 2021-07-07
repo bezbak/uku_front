@@ -27,8 +27,10 @@ const AuthForm = () => {
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const phoneRequest = (payload) => dispatch(actions.phoneRequestStart(payload));
+  const changeOldPhoneRequest = (payload) => dispatch(actions.changeOldPhoneRequestStart(payload));
   const removeToast = () => dispatch(toastAction.removeSnackbar());
   const toast = useSelector((store) => store.toast, shallowEqual);
+  const isChangeOldPhone = useSelector((store) => store.auth.isChangeOldPhone, shallowEqual);
   useEffect(() => {
     if (toast.open) {
       addToast(toast.message, {appearance: toast.variant, autoDismiss: true,});
@@ -38,17 +40,33 @@ const AuthForm = () => {
   console.log(toast)
   const onSubmit = (value) => {
     return new Promise((resolve) => {
-      phoneRequest({
-        value,
-        callback: (response) => {
-          console.log(response);
-          if (!response) {
-            push(pathnames.codeConfirmation);
-          } else {
-            resolve(response);
+      if (isChangeOldPhone === "phone") {
+        phoneRequest({
+          value,
+          title: "phone",
+          callback: (response) => {
+            console.log(response);
+            if (!response) {
+              push(pathnames.codeConfirmation);
+            } else {
+              resolve(response);
+            }
           }
-        }
-      });
+        });
+      } else {
+        changeOldPhoneRequest({
+          value,
+          title: "newPhone",
+          callback: (response) => {
+            console.log(response);
+            if (!response) {
+              push(pathnames.codeConfirmation);
+            } else {
+              resolve(response);
+            }
+          }
+        });
+      }
     })
   }
 
@@ -63,7 +81,7 @@ const AuthForm = () => {
       <div className={styles.sectionAuth__formContent}>
         <div className={styles.sectionAuth__formContent__headline}>
         <span className={styles.sectionAuth__formContent__headline__login}>
-          Вход
+          {isChangeOldPhone === "phone" ? 'Вход' : 'Введите новый номер'}
         </span>
           <NavLink url={'/'}>
             <span className={styles.sectionAuth__formContent__headline_cancel}>Отмена </span>

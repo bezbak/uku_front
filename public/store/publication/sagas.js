@@ -5,7 +5,7 @@ import {actions} from './slice';
 
 
 function* categoryPublicationRequest({payload}) {
-  const {id,callback} = payload;
+  const {id, callback} = payload;
   try {
     const response = yield call(api.get, `publication/category/${id}`);
     console.log(response)
@@ -31,7 +31,29 @@ function* userPublicationRequest({payload}) {
 }
 
 
+function* userCreatePublicationRequest({payload}) {
+  const {values, callback} = payload;
+
+  const data = {
+    location: 53,
+    category: 4,
+  }
+  const value = Object.assign(values, data)
+  console.log(value)
+  try {
+    const response = yield call(api.post, `publication/create/`, {data: value});
+    console.log(response)
+    yield put(actions.userCreatePublicationRequestSuccess(response));
+    yield call(callback);
+  } catch (e) {
+    yield put(actions.userCreatePublicationRequestFailure(e));
+    yield call(callback, parseSubmissionError(e));
+  }
+}
+
+
 export default function* publicationSagas() {
   yield takeEvery(`${actions.categoryPublicationRequestStart}`, categoryPublicationRequest);
   yield takeEvery(`${actions.userPublicationRequestStart}`, userPublicationRequest);
+  yield takeEvery(`${actions.userCreatePublicationRequestStart}`, userCreatePublicationRequest);
 }

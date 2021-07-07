@@ -1,8 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-  categoryPublication:{},
-  userPublication:{}
+  categoryPublication: {},
+  userPublication: {}
 };
 
 const publicationSlice = createSlice({
@@ -10,22 +10,33 @@ const publicationSlice = createSlice({
   initialState,
   reducers: {
 
-    categoryPublicationRequestStart() {},
-    categoryPublicationRequestSuccess(state,{payload}) {
+    categoryPublicationRequestStart() {
+    },
+    categoryPublicationRequestSuccess(state, {payload}) {
       state.categoryPublication = payload
     },
-    categoryPublicationRequestFailure() {},
+    categoryPublicationRequestFailure() {
+    },
 
-    userPublicationRequestStart() {},
-    userPublicationRequestSuccess(state,{payload}) {
+    userPublicationRequestStart() {
+    },
+    userPublicationRequestSuccess(state, {payload}) {
       state.userPublication = payload
     },
-    userPublicationRequestFailure() {},
+    userPublicationRequestFailure() {
+    },
+
+    userCreatePublicationRequestStart() {
+    },
+    userCreatePublicationRequestSuccess() {
+    },
+    userCreatePublicationRequestFailure() {
+    },
 
 
   },
 });
 
-export const { actions } = publicationSlice;
+export const {actions} = publicationSlice;
 
 export default publicationSlice.reducer;

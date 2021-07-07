@@ -1,49 +1,66 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-  phone:null,
+  isChangeOldPhone: "phone",
+  phone: null,
   isAuthenticated: false,
-  is_profile_completed:true,
-  token:'',
+  is_profile_completed: false,
+  token: '',
+  region_detail: {},
   isStaff: false,
   user: null,
-  responseMessage:''
+  responseMessage: ''
 };
 
 const userAuthSlice = createSlice({
   name: 'auth',
   initialState,
-  phoneToken:'',
+  phoneToken: '',
   reducers: {
-    userPhoneNumber (state,{payload}) {
+    changePhoneTitle(state, {payload}) {
+      state.isChangeOldPhone = payload
+    },
+    userPhoneNumber(state, {payload}) {
       state.phone = payload
     },
-    successMessage (state,{payload}) {
+    successMessage(state, {payload}) {
       state.responseMessage = payload
     },
-    phoneRequestStart() {},
-    phoneRequestSuccess() {},
-    phoneRequestFailure() {},
+    phoneRequestStart() {
+    },
+    phoneRequestSuccess() {
+    },
+    phoneRequestFailure() {
+    },
 
-    changeOldPhoneRequestStart() {},
-    changeOldPhoneRequestSuccess() {},
-    changeOldPhoneRequestFailure() {},
+    changeOldPhoneRequestStart() {
+    },
+    changeOldPhoneRequestSuccess() {
+    },
+    changeOldPhoneRequestFailure() {
+    },
 
-    oldPhoneRequestStart() {},
-    oldPhoneRequestSuccess() {},
-    oldPhoneRequestFailure() {},
+    oldPhoneRequestStart() {
+    },
+    oldPhoneRequestSuccess() {
+    },
+    oldPhoneRequestFailure() {
+    },
 
-    conformCodeRequestStart() {},
-    conformCodeRequestSuccess(state,{payload}) {
+    conformCodeRequestStart() {
+    },
+    conformCodeRequestSuccess(state, {payload}) {
       state.is_profile_completed = payload.is_profile_completed
       state.token = payload.token
+      state.region_detail = payload.region_detail
     },
     conformCodeRequestFailure(payload) {
       console.log(payload)
     },
 
-    newPhoneConformCodeRequestStart() {},
-    newPhoneCodeRequestSuccess(state,{payload}) {
+    newPhoneConformCodeRequestStart() {
+    },
+    newPhoneCodeRequestSuccess(state, {payload}) {
       state.is_profile_completed = payload.is_profile_completed
       state.token = payload.token
     },
@@ -51,52 +68,67 @@ const userAuthSlice = createSlice({
       console.log(payload)
     },
 
-    oldPhoneConformCodeRequestStart() {},
-    oldPhoneCodeRequestSuccess(state,{payload}) {
-      state.is_profile_completed = payload.is_profile_completed
+    oldPhoneConformCodeRequestStart() {
+    },
+    oldPhoneCodeRequestSuccess() {
     },
     oldPhoneCodeRequestFailure(payload) {
       console.log(payload)
     },
 
-    registrationRequestStart() {},
-    registrationRequestSuccess(state,{payload}) {
+    registrationRequestStart() {
+    },
+    registrationRequestSuccess(state, {payload}) {
       state.is_profile_completed = payload.is_profile_completed
     },
-    registrationRequestFailure(payload) {},
+    registrationRequestFailure(payload) {
+    },
 
-    favoriteRequestStart() {},
-    favoriteRequestSuccess() {},
-    favoriteRequestFailure() {},
+    favoriteRequestStart() {
+    },
+    favoriteRequestSuccess() {
+    },
+    favoriteRequestFailure() {
+    },
 
 
-    followRequestStart() {},
-    followRequestSuccess() {},
-    followRequestFailure() {},
+    followRequestStart() {
+    },
+    followRequestSuccess() {
+    },
+    followRequestFailure() {
+    },
 
-    searchRequestStart() {},
-    searchRequestSuccess() {},
-    searchRequestFailure() {},
+    searchRequestStart() {
+    },
+    searchRequestSuccess() {
+    },
+    searchRequestFailure() {
+    },
 
-    logoutRequestStart() {},
+    logoutRequestStart() {
+    },
     logoutRequestSuccess(state) {
       state.isAuthenticated = false;
       state.isStaff = false;
       state.user = null;
     },
-    logoutRequestFailure() {},
+    logoutRequestFailure() {
+    },
 
-    getStateRequestStart() {},
-    getStateRequestSuccess(state, { payload }) {
+    getStateRequestStart() {
+    },
+    getStateRequestSuccess(state, {payload}) {
       state.isAuthenticated = payload.is_authenticated;
       state.isStaff = payload.is_staff;
       state.user = payload.user;
       state.userBalance = payload.user.garbage_point.balance;
     },
-    getStateRequestFailure() {},
+    getStateRequestFailure() {
+    },
   },
 });
 
-export const { actions } = userAuthSlice;
+export const {actions} = userAuthSlice;
 
 export default userAuthSlice.reducer;

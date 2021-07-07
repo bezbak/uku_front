@@ -1,11 +1,10 @@
 import {put, call, select, takeEvery} from 'redux-saga/effects';
+import isEmpty from "lodash/isEmpty";
 import api from '../../lib/api';
 import {actions} from './slice';
-import isEmpty from "lodash/isEmpty";
-import {useSelector} from "react-redux";
 
 
-const getToken = (state) => state.auth
+const getToken = (store) => store.auth.token
 
 const checkStatus = (response) => {
   if (response.ok) return response;
@@ -43,31 +42,32 @@ const parseJSON = (response) => {
   return response.json();
 };
 
-function apiGet (url, token) {
+function apiGet(url, token) {
   console.log(token)
-  const res = fetch(`http://uku.kg/api/v1/${url}`, {
+  const response = fetch(`http://uku.kg/api/v1/${url}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       'Authorization': 'Token ' + token,
     },
-  }) .then(response => response.json())
-return res
+  }).then(response => response.json())
+  return response
 }
 
 
 function* profileRequest() {
   try {
-    const auth = yield select(getToken)
-    console.log(auth.token)
-    const response = yield call(apiGet, 'account/profile/', auth.token);
+    const token = yield select(getToken)
+    console.log(token)
+    const response = yield call(apiGet, 'account/profile/', token);
     console.log(response)
     yield put(actions.profileRequestSuccess(response));
   } catch (e) {
     yield put(actions.profileRequestFailure(e));
   }
 }
+
 function* updateProfileRequest() {
   try {
     const response = yield call(api.put, 'account/profile/update');
@@ -79,9 +79,9 @@ function* updateProfileRequest() {
 
 function* avatarRequest() {
   try {
-    const auth = yield select(getToken)
-    console.log(auth.token)
-    const response = yield call(apiGet, 'account/avatar/',auth.token);
+    const token = yield select(getToken)
+    console.log(token)
+    const response = yield call(apiGet, 'account/avatar/', token);
     yield put(actions.avatarGetRequestSuccess(response));
   } catch (e) {
     yield put(actions.avatarGetRequestFailure(e));
@@ -99,28 +99,29 @@ function* updateAvatarRequest() {
 
 function* feedRequest() {
   try {
-    const auth = yield select(getToken)
-    console.log(auth.token)
-    const response = yield call(apiGet, 'account/profile/feed/',auth.token);
+    const token = yield select(getToken)
+    console.log(token)
+    const response = yield call(apiGet, 'account/profile/feed/', token);
     yield put(actions.feedRequestSuccess(response));
   } catch (e) {
     yield put(actions.feedRequestFailure(e));
   }
 }
-function* publicationRequest(token) {
-  const {payload} = token
+
+function* publicationRequest() {
 
   try {
-    const auth = yield select(getToken)
-    console.log(auth.token)
-    const response = yield call(apiGet, 'account/profile/publication/', auth.token);
+    const token = yield select(getToken)
+    console.log(token)
+    const response = yield call(apiGet, 'account/profile/publication/', token);
     yield put(actions.publicationRequestSuccess(response));
   } catch (e) {
     yield put(actions.publicationRequestFailure(e));
   }
 }
+
 function* deletePublicationRequest(token) {
-  const {payload,id} = token
+  const { id} = token
 
   try {
     const response = yield call(api.delete, `account/profile/publication/${id}`);
@@ -129,6 +130,7 @@ function* deletePublicationRequest(token) {
     yield put(actions.deletePublicationRequestFailure(e));
   }
 }
+
 export default function* userProfileSagas() {
   yield takeEvery(`${actions.profileRequestStart}`, profileRequest);
   yield takeEvery(`${actions.updateProfileRequestStart}`, updateProfileRequest);

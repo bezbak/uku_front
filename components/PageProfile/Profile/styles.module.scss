@@ -11,20 +11,24 @@
   margin-right: 21px;
   margin-bottom: 12px;
   border-radius: 10px;
+
   &__userProfileEdit {
     float: right;
     margin-top: -44px !important;
-   svg {
-     //z-index: 2 !important;
-   }
+
+    svg {
+      z-index: 2 !important;
+    }
   }
-  &__avatar{
+
+  &__avatar {
     width: 84px;
     height: 84px;
     border: 5px solid #D5D5D5;
     border-radius: 78px;
-    margin:auto ;
+    margin: auto;
     z-index: 1;
+
     & img {
       border-radius: 78px;
       object-fit: cover;
@@ -32,13 +36,15 @@
       height: 100%;
     }
   }
-  &__info{
+
+  &__info {
     margin-top: 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    &_fio{
+
+    &_fio {
       font-weight: 500;
       font-size: 18px;
       line-height: 22px;
@@ -46,7 +52,8 @@
       margin-bottom: 6px;
 
     }
-    &_age{
+
+    &_age {
       display: flex;
       gap: 6px;
       font-weight: 500;
@@ -55,7 +62,8 @@
       color: #495360;
       margin-bottom: 12px;
     }
-    &_phone{
+
+    &_phone {
       display: flex;
       gap: 12px;
       font-size: 16px;
@@ -64,7 +72,8 @@
       margin-bottom: 12px;
     }
   }
-  &__appInfo{
+
+  &__appInfo {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -77,16 +86,19 @@
     box-sizing: border-box;
     border-radius: 6px;
     margin-bottom: 14px;
-    &_wrap{
+
+    &_wrap {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 4px;
-      &__list{
+
+      &__list {
         font-size: 12px;
         line-height: 15px;
         color: #7E7E7E;
-        &_cout{
+
+        &_cout {
           font-weight: 500;
           font-size: 14px;
           line-height: 17px;
@@ -102,6 +114,7 @@
 
     }
   }
+
   &__socialContact {
     display: flex;
     justify-content: flex-start;
@@ -109,19 +122,22 @@
     margin-left: 36px;
     margin-right: 16px;
     gap: 12px;
+
     & svg {
       width: 24px;
       height: 24px;
     }
   }
-  &__editButton{
+
+  &__editButton {
     margin-left: auto !important;
     height: 32px;
     width: auto;
     padding: 8px 24px !important;
     background: #E56366 !important;
     border-radius: 6px;
-    &__text{
+
+    &__text {
       font-weight: 500;
       font-size: 13px;
       line-height: 16px;
@@ -140,27 +156,31 @@
     width: 303px;
     display: flex;
     flex-direction: column;
-    margin: 0 21px  0 0;
+    margin: 0 21px 0 0;
     padding: 0;
-    &__avatar{
+
+    &__avatar {
       width: 140px;
       height: 140px;
       border: 5px solid #D5D5D5;
       border-radius: 78px;
-      margin:0 auto 15px auto;
+      margin: 0 auto 15px auto;
+
       & img {
         object-fit: cover;
         width: 100%;
         height: 100%;
       }
     }
-    &__info{
+
+    &__info {
       margin-top: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      &_fio{
+
+      &_fio {
         font-weight: 500;
         font-size: 18px;
         line-height: 22px;
@@ -168,7 +188,8 @@
         margin-bottom: 6px;
 
       }
-      &_age{
+
+      &_age {
         display: flex;
         gap: 6px;
         font-weight: 500;
@@ -177,7 +198,8 @@
         color: #495360;
         margin-bottom: 12px;
       }
-      &_phone{
+
+      &_phone {
         display: flex;
         gap: 12px;
         font-size: 16px;
@@ -186,7 +208,8 @@
         margin-bottom: 12px;
       }
     }
-    &__appInfo{
+
+    &__appInfo {
       width: 100%;
       display: flex;
       flex-direction: row;
@@ -200,24 +223,28 @@
       margin-bottom: 24px;
       margin-top: 6px;
       margin-left: 0;
-      &_wrap{
+
+      &_wrap {
         display: flex;
         flex-direction: column;
         gap: 12px;
       }
     }
+
     &__socialContact {
       display: flex;
       justify-content: flex-start;
       gap: 12px;
       margin-left: 0;
+
       & svg {
         width: 42px;
         height: 42px;
       }
     }
-    &__editButton{
-     display: none !important;
+
+    &__editButton {
+      display: none !important;
     }
   }
 }
@@ -242,6 +269,6 @@
 
 }
 
-@include respond-above(2k) {
+@include respond-above(2 k) {
 
 }

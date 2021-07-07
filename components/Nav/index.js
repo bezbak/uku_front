@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from 'classnames'
+import {shallowEqual, useSelector} from "react-redux";
 import Logo from "../Logo";
 import Search from "../Search";
 import NavLink from "../NavLink";
@@ -7,12 +8,11 @@ import SearchIcon from '../../public/icons/searchIcon.svg';
 import HeartIcon from '../../public/icons/heartIcon.svg';
 import LoginIcon from '../../public/icons/loginIcon.svg';
 import styles from './styles.module.scss';
-import {shallowEqual, useSelector} from "react-redux";
 
 const Nav = () => {
-  const userProfile = useSelector((store) => store.profile?.userProfile, shallowEqual);
+  const is_profile_completed = useSelector((store) => store.auth?.is_profile_completed);
   const userImg = useSelector((store) => store.profile?.userAvatar, shallowEqual);
-  console.log(userProfile)
+  console.log(userImg)
   return (
     <div className={styles.nav}>
       <div className={styles.nav_left}>
@@ -33,16 +33,16 @@ const Nav = () => {
           </NavLink>
         </li>
         <li className={classNames(styles.nav_right_list, styles.nav_right_listNoBorder)}>
-          {userProfile?.first_name ?
+          {is_profile_completed ?
             <NavLink url="/profile">
-              <img src={userProfile?.avatar} className={styles.nav_right_list__profileImg}/>
+              <img src={userImg?.avatar} className={styles.nav_right_list__profileImg}/>
               Профиль
-            </NavLink>:
+            </NavLink> :
             <NavLink url="/login">
-            <LoginIcon/>
-             Вход
-             </NavLink>
-           }
+              <LoginIcon/>
+              Вход
+            </NavLink>
+          }
         </li>
       </div>
     </div>

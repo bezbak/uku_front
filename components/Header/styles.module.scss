@@ -2,15 +2,21 @@
 @import "../../public/styles/mixins/index";
 
 .headerContainer {
+  width: 100vw;
+  top: 0;
+  position: fixed;
   background: #FFFFFF;
   box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.11);
 }
+
 .header {
   display: flex;
   justify-content: space-between;
   height: 60px;
+
   padding: 18px 16px;
-  &__mobileContent{
+
+  &__mobileContent {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -18,23 +24,27 @@
     height: 100%;
     width: 100%;
   }
+
   &__menuButton {
     height: 24px;
     width: 24px;
     border: none;
     background: none;
-    color:  #FFFFFF;
+    color: #FFFFFF;
     margin: 0;
     padding: 0;
+
     & svg {
       width: 24px;
       height: 24px;
+
       & path {
-        fill:#24475A;
+        fill: #24475A;
       }
     }
   }
-  &__mobileLogo{
+
+  &__mobileLogo {
     font-weight: 500;
     font-size: 20px;
     line-height: 24px;
@@ -42,6 +52,7 @@
     color: #374257;
 
   }
+
   &__list {
     display: flex;
     flex-direction: row;
@@ -54,58 +65,70 @@
     }
   }
 }
-.mobileMenu{
+
+.mobileMenu {
   position: absolute;
   display: none;
   flex-direction: column;
   width: 100vw;
-  height: calc( 100vh - 60px);
+  height: calc(100vh - 60px);
   padding: 16px 16px 16px 16px;
   background: #FFFFFF;
   z-index: 2;
+
   &_isOpen {
     display: flex;
   }
-  &__headerMenu{
+
+  &__headerMenu {
     border-bottom: 1px solid #CFCFCF;
     display: flex;
     flex-direction: column;
+
     &__list {
       height: 40px;
       padding: 12px 10px 10px;
       margin-bottom: 8px;
-      &_link{
+
+      &_link {
         font-size: 15px;
         line-height: 18px;
         color: #4F4F4F;
       }
+
       &:active {
         color: #091A2E;
       }
     }
 
   }
-  &__navMenu{
-    margin-top: 12px ;
+
+  &__navMenu {
+    margin-top: 12px;
     display: flex;
     flex-direction: column;
+
     &__list {
       height: 40px;
       padding: 12px 10px 10px;
       margin-bottom: 8px;
-      &_link{
+
+      &_link {
         display: flex;
         align-items: center;
         gap: 12px;
         font-size: 14px;
         line-height: 17px;
         color: #091A2E;
+
         svg {
           width: 18px;
           height: 18px;
         }
-        &_active{
+
+        &_active {
           color: red;
+
           svg {
             path {
               stroke: red;
@@ -115,20 +138,22 @@
       }
     }
   }
-  &__footer{
+
+  &__footer {
     position: absolute;
     bottom: 40px;
     display: flex;
     gap: 8px;
   }
 }
+
 @include respond-above(sm) {
-  .headerContainer{
+  .headerContainer {
     box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.05);
   }
-  .mobileMenu{
+  .mobileMenu {
     display: none;
-    }
+  }
 }
 
 @include respond-above(md) {

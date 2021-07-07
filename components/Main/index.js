@@ -3,23 +3,22 @@ import styles from './styles.module.scss'
 import Card from "../Card";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {actions} from "../../public/store/profile/slice";
-import {actions as toastAction} from "../../public/store/toast/slice";
 
 const sliderData = [
   {
     id: 1,
-    name:"Фывова Александра",
-    address :'Москва',
-    description:'height: 34px;\n' +
+    name: "Фывова Александра",
+    address: 'Москва',
+    description: 'height: 34px;\n' +
       'width: 336px;\n' +
       'left: 0px;\n' +
       'top: 24px;\n' +
       'border-radius: nullpx;\n',
     src: 'images/lenta.png',
     commentCount: 1,
-    data:8,
+    data: 8,
     altInfo: 'shoe',
-    slider :[
+    slider: [
       {
         id: 2,
         src: 'images/lenta.png',
@@ -55,7 +54,7 @@ const sliderData = [
   {
     id: 4,
     src: 'images/lenta.png',
-    altInfo: 'shoe',  slider :[
+    altInfo: 'shoe', slider: [
       {
         id: 2,
         src: 'images/lenta.png',
@@ -82,7 +81,7 @@ const sliderData = [
     id: 5,
     src: 'images/lenta.png',
     altInfo: 'shoe',
-    slider :[
+    slider: [
       {
         id: 2,
         src: 'images/lenta.png',
@@ -107,7 +106,14 @@ const sliderData = [
   }
 ]
 const Main = ({title = "Лента"}) => {
-
+  const dispatch = useDispatch();
+  const is_profile_completed = useSelector((store) => store.auth?.is_profile_completed);
+  const feedRequest = () => dispatch(actions.feedRequestStart());
+  useEffect(() => {
+    if (is_profile_completed)
+      feedRequest()
+  }, [is_profile_completed])
+  const userPublicationFeed = useSelector((store) => store.profile.feed, shallowEqual);
   return (
     <div className={styles.main}>
       <div className={styles.main__title}>
@@ -115,13 +121,13 @@ const Main = ({title = "Лента"}) => {
           {title}
         </span>
       </div>
-        <div className={styles.main__container}>
-          {
-            sliderData.map(slide =>
-               <Card slideData={slide} key={slide.id}/>
-            )
-          }
-        </div>
+      <div className={styles.main__container}>
+        {is_profile_completed &&
+        userPublicationFeed?.results?.map(slide =>
+          <Card slideData={slide} key={slide.id} publication={false}/>
+        )
+        }
+      </div>
     </div>
   )
 }
