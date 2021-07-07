@@ -1,11 +1,11 @@
+import isEmpty from "lodash/isEmpty";
 import {put, call, takeEvery, select} from 'redux-saga/effects';
 import {parseSubmissionError} from '../../lib/utils/store/sagas';
 import api from '../../lib/api';
 import {actions as toast} from '../toast/slice';
 import {actions} from './slice';
-import isEmpty from "lodash/isEmpty";
 
-const getToken = (state) => state.auth
+const getToken = (store) => store.auth.token
 
 const HTTP_INTERNAL_SERVER_ERROR_CODE = 500;
 const checkStatus = (response) => {
@@ -26,6 +26,7 @@ const checkStatus = (response) => {
     throwError: true,
   }));
 };
+
 const checkException = (response) => {
   if (response.throwError === true) {
     const errorMessage = Object.keys(response.json).map((key) => response.json[key]);
@@ -35,7 +36,10 @@ const checkException = (response) => {
   }
   return response;
 };
-
+const contentTypeResponseMapping = {
+  'application/zip': true,
+  'application/ms-excel': true,
+};
 const parseJSON = (response) => {
   const contentType = response.headers.get('content-type');
   if (isEmpty(contentType)) return response;
@@ -62,10 +66,9 @@ const apiPatch = (url, values, token) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Token' + token,
+      'Authorization': 'Token ' + token,
     },
     body: JSON.stringify(values),
-    credentials: 'same-origin'
   })
     .then(checkStatus)
     .then(checkException)
@@ -180,13 +183,15 @@ function* changeOldPhoneRequest({payload}) {
 }
 
 function* registrationRequest({payload}) {
-  const {values, token, callback} = payload;
+  const {values, callback} = payload;
 
   try {
+    const token = yield select(getToken)
     const data = yield call(apiPatch, 'account/', values, token);
     yield put(actions.registrationRequestSuccess(data));
     yield call(callback);
   } catch (e) {
+    yield put(toast.openRequestStatusErrorSnackbar(e.message))
     yield put(actions.registrationRequestFailure(e));
     yield call(callback, e);
   }

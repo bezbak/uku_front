@@ -1,21 +1,18 @@
 import React, {useEffect, useState} from "react";
-import {useRouter} from "next/router";
 import {useDispatch, useSelector, shallowEqual} from 'react-redux';
+import {useRouter} from "next/router";
 import {Field, Form} from "react-final-form";
 import useCountDown from 'react-countdown-hook';
-import {useToasts} from 'react-toast-notifications'
 import classNames from 'classnames'
-import NavLink from "../NavLink";
 import {actions} from '../../public/store/users/slice';
 import pathnames from "../../constants/pathnames";
+import NavLink from "../NavLink";
 import useIsMobile from "../../public/hooks/useIsMobile";
 import ResponseMessage from "../Auth/ResponseMessage";
-import {actions as toastAction} from "../../public/store/toast/slice";
 import styles from "./styles.module.scss";
 
 const CodeConfirmation = () => {
   const {push} = useRouter();
-  const {addToast} = useToasts();
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
 
@@ -23,18 +20,9 @@ const CodeConfirmation = () => {
   const [initialTime, setInitialTime] = useState(60 * 1000)
   const interval = 1000;
   const [timeLeft, {start, pause, resume, reset}] = useCountDown(initialTime, interval);
-  const removeToast = () => dispatch(toastAction.removeSnackbar());
 
-  const toast = useSelector((store) => store.toast, shallowEqual);
   const isChangeOldPhone = useSelector((store) => store.auth?.isChangeOldPhone, shallowEqual);
   const userPhone = useSelector((store) => store.auth?.phone, shallowEqual);
-
-  useEffect(() => {
-    if (toast.open) {
-      addToast(toast.message, {appearance: toast.variant, autoDismiss: true,});
-      removeToast()
-    }
-  }, [toast])
 
   useEffect(() => {
     start(initialTime);

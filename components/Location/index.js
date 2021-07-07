@@ -2,11 +2,11 @@ import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Swiper, SwiperSlide} from "swiper/react";
 import classNames from "classnames";
+import Button from "../Button";
 import Modal from "../UI/Modal";
+import {actions} from "../../public/store/locations/slice";
 import CloseIcon from '../../public/icons/CloseIcon.svg'
 import ArrowIcon from '../../public/icons/ArrowIcon.svg'
-import {actions} from "../../public/store/locations/slice";
-import Button from "../Button";
 import styles from './styles.module.scss'
 
 const Location = ({modalOpen, getAddress}) => {
@@ -21,7 +21,9 @@ const Location = ({modalOpen, getAddress}) => {
   const slideNext = () => swiperRef.current.slideNext();
   const slidePrev = () => swiperRef.current.slidePrev();
   const locationRequest = () => dispatch(actions.locationRequestStart());
-      locationRequest()
+     useEffect(()=>{
+       locationRequest()
+     },[])
 
   const modalCloseHandle = () => setIsModalOpen(false)
   const region = useSelector(state => state.location?.locations);
@@ -43,12 +45,14 @@ const Location = ({modalOpen, getAddress}) => {
     }
 
   }
+
   const childRegionFunction = (children, name,id) => {
     setActiveRegion(name)
     setSearchValue("")
     RegionsInRegion(children, name, id)
     setTimeout(() => slideNext(), 500);
   }
+
   const prevSlide = () => {
     slidePrev()
 

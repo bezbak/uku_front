@@ -1,14 +1,15 @@
 import React from 'react';
 import Head from 'next/head';
-import {useDispatch} from 'react-redux';
-import { ToastProvider} from 'react-toast-notifications'
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import {ToastProvider, useToasts} from 'react-toast-notifications'
+import SwiperCore, {Navigation, Pagination, Scrollbar, A11y} from 'swiper';
 import {wrapper} from '../public/store/index';
 import {actions} from '../public/store/main/slice';
 import '../public/styles/global.scss'
 import '../public/styles/phoneInput.scss'
-import SwiperCore, {Navigation, Pagination, Scrollbar, A11y} from 'swiper';
 import {setCookie} from '../public/lib/utils/auth';
 import 'swiper/components/pagination/pagination.scss';
+import {actions as toastAction} from "../public/store/toast/slice";
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
@@ -22,9 +23,27 @@ function LoadDiffData() {
   return null;
 }
 
-function App({Component, pageProps}) {
+function Toast () {
+  const {addToast} = useToasts();
+  const dispatch = useDispatch();
+  const toast = useSelector((store) => store.toast, shallowEqual);
+  const removeToast = () => dispatch(toastAction.removeSnackbar());
   React.useEffect(() => {
-    // Remove the server-side injected CSS.
+    if (toast.open) {
+      addToast(
+        toast.message, {
+          appearance: toast.variant,
+          autoDismiss: true,
+        });
+      removeToast()
+    }
+  }, [toast]);
+  return null
+}
+
+function App({Component, pageProps}) {
+
+  React.useEffect(() => {
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
@@ -34,7 +53,7 @@ function App({Component, pageProps}) {
   return (
     <ToastProvider  placement="top-center">
       <Head>
-        <title>Ubirator upay</title>
+        <title>Uku.kg</title>
         <meta name="theme-color"/>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
         <link
@@ -42,6 +61,7 @@ function App({Component, pageProps}) {
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
         />
       </Head>
+      <Toast/>
       {pageProps?.isAuthenticated && <LoadDiffData/>}
       <Component {...pageProps} />
     </ToastProvider>

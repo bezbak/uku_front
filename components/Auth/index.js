@@ -1,15 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import {Form, Field} from 'react-final-form'
-import {useToasts} from 'react-toast-notifications'
-import {useRouter} from 'next/router';
 import PhoneInput, {
   isValidPhoneNumber,
   isPossiblePhoneNumber
 } from 'react-phone-number-input'
 import pathnames from "../../constants/pathnames";
 import {actions} from '../../public/store/users/slice';
-import {actions as toastAction} from '../../public/store/toast/slice';
 
 
 import AuthSubmitError from "./AuthSubmitError";
@@ -19,25 +16,20 @@ import NavLink from "../NavLink";
 import CheckedIcon from '../../public/icons/checked.svg'
 import CheckBoxIcon from '../../public/icons/checkBox.svg'
 import styles from './styles.module.scss'
+import {useRouter} from "next/router";
 
 const AuthForm = () => {
   const {push} = useRouter();
-  const {addToast} = useToasts();
-  const [privacyChecked, setPrivacyChecked] = useState(true)
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
+  const [privacyChecked, setPrivacyChecked] = useState(true)
   const phoneRequest = (payload) => dispatch(actions.phoneRequestStart(payload));
   const changeOldPhoneRequest = (payload) => dispatch(actions.changeOldPhoneRequestStart(payload));
-  const removeToast = () => dispatch(toastAction.removeSnackbar());
-  const toast = useSelector((store) => store.toast, shallowEqual);
+
+
   const isChangeOldPhone = useSelector((store) => store.auth.isChangeOldPhone, shallowEqual);
-  useEffect(() => {
-    if (toast.open) {
-      addToast(toast.message, {appearance: toast.variant, autoDismiss: true,});
-      removeToast()
-    }
-  }, [toast])
-  console.log(toast)
+
+
   const onSubmit = (value) => {
     return new Promise((resolve) => {
       if (isChangeOldPhone === "phone") {
@@ -84,12 +76,14 @@ const AuthForm = () => {
           {isChangeOldPhone === "phone" ? 'Вход' : 'Введите новый номер'}
         </span>
           <NavLink url={'/'}>
-            <span className={styles.sectionAuth__formContent__headline_cancel}>Отмена </span>
+            <span className={styles.sectionAuth__formContent__headline_cancel}>
+              Отмена
+            </span>
           </NavLink>
         </div>
         <div className={styles.sectionAuth__checkbox}>
-
-          <input type="checkbox" id="privacy-checkbox" onChange={() => setPrivacyChecked(!privacyChecked)}/>
+          <input type="checkbox" id="privacy-checkbox"
+                 onChange={() => setPrivacyChecked(!privacyChecked)}/>
           <label htmlFor="privacy-checkbox">
             {privacyChecked ? <CheckBoxIcon/> : <CheckedIcon/>}
           </label>

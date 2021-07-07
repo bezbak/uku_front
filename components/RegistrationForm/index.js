@@ -1,36 +1,32 @@
 import React, {useState} from "react";
 import {useRouter} from "next/router";
+import {useDispatch} from "react-redux";
+import {Field, Form} from "react-final-form";
 import classNames from "classnames";
 import DatePicker from "react-datepicker";
-import {Field, Form} from "react-final-form";
-import {useDispatch, useSelector} from "react-redux";
-import {useToasts} from 'react-toast-notifications'
 import {parseISO, format} from 'date-fns';
 import Select from "../UI/Select";
 import Location from "../Location";
-import pathnames from "../../constants/pathnames";
 import AuthSubmitError from "../Auth/AuthSubmitError";
 import useIsMobile from "../../out/hooks/useIsMobile";
+import pathnames from "../../constants/pathnames";
 import {actions} from "../../public/store/users/slice";
 import style from "./styles.module.scss";
 
 const RegistrationForm = () => {
   const {push} = useRouter();
-  const {addToast} = useToasts();
   const isMobile = useIsMobile();
-  const [userInfo, setUserInfo] = useState(useSelector((store) => store.auth?.phone))
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [address, setAddress] = useState({})
   const [startDate, setStartDate] = useState();
   const dispatch = useDispatch();
   const registrationRequest = (payload) => dispatch(actions.registrationRequestStart(payload));
-  const token = useSelector((store) => store.auth?.token)
+
   const onSubmit = (value) => {
     const values= {
       last_name:value.last_name,
       first_name: value.first_name,
       region:value.region.id,
-      // region_detail:value.region.name,
       gender:value.gender,
       birth_date:value.birth_date
 
@@ -39,14 +35,11 @@ const RegistrationForm = () => {
     return new Promise((resolve) => {
       registrationRequest({
         values,
-        token,
         callback: (response) => {
           console.log("response", response)
           if (!response) {
-            addToast(response, {appearance: 'success', autoDismiss: true,});
             push(pathnames.main);
           } else {
-            addToast(response.Error, {appearance: 'error', autoDismiss: true,});
             resolve(response);
           }
         },
@@ -56,7 +49,6 @@ const RegistrationForm = () => {
 
 
   const getAddress = ({input, className, ...res}) => {
-    console.log(address);
     input.onChange(address)
     return (
       <input onFocus={() => setIsModalOpen(!isModalOpen)} onChange={() => setIsModalOpen(!isModalOpen)}
@@ -121,17 +113,11 @@ const RegistrationForm = () => {
           }}
           render={({
                      handleSubmit,
-                     values,
                      submitting,
-                     form,
                      pristine,
-                     reset,
-                     errors
                    }) => (
             <form onSubmit={handleSubmit}>
-
               <AuthSubmitError/>
-
               <Field
                 name="last_name"
               >
@@ -146,8 +132,6 @@ const RegistrationForm = () => {
                   </div>
                 )}
               </Field>
-
-
               <Field
                 name="first_name"
               >
@@ -162,7 +146,6 @@ const RegistrationForm = () => {
                   </div>
                 )}
               </Field>
-
               <div className={style.registrationForm__wrap}>
                 <div className={style.registrationForm__wrap_left}>
                   <Field name="gender" required>
@@ -177,7 +160,6 @@ const RegistrationForm = () => {
                   </Field>
                 </div>
                 <div className={style.registrationForm__wrap_right}>
-
                   <Field
                     name="birth_date"
                     type="date"

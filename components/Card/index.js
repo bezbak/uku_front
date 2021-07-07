@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
-import {useToasts} from 'react-toast-notifications'
 import SwiperCard from "../Swiper";
 import Button from "../Button";
 import Modal from "../UI/Modal";
@@ -13,7 +12,6 @@ import DeleteIcon from '../../public/icons/CloseIcon.svg'
 import styles from './styls.module.scss'
 
 const Card = ({slideData, publication, setToEditPublicationId, setEditPublication}) => {
-  const {addToast} = useToasts();
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [idPublication, setIdPublication] = useState(false)
@@ -32,10 +30,8 @@ const Card = ({slideData, publication, setToEditPublicationId, setEditPublicatio
         callback: (response) => {
           console.log(response);
           if (!response) {
-            addToast(response.message, {appearance: 'success', autoDismiss: true,});
             push(pathnames.registration);
           } else {
-            addToast(response.message, {appearance: 'error', autoDismiss: true,});
             resolve(response);
           }
         }
@@ -43,7 +39,6 @@ const Card = ({slideData, publication, setToEditPublicationId, setEditPublicatio
     })
   }
   const callEditContent = (id) => {
-    // setIdPublication(idPublication)
     console.log('djfjkdvjfbgvb')
     setToEditPublicationId(id);
     setEditPublication(true)

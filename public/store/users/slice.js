@@ -9,6 +9,7 @@ const initialState = {
   region_detail: {},
   isStaff: false,
   user: null,
+  user_region_detail: null,
   responseMessage: ''
 };
 
@@ -51,8 +52,8 @@ const userAuthSlice = createSlice({
     },
     conformCodeRequestSuccess(state, {payload}) {
       state.is_profile_completed = payload.is_profile_completed
-      state.token = payload.token
-      state.region_detail = payload.region_detail
+      state.token = payload.token,
+        state.user_region_detail = payload.region_detail
     },
     conformCodeRequestFailure(payload) {
       console.log(payload)
@@ -79,7 +80,8 @@ const userAuthSlice = createSlice({
     registrationRequestStart() {
     },
     registrationRequestSuccess(state, {payload}) {
-      state.is_profile_completed = payload.is_profile_completed
+      // state.is_profile_completed = payload.is_profile_completed,
+      state.user_region_detail = payload.region_detail
     },
     registrationRequestFailure(payload) {
     },
