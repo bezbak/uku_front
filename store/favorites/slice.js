@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
- userProfile:{},
+  userProfile:{},
   feed:{},
   userAvatar:'',
   userPublications:{}
 };
 
 const userProfileSlice = createSlice({
-  name: 'profile',
+  name: 'favorite',
   initialState,
   reducers: {
 
@@ -54,11 +54,11 @@ const userProfileSlice = createSlice({
     },
     avatarGetRequestFailure() {},
 
-    updateAvatarRequestStart() {},
-    updateAvatarRequestSuccess(state,{payload}) {
+    updateAvatarGetRequestStart() {},
+    updateAvatarGetRequestSuccess(state,{payload}) {
       state.userAvatar = payload
     },
-    updateAvatarRequestFailure() {},
+    updateAvatarGetRequestFailure() {},
   },
 });
 

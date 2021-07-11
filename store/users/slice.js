@@ -27,14 +27,14 @@ const userAuthSlice = createSlice({
     successMessage(state, {payload}) {
       state.responseMessage = payload
     },
-    phoneRequestStart(state, {payload}) {
+    phoneRequestStart(){
     },
     phoneRequestSuccess() {
     },
     phoneRequestFailure() {
     },
 
-    changeOldPhoneRequestStart(state, {payload}) {
+    changeOldPhoneRequestStart() {
     },
     changeOldPhoneRequestSuccess(state, {payload}) {
     },

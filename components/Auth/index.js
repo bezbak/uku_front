@@ -1,4 +1,5 @@
 import React, {useRef, useState} from "react";
+import {useRouter} from "next/router";
 import { useDispatch, useSelector} from 'react-redux';
 import {Form, Field} from 'react-final-form'
 import PhoneInput, {
@@ -6,15 +7,14 @@ import PhoneInput, {
   isPossiblePhoneNumber
 } from 'react-phone-number-input'
 import pathnames from "../../constants/pathnames";
+
+
 import {actions} from '../../store/users/slice';
-
-
 import useIsMobile from "../../public/hooks/useIsMobile";
 import NavLink from "../NavLink";
 import CheckedIcon from '../../public/icons/checked.svg'
 import CheckBoxIcon from '../../public/icons/checkBox.svg'
 import styles from './styles.module.scss'
-import {useRouter} from "next/router";
 
 const AuthForm = () => {
   const refLogin = useRef()
@@ -74,7 +74,7 @@ const AuthForm = () => {
       <div className={styles.sectionAuth__formContent}>
         <div className={styles.sectionAuth__formContent__headline}>
         <span className={styles.sectionAuth__formContent__headline__login}>
-          {is_profile_completed  ? 'Вход' : 'Введите новый номер'}
+          {!is_profile_completed  ? 'Вход' : 'Введите новый номер'}
         </span>
           <NavLink url={'/'}>
             <span className={styles.sectionAuth__formContent__headline_cancel}>

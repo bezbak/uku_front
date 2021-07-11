@@ -2,7 +2,6 @@ import {put, call, select, takeEvery} from 'redux-saga/effects';
 import isEmpty from "lodash/isEmpty";
 import api from '../../public/lib/api';
 import {actions} from './slice';
-import {actions as toast} from "../toast/slice";
 
 
 const getToken = (store) => store.auth.token
@@ -35,10 +34,7 @@ const checkException = (response) => {
   }
   return response;
 };
-const contentTypeResponseMapping = {
-  'application/zip': true,
-  'application/ms-excel': true,
-};
+
 const parseJSON = (response) => {
   const contentType = response.headers.get('content-type');
   if (isEmpty(contentType)) return response;
@@ -59,19 +55,6 @@ function apiGet(url, token) {
   return response
 }
 
-const apiPatch = (url, values, token) =>
-  fetch(`http://uku.kg/api/v1/${url}`, {
-    method: 'PATCH',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Token ' + token,
-    },
-    body: JSON.stringify(values),
-  })
-    .then(checkStatus)
-    .then(checkException)
-    .then(parseJSON);
 
 function* profileRequest() {
   try {
@@ -85,17 +68,12 @@ function* profileRequest() {
   }
 }
 
-function* updateProfileRequest({payload}) {
-  const {value,callback} = payload;
+function* updateProfileRequest() {
   try {
-    const token = yield select(getToken)
-    const response = yield call(apiPatch, 'account/profile/update/',value,token);
+    const response = yield call(api.put, 'account/profile/update');
     yield put(actions.updateProfileRequestSuccess(response));
-    yield put(toast.openRequestStatusSuccessSnackbar('Профиль успешно обновлены!'))
-    yield call(callback);
   } catch (e) {
     yield put(actions.updateProfileRequestFailure(e));
-    yield call(callback, e);
   }
 }
 
@@ -110,17 +88,12 @@ function* avatarRequest() {
   }
 }
 
-function* updateAvatarRequest({payload}) {
-  const {value,callback} = payload;
+function* updateAvatarRequest() {
   try {
-    const token = yield select(getToken)
-    const response = yield call(apiPatch, 'account/avatar/', value, token);
-    yield put(actions.updateAvatarRequestSuccess(response));
-    yield put(toast.openRequestStatusSuccessSnackbar('Профиль успешно обновлены!'))
-    yield call(callback);
+    const response = yield call(api.patch, 'account/avatar/');
+    yield put(actions.updateAvatarGetRequestSuccess(response));
   } catch (e) {
-    yield put(actions.updateAvatarRequestFailure(e));
-    yield call(callback, e);
+    yield put(actions.updateAvatarGetRequestFailure(e));
   }
 }
 
@@ -161,7 +134,7 @@ export default function* userProfileSagas() {
   yield takeEvery(`${actions.profileRequestStart}`, profileRequest);
   yield takeEvery(`${actions.updateProfileRequestStart}`, updateProfileRequest);
   yield takeEvery(`${actions.avatarGetRequestStart}`, avatarRequest);
-  yield takeEvery(`${actions.updateAvatarRequestStart}`, updateAvatarRequest);
+  yield takeEvery(`${actions.updateAvatarGetRequestStart}`, updateAvatarRequest);
   yield takeEvery(`${actions.publicationRequestStart}`, publicationRequest);
   yield takeEvery(`${actions.deletePublicationRequestStart}`, deletePublicationRequest);
   yield takeEvery(`${actions.feedRequestStart}`, feedRequest);
