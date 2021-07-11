@@ -1,6 +1,6 @@
 import {put, call, select, takeEvery} from 'redux-saga/effects';
 import isEmpty from "lodash/isEmpty";
-import api from '../../lib/api';
+import api from '../../public/lib/api';
 import {actions} from './slice';
 
 
@@ -109,11 +109,10 @@ function* feedRequest() {
 }
 
 function* publicationRequest() {
-
+  console.log('alo')
   try {
     const token = yield select(getToken)
-    console.log(token)
-    const response = yield call(apiGet, 'account/profile/publication/', token);
+    const response = yield call(apiGet, 'account/profile/publication/','22fe71db10e282fffa13868991b91cc5cfedb44b');
     yield put(actions.publicationRequestSuccess(response));
   } catch (e) {
     yield put(actions.publicationRequestFailure(e));

@@ -1,8 +1,9 @@
 import {put, call, takeEvery} from 'redux-saga/effects';
-import api from '../../lib/api';
-import {parseSubmissionError} from '../../lib/utils/store/sagas';
+import api from '../../public/lib/api';
+import {parseSubmissionError} from '../../public/lib/utils/store/sagas';
 import {actions} from './slice';
 
+const getToken = (store) => store.auth.token
 
 function* categoryPublicationRequest({payload}) {
   const {id, callback} = payload;

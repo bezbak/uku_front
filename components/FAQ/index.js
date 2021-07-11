@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {actions} from "../../public/store/system/slice";
+import {actions} from "../../store/system/slice";
 import Collapse from "../Collapse";
 import styles from './styles.module.scss'
 

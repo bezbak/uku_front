@@ -2,26 +2,25 @@ import React from 'react';
 import Head from 'next/head';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import {ToastProvider, useToasts} from 'react-toast-notifications'
-import SwiperCore, {Navigation, Pagination, Scrollbar, A11y} from 'swiper';
-import {wrapper} from '../public/store/index';
-import {actions} from '../public/store/main/slice';
+import SwiperCore, {Navigation,Autoplay, Pagination, Scrollbar, A11y} from 'swiper';
+import {wrapper} from '../store/index';
+import {actions} from '../store/main/slice';
 import '../public/styles/global.scss'
 import '../public/styles/phoneInput.scss'
 import {setCookie} from '../public/lib/utils/auth';
 import 'swiper/components/pagination/pagination.scss';
-import {actions as toastAction} from "../public/store/toast/slice";
+import {actions as toastAction} from "../store/toast/slice";
 
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
-
-function LoadDiffData() {
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    dispatch(actions.loadDifferentData());
-  }, []);
-
-  return null;
-}
+SwiperCore.use([Navigation, Pagination, Autoplay,Scrollbar, A11y]);
+// function LoadDiffData() {
+//   const dispatch = useDispatch();
+//
+//   React.useEffect(() => {
+//     dispatch(actions.loadDifferentData());
+//   }, []);
+//
+//   return null;
+// }
 
 function Toast () {
   const {addToast} = useToasts();
@@ -62,7 +61,7 @@ function App({Component, pageProps}) {
         />
       </Head>
       <Toast/>
-      {pageProps?.isAuthenticated && <LoadDiffData/>}
+      {/*{pageProps?.isAuthenticated && <LoadDiffData/>}*/}
       <Component {...pageProps} />
     </ToastProvider>
   );

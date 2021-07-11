@@ -32,7 +32,7 @@ export const makeStore = (context) => {
     reducer: reducers,
     middleware,
     preloadedState: context,
-    devTools: isDev && isBrowser,
+    devTools: true,
   });
 
   store.sagaTask = sagaMiddleware.run(sagas);

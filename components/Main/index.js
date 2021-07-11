@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import styles from './styles.module.scss'
 import Card from "../Card";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import {actions} from "../../public/store/profile/slice";
+import {actions} from "../../store/profile/slice";
 
 const sliderData = [
   {

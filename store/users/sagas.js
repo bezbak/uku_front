@@ -1,11 +1,12 @@
 import isEmpty from "lodash/isEmpty";
-import {put, call, takeEvery, select} from 'redux-saga/effects';
-import {parseSubmissionError} from '../../lib/utils/store/sagas';
-import api from '../../lib/api';
+import {call, put, select, takeEvery} from 'redux-saga/effects';
+import {parseSubmissionError} from '../../public/lib/utils/store/sagas';
+import api from '../../public/lib/api';
 import {actions as toast} from '../toast/slice';
 import {actions} from './slice';
 
 const getToken = (store) => store.auth.token
+const getPhone = (store) => store.auth.phone
 
 const HTTP_INTERNAL_SERVER_ERROR_CODE = 500;
 const checkStatus = (response) => {
@@ -36,10 +37,12 @@ const checkException = (response) => {
   }
   return response;
 };
+
 const contentTypeResponseMapping = {
   'application/zip': true,
   'application/ms-excel': true,
 };
+
 const parseJSON = (response) => {
   const contentType = response.headers.get('content-type');
   if (isEmpty(contentType)) return response;
@@ -47,17 +50,31 @@ const parseJSON = (response) => {
   return response.json();
 };
 
+const apiGet = (url, token) => {
+  return fetch(`http://uku.kg/api/v1/${url}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Token ' + token,
+    },
+  }).then(checkStatus)
+    .then(checkException)
+    .then(parseJSON)
+}
+
 function apiPost(url, values, token) {
-  const response = fetch(`http://uku.kg/api/v1/${url}`, {
+  return fetch(`http://uku.kg/api/v1/${url}`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Token' + token,
+      'Authorization': 'Token ' + token,
     },
     body: JSON.stringify(values)
-  })
-  return response
+  }).then(checkStatus)
+    .then(checkException)
+    .then(parseJSON)
 }
 
 const apiPatch = (url, values, token) =>
@@ -76,13 +93,12 @@ const apiPatch = (url, values, token) =>
 
 
 function* phoneRequest({payload}) {
-  const {value, callback, title} = payload;
+  const {value, callback} = payload;
   try {
     const response = yield call(api.post, 'account/auth/', {data: value});
     yield put(actions.userPhoneNumber(value));
     yield put(actions.successMessage(response.message));
     yield put(actions.phoneRequestSuccess(response));
-    yield put(actions.changePhoneTitle(title));
     if (response.message === "Сообщение отправлено" || response.message === "User создан! Сообщение отправлено") {
       yield put(toast.openRequestStatusSuccessSnackbar(`${response.message} на номеру ${value.phone}`))
       yield call(callback);
@@ -96,9 +112,28 @@ function* phoneRequest({payload}) {
   }
 }
 
-function* conformCodeRequest({payload}) {
-  const {values, callback} = payload;
+function* sendSmsToOldPhoneRequest({payload}) {
+  const {callback} = payload;
   try {
+    const token = yield select(getToken)
+    const response = yield call(apiGet, 'account/send-sms-to-old-phone/', token);
+    yield put(actions.changePhoneTitle("oldPhone"));
+    yield put(actions.sendSmsToOldPhoneRequestSuccess(response));
+    yield put(toast.openRequestStatusSuccessSnackbar(
+        `${response.message}`))
+    yield call(callback);
+  } catch (e) {
+    yield put(toast.openRequestStatusErrorSnackbar(`${e.message}`))
+    yield put(actions.sendSmsToOldPhoneRequestFailure(e));
+    yield call(callback, e);
+  }
+}
+
+function* conformCodeRequest({payload}) {
+  const {value, callback} = payload;
+  try {
+    const phone = yield select(getPhone)
+    const values =Object.assign(value, phone)
     const response = yield call(api.post, 'account/login-confirm/', {data: values});
     console.log(response)
     yield put(actions.conformCodeRequestSuccess(response));
@@ -115,35 +150,11 @@ function* conformCodeRequest({payload}) {
 
 }
 
-function* newPhoneConformCodeRequest({payload}) {
-  const {value, callback} = payload;
-  try {
-    const auth = yield select(getToken)
-    const response = yield call(apiPost, 'account/new-phone-conform/', value, auth.token);
-    console.log(response)
-    yield put(actions.newPhoneCodeRequestSuccess(response));
-    yield put(toast.openRequestStatusSuccessSnackbar(response.message))
-    yield call(callback);
-  } catch (e) {
-    console.log(e)
-    if (e.message === "Неверный код") {
-      yield put(toast.openRequestStatusErrorSnackbar(e.message))
-    }
-    yield put(toast.openRequestStatusErrorSnackbar(`Не правильной номер телефона или не заполнено поля номер телефона `))
-
-    yield put(actions.newPhoneCodeRequestFailure(e));
-    yield call(callback, parseSubmissionError(e));
-  }
-
-}
-
 function* oldPhoneConformCodeRequest({payload}) {
   const {value, callback} = payload;
-  console.log(value)
   try {
-    const auth = yield select(getToken)
-    const response = yield call(apiPost, 'account/old-phone-confirm/', value, auth.token);
-    console.log(response)
+    const token = yield select(getToken)
+    const response = yield call(apiPost, 'account/old-phone-confirm/', value, token);
     yield put(actions.oldPhoneCodeRequestSuccess(response));
     yield put(toast.openRequestStatusSuccessSnackbar(response.message))
     yield call(callback);
@@ -151,9 +162,28 @@ function* oldPhoneConformCodeRequest({payload}) {
     if (e.message === "Неверный код") {
       yield put(toast.openRequestStatusErrorSnackbar(e.message))
     }
-    yield put(toast.openRequestStatusErrorSnackbar(`Не правильной номер телефона или не заполнено поля номер телефона `))
+    yield put(toast.openRequestStatusErrorSnackbar(e.message));
     yield put(actions.oldPhoneCodeRequestFailure(e));
-    yield call(callback, parseSubmissionError(e));
+    yield call(callback,e);
+  }
+
+}
+
+function* newPhoneConformCodeRequest({payload}) {
+  const {value, callback} = payload;
+  try {
+    const token = yield select(getToken)
+    const response = yield call(apiPost, 'account/new-phone-conform/', value, token);
+    yield put(actions.newPhoneCodeRequestSuccess(response));
+    yield put(toast.openRequestStatusSuccessSnackbar(response.message))
+    yield call(callback);
+  } catch (e) {
+    if (e.message === "Неверный код") {
+      yield put(toast.openRequestStatusErrorSnackbar(e.message))
+    }
+    yield put(toast.openRequestStatusErrorSnackbar(e.message))
+    yield put(actions.newPhoneCodeRequestFailure(e));
+    yield call(callback);
   }
 
 }
@@ -161,23 +191,19 @@ function* oldPhoneConformCodeRequest({payload}) {
 function* changeOldPhoneRequest({payload}) {
   const {value, callback} = payload;
   try {
-    const response = yield call(api.post, 'account/change-old-phone/', {data: value});
-    console.log(response)
-    yield put(actions.userPhoneNumber(value));
+    const token = yield select(getToken)
+    const response = yield call(apiPost, 'account/change-old-phone/',  value, token);
     yield put(actions.changeOldPhoneRequestSuccess(response));
-    if (response.message === "Сообщение отправлено") {
-      yield put(toast.openRequestStatusSuccessSnackbar(
-        `${response.message} на номеру ${value.phone}`)
-      )
-      yield call(callback);
-    } else {
-      yield put(toast.openRequestStatusSuccessSnackbar(response.message))
-    }
+    yield put(actions.userPhoneNumber(value));
+    console.log(response);
+    yield put(actions.changePhoneTitle("newPhone"));
+    yield put(toast.openRequestStatusSuccessSnackbar(response.message))
+    yield call(callback);
   } catch (e) {
     console.log(e)
     yield put(toast.openRequestStatusErrorSnackbar(`${e.message}`))
     yield put(actions.changeOldPhoneRequestFailure(e));
-    yield call(callback, parseSubmissionError(e));
+    yield call(callback, e);
   }
 
 }
@@ -222,6 +248,7 @@ export default function* userAuthSagas() {
   yield takeEvery(`${actions.phoneRequestStart}`, phoneRequest);
   yield takeEvery(`${actions.changeOldPhoneRequestStart}`, changeOldPhoneRequest);
   yield takeEvery(`${actions.conformCodeRequestStart}`, conformCodeRequest);
+  yield takeEvery(`${actions.sendSmsToOldPhoneRequestStart}`, sendSmsToOldPhoneRequest);
   yield takeEvery(`${actions.newPhoneConformCodeRequestStart}`, newPhoneConformCodeRequest);
   yield takeEvery(`${actions.oldPhoneConformCodeRequestStart}`, oldPhoneConformCodeRequest);
   yield takeEvery(`${actions.registrationRequestStart}`, registrationRequest);

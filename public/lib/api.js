@@ -44,13 +44,16 @@ const getCookie = (name) => {
 
 const isFormDataRequest = (data) => data instanceof FormData;
 
-const parseSettings = ({ method, data, headers, ...otherParams } = {}) => {
+const parseSettings = ({ method, data, token, headers, ...otherParams } = {} ) => {
+  console.log( token)
+  const tokens = token==="undefined"?'':token
   const isFormData = isFormDataRequest(data);
   const defaultHeaders = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin':'http://uku.kg/api/v1/',
-    'X-CSRFToken': getCookie('csrftoken'),
+    'Authorization': 'Token ' + tokens,
+
   };
   //
   // Удаляем content-type, что бы браузер автоматически его подобрал

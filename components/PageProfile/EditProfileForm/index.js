@@ -9,7 +9,7 @@ import Modal from "../../UI/Modal";
 import NavLink from "../../NavLink";
 import pathnames from "../../../constants/pathnames";
 import UserPhoneEdit from '../../../public/icons/Edit.svg'
-import {actions as authAction} from "../../../public/store/users/slice";
+import {actions as authAction} from "../../../store/users/slice";
 import BackArrow from '../../../public/icons/backArrow.svg'
 import ImgIcon from '../../../public/icons/img.svg'
 import styles from './styles.module.scss';
@@ -85,7 +85,6 @@ const EditProfileForm = ({user = false}) => {
 
   }
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const confCodeRequest = (payload) => dispatch(authAction.conformCodeRequestStart(payload));
   const userPhone = useSelector((store) => store.auth?.phone);
   const onSubmit = (value) => console.log(value)
 
@@ -93,23 +92,21 @@ const EditProfileForm = ({user = false}) => {
     console.log(value)
   }
 
-  const phoneRequest = (payload) => dispatch(authAction.phoneRequestStart(payload));
+  const sendSmsToOldPhone = (payload) => dispatch(authAction.sendSmsToOldPhoneRequestStart(payload));
 
   const changePhoneNumber = () => {
     setIsModalOpen(false)
-    new Promise((resolve) => {
-      phoneRequest({
-        value: userPhone,
-        title: "oldPhone",
+    return new Promise((resolve) => {
+      sendSmsToOldPhone({
         callback: (response) => {
+          console.log(response)
           if (!response) {
-            push(pathnames.codeConfirmation);
+           setTimeout(()=> push(pathnames.codeConfirmation),2000)
           }
           resolve(response);
         },
       });
     })
-    push(pathnames.codeConfirmation);
   }
   return (
     <>
@@ -129,7 +126,6 @@ const EditProfileForm = ({user = false}) => {
             onSubmit={onChangeAvatar}
             render={({handleSubmit, values, submitting, form, pristine}) => (
               <form onSubmit={handleSubmit}>
-                {console.log(values)}
                 <Field
                   name="avatar"
                   component={Avatar}

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import CategoryNavbar from "../CategoryNavbar";
 import ComponentAds from "../Ads";
 import Container from "../../containers";
-import {actions} from "../../public/store/category/slice";
+import {actions} from "../../store/category/slice";
 import {useDispatch} from "react-redux";
 
 

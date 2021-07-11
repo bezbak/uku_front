@@ -22,7 +22,6 @@ const CategoryNavbar = ({setSelectedCategory}) => {
         </NavCollapse>
       )
     })}
-  console.log(categories)
   return(
     <div className={styles.navbar}>
       <ul className={styles.navbar__category}>

@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {parseMarkdown} from "../../public/lib/parser";
-import {actions} from "../../public/store/system/slice";
+import {actions} from "../../store/system/slice";
 import styles from './styles.module.scss'
 
 const TermsOfUse = () => {
@@ -10,7 +10,6 @@ const TermsOfUse = () => {
     dispatch(actions.termsOfUseRequestStart());
   })
   const termsOfUse = useSelector((store) => store.system.termsOfUse);
-  console.log(termsOfUse)
   return (
     <div className={styles.termsOfUse}>
       <div className={styles.termsOfUse__headline}>

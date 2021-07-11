@@ -4,7 +4,7 @@ import SwiperCard from "../Swiper";
 import Button from "../Button";
 import Modal from "../UI/Modal";
 import pathnames from "../../constants/pathnames";
-import {actions} from "../../public/store/profile/slice";
+import {actions} from "../../store/profile/slice";
 
 import EyeIcon from '../../public/icons/eye.svg'
 import EditIcon from '../../public/icons/Edit.svg'
@@ -24,11 +24,9 @@ const Card = ({slideData, publication, setToEditPublicationId, setEditPublicatio
   const DeletePublication = (payload) => dispatch(actions.deletePublicationRequestStart(payload));
   const DeleteUserPublication = (idPublication) => {
     return new Promise((resolve) => {
-      console.log(idPublication)
       DeletePublication({
         idPublication,
         callback: (response) => {
-          console.log(response);
           if (!response) {
             push(pathnames.registration);
           } else {
@@ -39,7 +37,6 @@ const Card = ({slideData, publication, setToEditPublicationId, setEditPublicatio
     })
   }
   const callEditContent = (id) => {
-    console.log('djfjkdvjfbgvb')
     setToEditPublicationId(id);
     setEditPublication(true)
     setIsModalOpen(true)

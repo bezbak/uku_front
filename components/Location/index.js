@@ -4,7 +4,7 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import classNames from "classnames";
 import Button from "../Button";
 import Modal from "../UI/Modal";
-import {actions} from "../../public/store/locations/slice";
+import {actions} from "../../store/locations/slice";
 import CloseIcon from '../../public/icons/CloseIcon.svg'
 import ArrowIcon from '../../public/icons/ArrowIcon.svg'
 import styles from './styles.module.scss'

@@ -21,7 +21,6 @@ const Collapse = ({className, containerClassName, titleClassName, descriptionCla
 
   React.useEffect(() => {
     const minHeight = getHeight(titleRef.current);
-    console.log(minHeight)
     if (isOpen) {
       animatedHeight(collapseRef.current, 'auto', refreshScrollTrigger);
     } else {

@@ -10,7 +10,7 @@ import Location from "../Location";
 import AuthSubmitError from "../Auth/AuthSubmitError";
 import useIsMobile from "../../out/hooks/useIsMobile";
 import pathnames from "../../constants/pathnames";
-import {actions} from "../../public/store/users/slice";
+import {actions} from "../../store/users/slice";
 import style from "./styles.module.scss";
 
 const RegistrationForm = () => {
@@ -31,12 +31,10 @@ const RegistrationForm = () => {
       birth_date:value.birth_date
 
     }
-    console.log(values)
     return new Promise((resolve) => {
       registrationRequest({
         values,
         callback: (response) => {
-          console.log("response", response)
           if (!response) {
             push(pathnames.main);
           } else {

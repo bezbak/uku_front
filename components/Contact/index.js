@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import {actions} from "../../public/store/system/slice";
+import {actions} from "../../store/system/slice";
 import {parseMarkdown} from "../../public/lib/parser";
 
 import PhoneIcon from '../../public/icons/phone.svg'
@@ -16,7 +16,6 @@ const Contact = () => {
     dispatch(actions.contactInfoRequestStart());
   })
   const contactInfo = useSelector((store) => store.system.contact);
-  console.log(contactInfo)
   return (
     <div className={styles.contact}>
       <div className={styles.contact__headline}>

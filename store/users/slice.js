@@ -27,16 +27,16 @@ const userAuthSlice = createSlice({
     successMessage(state, {payload}) {
       state.responseMessage = payload
     },
-    phoneRequestStart() {
+    phoneRequestStart(state, {payload}) {
     },
     phoneRequestSuccess() {
     },
     phoneRequestFailure() {
     },
 
-    changeOldPhoneRequestStart() {
+    changeOldPhoneRequestStart(state, {payload}) {
     },
-    changeOldPhoneRequestSuccess() {
+    changeOldPhoneRequestSuccess(state, {payload}) {
     },
     changeOldPhoneRequestFailure() {
     },
@@ -48,7 +48,7 @@ const userAuthSlice = createSlice({
     oldPhoneRequestFailure() {
     },
 
-    conformCodeRequestStart() {
+    conformCodeRequestStart(state, {payload}) {
     },
     conformCodeRequestSuccess(state, {payload}) {
       state.is_profile_completed = payload.is_profile_completed
@@ -56,54 +56,56 @@ const userAuthSlice = createSlice({
         state.user_region_detail = payload.region_detail
     },
     conformCodeRequestFailure(payload) {
-      console.log(payload)
     },
 
     newPhoneConformCodeRequestStart() {
     },
     newPhoneCodeRequestSuccess(state, {payload}) {
-      state.is_profile_completed = payload.is_profile_completed
-      state.token = payload.token
     },
     newPhoneCodeRequestFailure(payload) {
-      console.log(payload)
     },
 
-    oldPhoneConformCodeRequestStart() {
+    sendSmsToOldPhoneRequestStart(state, {payload}) {
     },
-    oldPhoneCodeRequestSuccess() {
+    sendSmsToOldPhoneRequestSuccess(state,{payload}) {
+
+    },
+    sendSmsToOldPhoneRequestFailure() {
+    },
+
+    oldPhoneConformCodeRequestStart(state, {payload}) {
+    },
+    oldPhoneCodeRequestSuccess(state, {payload}) {
     },
     oldPhoneCodeRequestFailure(payload) {
-      console.log(payload)
     },
 
-    registrationRequestStart() {
+    registrationRequestStart(state, {payload}) {
     },
     registrationRequestSuccess(state, {payload}) {
-      // state.is_profile_completed = payload.is_profile_completed,
       state.user_region_detail = payload.region_detail
     },
     registrationRequestFailure(payload) {
     },
 
-    favoriteRequestStart() {
+    favoriteRequestStart(state, {payload}) {
     },
-    favoriteRequestSuccess() {
+    favoriteRequestSuccess(state, {payload}) {
     },
     favoriteRequestFailure() {
     },
 
 
-    followRequestStart() {
+    followRequestStart(state, {payload}) {
     },
-    followRequestSuccess() {
+    followRequestSuccess(state, {payload}) {
     },
     followRequestFailure() {
     },
 
-    searchRequestStart() {
+    searchRequestStart(state, {payload}) {
     },
-    searchRequestSuccess() {
+    searchRequestSuccess(state, {payload}) {
     },
     searchRequestFailure() {
     },

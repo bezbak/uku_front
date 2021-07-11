@@ -7,7 +7,7 @@ import Main from "../components/Main";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import NavContainer from "../containers/NavContainer";
-import {actions as profileAction} from "../public/store/profile/slice";
+import {actions as profileAction} from "../store/profile/slice";
 
 function Home() {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function Home() {
       profileRequest()
       avatarRequest()
     }
-  })
+  }, [])
   return (
     <>
       <Meta/>

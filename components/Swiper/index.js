@@ -18,6 +18,8 @@ const SwiperCard = ({data}) => {
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
+        loop={true}
+        autoplay={{ delay: 3000 }}
         pagination={{
           clickable: true,
           el: `.${styles.swiperCard__sliderPagination}`,

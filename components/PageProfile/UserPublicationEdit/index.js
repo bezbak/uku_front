@@ -6,7 +6,7 @@ import CloseIcon from '../../../public/icons/CloseIcon.svg'
 import ImagesSelectIcon from '../../../public/icons/imgAddIcon.svg'
 import styles from './styles.module.scss'
 import {useDispatch} from "react-redux";
-import {actions} from "../../../public/store/publication/slice";
+import {actions} from "../../../store/publication/slice";
 
 const ImageSelectInput = ({input, setSelectedImages}) => {
   const onChangeImg = (e) => {
@@ -39,7 +39,6 @@ const UserPublicationEdit = ({setEditPublication}) => {
       userCreatePublicationRequest({
         values,
         callback: (response) => {
-          console.log("Aizada");
           if (!response) {
             console.log(response)
           } else {
