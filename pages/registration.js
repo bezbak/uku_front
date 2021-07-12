@@ -1,6 +1,7 @@
 import Meta from "../components/Meta";
 import Login from "../components/Login";
 import RegistrationForm from "../components/RegistrationForm";
+import {redirectToLogin} from "../lib/utils/auth";
 
 function Registration() {
   return (
@@ -14,5 +15,7 @@ function Registration() {
     </>
   )
 }
-
+// export async function getServerSideProps({ req }) {
+//   return redirectToLogin(req);
+// }
 export default Registration;

@@ -12,7 +12,7 @@ const ImageSelectInput = ({input, setSelectedImages}) => {
   const onChangeImg = (e) => {
     input.onChange(e.target.files)
     for (let i = 0; i < e.target.files.length; i++) {
-      setImages(selectedImages => [...selectedImages, URL.createObjectURL(e.target.files[i])])
+      // setImages(selectedImages => [...selectedImages, URL.createObjectURL(e.target.files[i])])
       setSelectedImages(selectedImages => [...selectedImages, URL.createObjectURL(e.target.files[i])])
     }
   }

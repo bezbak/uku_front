@@ -6,10 +6,12 @@ import styles from './styles.module.scss'
 
 const FAQ = () => {
   const dispatch = useDispatch()
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(actions.faqInfoRequestStart());
   })
+
   const faq = useSelector((store) => store.system.faq);
+
   return (
     <div className={styles.faq}>
       <div className={styles.faq__headline}>

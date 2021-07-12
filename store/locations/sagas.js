@@ -1,5 +1,5 @@
 import {put, call, takeEvery} from 'redux-saga/effects';
-import api from '../../public/lib/api';
+import api from '../../lib/api';
 import {actions} from './slice';
 
 

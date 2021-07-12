@@ -21,12 +21,15 @@ const Location = ({modalOpen, getAddress}) => {
   const slideNext = () => swiperRef.current.slideNext();
   const slidePrev = () => swiperRef.current.slidePrev();
   const locationRequest = () => dispatch(actions.locationRequestStart());
+
      useEffect(()=>{
        locationRequest()
      },[])
 
   const modalCloseHandle = () => setIsModalOpen(false)
+
   const region = useSelector(state => state.location?.locations);
+
   function RegionsInRegion(children, name, id) {
     setAddress(address => [...address, name])
     setAddressID(id)
@@ -61,6 +64,7 @@ const Location = ({modalOpen, getAddress}) => {
       address.pop()
     }, 500);
   }
+
   return (
 
     <Modal modalOpen={isModalOpen} >

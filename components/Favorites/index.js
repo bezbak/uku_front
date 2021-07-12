@@ -1,22 +1,21 @@
-import React, {useEffect} from "react";
+import React from "react";
 import Card from "../Card";
-import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import {actions} from "../../store/profile/slice";
+
 import styles from './styles.module.scss'
 
 const sliderData = [
   {
     id: 1,
-    name: "Фывова Александра",
-    address: 'Москва',
-    description: 'Want to know more? \n' +
-      'Please reach out to know more details on our ' +
-      'innovations and to arrange for a meeting with our ' +
-      'innovation expert.',
+    name:"Фывова Александра",
+    description:'Want to know more? \n' +
+      'Please reach out to know more ' +
+      'details on our innovations and to arrange for a ' +
+      'meeting with our innovation expert.',
+    src: 'images/lenta.png',
     commentCount: 1,
-    data: 8,
+    data:8,
     altInfo: 'shoe',
-    slider: [
+    slider :[
       {
         id: 2,
         src: 'images/lenta.png',
@@ -52,7 +51,7 @@ const sliderData = [
   {
     id: 4,
     src: 'images/lenta.png',
-    altInfo: 'shoe', slider: [
+    altInfo: 'shoe',  slider :[
       {
         id: 2,
         src: 'images/lenta.png',
@@ -79,7 +78,7 @@ const sliderData = [
     id: 5,
     src: 'images/lenta.png',
     altInfo: 'shoe',
-    slider: [
+    slider :[
       {
         id: 2,
         src: 'images/lenta.png',
@@ -103,33 +102,22 @@ const sliderData = [
     ]
   }
 ]
-
-const Main = ({title = "Лента"}) => {
-  const dispatch = useDispatch();
-  const is_profile_completed = useSelector((store) => store.auth?.is_profile_completed);
-  const feedRequest = () => dispatch(actions.feedRequestStart());
-  useEffect(() => {
-    if (is_profile_completed)
-      feedRequest()
-  }, [is_profile_completed])
-
-  const userPublicationFeed = useSelector((store) => store.profile.feed, shallowEqual);
-
+const ComponentFavorites = ({title, data, publication}) => {
   return (
-    <div className={styles.main}>
-      <div className={styles.main__title}>
+    <div className={styles.ads}>
+      <div className={styles.ads__title}>
         <span>
           {title}
         </span>
       </div>
-      <div className={styles.main__container}>
-        {is_profile_completed &&
-        userPublicationFeed?.results?.map(slide =>
-          <Card slideData={slide} key={slide.id} publication={false}/>
-        )
+      <div className={styles.ads__container}>
+        {
+          sliderData.map(slide =>
+            <Card slideData={slide} key={slide.id} publication/>
+          )
         }
       </div>
     </div>
   )
 }
-export default Main;
+export default ComponentFavorites;

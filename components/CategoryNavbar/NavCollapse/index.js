@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import {gsap, refreshScrollTrigger} from '../../../public/lib/gsap';
-import {getHeight} from '../../../public/lib/utils';
+import {gsap, refreshScrollTrigger} from '../../../lib/gsap';
+import {getHeight} from '../../../lib/utils';
 import CollapseIcon from '../../../public/icons/collapse.svg'
 import styles from './styles.module.scss';
 

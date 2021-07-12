@@ -84,8 +84,7 @@ const Card = ({slideData, publication, setToEditPublicationId, setEditPublicatio
           </div>
           <div className={styles.card__footer__timeAndView}>
           <span className={styles.card__footer__timeAndView_time}>
-            {slideData?.created_at} часов назад
-          </span>
+            {slideData?.created_at}           </span>
             <span className={styles.card__footer__timeAndView_view}>
            <EyeIcon/>{slideData.viewed}
           </span>

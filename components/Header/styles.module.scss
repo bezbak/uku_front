@@ -127,11 +127,11 @@
         }
 
         &_active {
-          color: red;
+          color: red !important;
 
           svg {
             path {
-              stroke: red;
+              stroke: red !important;
             }
           }
         }

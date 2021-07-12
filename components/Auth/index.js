@@ -1,6 +1,6 @@
 import React, {useRef, useState} from "react";
-import {useRouter} from "next/router";
 import { useDispatch, useSelector} from 'react-redux';
+import {useRouter} from "next/router";
 import {Form, Field} from 'react-final-form'
 import PhoneInput, {
   isValidPhoneNumber,
@@ -10,7 +10,7 @@ import pathnames from "../../constants/pathnames";
 
 
 import {actions} from '../../store/users/slice';
-import useIsMobile from "../../public/hooks/useIsMobile";
+import useIsMobile from "../../hooks/useIsMobile";
 import NavLink from "../NavLink";
 import CheckedIcon from '../../public/icons/checked.svg'
 import CheckBoxIcon from '../../public/icons/checkBox.svg'
@@ -23,7 +23,6 @@ const AuthForm = () => {
   const dispatch = useDispatch();
   const [privacyChecked, setPrivacyChecked] = useState(true)
   const is_profile_completed = useSelector((state) => state.auth.is_profile_completed);
-  const token = useSelector((state) => state.auth.token);
   const phoneRequest = (payload) => dispatch(actions.phoneRequestStart(payload));
   const changeOldPhoneRequest= (payload) => dispatch(actions.changeOldPhoneRequestStart(payload));
 
@@ -134,7 +133,7 @@ const AuthForm = () => {
               </Field>
               <button type="submit"
                       className={styles.sectionAuth__formContent__submitButton}
-                      disabled={(!isValidPhoneNumber(`${values.phone}`) || privacyChecked)}>Далее
+                      disabled={(!isValidPhoneNumber(`${values.phone}`) || privacyChecked)}> {!is_profile_completed  ? 'Далее' : 'Далее Сменить номер'}
               </button>
             </form>
           )}

@@ -2,20 +2,27 @@ import Meta from "../components/Meta";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import PageSearch from "../components/PageSearch";
+import PageFavorites from "../components/PageFavorites";
+import NavContainer from "../containers/NavContainer";
+import React from "react";
+import {redirectToLogin} from "../lib/utils/auth";
 
-function Search() {
+function Favorites() {
   return (
     <>
       <Meta/>
       <main className="home">
         <Header/>
-        <Nav/>
-        <PageSearch/>
+        <NavContainer>
+          <Nav/>
+        </NavContainer>
+        <PageFavorites/>
         <Footer className={"footer"}/>
       </main>
     </>
   )
 }
-
-export default Search
+// export async function getServerSideProps({ req }) {
+//   return redirectToLogin(req);
+// }
+export default Favorites

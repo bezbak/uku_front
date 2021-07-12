@@ -7,7 +7,7 @@ import classNames from 'classnames'
 import {actions} from '../../store/users/slice';
 import pathnames from "../../constants/pathnames";
 import NavLink from "../NavLink";
-import useIsMobile from "../../public/hooks/useIsMobile";
+import useIsMobile from "../../hooks/useIsMobile";
 import styles from "./styles.module.scss";
 
 const CodeConfirmation =()=>{
@@ -33,6 +33,14 @@ const CodeConfirmation =()=>{
         phoneRequest({
           value: user.phone,
           callback: (response) => {
+            if (response.token) {
+              if (response?.is_profile_completed) {
+                console.log('---------conform')
+                push(pathnames.main)
+              } else {
+                push(pathnames.registration)
+              }
+            }
             resolve(response);
             start(60 * 1000)
           },
@@ -88,9 +96,6 @@ const CodeConfirmation =()=>{
   //   });
   // })
 
-  // const isChangeOldPhone = useSelector((store) => store.auth.isChangeOldPhone);
-  // const user_region_detail = useSelector((store) => store.auth.user_region_detail);
-  // const token = useSelector((store) => store.auth.token);
   const senConfCode = (value) => {
     if (user.isChangeOldPhone==="phone") {
       return LoginConform(value)
@@ -138,8 +143,6 @@ const CodeConfirmation =()=>{
           onSubmit={senConfCode}
           render={({handleSubmit, values, submitting, form, pristine}) => (
             <form onSubmit={handleSubmit}>
-              {/*<AuthSubmitError/>*/}
-              {/*<ResponseMessage/>*/}
               <Field
                 name="confirmation_code"
                 component="input"

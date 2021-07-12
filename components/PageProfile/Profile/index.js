@@ -1,7 +1,5 @@
 import React from "react";
-import {shallowEqual, useSelector} from "react-redux";
-import NavLink from "../../NavLink";
-import useNavigationMenu from "../../../public/hooks/useNavigationMenu";
+import useNavigationMenu from "../../../hooks/useNavigationMenu";
 import Button from "../../Button";
 import TelegramIcon from '../../../public/icons/telegram.svg'
 import WhatsAppIcon from '../../../public/icons/whatsApp.svg'

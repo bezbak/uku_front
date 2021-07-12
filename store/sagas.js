@@ -1,6 +1,7 @@
 import { all, fork } from 'redux-saga/effects';
 import authSagas from './users/sagas';
 import userProfileSagas from './profile/sagas';
+import userFavoriteSagas from './favorites/sagas';
 import locationSagas from './locations/sagas';
 import mainSagas from './main/sagas';
 // import extraSagas from '@store/extra/sagas';
@@ -16,6 +17,7 @@ const sagas = [
   publicationSagas,
   // extraSagas,
   authSagas,
+  userFavoriteSagas,
   systemSagas
 
 ];

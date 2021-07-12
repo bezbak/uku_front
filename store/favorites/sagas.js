@@ -1,6 +1,6 @@
 import {put, call, select, takeEvery} from 'redux-saga/effects';
 import isEmpty from "lodash/isEmpty";
-import api from '../../public/lib/api';
+import api from '../../lib/api';
 import {actions} from './slice';
 
 
@@ -56,86 +56,28 @@ function apiGet(url, token) {
 }
 
 
-function* profileRequest() {
+function* userAllFavoriteReques() {
   try {
     const token = yield select(getToken)
-    console.log(token)
-    const response = yield call(apiGet, 'account/profile/', token);
-    console.log(response)
-    yield put(actions.profileRequestSuccess(response));
+    const response = yield call(api.get, 'account/favorite/', token);
+    yield put(actions.userAllFavoriteRequestSuccess(response));
   } catch (e) {
-    yield put(actions.profileRequestFailure(e));
+    yield put(actions.userFavoriteRequestFailure(e));
   }
 }
 
-function* updateProfileRequest() {
-  try {
-    const response = yield call(api.put, 'account/profile/update');
-    yield put(actions.updateProfileRequestSuccess(response));
-  } catch (e) {
-    yield put(actions.updateProfileRequestFailure(e));
-  }
-}
-
-function* avatarRequest() {
+function* userFavoriteAccountRequest({id}) {
   try {
     const token = yield select(getToken)
-    console.log(token)
-    const response = yield call(apiGet, 'account/avatar/', token);
-    yield put(actions.avatarGetRequestSuccess(response));
+    const response = yield call(api.get, `/account/favorite/${id}`,token);
+    yield put(actions.userFavoriteAccountRequestSuccess(response));
   } catch (e) {
-    yield put(actions.avatarGetRequestFailure(e));
+    yield put(actions.userAllFavoriteAccountRequestFailure(e));
   }
 }
 
-function* updateAvatarRequest() {
-  try {
-    const response = yield call(api.patch, 'account/avatar/');
-    yield put(actions.updateAvatarGetRequestSuccess(response));
-  } catch (e) {
-    yield put(actions.updateAvatarGetRequestFailure(e));
-  }
-}
 
-function* feedRequest() {
-  try {
-    const token = yield select(getToken)
-    console.log(token)
-    const response = yield call(apiGet, 'account/profile/feed/', token);
-    yield put(actions.feedRequestSuccess(response));
-  } catch (e) {
-    yield put(actions.feedRequestFailure(e));
-  }
-}
-
-function* publicationRequest() {
-  console.log('alo')
-  try {
-    const token = yield select(getToken)
-    const response = yield call(apiGet, 'account/profile/publication/','22fe71db10e282fffa13868991b91cc5cfedb44b');
-    yield put(actions.publicationRequestSuccess(response));
-  } catch (e) {
-    yield put(actions.publicationRequestFailure(e));
-  }
-}
-
-function* deletePublicationRequest(token) {
-  const { id} = token
-
-  try {
-    const response = yield call(api.delete, `account/profile/publication/${id}`);
-    yield put(actions.deletePublicationRequestSuccess(response));
-  } catch (e) {
-    yield put(actions.deletePublicationRequestFailure(e));
-  }
-}
-
-export default function* userProfileSagas() {
-  yield takeEvery(`${actions.profileRequestStart}`, profileRequest);
-  yield takeEvery(`${actions.updateProfileRequestStart}`, updateProfileRequest);
-  yield takeEvery(`${actions.avatarGetRequestStart}`, avatarRequest);
-  yield takeEvery(`${actions.updateAvatarGetRequestStart}`, updateAvatarRequest);
-  yield takeEvery(`${actions.publicationRequestStart}`, publicationRequest);
-  yield takeEvery(`${actions.deletePublicationRequestStart}`, deletePublicationRequest);
-  yield takeEvery(`${actions.feedRequestStart}`, feedRequest);
+export default function* userFavoriteSagas() {
+  yield takeEvery(`${actions.userAllFavoriteRequestStart}`, userAllFavoriteReques);
+  yield takeEvery(`${actions.userFavoriteAccountRequestStart}`, userFavoriteAccountRequest);
 }

@@ -9,7 +9,6 @@ import NavContainer from "../../containers/NavContainer";
 import Card from "../Card";
 import UserPublicationEdit from "./UserPublicationEdit";
 import styles from './styles.module.scss'
-import EditProfileForm from "./EditProfileForm";
 
 function PageProfile() {
   const [editPublication, setEditPublication] = useState(false)
@@ -20,8 +19,10 @@ function PageProfile() {
   useEffect(() => {
     publicationRequest()
   },[])
+
   const userProfile = useSelector((store) => store.profile?.userProfile);
   const userPublication = useSelector((store) => store.profile.userPublications, shallowEqual);
+
   return (
     <>
       <NavContainer>
@@ -30,7 +31,6 @@ function PageProfile() {
       <Container>
         <div className={styles.profile__content}>
           <Profile user={userProfile}/>
-          <EditProfileForm/>
           {editPublication &&
           <UserPublicationEdit setEditPublication={setEditPublication} editPublicationId={toEditPublicationId}/>}
           {!editPublication &&

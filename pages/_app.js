@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Head from 'next/head';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import {ToastProvider, useToasts} from 'react-toast-notifications'
@@ -7,7 +7,7 @@ import {wrapper} from '../store/index';
 import {actions} from '../store/main/slice';
 import '../public/styles/global.scss'
 import '../public/styles/phoneInput.scss'
-import {setCookie} from '../public/lib/utils/auth';
+import {setCookie} from '../lib/utils/auth';
 import 'swiper/components/pagination/pagination.scss';
 import {actions as toastAction} from "../store/toast/slice";
 
@@ -27,7 +27,7 @@ function Toast () {
   const dispatch = useDispatch();
   const toast = useSelector((store) => store.toast, shallowEqual);
   const removeToast = () => dispatch(toastAction.removeSnackbar());
-  React.useEffect(() => {
+  useEffect(() => {
     if (toast.open) {
       addToast(
         toast.message, {
@@ -67,9 +67,5 @@ function App({Component, pageProps}) {
   );
 }
 
-// App.getInitialProps = async ({ ctx }) => {
-//   await setCookie(ctx);
-//   return {};
-// };
 
 export default wrapper.withRedux(App);

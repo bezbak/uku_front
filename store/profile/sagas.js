@@ -1,6 +1,6 @@
 import {put, call, select, takeEvery} from 'redux-saga/effects';
 import isEmpty from "lodash/isEmpty";
-import api from '../../public/lib/api';
+import api from '../../lib/api';
 import {actions} from './slice';
 import {actions as toast} from "../toast/slice";
 

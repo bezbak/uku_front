@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {actions} from "../../store/system/slice";
-import {parseMarkdown} from "../../public/lib/parser";
+import {parseMarkdown} from "../../lib/parser";
 
 import PhoneIcon from '../../public/icons/phone.svg'
 import TelegramIcon from '../../public/icons/telegram.svg'

@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {parseMarkdown} from "../../public/lib/parser";
+import {parseMarkdown} from "../../lib/parser";
 import {actions} from "../../store/system/slice";
 import styles from './styles.module.scss'
 

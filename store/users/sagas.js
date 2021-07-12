@@ -1,7 +1,7 @@
 import isEmpty from "lodash/isEmpty";
 import {call, put, select, takeEvery} from 'redux-saga/effects';
-import {parseSubmissionError} from '../../public/lib/utils/store/sagas';
-import api from '../../public/lib/api';
+import {parseSubmissionError} from '../../lib/utils/store/sagas';
+import api from '../../lib/api';
 import {actions as toast} from '../toast/slice';
 import {actions} from './slice';
 
@@ -49,7 +49,13 @@ const parseJSON = (response) => {
   if (contentTypeResponseMapping[contentType]) return response;
   return response.json();
 };
-
+const getCookie = (name) => {
+  const matches = document.cookie.match(
+    // eslint-disable-next-line no-useless-escape
+    new RegExp(`(?:^|; )${name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1')}=([^;]*)`)
+  );
+  return matches ? decodeURIComponent(matches[1]) : '';
+};
 const apiGet = (url, token) => {
   return fetch(`http://uku.kg/api/v1/${url}`, {
     method: 'GET',

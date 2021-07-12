@@ -1,67 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  userProfile:{},
-  feed:{},
-  userAvatar:'',
-  userPublications:{}
+  allFavorites:{},
+  favorite:{},
 };
 
-const userProfileSlice = createSlice({
+const userFavorites = createSlice({
   name: 'favorite',
   initialState,
   reducers: {
 
-    successMessage (state,{payload}) {
-      state.responseMessage = payload
+    userAllFavoriteRequestStart() {},
+    userAllFavoriteRequestSuccess(state,{payload}) {
+      state.allFavorites = payload
     },
+    userFavoriteRequestFailure() {},
 
-    profileRequestStart() {},
-    profileRequestSuccess(state,{payload}) {
-      state.userProfile = payload
+    userFavoriteAccountRequestStart() {},
+    userFavoriteAccountRequestSuccess(state,{payload}) {
+      state.favorite = payload
     },
-    profileRequestFailure() {},
-
-    updateProfileRequestStart() {},
-    updateProfileRequestSuccess(state,{payload}) {
-      state.profile = payload
-    },
-    updateProfileRequestFailure() {},
-
-    feedRequestStart() {},
-    feedRequestSuccess(state,{payload}) {
-      state.feed = payload
-    },
-    feedRequestFailure() {},
-
-    publicationRequestStart() {},
-    publicationRequestSuccess(state,{payload}) {
-      state.userPublications = payload
-    },
-    publicationRequestFailure() {},
-
-    deletePublicationRequestStart() {},
-    deletePublicationRequestSuccess(state,{payload}) {
-      state.userPublications = payload
-    },
-    deletePublicationRequestFailure() {},
+    userAllFavoriteAccountRequestFailure() {},
 
 
-
-    avatarGetRequestStart() {},
-    avatarGetRequestSuccess(state,{payload}) {
-      state.userAvatar = payload
-    },
-    avatarGetRequestFailure() {},
-
-    updateAvatarGetRequestStart() {},
-    updateAvatarGetRequestSuccess(state,{payload}) {
-      state.userAvatar = payload
-    },
-    updateAvatarGetRequestFailure() {},
   },
 });
 
-export const { actions } = userProfileSlice;
+export const { actions } = userFavorites;
 
-export default userProfileSlice.reducer;
+export default userFavorites.reducer;

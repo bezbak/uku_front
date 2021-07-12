@@ -1,4 +1,4 @@
-import { createLogger } from 'redux-logger';
+import  { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';

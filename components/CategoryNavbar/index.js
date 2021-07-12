@@ -1,8 +1,7 @@
 import React, {useState} from "react";
-import ArrowIcon from '../../public/icons/ArrowIcon.svg'
-import styles from './styles.module.scss';
-import NavCollapse from "./NavCollapse";
 import { useSelector} from "react-redux";
+import NavCollapse from "./NavCollapse";
+import styles from './styles.module.scss';
 
 const CategoryNavbar = ({setSelectedCategory}) => {
   const [categoryInChildCategory, setCategoryInChildCategory] = useState([])

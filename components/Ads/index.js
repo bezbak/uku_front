@@ -7,11 +7,9 @@ const sliderData = [
   {
     id: 1,
     name:"Фывова Александра",
-    description:'height: 34px;\n' +
-      'width: 336px;\n' +
-      'left: 0px;\n' +
-      'top: 24px;\n' +
-      'border-radius: nullpx;\n',
+    description:'TYPE, KIND, SORT, NATURE, DESCRIPTION,' +
+      ' CHARACTER mean a number of individuals thought of' +
+      ' as a group because of a common quality or qualities',
     src: 'images/lenta.png',
     commentCount: 1,
     data:8,

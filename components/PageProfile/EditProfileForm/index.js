@@ -3,7 +3,7 @@ import {useRouter} from "next/router";
 import {useDispatch, useSelector} from "react-redux";
 import {Field, Form} from "react-final-form";
 import classNames from "classnames";
-import useNavigationMenu from '../../../public/hooks/useNavigationMenu';
+import useNavigationMenu from '../../../hooks/useNavigationMenu';
 import Button from "../../Button";
 import Modal from "../../UI/Modal";
 import NavLink from "../../NavLink";
@@ -16,10 +16,13 @@ import ImgIcon from '../../../public/icons/img.svg'
 import styles from './styles.module.scss';
 
 const Avatar = ({input}) => {
+
   const {push} = useRouter();
   const dispatch = useDispatch();
   const [fileAddress, setFileAddress] = useState();
+
   const updateAvatarRequest = (payload) => dispatch(profileAction.updateAvatarRequestStart(payload));
+
   const onChangeImg = (e) => {
     input.onChange(e.target.value)
     const image = new Image();
@@ -30,9 +33,9 @@ const Avatar = ({input}) => {
     }
     return new Promise((resolve) => {
       updateAvatarRequest({
-        value:e.target.files[0].name,
+        value:e.target.value,
         callback: (response) => {
-          console.log(e.target.files[0].name)
+          console.log(e.target.value)
           if (!response) {
             setTimeout(()=> push(pathnames.codeConfirmation),2000)
           }
@@ -73,12 +76,15 @@ const EditProfileForm = ({user = false}) => {
   const [isLOgOutModal, setIsLOgOutModal] = useState(false);
   const [state, actions] = useNavigationMenu();
   const editProfileFormRef = React.useRef();
+
   React.useEffect(async () => {
     setInitialized(true);
   }, []);
+
   const closeNavigationMenu = () => {
     actions.update(!state);
   }
+
   React.useEffect(() => {
     function handleClickOutside(event) {
       if (editProfileFormRef.current && !editProfileFormRef.current.contains(event.target)) {
@@ -91,6 +97,7 @@ const EditProfileForm = ({user = false}) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [editProfileFormRef]);
+
   React.useEffect(() => {
     router.events.on('routeChangeStart', closeNavigationMenu);
 
@@ -98,10 +105,9 @@ const EditProfileForm = ({user = false}) => {
       router.events.off('routeChangeStart', closeNavigationMenu);
     }
   }, []);
+
   const onClick = (selector) => {
-
     closeNavigationMenu();
-
   }
   const updateProfileRequest = (payload) => dispatch(profileAction.updateProfileRequestStart(payload));
   const sendSmsToOldPhone = (payload) => dispatch(authAction.sendSmsToOldPhoneRequestStart(payload));
@@ -116,7 +122,6 @@ const EditProfileForm = ({user = false}) => {
       updateProfileRequest({
         value,
         callback: (response) => {
-          console.log(response)
           if (!response) {
             setTimeout(()=> push(pathnames.profile),2000)
           }
@@ -141,10 +146,12 @@ const EditProfileForm = ({user = false}) => {
       });
     })
   }
+
   const logOutAsk = () =>{
     setIsModalOpen(true)
     setIsLOgOutModal(true)
   }
+
   const logOut = () => {
     return new Promise((resolve) => {
       logoutRequest({
@@ -158,6 +165,7 @@ const EditProfileForm = ({user = false}) => {
       });
     })
   }
+
   return (
     <>
       <div ref={editProfileFormRef} className={classNames('no-scrollbar', styles.editProfileForm, {

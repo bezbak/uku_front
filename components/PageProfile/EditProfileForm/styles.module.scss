@@ -10,7 +10,7 @@
   transform: translate3d(-310%, 0, 0);
   pointer-events: none;
   position: fixed;
-  z-index: 2;
+  z-index: 4  ;
   height: calc(100vh);
   overflow: auto;
 
@@ -267,7 +267,7 @@
 
 @include respond-above(md) {
   .editProfileForm {
-    width: 28vw;
+    width: calc(303px + (100vw - 1166px) / 2);
     max-height: 100vh;
     background: #F1F1F1;
     display: flex;
@@ -276,6 +276,7 @@
     padding: 0;
 
     &_content {
+      margin-top: 166px;
       width: 303px;
       margin-left: auto;
       display: flex;

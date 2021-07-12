@@ -3,7 +3,7 @@ import {useRouter} from "next/router";
 import {shallowEqual, useSelector} from "react-redux";
 import classNames from "classnames";
 import NavLink from "../NavLink";
-import useIsMobile from "../../public/hooks/useIsMobile";
+import useIsMobile from "../../hooks/useIsMobile";
 import CloseIcon from '../../public/icons/CloseIcon.svg';
 import Menu from '../../public/icons/menu 1.svg';
 import SearchIcon from '../../public/icons/searchIcon.svg';
@@ -91,15 +91,15 @@ const Header = () => {
           <li className={styles.mobileMenu__navMenu__list}>
             <NavLink url='/search'
                      className={classNames(styles.mobileMenu__navMenu__list_link,
-              {[styles.mobileMenu__navMenu__list_link_active]:pathname==='search'})}
+              {[styles.mobileMenu__navMenu__list_link_active]:pathname==='/search'})}
                      onClick={()=>setIsMobileMenuOpen(false)}>
               <SearchIcon/>
               Поиск
             </NavLink>
           </li>
           <li className={styles.mobileMenu__navMenu__list}>
-            <NavLink url="/" className={classNames(styles.mobileMenu__navMenu__list_link,
-              {[styles.mobileMenu__navMenu__list_link_active]:pathname==='/'})}
+            <NavLink url="/favorites" className={classNames(styles.mobileMenu__navMenu__list_link,
+              {[styles.mobileMenu__navMenu__list_link_active]:pathname==='/favorites'})}
                      onClick={()=>setIsMobileMenuOpen(false)}
             >
               <HeartIcon/>
@@ -109,7 +109,7 @@ const Header = () => {
           {userProfile === '' ? <li className={classNames(styles.mobileMenu__navMenu__list)}>
               <NavLink url="/profile"
                        className={classNames(styles.mobileMenu__navMenu__list_link,
-                {[styles.mobileMenu__navMenu__list_link_active]: pathname === 'profile'})}
+                {[styles.mobileMenu__navMenu__list_link_active]: pathname === '/profile'})}
                        onClick={() => setIsMobileMenuOpen(false)}>
                 <LoginIcon/>
                 Profile
