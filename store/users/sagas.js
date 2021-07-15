@@ -4,8 +4,8 @@ import {parseSubmissionError} from '../../lib/utils/store/sagas';
 import api from '../../lib/api';
 import {actions as toast} from '../toast/slice';
 import {actions} from './slice';
+import Cookies from "js-cookie";
 
-const getToken = (store) => store.auth.token
 const getPhone = (store) => store.auth.phone
 
 const HTTP_INTERNAL_SERVER_ERROR_CODE = 500;
@@ -49,25 +49,6 @@ const parseJSON = (response) => {
   if (contentTypeResponseMapping[contentType]) return response;
   return response.json();
 };
-const getCookie = (name) => {
-  const matches = document.cookie.match(
-    // eslint-disable-next-line no-useless-escape
-    new RegExp(`(?:^|; )${name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1')}=([^;]*)`)
-  );
-  return matches ? decodeURIComponent(matches[1]) : '';
-};
-const apiGet = (url, token) => {
-  return fetch(`http://uku.kg/api/v1/${url}`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Token ' + token,
-    },
-  }).then(checkStatus)
-    .then(checkException)
-    .then(parseJSON)
-}
 
 function apiPost(url, values, token) {
   return fetch(`http://uku.kg/api/v1/${url}`, {
@@ -75,7 +56,7 @@ function apiPost(url, values, token) {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Token ' + token,
+      'Authorization': 'Token ' + token ? token :'',
     },
     body: JSON.stringify(values)
   }).then(checkStatus)
@@ -83,25 +64,10 @@ function apiPost(url, values, token) {
     .then(parseJSON)
 }
 
-const apiPatch = (url, values, token) =>
-  fetch(`http://uku.kg/api/v1/${url}`, {
-    method: 'PATCH',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Token ' + token,
-    },
-    body: JSON.stringify(values),
-  })
-    .then(checkStatus)
-    .then(checkException)
-    .then(parseJSON);
-
-
 function* phoneRequest({payload}) {
   const {value, callback} = payload;
   try {
-    const response = yield call(api.post, 'account/auth/', {data: value});
+    const response = yield call(apiPost, 'account/auth/', value);
     yield put(actions.userPhoneNumber(value));
     yield put(actions.successMessage(response.message));
     yield put(actions.phoneRequestSuccess(response));
@@ -121,8 +87,7 @@ function* phoneRequest({payload}) {
 function* sendSmsToOldPhoneRequest({payload}) {
   const {callback} = payload;
   try {
-    const token = yield select(getToken)
-    const response = yield call(apiGet, 'account/send-sms-to-old-phone/', token);
+    const response = yield call(api.get, 'account/send-sms-to-old-phone/');
     yield put(actions.changePhoneTitle("oldPhone"));
     yield put(actions.sendSmsToOldPhoneRequestSuccess(response));
     yield put(toast.openRequestStatusSuccessSnackbar(
@@ -140,16 +105,18 @@ function* conformCodeRequest({payload}) {
   try {
     const phone = yield select(getPhone)
     const values =Object.assign(value, phone)
-    const response = yield call(api.post, 'account/login-confirm/', {data: values});
-    console.log(response)
+    const response = yield call(apiPost, 'account/login-confirm/', values);
     yield put(actions.conformCodeRequestSuccess(response));
+    console.log(response)
+    Cookies.set("token", response.token);
+    Cookies.set("is_profile_completed", response.is_profile_completed);
+    // Cookies.set("region_id", response.region_detail.id);
+    // Cookies.set("region_name", response.region_detail.name);
     yield call(callback, response);
   } catch (e) {
-    console.log(e)
     if (e.message === "Неверный код") {
       yield put(toast.openRequestStatusErrorSnackbar(e.message))
     }
-    yield put(toast.openRequestStatusErrorSnackbar(`Не правильной номер телефона или не заполнено поля номер телефона `))
     yield put(actions.conformCodeRequestFailure(e));
     yield call(callback, parseSubmissionError(e));
   }
@@ -159,8 +126,7 @@ function* conformCodeRequest({payload}) {
 function* oldPhoneConformCodeRequest({payload}) {
   const {value, callback} = payload;
   try {
-    const token = yield select(getToken)
-    const response = yield call(apiPost, 'account/old-phone-confirm/', value, token);
+    const response = yield call(api.post, 'account/old-phone-confirm/', {data: value});
     yield put(actions.oldPhoneCodeRequestSuccess(response));
     yield put(toast.openRequestStatusSuccessSnackbar(response.message))
     yield call(callback);
@@ -178,8 +144,7 @@ function* oldPhoneConformCodeRequest({payload}) {
 function* newPhoneConformCodeRequest({payload}) {
   const {value, callback} = payload;
   try {
-    const token = yield select(getToken)
-    const response = yield call(apiPost, 'account/new-phone-conform/', value, token);
+    const response = yield call(api.post, 'account/new-phone-conform/', {data: value});
     yield put(actions.newPhoneCodeRequestSuccess(response));
     yield put(toast.openRequestStatusSuccessSnackbar(response.message))
     yield call(callback);
@@ -197,16 +162,13 @@ function* newPhoneConformCodeRequest({payload}) {
 function* changeOldPhoneRequest({payload}) {
   const {value, callback} = payload;
   try {
-    const token = yield select(getToken)
-    const response = yield call(apiPost, 'account/change-old-phone/',  value, token);
+    const response = yield call(api.post, 'account/change-old-phone/',   {data: value});
     yield put(actions.changeOldPhoneRequestSuccess(response));
     yield put(actions.userPhoneNumber(value));
-    console.log(response);
     yield put(actions.changePhoneTitle("newPhone"));
     yield put(toast.openRequestStatusSuccessSnackbar(response.message))
     yield call(callback);
   } catch (e) {
-    console.log(e)
     yield put(toast.openRequestStatusErrorSnackbar(`${e.message}`))
     yield put(actions.changeOldPhoneRequestFailure(e));
     yield call(callback, e);
@@ -218,8 +180,7 @@ function* registrationRequest({payload}) {
   const {values, callback} = payload;
 
   try {
-    const token = yield select(getToken)
-    const data = yield call(apiPatch, 'account/', values, token);
+    const data = yield call(api.patch, 'account/',  {data: values});
     yield put(actions.registrationRequestSuccess(data));
     yield call(callback);
   } catch (e) {
@@ -230,15 +191,11 @@ function* registrationRequest({payload}) {
 
 }
 
-function* logoutRequest({payload}) {
-  const {callback} = payload;
-  try {
-    yield call(api.post, 'account/logout/');
-    yield put(actions.logoutRequestSuccess());
-    yield call(callback);
-  } catch (e) {
-    yield put(actions.logoutRequestFailure(e));
-  }
+function* logoutRequest() {
+    Cookies.remove("token",)
+    Cookies.remove("is_profile_completed", false)
+    // Cookies.remove("region_id", )
+    // Cookies.remove("region_name",)
 }
 
 function* getStateRequest() {

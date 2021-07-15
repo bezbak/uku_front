@@ -1,4 +1,4 @@
-import  { createLogger } from 'redux-logger';
+import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
@@ -7,7 +7,6 @@ import reducers from './reducers';
 import sagas from './sagas';
 
 const isDev = process.env.NEXT_PUBLIC_NODE_TARGET === 'development';
-const isBrowser = typeof window !== 'undefined';
 
 export const makeStore = (context) => {
   const sagaMiddleware = createSagaMiddleware();

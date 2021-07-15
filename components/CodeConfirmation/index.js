@@ -33,9 +33,9 @@ const CodeConfirmation =()=>{
         phoneRequest({
           value: user.phone,
           callback: (response) => {
+            console.log('---------conform')
             if (response.token) {
               if (response?.is_profile_completed) {
-                console.log('---------conform')
                 push(pathnames.main)
               } else {
                 push(pathnames.registration)
@@ -54,7 +54,6 @@ const CodeConfirmation =()=>{
       callback: (response) => {
         if (response.token) {
           if (response?.is_profile_completed) {
-            console.log('---------conform')
             push(pathnames.main)
           } else {
             push(pathnames.registration)

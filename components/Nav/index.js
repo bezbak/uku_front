@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
-import {shallowEqual, useSelector} from "react-redux";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import classNames from 'classnames'
+import Cookies from "js-cookie";
+import {actions as profileAction} from "../../store/profile/slice";
 import Logo from "../Logo";
 import Search from "../Search";
 import NavLink from "../NavLink";
@@ -13,7 +15,14 @@ import AddressIcon from '../../public/icons/address.svg'
 import styles from './styles.module.scss';
 
 const Nav = () => {
-  const {pathname} = useRouter()
+  const {pathname} = useRouter();
+  const dispatch = useDispatch();
+  const [region, setRegion] = useState(Cookies.get("region_name"));
+  const [is_profile_completed, setIs_profile_completed] = useState(Cookies.get("is_profile_completed"));
+  const avatarRequest = () => dispatch(profileAction.avatarGetRequestStart());
+  useEffect(() => {
+      avatarRequest()
+  }, [])
   const userAvatar = useSelector((store) => store.profile?.userAvatar, shallowEqual);
   const user_region_detail = useSelector((store) => store.auth?.user_region_detail, shallowEqual);
   return (
@@ -26,7 +35,7 @@ const Nav = () => {
         {(pathname === '/search' && pathname !== '') && <li className={classNames(styles.nav_right_list)}>
           <NavLink url="/search">
             <AddressIcon/>
-            {user_region_detail?.name}
+            {region}
           </NavLink>
         </li>}
         <li className={classNames(styles.nav_right_list, {[styles.nav_right_list_active]:pathname==='/search'})}>
@@ -42,7 +51,7 @@ const Nav = () => {
           </NavLink>
         </li>
         <li  className={classNames(styles.nav_right_list, styles.nav_right_listNoBorder, {[styles.nav_right_list_active]:pathname==='/profile'})}>
-          {userAvatar!=='' ?
+          {is_profile_completed ?
             <NavLink url="/profile">
               {userAvatar?.avatar ? <img src={userAvatar?.avatar} className={styles.nav_right_list__profileImg}/> : <AvatarIcon/> }
               Профиль
@@ -57,4 +66,5 @@ const Nav = () => {
     </div>
   )
 }
+
 export default Nav;

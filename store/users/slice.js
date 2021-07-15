@@ -16,7 +16,6 @@ const initialState = {
 const userAuthSlice = createSlice({
   name: 'auth',
   initialState,
-  phoneToken: '',
   reducers: {
     changePhoneTitle(state, {payload}) {
       state.isChangeOldPhone = payload
@@ -110,23 +109,16 @@ const userAuthSlice = createSlice({
     searchRequestFailure() {
     },
 
-    logoutRequestStart() {
-    },
-    logoutRequestSuccess(state) {
+    logoutRequestStart(state) {
       state.isAuthenticated = false;
-      state.isStaff = false;
+      state.is_profile_completed = false;
       state.user = null;
-    },
-    logoutRequestFailure() {
     },
 
     getStateRequestStart() {
     },
     getStateRequestSuccess(state, {payload}) {
       state.isAuthenticated = payload.is_authenticated;
-      state.isStaff = payload.is_staff;
-      state.user = payload.user;
-      state.userBalance = payload.user.garbage_point.balance;
     },
     getStateRequestFailure() {
     },

@@ -4,7 +4,6 @@ import userProfileSagas from './profile/sagas';
 import userFavoriteSagas from './favorites/sagas';
 import locationSagas from './locations/sagas';
 import mainSagas from './main/sagas';
-// import extraSagas from '@store/extra/sagas';
 import categorySagas from './category/sagas';
 import publicationSagas from './publication/sagas';
 import systemSagas from './system/sagas';
@@ -15,7 +14,6 @@ const sagas = [
   userProfileSagas,
   categorySagas,
   publicationSagas,
-  // extraSagas,
   authSagas,
   userFavoriteSagas,
   systemSagas

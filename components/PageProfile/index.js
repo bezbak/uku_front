@@ -14,9 +14,11 @@ function PageProfile() {
   const [editPublication, setEditPublication] = useState(false)
   const [toEditPublicationId, setToEditPublicationId] = useState()
   const dispatch = useDispatch();
+  const profileRequest = () => dispatch(actions.profileRequestStart())
   const publicationRequest = () => dispatch(actions.publicationRequestStart());
 
   useEffect(() => {
+    profileRequest();
     publicationRequest()
   },[])
 

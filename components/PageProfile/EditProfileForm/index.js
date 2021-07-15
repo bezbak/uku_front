@@ -71,6 +71,7 @@ const EditProfileForm = ({user = false}) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [isInitialized, setInitialized] = React.useState(false);
+  const [isPhoneNumberModalOpen, setIsPhoneNumberModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPhoneNumberModal, setIsPhoneNumberModal] = useState(false);
   const [isLOgOutModal, setIsLOgOutModal] = useState(false);
@@ -112,7 +113,7 @@ const EditProfileForm = ({user = false}) => {
   const updateProfileRequest = (payload) => dispatch(profileAction.updateProfileRequestStart(payload));
   const sendSmsToOldPhone = (payload) => dispatch(authAction.sendSmsToOldPhoneRequestStart(payload));
 
-  const logoutRequest = (payload) => dispatch(authAction.logoutRequestStart(payload));
+  const logoutRequest = () => dispatch(authAction.logoutRequestStart());
   const userInfo = useSelector((store) => store.profile.userProfile);
   const onChangeAvatar = (value) => {
     console.log(value)
@@ -133,7 +134,6 @@ const EditProfileForm = ({user = false}) => {
 
   const changePhoneNumber = () => {
     setIsPhoneNumberModal(true)
-    setIsModalOpen(false)
     return new Promise((resolve) => {
       sendSmsToOldPhone({
         callback: (response) => {
@@ -153,17 +153,9 @@ const EditProfileForm = ({user = false}) => {
   }
 
   const logOut = () => {
-    return new Promise((resolve) => {
-      logoutRequest({
-        callback: (response) => {
-          if (!response) {
-            setTimeout(()=> push(pathnames.main),2000)
-            setIsModalOpen(false)
-          }
-          resolve(response);
-        },
-      });
-    })
+    logoutRequest();
+    setIsModalOpen(false);
+    router.push('/')
   }
 
   return (
@@ -202,7 +194,7 @@ const EditProfileForm = ({user = false}) => {
               className={styles.editProfileForm__form__input}
             />
             <Button className={styles.editProfileForm__editUserPhoneButton}
-                    onClick={() => setIsModalOpen(true)}>
+                    onClick={() => setIsPhoneNumberModalOpen(true)}>
               <UserPhoneEdit/>
             </Button>
           </div>
@@ -260,7 +252,7 @@ const EditProfileForm = ({user = false}) => {
 
         </div>
       </div>
-      <Modal modalOpen={isModalOpen}>
+      <Modal modalOpen={isPhoneNumberModalOpen}>
         <div className={styles.editProfileForm__modal}>
           <div className={styles.editProfileForm__modal__title}>
             <span>
@@ -276,7 +268,7 @@ const EditProfileForm = ({user = false}) => {
             </Button>
             <Button className={styles.editProfileForm__modal__cancelButton}
                     textClassName={styles.editProfileForm__modal__cancelButton_text}
-                    onClick={() => setIsModalOpen(false)}
+                    onClick={() => setIsPhoneNumberModal(false)}
             >Отмена</Button>
           </div>
         </div>
