@@ -5,7 +5,6 @@ const initialState = {
   phone: null,
   isAuthenticated: false,
   is_profile_completed: false,
-  token: '',
   region_detail: {},
   isStaff: false,
   user: null,
@@ -26,33 +25,26 @@ const userAuthSlice = createSlice({
     successMessage(state, {payload}) {
       state.responseMessage = payload
     },
-    phoneRequestStart(){
+    phoneRequestStart() {
     },
     phoneRequestSuccess() {
     },
     phoneRequestFailure() {
     },
 
+    sendAgainPhoneRequestStart() {
+    },
     changeOldPhoneRequestStart() {
     },
     changeOldPhoneRequestSuccess(state, {payload}) {
     },
     changeOldPhoneRequestFailure() {
     },
-
-    oldPhoneRequestStart() {
-    },
-    oldPhoneRequestSuccess() {
-    },
-    oldPhoneRequestFailure() {
-    },
-
     conformCodeRequestStart(state, {payload}) {
     },
     conformCodeRequestSuccess(state, {payload}) {
       state.is_profile_completed = payload.is_profile_completed
-      state.token = payload.token,
-        state.user_region_detail = payload.region_detail
+      state.user_region_detail = payload.region_detail
     },
     conformCodeRequestFailure(payload) {
     },
@@ -61,12 +53,12 @@ const userAuthSlice = createSlice({
     },
     newPhoneCodeRequestSuccess(state, {payload}) {
     },
-    newPhoneCodeRequestFailure(payload) {
+    newPhoneCodeRequestFailure() {
     },
 
-    sendSmsToOldPhoneRequestStart(state, {payload}) {
+    sendSmsToOldPhoneRequestStart() {
     },
-    sendSmsToOldPhoneRequestSuccess(state,{payload}) {
+    sendSmsToOldPhoneRequestSuccess(state, {payload}) {
 
     },
     sendSmsToOldPhoneRequestFailure() {
@@ -115,13 +107,6 @@ const userAuthSlice = createSlice({
       state.user = null;
     },
 
-    getStateRequestStart() {
-    },
-    getStateRequestSuccess(state, {payload}) {
-      state.isAuthenticated = payload.is_authenticated;
-    },
-    getStateRequestFailure() {
-    },
   },
 });
 

@@ -1,5 +1,5 @@
 import React, {useRef, useState} from "react";
-import { useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {useRouter} from "next/router";
 import {Form, Field} from 'react-final-form'
 import PhoneInput, {
@@ -12,38 +12,40 @@ import pathnames from "../../constants/pathnames";
 import {actions} from '../../store/users/slice';
 import useIsMobile from "../../hooks/useIsMobile";
 import NavLink from "../NavLink";
+import Cookie from 'js-cookie'
 import CheckedIcon from '../../public/icons/checked.svg'
 import CheckBoxIcon from '../../public/icons/checkBox.svg'
 import styles from './styles.module.scss'
 
 const AuthForm = () => {
   const refLogin = useRef()
-  const {push} = useRouter();
+  const router = useRouter()
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const [privacyChecked, setPrivacyChecked] = useState(true)
-  const is_profile_completed = useSelector((state) => state.auth.is_profile_completed);
+  const is_profile_completed = Cookie.get("is_profile_completed")
   const phoneRequest = (payload) => dispatch(actions.phoneRequestStart(payload));
-  const changeOldPhoneRequest= (payload) => dispatch(actions.changeOldPhoneRequestStart(payload));
+  const changeOldPhoneRequest = (payload) => dispatch(actions.changeOldPhoneRequestStart(payload));
 
   const phoneSend = (value) => new Promise((resolve) => {
     phoneRequest({
       value,
       callback: (response) => {
         if (!response) {
-          push(pathnames.codeConfirmation);
+          setTimeout(() => router.push(pathnames.codeConfirmation), 1000)
         } else {
           resolve(response);
         }
       }
     });
   })
+
   const changePhone = (value) => new Promise((resolve) => {
     changeOldPhoneRequest({
       value,
       callback: (response) => {
         if (!response) {
-          push(pathnames.codeConfirmation);
+          setTimeout(() => router.push(pathnames.codeConfirmation), 1000)
         } else {
           resolve(response);
         }
@@ -52,14 +54,10 @@ const AuthForm = () => {
   })
 
   const phoneSubmit = (value) => {
-    if (!is_profile_completed) {
-      return phoneSend(value)
-    }
     if (is_profile_completed) {
       return changePhone(value)
     }
-    else
-      return null
+    return phoneSend(value)
   }
 
   return (
@@ -73,7 +71,7 @@ const AuthForm = () => {
       <div className={styles.sectionAuth__formContent}>
         <div className={styles.sectionAuth__formContent__headline}>
         <span className={styles.sectionAuth__formContent__headline__login}>
-          {!is_profile_completed  ? 'Вход' : 'Введите новый номер'}
+          {!is_profile_completed ? 'Вход' : 'Введите новый номер'}
         </span>
           <NavLink url={'/'}>
             <span className={styles.sectionAuth__formContent__headline_cancel}>
@@ -81,7 +79,7 @@ const AuthForm = () => {
             </span>
           </NavLink>
         </div>
-        <div className={styles.sectionAuth__checkbox}>
+        {!is_profile_completed && <div className={styles.sectionAuth__checkbox}>
           <input type="checkbox" id="privacy-checkbox"
                  onChange={() => setPrivacyChecked(!privacyChecked)}/>
           <label htmlFor="privacy-checkbox">
@@ -90,7 +88,7 @@ const AuthForm = () => {
           <span>
             Принимаю условия конфиденциальности и политику безопасности
           </span>
-        </div>
+        </div>}
         <Form
           onSubmit={phoneSubmit}
           validate={values => {
@@ -111,7 +109,6 @@ const AuthForm = () => {
                      submitError, submitting, form, pristine
                    }) => (
             <form onSubmit={handleSubmit}>
-              {console.log(values)}
               <Field name="phone">
                 {({input, meta}) => (
                   <div>
@@ -133,7 +130,7 @@ const AuthForm = () => {
               </Field>
               <button type="submit"
                       className={styles.sectionAuth__formContent__submitButton}
-                      disabled={(!isValidPhoneNumber(`${values.phone}`) || privacyChecked)}> {!is_profile_completed  ? 'Далее' : 'Далее Сменить номер'}
+                      disabled={(!isValidPhoneNumber(`${values.phone}`) || (privacyChecked && !is_profile_completed))}> {!is_profile_completed ? 'Далее' : 'Далее Сменить номер'}
               </button>
             </form>
           )}

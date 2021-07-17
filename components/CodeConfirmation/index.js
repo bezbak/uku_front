@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from "react";
-import {useDispatch, useSelector, shallowEqual} from 'react-redux';
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from 'react-redux';
 import {useRouter} from "next/router";
 import {Field, Form} from "react-final-form";
 import useCountDown from 'react-countdown-hook';
@@ -9,9 +9,10 @@ import pathnames from "../../constants/pathnames";
 import NavLink from "../NavLink";
 import useIsMobile from "../../hooks/useIsMobile";
 import styles from "./styles.module.scss";
+import Cookie from "js-cookie";
 
 const CodeConfirmation =()=>{
-  const {push} = useRouter();
+  const router = useRouter();
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
 
@@ -19,34 +20,15 @@ const CodeConfirmation =()=>{
   const [initialTime, setInitialTime] = useState(60 * 1000)
   const interval = 1000;
   const [timeLeft, {start, pause, resume, reset}] = useCountDown(initialTime, interval);
-  const user = useSelector((store) => store.auth)
+    const user = useSelector((store) => store.auth)
+  const is_profile_completed =Cookie.get("is_profile_completed")
   useEffect(()=> start(initialTime),[])
 
-  const phoneRequest = (payload) => dispatch(actions.phoneRequestStart(payload));
 
   const conformCodeRequest = (payload) => dispatch(actions.conformCodeRequestStart(payload));
   const oldPhoneConformCodeRequest = (payload) => dispatch(actions.oldPhoneConformCodeRequestStart(payload));
   const newPhoneConformCode= (payload) => dispatch(actions.newPhoneConformCodeRequestStart(payload));
-  // const changeOldPhoneRequest = (payload) => dispatch(actions.changeOldPhoneRequestStart(payload));
-  const SendAgain = () => (
-    new Promise((resolve) => {
-        phoneRequest({
-          value: user.phone,
-          callback: (response) => {
-            console.log('---------conform')
-            if (response.token) {
-              if (response?.is_profile_completed) {
-                push(pathnames.main)
-              } else {
-                push(pathnames.registration)
-              }
-            }
-            resolve(response);
-            start(60 * 1000)
-          },
-        })
-    })
-  )
+  const SendAgain = () => dispatch(actions.sendAgainPhoneRequestStart())
 
   const LoginConform = (value) => new Promise((resolve) => {
     conformCodeRequest({
@@ -54,9 +36,9 @@ const CodeConfirmation =()=>{
       callback: (response) => {
         if (response.token) {
           if (response?.is_profile_completed) {
-            push(pathnames.main)
+            router.push(pathnames.main)
           } else {
-            push(pathnames.registration)
+            router.push(pathnames.registration)
           }
         } else {
           resolve(response);
@@ -72,7 +54,7 @@ const CodeConfirmation =()=>{
       callback: (response) => {
         if (!response) {
           console.log('---------OldLoginConform')
-          push(pathnames.login)
+          router.push(pathnames.login)
           // start(initialTime);
         } else {
           resolve(response);
@@ -81,19 +63,19 @@ const CodeConfirmation =()=>{
     })
   })
 
-  const NewLoginConform = (value) => console.log('---------OldLoginConform')
-  //   new Promise((resolve) => {
-  //   newPhoneConformCode({
-  //     value,
-  //     callback: (response) => {
-  //       if (!response) {
-  //           push(pathnames.profile)
-  //       } else {
-  //         resolve(response);
-  //       }
-  //     },
-  //   });
-  // })
+  const NewLoginConform = (value) =>
+    new Promise((resolve) => {
+    newPhoneConformCode({
+      value,
+      callback: (response) => {
+        if (!response) {
+          router.push(pathnames.profile)
+        }
+          resolve(response);
+
+      },
+    });
+  })
 
   const senConfCode = (value) => {
     if (user.isChangeOldPhone==="phone") {
@@ -136,7 +118,7 @@ const CodeConfirmation =()=>{
           <span>
           {user.phone?.phone}
        </span>
-          <NavLink className={styles.codeConfirmForm__description_link} url={"/login"}> Неверный номер?</NavLink>
+          {!is_profile_completed && <NavLink className={styles.codeConfirmForm__description_link} url={"/login"}> Неверный номер?</NavLink>}
         </div>
         <Form
           onSubmit={senConfCode}

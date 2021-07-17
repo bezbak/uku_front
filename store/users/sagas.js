@@ -1,14 +1,15 @@
 import isEmpty from "lodash/isEmpty";
 import {call, put, select, takeEvery} from 'redux-saga/effects';
+import Cookies from "js-cookie";
 import {parseSubmissionError} from '../../lib/utils/store/sagas';
 import api from '../../lib/api';
 import {actions as toast} from '../toast/slice';
 import {actions} from './slice';
-import Cookies from "js-cookie";
 
-const getPhone = (store) => store.auth.phone
+const getPhone = (store) => store.auth.phone;
 
 const HTTP_INTERNAL_SERVER_ERROR_CODE = 500;
+
 const checkStatus = (response) => {
   if (response.ok) return response;
 
@@ -56,7 +57,7 @@ function apiPost(url, values, token) {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Token ' + token ? token :'',
+      'Authorization': 'Token ' + token ? token : '',
     },
     body: JSON.stringify(values)
   }).then(checkStatus)
@@ -84,19 +85,20 @@ function* phoneRequest({payload}) {
   }
 }
 
-function* sendSmsToOldPhoneRequest({payload}) {
-  const {callback} = payload;
+function* sendAgainPhoneRequest() {
   try {
-    const response = yield call(api.get, 'account/send-sms-to-old-phone/');
-    yield put(actions.changePhoneTitle("oldPhone"));
-    yield put(actions.sendSmsToOldPhoneRequestSuccess(response));
-    yield put(toast.openRequestStatusSuccessSnackbar(
-        `${response.message}`))
-    yield call(callback);
+    const phone = yield select(getPhone)
+    const response = yield call(apiPost, 'account/auth/', phone);
+    yield put(actions.phoneRequestSuccess(response));
+    if (response.message === "Сообщение отправлено" || response.message === "User создан! Сообщение отправлено") {
+      yield put(toast.openRequestStatusSuccessSnackbar(`${response.message} на номеру ${value.phone}`))
+      yield call(callback);
+    } else {
+      yield put(toast.openRequestStatusSuccessSnackbar(response.message))
+    }
   } catch (e) {
     yield put(toast.openRequestStatusErrorSnackbar(`${e.message}`))
-    yield put(actions.sendSmsToOldPhoneRequestFailure(e));
-    yield call(callback, e);
+    yield put(actions.phoneRequestFailure(e));
   }
 }
 
@@ -104,14 +106,11 @@ function* conformCodeRequest({payload}) {
   const {value, callback} = payload;
   try {
     const phone = yield select(getPhone)
-    const values =Object.assign(value, phone)
+    const values = Object.assign(value, phone)
     const response = yield call(apiPost, 'account/login-confirm/', values);
     yield put(actions.conformCodeRequestSuccess(response));
-    console.log(response)
     Cookies.set("token", response.token);
     Cookies.set("is_profile_completed", response.is_profile_completed);
-    // Cookies.set("region_id", response.region_detail.id);
-    // Cookies.set("region_name", response.region_detail.name);
     yield call(callback, response);
   } catch (e) {
     if (e.message === "Неверный код") {
@@ -121,6 +120,23 @@ function* conformCodeRequest({payload}) {
     yield call(callback, parseSubmissionError(e));
   }
 
+}
+
+function* sendSmsToOldPhoneRequest({payload}) {
+  const {callback} = payload;
+  try {
+    const response = yield call(api.get, 'account/send-sms-to-old-phone/');
+    yield put(actions.sendSmsToOldPhoneRequestSuccess(response));
+    yield put(actions.changePhoneTitle("oldPhone"));
+    yield put(toast.openRequestStatusSuccessSnackbar(
+      `${response.message}`))
+    yield call(callback);
+  } catch (e) {
+    yield put(toast.openRequestStatusErrorSnackbar(e.message))
+    console.log(<e className="message"></e>)
+    yield put(actions.sendSmsToOldPhoneRequestFailure(e));
+    yield call(callback, e);
+  }
 }
 
 function* oldPhoneConformCodeRequest({payload}) {
@@ -136,7 +152,7 @@ function* oldPhoneConformCodeRequest({payload}) {
     }
     yield put(toast.openRequestStatusErrorSnackbar(e.message));
     yield put(actions.oldPhoneCodeRequestFailure(e));
-    yield call(callback,e);
+    yield call(callback, e);
   }
 
 }
@@ -144,7 +160,7 @@ function* oldPhoneConformCodeRequest({payload}) {
 function* newPhoneConformCodeRequest({payload}) {
   const {value, callback} = payload;
   try {
-    const response = yield call(api.post, 'account/new-phone-conform/', {data: value});
+    const response = yield call(api.post, 'account/new-phone-confirm/', {data: value});
     yield put(actions.newPhoneCodeRequestSuccess(response));
     yield put(toast.openRequestStatusSuccessSnackbar(response.message))
     yield call(callback);
@@ -162,7 +178,7 @@ function* newPhoneConformCodeRequest({payload}) {
 function* changeOldPhoneRequest({payload}) {
   const {value, callback} = payload;
   try {
-    const response = yield call(api.post, 'account/change-old-phone/',   {data: value});
+    const response = yield call(api.post, 'account/change-old-phone/', {data: value});
     yield put(actions.changeOldPhoneRequestSuccess(response));
     yield put(actions.userPhoneNumber(value));
     yield put(actions.changePhoneTitle("newPhone"));
@@ -180,7 +196,7 @@ function* registrationRequest({payload}) {
   const {values, callback} = payload;
 
   try {
-    const data = yield call(api.patch, 'account/',  {data: values});
+    const data = yield call(api.patch, 'account/', {data: values});
     yield put(actions.registrationRequestSuccess(data));
     yield call(callback);
   } catch (e) {
@@ -192,23 +208,15 @@ function* registrationRequest({payload}) {
 }
 
 function* logoutRequest() {
-    Cookies.remove("token",)
-    Cookies.remove("is_profile_completed", false)
-    // Cookies.remove("region_id", )
-    // Cookies.remove("region_name",)
-}
-
-function* getStateRequest() {
-  try {
-    const response = yield call(api.get, 'account/get_state/');
-    yield put(actions.getStateRequestSuccess(response));
-  } catch (e) {
-    yield put(actions.getStateRequestFailure(e));
-  }
+  Cookies.remove("token",)
+  Cookies.remove("is_profile_completed", false)
+  // Cookies.remove("region_id", )
+  // Cookies.remove("region_name",)
 }
 
 export default function* userAuthSagas() {
   yield takeEvery(`${actions.phoneRequestStart}`, phoneRequest);
+  yield takeEvery(`${actions.sendAgainPhoneRequestStart}`, sendAgainPhoneRequest);
   yield takeEvery(`${actions.changeOldPhoneRequestStart}`, changeOldPhoneRequest);
   yield takeEvery(`${actions.conformCodeRequestStart}`, conformCodeRequest);
   yield takeEvery(`${actions.sendSmsToOldPhoneRequestStart}`, sendSmsToOldPhoneRequest);
@@ -216,5 +224,4 @@ export default function* userAuthSagas() {
   yield takeEvery(`${actions.oldPhoneConformCodeRequestStart}`, oldPhoneConformCodeRequest);
   yield takeEvery(`${actions.registrationRequestStart}`, registrationRequest);
   yield takeEvery(`${actions.logoutRequestStart}`, logoutRequest);
-  yield takeEvery(`${actions.getStateRequestStart}`, getStateRequest);
 }

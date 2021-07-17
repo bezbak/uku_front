@@ -8,7 +8,7 @@ import {parseISO, format} from 'date-fns';
 import Select from "../UI/Select";
 import Location from "../Location";
 import AuthSubmitError from "../Auth/AuthSubmitError";
-import useIsMobile from "../../out/hooks/useIsMobile";
+import useIsMobile from "../../hooks/useIsMobile";
 import pathnames from "../../constants/pathnames";
 import {actions} from "../../store/users/slice";
 import style from "./styles.module.scss";

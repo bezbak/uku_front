@@ -44,7 +44,7 @@ const Nav = () => {
             Поиск
           </NavLink>
         </li>
-        <li className={classNames(styles.nav_right_list, {[styles.nav_right_list_active]:pathname==='/favorites'})}>
+        <li className={classNames(styles.nav_right_list, styles.nav_right_list_favorite, {[styles.nav_right_list_active]:pathname==='/favorites'})}>
           <NavLink url="/favorites">
             <HeartIcon/>
             Избранное
@@ -53,7 +53,7 @@ const Nav = () => {
         <li  className={classNames(styles.nav_right_list, styles.nav_right_listNoBorder, {[styles.nav_right_list_active]:pathname==='/profile'})}>
           {is_profile_completed ?
             <NavLink url="/profile">
-              {userAvatar?.avatar ? <img src={userAvatar?.avatar} className={styles.nav_right_list__profileImg}/> : <AvatarIcon/> }
+              {userAvatar.avatar ? <img src={userAvatar?.avatar} className={styles.nav_right_list__profileImg} alt="avatar"/> : <AvatarIcon/> }
               Профиль
             </NavLink> :
             <NavLink url="/login">

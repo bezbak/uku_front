@@ -35,6 +35,13 @@
       margin-left: 16px;
       padding-right: 16px;
       border-right: 1px solid #D3D3D3;
+      &_favorite {
+       & svg {
+          & path {
+            fill: none !important;
+          }
+        }
+      }
 
       a {
         font-weight: 500;
@@ -57,7 +64,8 @@
           color: #E56366;;
           & svg {
             path {
-              stroke: #E56366;;
+              stroke: #E56366;
+              fill: #E56366;
             }
           }
           img {
@@ -84,6 +92,9 @@
         width: 20px;
         height: 20px;
         margin-right: 10px;
+        path {
+          fill: #989797;
+        }
       }
     }
 

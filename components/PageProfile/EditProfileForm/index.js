@@ -67,14 +67,11 @@ const Avatar = ({input}) => {
 }
 
 const EditProfileForm = ({user = false}) => {
-  const {push} = useRouter();
   const router = useRouter();
   const dispatch = useDispatch();
   const [isInitialized, setInitialized] = React.useState(false);
   const [isPhoneNumberModalOpen, setIsPhoneNumberModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPhoneNumberModal, setIsPhoneNumberModal] = useState(false);
-  const [isLOgOutModal, setIsLOgOutModal] = useState(false);
   const [state, actions] = useNavigationMenu();
   const editProfileFormRef = React.useRef();
 
@@ -124,7 +121,7 @@ const EditProfileForm = ({user = false}) => {
         value,
         callback: (response) => {
           if (!response) {
-            setTimeout(()=> push(pathnames.profile),2000)
+            setTimeout(()=> router.push(pathnames.profile),2000)
           }
           resolve(response);
         },
@@ -132,24 +129,20 @@ const EditProfileForm = ({user = false}) => {
     })
   }
 
-  const changePhoneNumber = () => {
-    setIsPhoneNumberModal(true)
-    return new Promise((resolve) => {
+  const changePhoneNumber = () =>
+    new Promise((resolve) => {
       sendSmsToOldPhone({
         callback: (response) => {
-          console.log(response)
           if (!response) {
-           setTimeout(()=> push(pathnames.codeConfirmation),2000)
+            setTimeout(()=> router.push(pathnames.codeConfirmation),1000)
           }
           resolve(response);
         },
       });
     })
-  }
 
   const logOutAsk = () =>{
     setIsModalOpen(true)
-    setIsLOgOutModal(true)
   }
 
   const logOut = () => {
@@ -268,7 +261,7 @@ const EditProfileForm = ({user = false}) => {
             </Button>
             <Button className={styles.editProfileForm__modal__cancelButton}
                     textClassName={styles.editProfileForm__modal__cancelButton_text}
-                    onClick={() => setIsPhoneNumberModal(false)}
+                    onClick={() => setIsPhoneNumberModalOpen(false)}
             >Отмена</Button>
           </div>
         </div>
