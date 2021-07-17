@@ -10,6 +10,9 @@ import NavLink from "../NavLink";
 import useIsMobile from "../../hooks/useIsMobile";
 import styles from "./styles.module.scss";
 import Cookie from "js-cookie";
+import FinishCheckedIcon from "../../public/icons/finishChecked.svg";
+import Button from "../Button";
+import Modal from "../UI/Modal";
 
 const CodeConfirmation =()=>{
   const router = useRouter();
@@ -17,6 +20,7 @@ const CodeConfirmation =()=>{
   const dispatch = useDispatch();
 
   const [codeLength, setCodeLength] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [initialTime, setInitialTime] = useState(60 * 1000)
   const interval = 1000;
   const [timeLeft, {start, pause, resume, reset}] = useCountDown(initialTime, interval);
@@ -69,7 +73,8 @@ const CodeConfirmation =()=>{
       value,
       callback: (response) => {
         if (!response) {
-          router.push(pathnames.profile)
+          setIsModalOpen(true)
+        
         }
           resolve(response);
 
@@ -89,7 +94,10 @@ const CodeConfirmation =()=>{
     }
 
   }
-
+  const toMainPage = () => {
+    router.push(pathnames.main)
+    setIsModalOpen(false)
+  }
   const maxLengthCheck = (object) => {
     if (object.target.value.length > object.target.maxLength) {
       object.target.value = object.target.value.slice(0, object.target.maxLength)
@@ -100,67 +108,85 @@ const CodeConfirmation =()=>{
   }
 
   return (
-    <div className={styles.codeConfirmForm}>
-      {isMobile &&
-      <div className={styles.codeConfirmForm__logo}>
+<>
+  <div className={styles.codeConfirmForm}>
+    {isMobile &&
+    <div className={styles.codeConfirmForm__logo}>
         <span>
           Uku.kg
         </span>
-      </div>}
-      <div className={styles.codeConfirmForm__formContent}>
-        <div className={styles.codeConfirmForm__codeConfirmFormTitle}>
+    </div>}
+    <div className={styles.codeConfirmForm__formContent}>
+      <div className={styles.codeConfirmForm__codeConfirmFormTitle}>
          <span>
             Подтверждение кода
          </span>
-        </div>
-        <div className={styles.codeConfirmForm__description}>
-          Код был отправлен на номер <br/>
-          <span>
+      </div>
+      <div className={styles.codeConfirmForm__description}>
+        Код был отправлен на номер <br/>
+        <span>
           {user.phone?.phone}
        </span>
-          {!is_profile_completed && <NavLink className={styles.codeConfirmForm__description_link} url={"/login"}> Неверный номер?</NavLink>}
-        </div>
-        <Form
-          onSubmit={senConfCode}
-          render={({handleSubmit, values, submitting, form, pristine}) => (
-            <form onSubmit={handleSubmit}>
-              <Field
-                name="confirmation_code"
-                component="input"
-                type="number"
-                placeholder="Код"
-                maxLength="6"
-                onInput={maxLengthCheck}
-                className={styles.codeConfirmForm__input}
-              />
+        {!is_profile_completed && <NavLink className={styles.codeConfirmForm__description_link} url={"/login"}> Неверный номер?</NavLink>}
+      </div>
+      <Form
+        onSubmit={senConfCode}
+        render={({handleSubmit, values, submitting, form, pristine}) => (
+          <form onSubmit={handleSubmit}>
+            <Field
+              name="confirmation_code"
+              component="input"
+              type="number"
+              placeholder="Код"
+              maxLength="6"
+              onInput={maxLengthCheck}
+              className={styles.codeConfirmForm__input}
+            />
 
-              <button type="submit"
-                      className={
-                        classNames(styles.codeConfirmForm__button,
-                          styles.codeConfirmForm__button_submitButton
-                        )
-                      }
-                      disabled={codeLength}>
-                Подтвердить
-              </button>
+            <button type="submit"
+                    className={
+                      classNames(styles.codeConfirmForm__button,
+                        styles.codeConfirmForm__button_submitButton
+                      )
+                    }
+                    disabled={codeLength}>
+              Подтвердить
+            </button>
 
-              <div className={styles.codeConfirmForm__label}>Не пришло SMS сообщение?</div>
-              <button type="button"
-                      className={classNames(styles.codeConfirmForm__button,
-                        styles.codeConfirmForm__button_submitAgain,
-                      )}
-                      onClick={SendAgain}
-                      disabled={timeLeft / 1000 ? true : false}>
-                <span>Отправить снова</span>
-                <span className={classNames({[styles.codeConfirmForm__button_submitAgain_timer]: !timeLeft / 1000})}>
+            <div className={styles.codeConfirmForm__label}>Не пришло SMS сообщение?</div>
+            <button type="button"
+                    className={classNames(styles.codeConfirmForm__button,
+                      styles.codeConfirmForm__button_submitAgain,
+                    )}
+                    onClick={SendAgain}
+                    disabled={timeLeft / 1000 ? true : false}>
+              <span>Отправить снова</span>
+              <span className={classNames({[styles.codeConfirmForm__button_submitAgain_timer]: !timeLeft / 1000})}>
                   0:{timeLeft / 1000}
                 </span>
-              </button>
-            </form>
-          )}
-        />
-      </div>
+            </button>
+          </form>
+        )}
+      />
     </div>
+  </div>
+  <Modal modalOpen={isModalOpen}>
+    <div className={styles.codeConfirmForm__modal}>
+      <FinishCheckedIcon/>
+      <div className={styles.codeConfirmForm__modal__title}>
+            <span>
+             Номер изменен
+            </span>
+      </div>
+      <Button className={styles.codeConfirmForm__modal__button}
+              textClassName={styles.codeConfirmForm__modal__button_text}
+              onClick={toMainPage}
+      >
+        На главную
+      </Button>
+    </div>
+  </Modal>
+</>
   )
 }
 export default CodeConfirmation;
