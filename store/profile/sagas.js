@@ -2,6 +2,63 @@ import {put, call, takeEvery} from 'redux-saga/effects';
 import api from '../../lib/api';
 import {actions} from './slice';
 import {actions as toast} from "../toast/slice";
+import isEmpty from "lodash/isEmpty";
+import Cookies from "js-cookie";
+
+const HTTP_INTERNAL_SERVER_ERROR_CODE = 500;
+
+const checkStatus = (response) => {
+  if (response.ok) return response;
+
+  if (response.status >= HTTP_INTERNAL_SERVER_ERROR_CODE) {
+    return {
+      throwError: true,
+      json: {
+        detail:
+          'Ошибка на сервере! Если ошибка не исчезнет в ближайшее время - обратитесь к администратору',
+      },
+    };
+  }
+
+  return response.json().then((json) => ({
+    json,
+    throwError: true,
+  }));
+};
+
+const checkException = (response) => {
+  if (response.throwError === true) {
+    const errorMessage = Object.keys(response.json).map((key) => response.json[key]);
+    const error = new Error(errorMessage);
+    error.error = response.json;
+    throw error;
+  }
+  return response;
+};
+
+const contentTypeResponseMapping = {
+  'application/zip': true,
+  'application/ms-excel': true,
+};
+
+const parseJSON = (response) => {
+  const contentType = response.headers.get('content-type');
+  if (isEmpty(contentType)) return response;
+  if (contentTypeResponseMapping[contentType]) return response;
+  return response.json();
+};
+
+function apiPatch(url, values) {
+  return fetch(`http://uku.kg/api/v1/${url}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Token ${Cookies.get("token") ? Cookies.get("token") :'' }` ,
+    },
+    body: values
+  }).then(checkStatus)
+    .then(checkException)
+    .then(parseJSON)
+}
 
 function* profileRequest() {
   try {
@@ -37,7 +94,7 @@ function* avatarRequest() {
 function* updateAvatarRequest({payload}) {
   const {value,callback} = payload;
   try {
-    const response = yield call(api.patch, 'account/avatar/', {data:value});
+    const response = yield call(apiPatch, 'account/avatar/',value);
     yield put(actions.updateAvatarRequestSuccess(response));
     yield put(toast.openRequestStatusSuccessSnackbar('Профиль успешно обновлены!'))
     yield call(callback);

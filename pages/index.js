@@ -5,6 +5,7 @@ import Main from "../components/Main";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import NavContainer from "../containers/NavContainer";
+import Cookie from "js-cookie";
 
 function Home() {
   return (
@@ -13,7 +14,7 @@ function Home() {
       <main className="home">
         <Header/>
         <NavContainer>
-          <Nav/>
+          <Nav title={"Кого будем искать"}/>
         </NavContainer>
         <Container>
           <Main/>

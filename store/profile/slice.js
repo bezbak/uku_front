@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
- userProfile:{},
+  userProfile:{},
   feed:{},
   userAvatar:'',
   userPublications:{}

@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import Cookie from "js-cookie";
 import Card from "../Card";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {actions} from "../../store/profile/slice";
@@ -106,7 +107,8 @@ const sliderData = [
 
 const Main = ({title = "Лента"}) => {
   const dispatch = useDispatch();
-  const is_profile_completed = useSelector((store) => store.auth?.is_profile_completed);
+  const is_profile_completed = Cookie.get("is_profile_completed")
+  // const is_profile_completed = useSelector((store) => store.auth?.is_profile_completed);
   const feedRequest = () => dispatch(actions.feedRequestStart());
   useEffect(() => {
     if (is_profile_completed)

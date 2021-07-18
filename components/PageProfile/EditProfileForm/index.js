@@ -19,25 +19,26 @@ const Avatar = ({input}) => {
 
   const {push} = useRouter();
   const dispatch = useDispatch();
-  const [fileAddress, setFileAddress] = useState();
-
+  const userProfile = useSelector((store) => store.profile?.userProfile);
+  const [fileAddress, setFileAddress] = useState(userProfile.avatar);
   const updateAvatarRequest = (payload) => dispatch(profileAction.updateAvatarRequestStart(payload));
 
   const onChangeImg = (e) => {
+    e.preventDefault();
     input.onChange(e.target.value)
-    const image = new Image();
+    const files = Array.from(e.target.files)
+    const formData = new FormData()
+
     setFileAddress(URL.createObjectURL(e.target.files[0]))
-    image.src = e.target.result;
-    image.onload = function () {
-      document.getElementById('avatar').src = image.src;
-    }
+    files.forEach((file, i) => {
+      formData.append('avatar', file)
+    })
     return new Promise((resolve) => {
       updateAvatarRequest({
-        value:e.target.value,
+        value: formData,
         callback: (response) => {
-          console.log(e.target.value)
           if (!response) {
-            setTimeout(()=> push(pathnames.codeConfirmation),2000)
+            setTimeout(() => push(pathnames.profile), 2000)
           }
           resolve(response);
         },
@@ -108,20 +109,23 @@ const EditProfileForm = ({user = false}) => {
     closeNavigationMenu();
   }
   const updateProfileRequest = (payload) => dispatch(profileAction.updateProfileRequestStart(payload));
+
   const sendSmsToOldPhone = (payload) => dispatch(authAction.sendSmsToOldPhoneRequestStart(payload));
 
   const logoutRequest = () => dispatch(authAction.logoutRequestStart());
+
   const userInfo = useSelector((store) => store.profile.userProfile);
   const onChangeAvatar = (value) => {
     console.log(value)
   }
+
   const changeProfile = (value) => {
     return new Promise((resolve) => {
       updateProfileRequest({
         value,
         callback: (response) => {
           if (!response) {
-            setTimeout(()=> router.push(pathnames.profile),2000)
+            setTimeout(() => router.push(pathnames.profile), 2000)
           }
           resolve(response);
         },
@@ -134,14 +138,14 @@ const EditProfileForm = ({user = false}) => {
       sendSmsToOldPhone({
         callback: (response) => {
           if (!response) {
-            setTimeout(()=> router.push(pathnames.codeConfirmation),1000)
+            setTimeout(() => router.push(pathnames.codeConfirmation), 1000)
           }
           resolve(response);
         },
       });
     })
 
-  const logOutAsk = () =>{
+  const logOutAsk = () => {
     setIsModalOpen(true)
   }
 
