@@ -170,7 +170,7 @@ function* newPhoneConformCodeRequest({payload}) {
     }
     yield put(toast.openRequestStatusErrorSnackbar(e.message))
     yield put(actions.newPhoneCodeRequestFailure(e));
-    yield call(callback);
+    yield call(callback,e);
   }
 
 }

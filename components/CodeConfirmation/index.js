@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {useRouter} from "next/router";
-import {Field, Form} from "react-final-form";
-import useCountDown from 'react-countdown-hook';
 import classNames from 'classnames'
+import useCountDown from 'react-countdown-hook';
+import {Field, Form} from "react-final-form";
+import Cookie from "js-cookie";
 import {actions} from '../../store/users/slice';
 import pathnames from "../../constants/pathnames";
+import Modal from "../UI/Modal";
+import Button from "../Button";
 import NavLink from "../NavLink";
 import useIsMobile from "../../hooks/useIsMobile";
-import styles from "./styles.module.scss";
-import Cookie from "js-cookie";
 import FinishCheckedIcon from "../../public/icons/finishChecked.svg";
-import Button from "../Button";
-import Modal from "../UI/Modal";
+import styles from "./styles.module.scss";
 
 const CodeConfirmation =()=>{
   const router = useRouter();
@@ -74,7 +74,6 @@ const CodeConfirmation =()=>{
       callback: (response) => {
         if (!response) {
           setIsModalOpen(true)
-        
         }
           resolve(response);
 
@@ -159,7 +158,7 @@ const CodeConfirmation =()=>{
                       styles.codeConfirmForm__button_submitAgain,
                     )}
                     onClick={SendAgain}
-                    disabled={timeLeft / 1000 ? true : false}>
+                    disabled={!!(timeLeft / 1000)}>
               <span>Отправить снова</span>
               <span className={classNames({[styles.codeConfirmForm__button_submitAgain_timer]: !timeLeft / 1000})}>
                   0:{timeLeft / 1000}

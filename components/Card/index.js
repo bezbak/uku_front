@@ -18,12 +18,12 @@ const Card = ({slideData,userPublicationFeed, countProfile, publication, setToEd
   const route = useRouter();
   const avatar = slideData.user?.avatar ? slideData.user.avatar : "icons/avatar.png";
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [userId, setUserId] = useState(slideData.user.id);
+  const [userId, setUserId] = useState(slideData.user?.id);
   const [idPublication, setIdPublication] = useState(slideData.id)
 
 
   const account = useSelector((store) => store.account, shallowEqual);
-  const [isSubscribe, setIsSubscribe] = useState(slideData?.user.id === account.id ? account.subscribe : slideData?.user?.following)
+  const [isSubscribe, setIsSubscribe] = useState(slideData?.user?.id === account.id ? account.subscribe : slideData?.user?.following)
 
   const askToDeletePublication = (idPublication) => {
     setIsModalOpen(true)
@@ -81,7 +81,7 @@ const Card = ({slideData,userPublicationFeed, countProfile, publication, setToEd
 
           <Button className={styles.card__headline__follow} textClassName={ styles.card__headline__follow_text}
                   onClick={()=>accountFollow(slideData?.user.id)}>
-            {(slideData?.user.id === account.id ? account.subscribe : isSubscribe) ? "Отписаться" : "Подписаться"}
+            {(slideData?.user?.id === account.id ? account.subscribe : isSubscribe) ? "Отписаться" : "Подписаться"}
           </Button>
         </div>}
         {publication && <div className={styles.userPublication}>
@@ -143,4 +143,5 @@ const Card = ({slideData,userPublicationFeed, countProfile, publication, setToEd
     </>
   )
 }
+
 export default Card;

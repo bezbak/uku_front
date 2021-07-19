@@ -24,11 +24,12 @@ function* accountPublicationsRequest({payload}) {
 }
 
 function* accountFollowRequest({payload}) {
-  const {id,userPublicationFeed}=payload;
+  const {id,changedUserPublicationFeed}=payload;
+  console.log(changedUserPublicationFeed)
   try {
     const response = yield call(api.get, `account/follow/${id}`);
     yield put(actions.accountFollowRequestSuccess({subscribe:response.subscribe ,id : id}));
-    yield put(profileAction.updateFeed(userPublicationFeed));
+    yield put(profileAction.updateFeed(changedUserPublicationFeed));
   } catch (e) {
     yield put(actions.accountFollowRequestFailure(e));
   }

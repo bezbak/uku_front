@@ -30,9 +30,9 @@ const userProfileSlice = createSlice({
     updateProfileRequestFailure() {},
 
     feedRequestStart() {},
-    feedRequestSuccess(state,{payload}) {
+    feedRequestSuccess: (state,{payload})=> {
       state.feed = payload
-      state.feedPublication = payload.results;
+      state.feedPublication = state.feedPublication.concat( payload.results);
     },
     feedRequestFailure() {},
 
