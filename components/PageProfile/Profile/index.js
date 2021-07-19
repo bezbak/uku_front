@@ -7,17 +7,18 @@ import InstagramIcon from '../../../public/icons/instagram.svg'
 import UserProfileEdit from '../../../public/icons/userProfileEdit.svg'
 import styles from './styles.module.scss';
 
-const Profile = ({user}) => {
+const Profile = ({user, userProfile}) => {
   const [state, actions] = useNavigationMenu();
-  return(
+  const avatar = user.avatar ? user.avatar : "icons/avatar.png"
+  return (
     <div className={styles.profile}>
       <div className={styles.profile__avatar}>
-          <img src={user.avatar}/>
-        {user &&
+        <img src={avatar}/>
+        {userProfile &&
         <Button className={styles.profile__userProfileEdit}
                 onClick={() => actions.update(!state.isOpened)}>
           <UserProfileEdit/>
-        </Button >}
+        </Button>}
       </div>
       <div className={styles.profile__info}>
         <div className={styles.profile__info_fio}>
@@ -27,13 +28,13 @@ const Profile = ({user}) => {
           <span>Женщина</span>
           <span>23 </span>
         </div>}
-        {user &&  <div className={styles.profile__info_phone}>
+        {user && <div className={styles.profile__info_phone}>
           <span>Тел:</span>
           <span>{user.phone}</span>
         </div>}
       </div>
       <div className={styles.profile__appInfo}>
-        <div  className={styles.profile__appInfo_wrap}>
+        <div className={styles.profile__appInfo_wrap}>
           <span className={styles.profile__appInfo_wrap__list}>
             Подписчики
           </span>
@@ -45,7 +46,7 @@ const Profile = ({user}) => {
           <span className={styles.profile__appInfo_wrap__list}>
             Подписки
           </span>
-          <span  className={styles.profile__appInfo_wrap__list_cout}>
+          <span className={styles.profile__appInfo_wrap__list_cout}>
            {user.following_count}
           </span>
         </div>
@@ -68,7 +69,7 @@ const Profile = ({user}) => {
         </a>
         <a href={`https://www.instagram.com/${user.instagram}`} target="_blank">
           <InstagramIcon/>
-      </a>
+        </a>
         {!user && <Button className={styles.profile__editButton} textClassName={styles.profile__editButton__text}>
           Редактировать
         </Button>}

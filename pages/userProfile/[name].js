@@ -1,16 +1,16 @@
 import Meta from "../../components/Meta";
 import Header from "../../components/Header";
-import PageProfile from "../../components/PageProfile";
+import AccountProfile from "../../components/PageProfile/AccountProfile";
 import React from "react";
 import {redirectToLogin} from "../../lib/utils/auth";
 
-function UserProfilePage({isAuthenticated}) {
+function AccountProfilePage({isAuthenticated}) {
   return (
     <>
       <Meta/>
       <main className="home">
         <Header/>
-        <PageProfile/>
+        <AccountProfile/>
       </main>
     </>
   )
@@ -18,4 +18,4 @@ function UserProfilePage({isAuthenticated}) {
 export async function getServerSideProps({req, res}) {
   return redirectToLogin(req.cookies.token);
 }
-export default UserProfilePage;
+export default AccountProfilePage;

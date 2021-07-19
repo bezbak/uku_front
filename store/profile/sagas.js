@@ -52,7 +52,7 @@ function apiPatch(url, values) {
   return fetch(`http://uku.kg/api/v1/${url}`, {
     method: 'PATCH',
     headers: {
-      'Authorization': `Token ${Cookies.get("token") ? Cookies.get("token") :'' }` ,
+      'Authorization': `Token ${Cookies.get("token") ? Cookies.get("token") : ''}`,
     },
     body: values
   }).then(checkStatus)
@@ -70,9 +70,9 @@ function* profileRequest() {
 }
 
 function* updateProfileRequest({payload}) {
-  const {value,callback} = payload;
+  const {value, callback} = payload;
   try {
-    const response = yield call(api.patch, 'account/profile/update/', {data:value});
+    const response = yield call(api.patch, 'account/profile/update/', {data: value});
     yield put(actions.updateProfileRequestSuccess(response));
     yield put(toast.openRequestStatusSuccessSnackbar('Профиль успешно обновлены!'))
     yield call(callback);
@@ -92,9 +92,9 @@ function* avatarRequest() {
 }
 
 function* updateAvatarRequest({payload}) {
-  const {value,callback} = payload;
+  const {value, callback} = payload;
   try {
-    const response = yield call(apiPatch, 'account/avatar/',value);
+    const response = yield call(apiPatch, 'account/avatar/', value);
     yield put(actions.updateAvatarRequestSuccess(response));
     yield put(toast.openRequestStatusSuccessSnackbar('Профиль успешно обновлены!'))
     yield call(callback);
@@ -110,6 +110,7 @@ function* feedRequest({payload}) {
     yield put(actions.feedRequestSuccess(response));
   } catch (e) {
     yield put(actions.feedRequestFailure(e));
+    yield put(toast.openRequestStatusErrorSnackbar(e.message))
   }
 }
 
@@ -123,7 +124,7 @@ function* publicationRequest() {
 }
 
 function* deletePublicationRequest(token) {
-  const { id} = token
+  const {id} = token
 
   try {
     const response = yield call(api.delete, `/publication/${id}/delete`);

@@ -20,7 +20,7 @@ function PageProfile() {
   useEffect(() => {
     profileRequest();
     publicationRequest()
-  },[])
+  }, [])
 
   const userProfile = useSelector((store) => store.profile?.userProfile);
   const userPublication = useSelector((store) => store.profile.userPublications, shallowEqual);
@@ -32,7 +32,7 @@ function PageProfile() {
       </NavContainer>
       <Container>
         <div className={styles.profile__content}>
-          <Profile user={userProfile}/>
+          <Profile user={userProfile} userProfile={true}/>
           {editPublication &&
           <UserPublicationEdit setEditPublication={setEditPublication} editPublicationId={toEditPublicationId}/>}
           {!editPublication &&
@@ -45,7 +45,7 @@ function PageProfile() {
             <div className={styles.profile__publication__container}>
               {
                 userPublication?.results?.map((user, index) =>
-                  <Card slideData={user} key={index} publication={true}
+                  <Card slideData={user} key={index} publication={true} profileCard={true}
                         setToEditPublicationId={setToEditPublicationId}
                         setEditPublication={setEditPublication}
                   />

@@ -1,8 +1,9 @@
 const pathnames = {
-  main:'/',
+  main: '/',
   login: '/login',
   codeConfirmation: '/codeConfirmation',
   profile: '/profile',
+  accountProfile: '/userProfile',
   registration: '/registration',
   providers: '/dashboard/providers',
 };

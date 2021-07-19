@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import {useRouter} from "next/router";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import SwiperCard from "../Swiper";
@@ -7,16 +7,23 @@ import Modal from "../UI/Modal";
 import pathnames from "../../constants/pathnames";
 import {actions} from "../../store/profile/slice";
 
-import {actions as accountAction}  from '../../store/account/slice'
+import {actions as accountAction} from '../../store/account/slice'
 import EyeIcon from '../../public/icons/eye.svg'
 import EditIcon from '../../public/icons/Edit.svg'
 import DeleteIcon from '../../public/icons/CloseIcon.svg'
 import styles from './styls.module.scss'
 
-const Card = ({slideData,userPublicationFeed, countProfile, publication, setToEditPublicationId, setEditPublication}) => {
+const Card = ({
+                slideData,
+                userPublicationFeed,
+                profileCard,
+                publication,
+                setToEditPublicationId,
+                setEditPublication
+              }) => {
   const dispatch = useDispatch();
   const route = useRouter();
-  const avatar = slideData.user?.avatar ? slideData.user.avatar : "icons/avatar.png";
+  const avatar = slideData.user?.avatar ? slideData.user?.avatar : "icons/avatar.png";
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [userId, setUserId] = useState(slideData.user?.id);
   const [idPublication, setIdPublication] = useState(slideData.id)
@@ -29,9 +36,15 @@ const Card = ({slideData,userPublicationFeed, countProfile, publication, setToEd
     setIsModalOpen(true)
   }
 
-  const accountProfile = () => {
-    dispatch(accountAction.accountProfileRequestStart(userId))
-  }
+  console.log(slideData.user?.avatar)
+  const accountProfile = useCallback(
+    () => {
+      dispatch(accountAction.accountProfileRequestStart({id: userId}));
+      route.push(`${pathnames.accountProfile}/${slideData?.user?.first_name}`)
+    },
+    []
+  );
+
 
   const deletePublication = (payload) => dispatch(actions.deletePublicationRequestStart(payload));
 
@@ -56,19 +69,19 @@ const Card = ({slideData,userPublicationFeed, countProfile, publication, setToEd
     setIsModalOpen(true)
   }
 
-  const accountFollow = (id) =>{
+  const accountFollow = (id) => {
     const changedUserPublicationFeed = userPublicationFeed?.map(el => {
-      return { ...el, user : { ...el.user, following : el.user.id === account.id ? !el.user.following : el.user.following} }
+      return {...el, user: {...el.user, following: el.user.id === account.id ? !el.user.following : el.user.following}}
     })
-    dispatch(accountAction.accountFollowRequestStart({id,changedUserPublicationFeed}));
+    dispatch(accountAction.accountFollowRequestStart({id, changedUserPublicationFeed}));
     setIsSubscribe(slideData?.user.id === account.id ? account.subscribe : isSubscribe)
   };
 
   return (
     <>
-      <div className={styles.card} >
-        {!publication &&
-        <div className={styles.card__headline} >
+      <div className={styles.card}>
+        {!publication && !profileCard &&
+        <div className={styles.card__headline}>
           <img src={avatar} alt="avatar"/>
 
           <div className={styles.card__headline__info} onClick={accountProfile}>
@@ -76,11 +89,11 @@ const Card = ({slideData,userPublicationFeed, countProfile, publication, setToEd
               className={styles.card__headline__info_name}>{slideData?.user?.first_name} {slideData?.user?.last_name}
             </span>
             {slideData?.user?.location &&
-              <span className={styles.card__headline__info_address}>{slideData?.user?.location}</span>}
+            <span className={styles.card__headline__info_address}>{slideData?.user?.location}</span>}
           </div>
 
-          <Button className={styles.card__headline__follow} textClassName={ styles.card__headline__follow_text}
-                  onClick={()=>accountFollow(slideData?.user.id)}>
+          <Button className={styles.card__headline__follow} textClassName={styles.card__headline__follow_text}
+                  onClick={() => accountFollow(slideData?.user.id)}>
             {(slideData?.user?.id === account.id ? account.subscribe : isSubscribe) ? "Отписаться" : "Подписаться"}
           </Button>
         </div>}

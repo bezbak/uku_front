@@ -12,43 +12,39 @@ const Main = ({title = "Лента"}) => {
   const [loading, setLoading] = useState(false);
   const userPublicationFeed = useSelector((store) => store.profile.feedPublication, shallowEqual);
 
-  const accountProfile = (id )=> {
-    console.log(id)
-  }
   const is_profile_completed = Cookie.get("is_profile_completed")
 
   const feedRequest = (page) => dispatch(actions.feedRequestStart(page));
 
   const handleScroll = (event) => {
-    const {scrollTop,clientHeight, scrollHeight} = event.currentTarget;
-    if (scrollHeight- scrollTop === clientHeight) {
-      setPage(prev=>prev+1);
+    const {scrollTop, clientHeight, scrollHeight} = event.currentTarget;
+    if (scrollHeight - scrollTop === clientHeight) {
+      setPage(prev => prev + 1);
     }
   }
 
   useEffect(() => {
-      setLoading(true);
-      feedRequest(page)
-      setLoading(false)
+    setLoading(true);
+    feedRequest(page)
+    setLoading(false)
   }, [page])
 
   return (
-    <div className={styles.main} >
+    <div className={styles.main}>
       <div className={styles.main__title}>
         <span>
           {title}
         </span>
       </div>
-        <div className={styles.main__container}  onClick={handleScroll}>
-          { is_profile_completed  &&
-          userPublicationFeed?.map(slide =>
-            <Card slideData={slide}
-                  userPublicationFeed={userPublicationFeed}
-                  accountProfile={accountProfile}
-                  key={slide.id} publication={false}/>
-          )
-          }
-        </div>
+      <div className={styles.main__container} onClick={handleScroll}>
+        {is_profile_completed &&
+        userPublicationFeed?.map(slide =>
+          <Card slideData={slide}
+                userPublicationFeed={userPublicationFeed}
+                key={slide.id} publication={false}/>
+        )
+        }
+      </div>
       {loading && <h4>Loading...</h4>}
     </div>
   )
