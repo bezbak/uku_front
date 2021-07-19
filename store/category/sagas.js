@@ -11,6 +11,21 @@ function* categoryRequest() {
   }
 }
 
+
+function* categoryPublicationsRequest({payload}) {
+  const {id, callback} = payload;
+  try {
+    const response = yield call(api.get, `publication/category/${id}`);
+    yield put(actions.categoryPublicationsRequestSuccess(response));
+    yield call(callback);
+  } catch (e) {
+    yield put(actions.categoryPublicationsRequestFailure(e));
+  }
+}
+
+
+
 export default function* categorySagas() {
   yield takeEvery(`${actions.categoryRequestStart}`, categoryRequest);
+  yield takeEvery(`${actions.categoryPublicationsRequestStart}`, categoryPublicationsRequest);
 }

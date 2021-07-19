@@ -19,6 +19,7 @@
       width: 32px;
       height: 32px;
       margin-right: 8px;
+      object-fit: cover ;
     }
     &__info{
       height: 100%;
@@ -40,9 +41,11 @@
     }
     &__follow{
       margin-left: auto;
-      font-size: 14px;
-      line-height: 17px;
-      color: #E56366;
+      &_text {
+        font-size: 14px;
+        line-height: 17px;
+        color: #E56366 !important;
+      }
     }
   }
   &__footer{

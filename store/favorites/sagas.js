@@ -3,26 +3,28 @@ import api from '../../lib/api';
 import {actions} from './slice';
 
 
-function* userAllFavoriteRequest() {
+function* userAllFavoritePublicationsRequest({payload}) {
+  const {page,callback}=payload;
   try {
-    const response = yield call(api.get, 'account/favorite/');
-    yield put(actions.userAllFavoriteRequestSuccess(response));
+    const response = yield call(api.get, 'account/favorite/', {qs:{page:page}});
+    yield put(actions.userAllFavoritePublicationsRequestSuccess(response));
+    yield call(callback);
   } catch (e) {
-    yield put(actions.userFavoriteRequestFailure(e));
+    yield put(actions.userAllFavoritePublicationsRequestFailure(e));
   }
 }
 
-function* userFavoriteAccountRequest({id}) {
+function* userFavoritePublicationRequest({id}) {
   try {
     const response = yield call(api.get, `/account/favorite/${id}`);
-    yield put(actions.userFavoriteAccountRequestSuccess(response));
+    yield put(actions.userFavoritePublicationRequestSuccess(response));
   } catch (e) {
-    yield put(actions.userAllFavoriteAccountRequestFailure(e));
+    yield put(actions.userFavoritePublicationRequestFailure(e));
   }
 }
 
 
 export default function* userFavoriteSagas() {
-  yield takeEvery(`${actions.userAllFavoriteRequestStart}`, userAllFavoriteRequest);
-  yield takeEvery(`${actions.userFavoriteAccountRequestStart}`, userFavoriteAccountRequest);
+  yield takeEvery(`${actions.userAllFavoritePublicationsRequestStart}`, userAllFavoritePublicationsRequest);
+  yield takeEvery(`${actions.userFavoritePublicationRequestStart}`, userFavoritePublicationRequest);
 }

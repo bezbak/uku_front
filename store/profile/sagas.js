@@ -104,9 +104,9 @@ function* updateAvatarRequest({payload}) {
   }
 }
 
-function* feedRequest() {
+function* feedRequest({payload}) {
   try {
-    const response = yield call(api.get, 'account/profile/feed/');
+    const response = yield call(api.get, 'account/profile/feed/', {qs: {page: payload}});
     yield put(actions.feedRequestSuccess(response));
   } catch (e) {
     yield put(actions.feedRequestFailure(e));
@@ -126,8 +126,9 @@ function* deletePublicationRequest(token) {
   const { id} = token
 
   try {
-    const response = yield call(api.delete, `account/profile/publication/${id}`);
+    const response = yield call(api.delete, `/publication/${id}/delete`);
     yield put(actions.deletePublicationRequestSuccess(response));
+    yield put(toast.openRequestStatusSuccessSnackbar(response.message))
   } catch (e) {
     yield put(actions.deletePublicationRequestFailure(e));
   }

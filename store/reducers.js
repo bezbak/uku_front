@@ -3,6 +3,7 @@ import toastReducer from './toast/slice';
 import mainReducer from './main/slice';
 import authReducer from './users/slice';
 import userReducer from './profile/slice';
+import accountReducer from './account/slice';
 import userFavorites from './favorites/slice';
 import categoryReducer from './category/slice';
 import publicationReducer from './publication/slice';
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   category:categoryReducer,
   system:systemReducer,
   location:locationSlice,
+  account:accountReducer,
 });
 
 export default rootReducer;

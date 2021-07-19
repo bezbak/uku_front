@@ -1,8 +1,13 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-  categoryPublication: {},
-  userPublication: {}
+  publicationInfo:{},
+  searchedPublicationInfo:{},
+  publicationDescription:{},
+  userPublication: {},
+  publicationCommentList:{},
+  publicationComment:{},
+  publicationReply:{},
 };
 
 const publicationSlice = createSlice({
@@ -10,29 +15,65 @@ const publicationSlice = createSlice({
   initialState,
   reducers: {
 
-    categoryPublicationRequestStart() {
+    uploadPublicationImageRequestStart () {},
+    uploadPublicationImageRequestSuccess (state, {payload}) {
     },
-    categoryPublicationRequestSuccess(state, {payload}) {
-      state.categoryPublication = payload
-    },
-    categoryPublicationRequestFailure() {
-    },
+    uploadPublicationImageRequestFailure () {},
 
-    userPublicationRequestStart() {
+    createPublicationRequestStart () {},
+    createPublicationRequestSuccess (state, {payload}) {
     },
-    userPublicationRequestSuccess(state, {payload}) {
-      state.userPublication = payload
-    },
-    userPublicationRequestFailure() {
-    },
+    createPublicationRequestFailure () {},
 
-    userCreatePublicationRequestStart() {
+    getPublicationInfoRequestStart () {},
+    getPublicationInfoRequestSuccess (state, {payload}) {
+      state.publicationInfo = payload
     },
-    userCreatePublicationRequestSuccess() {
-    },
-    userCreatePublicationRequestFailure() {
-    },
+    getPublicationInfoRequestFailure () {},
 
+    updatePublicationRequestStart () {},
+    updatePublicationRequestSuccess (state,{payload}) {
+      state.publicationDescription=payload;
+    },
+    updatePublicationRequestFailure () {},
+
+    deletePublicationRequestStart () {},
+    deletePublicationRequestSuccess () {},
+    deletePublicationRequestFailure () {},
+
+    deletePublicationImageRequestStart () {},
+    deletePublicationImageRequestSuccess () {},
+    deletePublicationImageRequestFailure () {},
+
+    searchPublicationRequestStart () {},
+    searchPublicationRequestSuccess(state, {payload}) {
+      state.searchedPublicationInfo = payload
+    },
+    searchPublicationRequestFailure () {},
+
+    // userPublicationRequestStart() {},
+    // userPublicationRequestSuccess(state, {payload}) {
+    //   state.userPublication = payload
+    // },
+    // userPublicationRequestFailure() {},
+
+    commentsPublicationRequestStart() {},
+    commentsPublicationRequestSuccess(state, {payload}) {
+      state.publicationCommentList = payload
+    },
+    commentsPublicationRequestFailure() {},
+
+    addCommentPublicationRequestStart() {},
+    addCommentPublicationRequestSuccess(state, {payload}) {
+      state.publicationComment=payload;
+    },
+    addCommentPublicationRequestFailure() {},
+
+    replyCommentPublicationRequestStart() {},
+    replyCommentPublicationRequestSuccess(state, {payload}) {
+      state.publicationReply=payload;
+    },
+    replyCommentPublicationRequestFailure() {},
 
   },
 });
