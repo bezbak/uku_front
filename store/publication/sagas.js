@@ -76,12 +76,10 @@ function* deletePublicationImageRequest({payload}) {
 }
 
 function* searchPublicationRequest({payload}) {
-  const { callback} = payload;
-
+console.log(payload)
   try {
     const response = yield call(api.get, `publication/search/`,  {qs: {page: payload.page,q: payload.q, category_id: payload.category_id, location_id: payload.location_id}});
     yield put(actions.searchPublicationRequestSuccess(response));
-    yield call(callback);
   } catch (e) {
     yield put(actions.searchPublicationRequestFailure(e));
   }

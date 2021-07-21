@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const initialState = {
   category:[],
   categoryPublications: {},
+  category_id: null
 
 };
 

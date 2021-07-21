@@ -2,16 +2,9 @@ import React, {useEffect, useState} from "react";
 import ComponentFavorites from "../Favorites";
 import Container from "../../containers";
 import {actions} from "../../store/favorites/slice";
-import {useDispatch} from "react-redux";
-
-
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import Cookie from "js-cookie";
 const PageFavorites = () => {
-  const dispatch = useDispatch();
-  const userAllFavoriteRequest = (payload) => dispatch(actions.userAllFavoriteRequestStart(payload));
-  useEffect(()=> {
-    userAllFavoriteRequest
-  },[])
-  const [selectedCategory, setSelectedCategory] = useState();
   return (
     <Container>
       <ComponentFavorites title={"Избранное"}/>

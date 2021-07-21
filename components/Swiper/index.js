@@ -6,12 +6,12 @@ import styles from './styles.module.scss'
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
-const SwiperCard = ({data}) => {
+const SwiperCard = ({data, onClick}) => {
   const swiperRef = useRef();
   const [activeSlideIndex, setActiveSlideIndex] = React.useState(0);
   const setActiveSlide = (swiper) => setActiveSlideIndex(swiper.activeIndex);
   return (
-    <div className={styles.swiperCard}>
+    <div className={styles.swiperCard} onClick={onClick}>
       <Swiper
         slidesPerView={1}
         // onSlideChange={setActiveSlide}

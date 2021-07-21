@@ -4,6 +4,7 @@ const pathnames = {
   codeConfirmation: '/codeConfirmation',
   profile: '/profile',
   accountProfile: '/userProfile',
+  publicationInfo: '/publicationInfo',
   registration: '/registration',
   providers: '/dashboard/providers',
 };

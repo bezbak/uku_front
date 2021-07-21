@@ -111,6 +111,8 @@ function* conformCodeRequest({payload}) {
     yield put(actions.conformCodeRequestSuccess(response));
     Cookies.set("token", response.token);
     Cookies.set("is_profile_completed", response.is_profile_completed);
+    Cookies.set( JSON.stringify(response.region_detail));
+
     yield call(callback, response);
   } catch (e) {
     if (e.message === "Неверный код") {

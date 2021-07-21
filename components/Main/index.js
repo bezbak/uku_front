@@ -17,10 +17,11 @@ const Main = ({title = "Лента"}) => {
   const feedRequest = (page) => dispatch(actions.feedRequestStart(page));
 
   const handleScroll = (event) => {
-    const {scrollTop, clientHeight, scrollHeight} = event.currentTarget;
-    if (scrollHeight - scrollTop === clientHeight) {
-      setPage(prev => prev + 1);
-    }
+    console.log("d")
+    // const {scrollTop, clientHeight, scrollHeight} = event.currentTarget;
+    // if (scrollHeight - scrollTop === clientHeight) {
+    //   setPage(prev => prev + 1);
+    // }
   }
 
   useEffect(() => {

@@ -17,12 +17,13 @@ import styles from './styles.module.scss';
 const Nav = () => {
   const {pathname} = useRouter();
   const dispatch = useDispatch();
-  const [region, setRegion] = useState(Cookies.get("region_name"));
+  const [region, setRegion] = useState(Cookies.get("region"));
   const [is_profile_completed, setIs_profile_completed] = useState(Cookies.get("is_profile_completed"));
   const avatarRequest = () => dispatch(profileAction.avatarGetRequestStart());
   useEffect(() => {
       avatarRequest()
   }, [])
+  console.log(region)
   const userAvatar = useSelector((store) => store.profile?.userAvatar, shallowEqual);
   const user_region_detail = useSelector((store) => store.auth?.user_region_detail, shallowEqual);
   return (

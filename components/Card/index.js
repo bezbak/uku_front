@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import SwiperCard from "../Swiper";
@@ -8,6 +8,7 @@ import pathnames from "../../constants/pathnames";
 import {actions} from "../../store/profile/slice";
 
 import {actions as accountAction} from '../../store/account/slice'
+import {actions as publicationAction} from '../../store/publication/slice'
 import EyeIcon from '../../public/icons/eye.svg'
 import EditIcon from '../../public/icons/Edit.svg'
 import DeleteIcon from '../../public/icons/CloseIcon.svg'
@@ -40,7 +41,7 @@ const Card = ({
   const accountProfile = useCallback(
     () => {
       dispatch(accountAction.accountProfileRequestStart({id: userId}));
-      route.push(`${pathnames.accountProfile}/${slideData?.user?.first_name}`)
+      route.push({pathname:`${pathnames.accountProfile}/${slideData?.user?.first_name}`,query:{id:1}})
     },
     []
   );
@@ -76,6 +77,13 @@ const Card = ({
     dispatch(accountAction.accountFollowRequestStart({id, changedUserPublicationFeed}));
     setIsSubscribe(slideData?.user.id === account.id ? account.subscribe : isSubscribe)
   };
+  const publicationInfo = () => {
+    dispatch(publicationAction.setPublicationId({publication_id:1}))
+    route.push({pathname:`${pathnames.publicationInfo}/${slideData?.user?.first_name}`})
+  };
+  useEffect(()=>{
+    publicationInfo()
+  })
 
   return (
     <>
@@ -105,8 +113,8 @@ const Card = ({
             <DeleteIcon/>
           </Button>
         </div>}
-        <SwiperCard data={slideData?.images}/>
-        <div className={styles.card__footer}>
+        <SwiperCard data={slideData?.images} onClick={publicationInfo}/>
+        <div className={styles.card__footer} onClick={publicationInfo}>
           <div className={styles.card__footer__category}>
             <span>Категория/ {slideData?.categories}</span>
           </div>

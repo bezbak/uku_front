@@ -6,7 +6,7 @@ import {actions} from './slice';
 function* userAllFavoritePublicationsRequest({payload}) {
   const {page,callback}=payload;
   try {
-    const response = yield call(api.get, 'account/favorite/', {qs:{page:page}});
+    const response = yield call(api.get, 'account/favorite', {qs:{page:page}});
     yield put(actions.userAllFavoritePublicationsRequestSuccess(response));
     yield call(callback);
   } catch (e) {

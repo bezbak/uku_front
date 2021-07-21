@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
+  publication_id:null,
   publicationInfo:{},
   searchedPublicationInfo:{},
   publicationDescription:{},
@@ -14,6 +15,11 @@ const publicationSlice = createSlice({
   name: 'publication',
   initialState,
   reducers: {
+
+    setPublicationId (state, {payload}) {
+      console.log(payload ,"kldmclmd")
+      state.publication_id=payload;
+    },
 
     uploadPublicationImageRequestStart () {},
     uploadPublicationImageRequestSuccess (state, {payload}) {
