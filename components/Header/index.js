@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {useRouter} from "next/router";
 import {shallowEqual, useSelector} from "react-redux";
 import classNames from "classnames";
+import Button from "../Button";
 import NavLink from "../NavLink";
 import useIsMobile from "../../hooks/useIsMobile";
 import CloseIcon from '../../public/icons/CloseIcon.svg';
@@ -40,21 +41,21 @@ const Header = () => {
       <div className={styles.header}>
         {isMobile &&
         <div className={styles.header__mobileContent}>
-          <button className={styles.header__menuButton} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <Button className={styles.header__menuButton} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
             {isMobileMenuOpen ? <CloseIcon/> : <Menu/>}
-          </button>
+          </Button>
 
           <div className={styles.header__mobileLogo}>
             <span>Uku.kg</span>
           </div>
-          <button className={styles.header__menuButton}>
+          <Button  className={styles.header__menuButton}>
             <SearchIcon/>
-          </button>
+          </Button>
         </div>
         }
         {!isMobile &&
         <ul className={styles.header__list}>
-          <li className={styles.header__list__li}>
+          <li className={styles.header__list__link}>
             <NavLink url={"/"} className={styles.header__list__link} children={"Главная"}/>
           </li>
           <li>
@@ -71,19 +72,19 @@ const Header = () => {
           <li className={styles.mobileMenu__headerMenu__list}>
             <NavLink url={"/"}
                      className={styles.mobileMenu__headerMenu__list_link} children={"Главная"}
-                     onClick={()=>setIsMobileMenuOpen(false)}
+                     // onClick={()=>setIsMobileMenuOpen(false)}
             />
           </li>
           <li className={styles.mobileMenu__headerMenu__list}>
             <NavLink url={"/system/contact"}
                      className={styles.mobileMenu__headerMenu__list_link} children={"Контакты"}
-                     onClick={()=>setIsMobileMenuOpen(false)}
+                     // onClick={()=>setIsMobileMenuOpen(false)}
             />
           </li>
           <li className={styles.mobileMenu__headerMenu__list}>
             <NavLink url={"/system/faq"}
                      className={styles.mobileMenu__headerMenu__list_link} children={"F.A.Q."}
-                     onClick={()=>setIsMobileMenuOpen(false)}
+                     // onClick={()=>setIsMobileMenuOpen(false)}
             />
           </li>
         </div>
@@ -92,7 +93,8 @@ const Header = () => {
             <NavLink url='/search'
                      className={classNames(styles.mobileMenu__navMenu__list_link,
               {[styles.mobileMenu__navMenu__list_link_active]:pathname==='/search'})}
-                     onClick={()=>setIsMobileMenuOpen(false)}>
+                     // onClick={()=>setIsMobileMenuOpen(false)}
+            >
               <SearchIcon/>
               Поиск
             </NavLink>

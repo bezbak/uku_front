@@ -103,6 +103,9 @@
     font-size: 14px;
     line-height: 17px;
     margin-top: 45px;
+    &_disabled:disabled {
+      background: rgba(229, 99, 102, 0.5);
+    }
   }
 
   &__button:disabled,

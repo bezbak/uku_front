@@ -55,7 +55,6 @@ function AccountProfile() {
           </div>
         </div>
       </Container>
-      <Footer/>
     </>
   )
 }

@@ -55,7 +55,6 @@ function PageProfile() {
           </div>}
         </div>
       </Container>
-      <Footer/>
     </>
   )
 }

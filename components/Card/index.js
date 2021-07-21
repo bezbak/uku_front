@@ -81,9 +81,9 @@ const Card = ({
     dispatch(publicationAction.setPublicationId({publication_id:1}))
     route.push({pathname:`${pathnames.publicationInfo}/${slideData?.user?.first_name}`})
   };
-  useEffect(()=>{
-    publicationInfo()
-  })
+  // useEffect(()=>{
+  //   publicationInfo()
+  // })
 
   return (
     <>

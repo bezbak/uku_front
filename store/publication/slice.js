@@ -17,7 +17,6 @@ const publicationSlice = createSlice({
   reducers: {
 
     setPublicationId (state, {payload}) {
-      console.log(payload ,"kldmclmd")
       state.publication_id=payload;
     },
 

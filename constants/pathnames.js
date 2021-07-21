@@ -6,7 +6,7 @@ const pathnames = {
   accountProfile: '/userProfile',
   publicationInfo: '/publicationInfo',
   registration: '/registration',
-  providers: '/dashboard/providers',
+  search: '/search',
 };
 
 export default pathnames;

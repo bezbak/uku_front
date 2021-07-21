@@ -2,19 +2,17 @@
 @import "../../public/styles/mixins/index";
 
 .main {
-  margin-bottom: 27px;
   &__title {
-    display: none;
     font-weight: 500;
     font-size: 24px;
     line-height: 29px;
     color: #121213;
-    margin-top: 32px;
-    margin-bottom: 22px;
 
   }
 
   &__container {
+    overflow-y: scroll;
+    height: 100%;
     display: grid;
     grid-template-columns: 100%;
     justify-content: space-between;
@@ -23,9 +21,6 @@
     row-gap: 30px;
   }
 }
-@import "../../public/styles/varibles";
-@import "../../public/styles/mixins/index";
-
 .card{
   display: flex;
   flex-direction: column;
@@ -112,6 +107,7 @@
 
     &__title {
       display: block;
+      margin-bottom: 22px;
     }
   }
 }

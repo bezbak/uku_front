@@ -4,9 +4,10 @@
 .container {
   width: 100vw;
   position: absolute;
-  //top: 132px;
+  top: 86px;
 
   &_content {
+    height: 100%;
     display: flex;
     width: 100%;
     padding: $paddingSm $paddingMb;
@@ -17,8 +18,7 @@
 @include respond-above(sm) {
 
   .container {
-    padding: $paddingSm;
-
+    overflow: hidden;
   }
 }
 
@@ -27,7 +27,8 @@
   .container {
     width: 100vw;
     position: absolute;
-    top: 70px;
+    top: 216px;
+    height: calc(100vh - 196px);
 
     &_content {
       display: flex;
@@ -42,7 +43,7 @@
 
   .container {
     position: absolute;
-    top: 76px;
+    top: 132px;
 
 
   }

@@ -1,7 +1,6 @@
 import Meta from "../components/Meta";
 import Login from "../components/Login";
 import CodeConfirmation from "../components/CodeConfirmation";
-import {redirectToLogin} from "../lib/utils/auth";
 
 function CodeConform() {
   return (

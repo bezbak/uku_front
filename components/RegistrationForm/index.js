@@ -109,7 +109,7 @@ const RegistrationForm = () => {
             }
             return errors
           }}
-          render={({
+          render={({ values,
                      handleSubmit,
                      submitting,
                      pristine,
@@ -184,8 +184,8 @@ const RegistrationForm = () => {
               </div>
 
               <button type="submit"
-                      disabled={submitting || pristine}
-                      className={classNames(style.registrationForm__button)}>Сохранить
+                      disabled={ values || submitting || pristine}
+                      className={classNames(style.registrationForm__button,style.registrationForm__button_disabled)}>Сохранить
               </button>
             </form>
           )}

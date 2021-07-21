@@ -106,6 +106,7 @@ const ComponentAds = ({title, data, publication}) => {
     <div className={styles.ads}>
       <div className={styles.ads__title}>
         <span>
+          Объявления
           {title}
         </span>
       </div>
