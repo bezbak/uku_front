@@ -78,12 +78,11 @@ const Card = ({
     setIsSubscribe(slideData?.user.id === account.id ? account.subscribe : isSubscribe)
   };
   const publicationInfo = () => {
-    dispatch(publicationAction.setPublicationId({publication_id:1}))
-    route.push({pathname:`${pathnames.publicationInfo}/${slideData?.user?.first_name}`})
+    dispatch(publicationAction.setPublicationId(idPublication))
+    setTimeout(()=>{
+      route.push({pathname:`${pathnames.publicationInfo}/${slideData?.title}`})
+    },1000)
   };
-  // useEffect(()=>{
-  //   publicationInfo()
-  // })
 
   return (
     <>

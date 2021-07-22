@@ -1,6 +1,70 @@
 import {put, call, takeEvery} from 'redux-saga/effects';
 import api from '../../lib/api';
 import {actions} from './slice';
+import isEmpty from "lodash/isEmpty";
+import Cookies from "js-cookie";
+
+const HTTP_INTERNAL_SERVER_ERROR_CODE = 500;
+
+const checkStatus = (response) => {
+  if (response.ok) return response;
+
+  if (response.status >= HTTP_INTERNAL_SERVER_ERROR_CODE) {
+    return {
+      throwError: true,
+      json: {
+        detail:
+          'Ошибка на сервере! Если ошибка не исчезнет в ближайшее время - обратитесь к администратору',
+      },
+    };
+  }
+
+  return response.json().then((json) => ({
+    json,
+    throwError: true,
+  }));
+};
+
+const checkException = (response) => {
+  if (response.throwError === true) {
+    const errorMessage = Object.keys(response.json).map((key) => response.json[key]);
+    const error = new Error(errorMessage);
+    error.error = response.json;
+    throw error;
+  }
+  return response;
+};
+
+const contentTypeResponseMapping = {
+  'application/zip': true,
+  'application/ms-excel': true,
+};
+
+const parseJSON = (response) => {
+  const contentType = response.headers.get('content-type');
+  if (isEmpty(contentType)) return response;
+  if (contentTypeResponseMapping[contentType]) return response;
+  return response.json();
+};
+
+function apiPost(url, values) {
+  return fetch(`http://uku.kg/api/v1/${url}`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${Cookies.get("token") ? Cookies.get("token") : ''}`,
+    },
+    body: JSON.stringify(values)
+  }).then(checkStatus)
+    .then(checkException)
+    .then(parseJSON)
+}
+
+function* setPublicationIdRequest({payload}) {
+  const {id} = payload;
+    yield put(actions.setPublicationId(id));
+}
 
 function* uploadPublicationImageRequest({payload}) {
   const {values, callback} = payload;
@@ -13,7 +77,6 @@ function* uploadPublicationImageRequest({payload}) {
     yield put(actions.uploadPublicationImageRequestFailure(e));
   }
 }
-
 function* createPublicationRequest({payload}) {
   const {values, callback} = payload;
 
@@ -28,12 +91,10 @@ function* createPublicationRequest({payload}) {
 }
 
 function* getPublicationInfoRequest({payload}) {
-  const {id, callback} = payload;
-
   try {
-    const response = yield call(api.get, `publication/${id}/`);
+    const response = yield call(api.get, `publication/${payload}/`);
     yield put(actions.getPublicationInfoRequestSuccess(response));
-    yield call(callback);
+    // yield call(callback);
   } catch (e) {
     yield put(actions.getPublicationInfoRequestFailure(e));
   }
@@ -98,24 +159,25 @@ function* commentsPublicationRequest({payload}) {
 }
 
 function* addCommentPublicationRequest({payload}) {
-  const { id,callback} = payload;
+  const {addCommentText,    publication_id} = payload;
 
   try {
-    const response = yield call(api.post, `publication/comment/${id}/add_comment/`);
+    const response = yield call(apiPost, `publication/comment/${publication_id}/add_comment/`, {text:addCommentText});
     yield put(actions.addCommentPublicationRequestSuccess(response));
-    yield call(callback);
+    // yield call(callback);
   } catch (e) {
     yield put(actions.addCommentPublicationRequestFailure(e));
   }
 }
 
 function* replyCommentPublicationRequest({payload}) {
-  const { id,comment_id,callback} = payload;
-
+  const {addCommentText, commentsAuthorID,   publication_id} = payload;
+  console.log(addCommentText)
+  console.log(publication_id)
   try {
-    const response = yield call(api.post, `publication/comment/${id}/${comment_id}/add_replu/`);
+    const response = yield call(apiPost, `publication/comment/${publication_id}/${commentsAuthorID}/add_reply/`,{text:addCommentText});
     yield put(actions.replyCommentPublicationRequestSuccess(response));
-    yield call(callback);
+    // yield call(callback);
   } catch (e) {
     yield put(actions.replyCommentPublicationRequestFailure(e));
   }
@@ -124,6 +186,7 @@ function* replyCommentPublicationRequest({payload}) {
 
 export default function* publicationSagas() {
   yield takeEvery(`${actions.uploadPublicationImageRequestStart}`, uploadPublicationImageRequest);
+  // yield takeEvery(`${actions.setPublicationId}`, setPublicationIdRequest);
   yield takeEvery(`${actions.createPublicationRequestStart}`, createPublicationRequest);
   yield takeEvery(`${actions.getPublicationInfoRequestStart}`, getPublicationInfoRequest);
   yield takeEvery(`${actions.updatePublicationRequestStart}`, updatePublicationRequest);

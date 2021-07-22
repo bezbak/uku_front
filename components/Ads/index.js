@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import Card from "../Card";
 
 import styles from './styles.module.scss'
+import Button from "../Button";
 
 const sliderData = [
   {
@@ -101,7 +102,8 @@ const sliderData = [
     ]
   }
 ]
-const ComponentAds = ({title, data, publication}) => {
+const ComponentAds = ({title,setAddPublicationModal, data, publication}) => {
+  // const [addPublicationModal,setAddPublicationModal]=useState(false)
   return (
     <div className={styles.ads}>
       <div className={styles.ads__title}>
@@ -111,6 +113,11 @@ const ComponentAds = ({title, data, publication}) => {
         </span>
       </div>
       <div className={styles.ads__container}>
+        <Button className={styles.ads__container__addPublicationButton}
+                textClassName={styles.ads__container__addPublicationButton_text}
+                onClick={ ()=>setAddPublicationModal(true)}>
+          Добавить объявление
+        </Button>
         {
           sliderData.map(slide =>
             <Card slideData={slide} key={slide.id} publication/>

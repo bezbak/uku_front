@@ -2,6 +2,7 @@
 @import "../../public/styles/mixins/index";
 
 .pagePublication {
+  width: 100%;
   display: flex;
   flex-direction: column;
   &__header {
@@ -114,6 +115,8 @@
       }
     }
     &__commentsBox{
+      height: 400px;
+      overflow-y: scroll;
       display: flex;
       flex-direction: column;
       gap: 10px;

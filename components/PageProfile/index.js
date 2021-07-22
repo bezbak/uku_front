@@ -33,9 +33,9 @@ function PageProfile() {
       <Container>
         <div className={styles.profile__content}>
           <Profile user={userProfile} userProfile={true}/>
-          {editPublication &&
-          <UserPublicationEdit setEditPublication={setEditPublication} editPublicationId={toEditPublicationId}/>}
           {!editPublication &&
+          <UserPublicationEdit edit={true} setEditPublication={setEditPublication} editPublicationId={toEditPublicationId}/>}
+          {editPublication &&
           <div className={styles.profile__publication}>
             <div className={styles.profile__publication__title}>
               <span>

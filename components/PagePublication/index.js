@@ -39,11 +39,16 @@ const ImageSelectInput = ({setSelectedImages}) => {
 const PagePublication = () => {
   const dispatch = useDispatch();
   const [selectedImages, setSelectedImages] = useState([])
+  const [addCommentText, setAddCommentText] = useState([])
+  const [reply, setReply] = useState(false)
   const [closeNComment, setCloseNComment] = useState(false)
+  const [commentsAuthorID, setCommentAuthorID] = useState()
   const [showNComment, setShowNComment] = useState(true)
   const [isSelectedImages, setIsSelectedImages] = useState(false)
   const publication_id = useSelector((store) => store.publication.publication_id, shallowEqual);
   const getPublicationInfoRequest = (payload) => dispatch(actions.getPublicationInfoRequestStart(payload));
+  const addCommentPublicationRequest = (payload) => dispatch(actions.addCommentPublicationRequestStart(payload));
+  const replyCommentPublicationRequest = (payload) => dispatch(actions.replyCommentPublicationRequestStart(payload));
   useEffect(() => {
     getPublicationInfoRequest(publication_id)
   }, [publication_id])
@@ -52,10 +57,19 @@ const PagePublication = () => {
     setCloseNComment(true)
     setShowNComment(false)
   }
-  const addComment = (values) =>{
-    console.log(values)
+  const handleChange = (e) => {
+    setAddCommentText(e.target.value)
   }
+  const addComment = (values) => {
+    addCommentPublicationRequest({publication_id, addCommentText, selectedImages})
+    console.log('publication_id' + publication_id)
+  }
+  const addReplyComment = (values) => {
+    console.log("commentsAuthorID" + commentsAuthorID)
+    console.log('publication_id' + publication_id)
+    replyCommentPublicationRequest({publication_id, commentsAuthorID,addCommentText, selectedImages})
 
+  }
   return (
     <Container>
       <div className={styles.pagePublication}>
@@ -65,9 +79,9 @@ const PagePublication = () => {
             Назад
           </Button>
           <div className={styles.pagePublication__header__socialButtonAddress}>
-            <NavLink><TelegramIcon/></NavLink>
-            <NavLink><WhatsAppIcon/></NavLink>
-            <NavLink><InstagramIcon/></NavLink>
+            <NavLink url={publicationInfo?.user?.telegram}><TelegramIcon/></NavLink>
+            <NavLink url={publicationInfo?.user?.whatsapp}><WhatsAppIcon/></NavLink>
+            <NavLink url={publicationInfo?.user?.instagram}><InstagramIcon/></NavLink>
           </div>
           <div className={styles.pagePublication__header_editButtons}>
             <Button>Редактировать</Button>
@@ -77,10 +91,11 @@ const PagePublication = () => {
         <div className={styles.pagePublication__infoContent}>
           <div className={styles.pagePublication__infoContent_left}>
             <div className={styles.pagePublication__infoContent__userInfo}>
-              <img src='images/avatar.png'/>
+              <img src={publicationInfo?.user?.avatar}/>
               <div className={styles.pagePublication__infoContent__userInfo__fioAndAddress}>
-                <span>Фывова Александра</span>
-                <span className={styles.pagePublication__infoContent__userInfo__fioAndAddress_address}>Россия, Москва, метро Черкизовская</span>
+                <span>{publicationInfo?.user?.first_name} {publicationInfo?.user?.last_name}</span>
+                <span
+                  className={styles.pagePublication__infoContent__userInfo__fioAndAddress_address}>{publicationInfo?.location?.name}</span>
               </div>
             </div>
             <div>
@@ -89,22 +104,17 @@ const PagePublication = () => {
           </div>
           <div className={styles.pagePublication__infoContent_right}>
             <div className={styles.pagePublication__infoContent__category}>
-              <span>Категория/ Подкатегория 1</span>
+              <span>Категория/{publicationInfo?.category?.name}</span>
             </div>
             <div className={styles.pagePublication__infoContent__info}>
-              <div v className={styles.pagePublication__infoContent__info_opisanie}>
+              <div className={styles.pagePublication__infoContent__info_opisanie}>
               <span>
                 Описание
               </span>
               </div>
-              <div v className={styles.pagePublication__infoContent__info_description}>
+              <div className={styles.pagePublication__infoContent__info_description}>
               <span>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Tincidunt ac fames ut commodo ut orci ut id porta.
-                Mi nisi nunc nunc gravida. Purus mauris sed eleifend nulla risus ipsum sit.
-                Ac mauris ut faucibus etiam sed varius in maecenas tristique.Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Tincidunt ac fames ut commodo
-                ut orci ut id porta. Mi nisi nunc nunc gravida. Purus mauris sed eleifend nulla risus ipsum
+               {publicationInfo?.description}
               </span>
               </div>
             </div>
@@ -115,75 +125,95 @@ const PagePublication = () => {
               </span>
               </div>
               <div className={styles.pagePublication__infoContent__commentsBox}>
-                <div className={styles.pagePublication__infoContent__commentsBox__comment}>
-                  <img src={'images/avatar.png'}/>
-                  <div>
-                    <div className={styles.pagePublication__infoContent__commentsBox__comment_info}>
+                {
+                  publicationInfo?.comments?.map((comment) => {
+                    return (
+                      <div className={styles.pagePublication__infoContent__commentsBox__comment} key={comment.id}>
+                        <img src={comment.author.avatar}/>
+                        <div>
+                          <div className={styles.pagePublication__infoContent__commentsBox__comment_info}>
                     <span className={styles.pagePublication__infoContent__commentsBox__comment_name}>
-                    Фывова Александра
+                      {comment.author.first_name} {comment.author.last_name}
                     </span>
-                      <span className={styles.pagePublication__infoContent__commentsBox__comment_text}>
-                     Lorem ipsum dolor sit amet, consectetur ut ut ut adipiscing elit. Tincidunt ac fames ut commodo ut Lorem ipsum dolor sit amet, consectetur ut ut ut adipiscing elit. Tincidunt ac fames ut
-                      </span>
-                    </div>
-                    <div className={styles.pagePublication__infoContent__commentsBox__comment_time}>
+                            <span className={styles.pagePublication__infoContent__commentsBox__comment_text}>
+                              {comment.text}
+                            </span>
+                          </div>
+                          <div className={styles.pagePublication__infoContent__commentsBox__comment_time}>
                     <span>
-                      8 часов назад
+                      {comment?.created_at}
                     </span>
-                    </div>
-                    <div className={styles.pagePublication__infoContent__commentsBox__comment_isAnswer}>
-                      <Button className={styles.pagePublication__infoContent__commentsBox__comment_isAnswer}
-                              textClassName={styles.pagePublication__infoContent__commentsBox__comment_isAnswer_text}
-                      >
-                        Ответить
-                      </Button>
-                    </div>
+                          </div>
+                          <div className={styles.pagePublication__infoContent__commentsBox__comment_isAnswer}>
+                            <Button className={styles.pagePublication__infoContent__commentsBox__comment_isAnswer}
+                                    textClassName={styles.pagePublication__infoContent__commentsBox__comment_isAnswer_text}
+                                    onClick={() => {
+                                      setReply(true)
+                                      setCommentAuthorID(comment.id)
+                                    }}
+                            >
+                              Ответить
+                            </Button>
+                          </div>
 
-                    {closeNComment &&
-                    <div className={styles.pagePublication__infoContent__commentsBox__comment}>
-                      <img src={'images/avatar.png'}/>
-                      <div>
-                        <div className={styles.pagePublication__infoContent__commentsBox__comment_info}>
-                    <span className={styles.pagePublication__infoContent__commentsBox__comment_name}>
-                    Фывова Александра
-                    </span>
-                          <span className={styles.pagePublication__infoContent__commentsBox__comment_text}>
-                      Lorem ipsum dolor sit amet, consectetur ut ut ut adipiscing elit. Tincidunt ac fames ut commodo ut Lorem ipsum dolor sit amet, consectetur ut ut ut adipiscing elit. Tincidunt ac fames ut
-                      </span>
+                          {closeNComment && comment?.replies &&
+                          comment?.replies?.map((replyComment) => {
+                            return (
+                              <div className={styles.pagePublication__infoContent__commentsBox__comment}>
+                                <img src={replyComment.author.avatar}/>
+                                <div>
+                                  <div className={styles.pagePublication__infoContent__commentsBox__comment_info}>
+                                     <span className={styles.pagePublication__infoContent__commentsBox__comment_name}>
+                                  @{replyComment.reply_to_user.first_name} {replyComment.reply_to_user.last_name}
+                                </span>
+                                    <span className={styles.pagePublication__infoContent__commentsBox__comment_name}>
+                                  {replyComment.author.first_name} {replyComment.author.last_name}
+                                </span>
+                                    <span className={styles.pagePublication__infoContent__commentsBox__comment_text}>{
+                                      replyComment.text
+                                    } </span>
+                                  </div>
+                                  <span className={styles.pagePublication__infoContent__commentsBox__comment_time}>
+                                <span>
+                                  {replyComment.created_at}
+                                </span>
+                              </span>
+                                  <Button className={styles.pagePublication__infoContent__commentsBox__comment_isAnswer}
+                                          textClassName={styles.pagePublication__infoContent__commentsBox__comment_isAnswer_text}
+                                          onClick={() => setCommentAuthorID(comment.id)}
+                                  >
+                                    Ответить
+                                  </Button>
+                                  <Button
+                                    className={styles.pagePublication__infoContent__commentsBox__comment_replyOpen}
+                                    textClassName={styles.pagePublication__infoContent__commentsBox__comment_replyOpen_text}
+                                    onClick={() => {
+                                      setCloseNComment(false);
+                                      setShowNComment(true)
+                                    }}
+                                  >
+                                    <LineIcon/> <span>Скрыть коментарии</span>
+                                  </Button>
+                                </div>
+
+
+                              </div>
+                            )
+                          })
+
+                          }
+                          {showNComment && comment.replies.length > 0 &&
+                          <Button className={styles.pagePublication__infoContent__commentsBox__comment_replyOpen}
+                                  textClassName={styles.pagePublication__infoContent__commentsBox__comment_replyOpen_text}
+                                  onClick={getReplyComment}
+                          >
+                            <LineIcon/> <span>Показать N коментариев</span>
+                          </Button>}
                         </div>
-                        <span className={styles.pagePublication__infoContent__commentsBox__comment_time}>
-                    <span>
-                      8 часов назад
-                    </span>
-                          </span>
-                        <Button className={styles.pagePublication__infoContent__commentsBox__comment_isAnswer}
-                                textClassName={styles.pagePublication__infoContent__commentsBox__comment_isAnswer_text}
-                        >
-                          Ответить
-                        </Button>
-                        <Button className={styles.pagePublication__infoContent__commentsBox__comment_replyOpen}
-                                textClassName={styles.pagePublication__infoContent__commentsBox__comment_replyOpen_text}
-                                onClick={() => {
-                                  setCloseNComment(false);
-                                  setShowNComment(true)
-                                }}
-                        >
-                          <LineIcon/> <span>Скрыть коментарии</span>
-                        </Button>
                       </div>
-
-
-                    </div>
-
-                    }
-                    {showNComment && <Button className={styles.pagePublication__infoContent__commentsBox__comment_replyOpen}
-                             textClassName={styles.pagePublication__infoContent__commentsBox__comment_replyOpen_text}
-                             onClick={getReplyComment}
-                    >
-                      <LineIcon/> <span>Показать N коментариев</span>
-                    </Button>}
-                  </div>
-                </div>
+                    )
+                  })
+                }
               </div>
 
             </div>
@@ -207,12 +237,14 @@ const PagePublication = () => {
               }
               <div className={styles.pagePublication__addComment__comment}>
                 <textarea placeholder={"Ваш коментарий"}
+                          cols="40" rows="3"
+                          onChange={handleChange}
                           className={styles.pagePublication__addComment__comment_textarea}
-                          
+
                 />
               </div>
               <Button className={styles.pagePublication__addComment__sendButton}
-                      onClick={addComment}
+                      onClick={reply ? addReplyComment : addComment}
               >
                 <SendMsgIcon/>
               </Button>

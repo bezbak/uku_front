@@ -14,7 +14,7 @@ function ProfilePage({isAuthenticated}) {
         <Header/>
         <EditProfileForm/>
         <PageProfile/>
-        <Footer  className={"footer"}/>
+          <Footer  className={"footer"}/>
       </main>
     </>
   )
