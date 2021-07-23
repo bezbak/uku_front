@@ -3,7 +3,6 @@ import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {actions} from "../../store/profile/slice";
 import Container from "../../containers";
 import Nav from "../Nav";
-import Footer from "../Footer";
 import Profile from "../PageProfile/Profile";
 import NavContainer from "../../containers/NavContainer";
 import Card from "../Card";
@@ -16,14 +15,13 @@ function PageProfile() {
   const dispatch = useDispatch();
   const profileRequest = () => dispatch(actions.profileRequestStart())
   const publicationRequest = () => dispatch(actions.publicationRequestStart());
-
+  const userProfile = useSelector((store) => store.profile?.userProfile);
+  const userPublication = useSelector((store) => store.profile.userPublications, shallowEqual);
   useEffect(() => {
     profileRequest();
     publicationRequest()
   }, [])
 
-  const userProfile = useSelector((store) => store.profile?.userProfile);
-  const userPublication = useSelector((store) => store.profile.userPublications, shallowEqual);
 
   return (
     <>
@@ -33,9 +31,9 @@ function PageProfile() {
       <Container>
         <div className={styles.profile__content}>
           <Profile user={userProfile} userProfile={true}/>
-          {!editPublication &&
-          <UserPublicationEdit edit={true} setEditPublication={setEditPublication} editPublicationId={toEditPublicationId}/>}
           {editPublication &&
+          <UserPublicationEdit edit={true} setEditPublication={setEditPublication} editPublicationId={toEditPublicationId}/>}
+          {!editPublication &&
           <div className={styles.profile__publication}>
             <div className={styles.profile__publication__title}>
               <span>
@@ -45,7 +43,8 @@ function PageProfile() {
             <div className={styles.profile__publication__container}>
               {
                 userPublication?.results?.map((user, index) =>
-                  <Card slideData={user} key={index} publication={true} profileCard={true}
+                  <Card slideData={user} key={index} publication={true}
+                        profileCard={true}
                         setToEditPublicationId={setToEditPublicationId}
                         setEditPublication={setEditPublication}
                   />

@@ -60,6 +60,18 @@ function apiPost(url, values) {
     .then(checkException)
     .then(parseJSON)
 }
+function apiPostPhote(url, values) {
+  return fetch(`http://uku.kg/api/v1/${url}`, {
+    method: 'POST',
+    headers: {
+      // 'Content-Type': 'multipart/form-data',
+      // 'Authorization': `Token ${Cookies.get("token") ? Cookies.get("token") : ''}`,
+    },
+    body: values
+  }).then(checkStatus)
+    .then(checkException)
+    .then(parseJSON)
+}
 
 function* setPublicationIdRequest({payload}) {
   const {id} = payload;
@@ -67,16 +79,17 @@ function* setPublicationIdRequest({payload}) {
 }
 
 function* uploadPublicationImageRequest({payload}) {
-  const {values, callback} = payload;
+  console.log(payload)
 
   try {
-    const response = yield call(api.post, `publication/image/upload/`, {data: values});
+    const response = yield call(apiPostPhote, `publication/image/upload/`,  payload);
     yield put(actions.uploadPublicationImageRequestSuccess(response));
     yield call(callback);
   } catch (e) {
     yield put(actions.uploadPublicationImageRequestFailure(e));
   }
 }
+
 function* createPublicationRequest({payload}) {
   const {values, callback} = payload;
   console.log(payload)
@@ -93,7 +106,8 @@ function* createPublicationRequest({payload}) {
 
 function* getPublicationInfoRequest({payload}) {
   try {
-    const response = yield call(api.get, `publication/${payload}/`);
+    const publicationId = Cookies.get("PublicationId");
+    const response = yield call(api.get, `publication/${publicationId}/`);
     yield put(actions.getPublicationInfoRequestSuccess(response));
     // yield call(callback);
   } catch (e) {
@@ -102,10 +116,10 @@ function* getPublicationInfoRequest({payload}) {
 }
 
 function* updatePublicationRequest({payload}) {
-  const {id,values, callback} = payload;
+  const {id,description, callback} = payload;
   console.log(payload)
   try {
-    const response = yield call(api.put, `publication/${id}/update/`, {data: values});
+    const response = yield call(api.put, `publication/${id}/update/`, {data: {description:description}});
     yield put(actions.updatePublicationRequestSuccess(response));
     yield call(callback);
   } catch (e) {
@@ -115,9 +129,11 @@ function* updatePublicationRequest({payload}) {
 
 function* deletePublicationRequest({payload}) {
   const {id, callback} = payload;
+  console.log(payload)
+  console.log(id)
 
   try {
-    const response = yield call(api.delete, `publication/${id}/delete/`);
+    const response = yield call(api.delete, `publication/${id}/delete`);
     yield put(actions.deletePublicationRequestSuccess(response));
     yield call(callback);
   } catch (e) {

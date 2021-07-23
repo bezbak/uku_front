@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   accountProfile: {},
+  publicationCount:null,
   accountPublicationList: {},
   searchedAccountsList: [],
   subscribe: true,
@@ -34,7 +35,8 @@ const accountProfileSlice = createSlice({
     accountPublicationsRequestStart() {
     },
     accountPublicationsRequestSuccess(state, {payload}) {
-      state.accountPublicationList = payload
+      state.accountPublicationList = payload,
+        state.publicationCount=payload.count
     },
     accountPublicationsRequestFailure() {
     },

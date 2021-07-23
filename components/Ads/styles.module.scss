@@ -8,12 +8,17 @@
     //display: none;
   }
   &__container {
+    height: 100%;
     overflow-y: scroll;
     display: grid;
     grid-template-columns: 100%;
     justify-content: space-between;
     column-gap: 16px;
     row-gap: 27.5px;
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
 
     &__addPublicationButton{
       position: absolute;

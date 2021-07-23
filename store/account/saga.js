@@ -18,10 +18,9 @@ function* accountProfileRequest({payload}) {
 }
 
 function* accountPublicationsRequest({payload}) {
-  // const {id} = payload
   try {
     const id = yield select(accountId)
-    const response = yield call(api.get, `publication/user/${id}/publications`);
+    const response = yield call(api.get, `publication/user/${id}/publications`, {qs:{page:payload}});
     yield put(actions.accountPublicationsRequestSuccess(response));
   } catch (e) {
     yield put(actions.accountPublicationsRequestFailure(e));

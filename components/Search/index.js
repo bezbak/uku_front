@@ -10,14 +10,12 @@ const AccountSearch = () => {
 
   const result = useSelector((store) => store.account.searchedAccountsList, shallowEqual);
   const onSubmit = (e) => {
-    const q= e.target.value
+    const q = e.target.value
     setTimeout(() => {
       dispatch(accountAction.searchAccountRequestStart({q: q}));
     }, 2000)
-    console.log(e.target.value)
 
   };
-console.log(result)
 
   return (
     <div>
@@ -27,10 +25,9 @@ console.log(result)
              onChange={onSubmit}
              className={styles.search}/>
       <div className={styles.searchResultBar}>
-        <ul  className={styles.searchResultBar}>
-          {result?.map((item)=>
-            <li  className={styles.searchResultBar__list_item}>
-              {console.log(item.avatar)}
+        <ul className={styles.searchResultBar}>
+          {result?.map((item) =>
+            <li className={styles.searchResultBar__list_item}>
               <img src={item.avatar} className={styles.searchResultBar__list_item_avatar}/>
               <div className={styles.searchResultBar__list_item_info}>
                 <div className={styles.searchResultBar__list_item_fio}>
@@ -56,19 +53,17 @@ console.log(result)
 
 const PublicationSearch = () => {
   const dispatch = useDispatch();
-  const [page,setPage] = useState(1)
+  const [page, setPage] = useState(1)
   const result = useSelector((store) => store.publication.searchedPublicationInfo, shallowEqual);
   const category_id = useSelector((store) => store.category.category_id, shallowEqual);
   const location_id = useSelector((store) => store.location.location_id, shallowEqual);
   const onSubmit = (e) => {
-    const q= e.target.value
+    const q = e.target.value
     setTimeout(() => {
-      dispatch(publicationAction.searchPublicationRequestStart({page:page,q: q,category_id:6,location_id:17}));
+      dispatch(publicationAction.searchPublicationRequestStart({page: page, q: q, category_id: 6, location_id: 17}));
     }, 2000)
-    console.log(e.target.value)
 
   };
-  console.log(result)
 
   return (
     <div>
@@ -78,14 +73,14 @@ const PublicationSearch = () => {
              onChange={onSubmit}
              className={styles.search}/>
       <div className={styles.searchResultBar}>
-        <ul  className={styles.searchResultBar}>
-          {result?.results?.map((item)=>
-            <li  className={styles.searchResultBar__list_item}>
-                <div className={styles.searchResultBar__list_item_fio}>
+        <ul className={styles.searchResultBar}>
+          {result?.results?.map((item) =>
+            <li className={styles.searchResultBar__list_item}>
+              <div className={styles.searchResultBar__list_item_fio}>
                   <span>
                     {item.description}
                   </span>
-                </div>
+              </div>
             </li>
           )}
         </ul>
@@ -97,7 +92,7 @@ const PublicationSearch = () => {
 
 const Search = () => {
   const route = useRouter();
-  if (route.pathname==="/") return <AccountSearch/>
+  if (route.pathname === "/") return <AccountSearch/>
   else return <PublicationSearch/>
 
 }

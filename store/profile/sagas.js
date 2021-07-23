@@ -114,9 +114,9 @@ function* feedRequest({payload}) {
   }
 }
 
-function* publicationRequest() {
+function* publicationRequest({page}) {
   try {
-    const response = yield call(api.get, 'account/profile/publication/');
+    const response = yield call(api.get, 'account/profile/publication/', {qs:{page:page}});
     yield put(actions.publicationRequestSuccess(response));
   } catch (e) {
     yield put(actions.publicationRequestFailure(e));

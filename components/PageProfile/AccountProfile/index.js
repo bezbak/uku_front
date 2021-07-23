@@ -12,10 +12,24 @@ import Button from "../../Button";
 
 function AccountProfile() {
   const dispatch = useDispatch();
-  const publicationRequest = () => dispatch(actions.accountPublicationsRequestStart())
+  const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(false);
+  const publicationRequest = (page) => dispatch(actions.accountPublicationsRequestStart(page))
+  const maxPage = useSelector((store) => store.account?.publicationCount);
+  const handleScroll = (event) => {
+    const {scrollTop, clientHeight, scrollHeight} = event.currentTarget;
+    if (( scrollTop + clientHeight > scrollHeight - 1) && (maxPage /12) >=page) {
+      setPage(prev => prev + 1);
+    }
+  }
+
   useEffect(() => {
-    publicationRequest();
-  }, [])
+    setLoading(true);
+    publicationRequest(page);
+    setLoading(false)
+  }, [page])
+
+
   const accountProfile = useSelector((store) => store.account?.accountProfile);
   const accountPublication = useSelector((store) => store.account.accountPublicationList, shallowEqual);
   const [subscribe, setSubscribe] = useState(accountProfile.following)
@@ -44,7 +58,7 @@ function AccountProfile() {
                 {subscribe ? 'Отписаться' : 'Подписаться'}
               </Button>
             </div>
-            <div className={styles.profile__publication__container}>
+            <div className={styles.profile__publication__container} onScroll={handleScroll}>
               {
                 accountPublication?.results?.map((user, index) =>
                   <Card slideData={user} key={index} profileCard={true}

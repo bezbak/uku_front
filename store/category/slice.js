@@ -2,7 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
   category:[],
-  categoryPublications: {},
+  pageCount:null,
+  categoryPublications1: [],
+  categoryPublications2: [],
+  categoryPublications: [],
   category_id: null
 
 };
@@ -25,6 +28,7 @@ const categorySlice = createSlice({
     },
     categoryPublicationsRequestSuccess(state, {payload}) {
       state.categoryPublications = payload
+      state.pageCount =  payload.count
     },
     categoryPublicationsRequestFailure() {
     },

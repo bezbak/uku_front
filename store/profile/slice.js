@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   userProfile:{},
   feed:{},
+  count:null,
   feedPublication:[],
   userAvatar:'',
   userPublications:{}
@@ -31,7 +32,8 @@ const userProfileSlice = createSlice({
 
     feedRequestStart() {},
     feedRequestSuccess: (state,{payload})=> {
-      state.feed = payload
+      state.feed = payload,
+      state.count = payload.count,
       state.feedPublication = state.feedPublication.concat( payload.results);
     },
     feedRequestFailure() {},

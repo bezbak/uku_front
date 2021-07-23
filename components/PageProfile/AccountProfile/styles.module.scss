@@ -84,6 +84,10 @@
         //grid-template-rows: auto;
         column-gap: 16px;
         row-gap: 27.5px;
+        &::-webkit-scrollbar {
+          width: 0;
+          height: 0;
+        }
       }
     }
   }

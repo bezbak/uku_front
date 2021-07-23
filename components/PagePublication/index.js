@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import Button from "../Button";
 import {actions} from "../../store/publication/slice";
@@ -38,6 +38,7 @@ const ImageSelectInput = ({setSelectedImages}) => {
 }
 const PagePublication = () => {
   const dispatch = useDispatch();
+  const ref= useRef();
   const [selectedImages, setSelectedImages] = useState([])
   const [addCommentText, setAddCommentText] = useState([])
   const [reply, setReply] = useState(false)
@@ -62,12 +63,11 @@ const PagePublication = () => {
   }
   const addComment = (values) => {
     addCommentPublicationRequest({publication_id, addCommentText, selectedImages})
-    console.log('publication_id' + publication_id)
+    ref.current.value=''
   }
   const addReplyComment = (values) => {
-    console.log("commentsAuthorID" + commentsAuthorID)
-    console.log('publication_id' + publication_id)
     replyCommentPublicationRequest({publication_id, commentsAuthorID,addCommentText, selectedImages})
+    ref.current.value=''
 
   }
   return (
@@ -238,6 +238,7 @@ const PagePublication = () => {
               <div className={styles.pagePublication__addComment__comment}>
                 <textarea placeholder={"Ваш коментарий"}
                           cols="40" rows="3"
+                          ref={ref}
                           onChange={handleChange}
                           className={styles.pagePublication__addComment__comment_textarea}
 

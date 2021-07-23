@@ -13,14 +13,27 @@ import styles from './styles.module.scss'
 function PageProfile() {
   const [editPublication, setEditPublication] = useState(false)
   const [toEditPublicationId, setToEditPublicationId] = useState()
+  const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const profileRequest = () => dispatch(actions.profileRequestStart())
-  const publicationRequest = () => dispatch(actions.publicationRequestStart());
+  const publicationRequest = (page) => dispatch(actions.publicationRequestStart(page));
+  const handleScroll = (event) => {
+    const {scrollTop, clientHeight, scrollHeight} = event.currentTarget;
+    if (( scrollTop + clientHeight > scrollHeight - 1) && (pageCount /12) >=page) {
+      setPage(prev => prev + 1);
+    }
+  }
 
   useEffect(() => {
     profileRequest();
-    publicationRequest()
   },[])
+
+  useEffect(() => {
+    setLoading(true)
+    publicationRequest(page)
+    setLoading(false)
+  },[page])
 
   const userProfile = useSelector((store) => store.profile?.userProfile);
   const userPublication = useSelector((store) => store.profile.userPublications, shallowEqual);
@@ -42,7 +55,7 @@ function PageProfile() {
               Публикации
               </span>
             </div>
-            <div className={styles.profile__publication__container}>
+            <div className={styles.profile__publication__container} onScroll={handleScroll}>
               {
                 userPublication?.results?.map((user, index) =>
                   <Card slideData={user} key={index} publication={true}

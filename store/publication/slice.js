@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import Cookies from "js-cookie";
 
 const initialState = {
   publication_id:null,
@@ -18,6 +19,7 @@ const publicationSlice = createSlice({
 
     setPublicationId (state, {payload}) {
       state.publication_id=payload;
+      Cookies.set("PublicationId", payload);
     },
 
     uploadPublicationImageRequestStart () {},

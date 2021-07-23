@@ -4,9 +4,10 @@ import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import SwiperCard from "../Swiper";
 import Button from "../Button";
 import Modal from "../UI/Modal";
+import Cookies from "js-cookie";
 import pathnames from "../../constants/pathnames";
-import {actions} from "../../store/profile/slice";
 
+import {actions} from "../../store/profile/slice";
 import {actions as accountAction} from '../../store/account/slice'
 import {actions as publicationAction} from '../../store/publication/slice'
 import EyeIcon from '../../public/icons/eye.svg'
@@ -33,26 +34,26 @@ const Card = ({
   const account = useSelector((store) => store.account, shallowEqual);
   const [isSubscribe, setIsSubscribe] = useState(slideData?.user?.id === account.id ? account.subscribe : slideData?.user?.following)
 
-  const askToDeletePublication = (idPublication) => {
+  const askToDeletePublication = () => {
     setIsModalOpen(true)
   }
 
-  console.log(slideData.user?.avatar)
   const accountProfile = useCallback(
     () => {
       dispatch(accountAction.accountProfileRequestStart({id: userId}));
-      route.push({pathname:`${pathnames.accountProfile}/${slideData?.user?.first_name}`,query:{id:1}})
+      route.push({pathname:`${pathnames.accountProfile}/${slideData?.user?.first_name}`})
     },
     []
   );
 
   const getPublicationInfoRequest = (payload) => dispatch(actions.getPublicationInfoRequestStart(payload));
-  const deletePublication = (payload) => dispatch(actions.deletePublicationRequestStart(payload));
+  const deletePublication = (payload) => dispatch(publicationAction.deletePublicationRequestStart(payload));
 
-  const deleteUserPublication = (idPublication) => {
+  const deleteUserPublication = () => {
+    setIsModalOpen(false)
     return new Promise((resolve) => {
       deletePublication({
-        idPublication,
+        id:idPublication,
         callback: (response) => {
           if (!response) {
             route.push(pathnames.profile);
@@ -68,8 +69,7 @@ const Card = ({
     setToEditPublicationId(id);
     setEditPublication(true)
     setIsModalOpen(true)
-    getPublicationInfoRequest(id)
-
+    setIdPublication(id)
   }
 
   const accountFollow = (id) => {
@@ -79,7 +79,8 @@ const Card = ({
     dispatch(accountAction.accountFollowRequestStart({id, changedUserPublicationFeed}));
     setIsSubscribe(slideData?.user.id === account.id ? account.subscribe : isSubscribe)
   };
-  const publicationInfo = () => {
+
+  const publicationInfo = (id) => {
     dispatch(publicationAction.setPublicationId(idPublication))
     setTimeout(()=>{
       route.push({pathname:`${pathnames.publicationInfo}/${slideData?.id}`})
@@ -114,8 +115,8 @@ const Card = ({
             <DeleteIcon/>
           </Button>
         </div>}
-        <SwiperCard data={slideData?.images} onClick={publicationInfo}/>
-        <div className={styles.card__footer} onClick={publicationInfo}>
+        <SwiperCard data={slideData?.images} onClick={()=>publicationInfo(slideData.id)}/>
+        <div className={styles.card__footer} onClick={()=>publicationInfo(slideData.id)}>
           <div className={styles.card__footer__category}>
             <span>Категория/ {slideData?.categories}</span>
           </div>

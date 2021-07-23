@@ -57,7 +57,6 @@ const CodeConfirmation =()=>{
        value,
       callback: (response) => {
         if (!response) {
-          console.log('---------OldLoginConform')
           router.push(pathnames.login)
           // start(initialTime);
         } else {

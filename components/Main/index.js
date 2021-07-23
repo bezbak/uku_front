@@ -11,14 +11,14 @@ const Main = ({title = "Лента"}) => {
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false);
   const userPublicationFeed = useSelector((store) => store.profile.feedPublication, shallowEqual);
-
+  const maxPage = useSelector((store) => store.profile.count, shallowEqual);
   const is_profile_completed = Cookie.get("is_profile_completed")
 
   const feedRequest = (page) => dispatch(actions.feedRequestStart(page));
 
   const handleScroll = (event) => {
     const {scrollTop, clientHeight, scrollHeight} = event.currentTarget;
-    if (scrollHeight - scrollTop === clientHeight) {
+    if ((scrollTop + clientHeight > scrollHeight - 1) && (maxPage / 12) >= page) {
       setPage(prev => prev + 1);
     }
   }

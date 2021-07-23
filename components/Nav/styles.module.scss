@@ -28,6 +28,7 @@
       height: 20px;
       border-radius: 50%;
       border: 1px solid #D3D3D3;
+      object-fit: cover;
     }
 
     &_list {
@@ -80,7 +81,8 @@
         height: 22px;
         margin-right: 10px;
         border-radius: 50%;
-        border: 1.6px solid #D3D3D3;
+        border: 1px solid #D3D3D3;
+        object-fit: cover;
       }
 
       & a {
