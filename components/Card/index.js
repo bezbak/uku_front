@@ -46,7 +46,7 @@ const Card = ({
     []
   );
 
-
+  const getPublicationInfoRequest = (payload) => dispatch(actions.getPublicationInfoRequestStart(payload));
   const deletePublication = (payload) => dispatch(actions.deletePublicationRequestStart(payload));
 
   const deleteUserPublication = (idPublication) => {
@@ -68,6 +68,8 @@ const Card = ({
     setToEditPublicationId(id);
     setEditPublication(true)
     setIsModalOpen(true)
+    getPublicationInfoRequest(id)
+
   }
 
   const accountFollow = (id) => {
@@ -80,7 +82,7 @@ const Card = ({
   const publicationInfo = () => {
     dispatch(publicationAction.setPublicationId(idPublication))
     setTimeout(()=>{
-      route.push({pathname:`${pathnames.publicationInfo}/${slideData?.title}`})
+      route.push({pathname:`${pathnames.publicationInfo}/${slideData?.id}`})
     },1000)
   };
 

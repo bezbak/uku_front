@@ -2,12 +2,13 @@
 @import "../../public/styles/mixins/index";
 
 .ads{
+  //position: relative;
   display: block;
   &__title{
     //display: none;
   }
   &__container {
-    position: relative;
+    overflow-y: scroll;
     display: grid;
     grid-template-columns: 100%;
     justify-content: space-between;
@@ -17,12 +18,12 @@
     &__addPublicationButton{
       position: absolute;
       right: 0;
-      padding: 18px 24px;
-      height: 56px;
-      left: calc(50% - 226px/2 + 471px);
-      top: calc(50% - 56px/2 - 462.5px);
+      top: 38vh;
+      height: 60px;
+      width: 60px;
       background: #E56366;
-      border-radius: 6px;
+      border-radius: 53px;
+      z-index: 2;
       &_text{
         font-weight: 500;
         font-size: 16px;
@@ -48,6 +49,19 @@
       //grid-template-rows: auto;
       column-gap: 16px;
       row-gap: 27.5px;
+      &__addPublicationButton{
+        position: absolute;
+        width: auto;
+        height: 56px;
+        padding: 18px 24px;
+        border-radius: 6px;
+        &_text{
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 19px;
+          color: #FFFFFF;
+        }
+      }
     }
   }
 }

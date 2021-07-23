@@ -4,7 +4,7 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import classNames from "classnames";
 import Button from "../Button";
 import Modal from "../UI/Modal";
-import {actions} from "../../store/locations/slice";
+import {actions} from "../../store/category/slice";
 import CloseIcon from '../../public/icons/CloseIcon.svg'
 import ArrowIcon from '../../public/icons/ArrowIcon.svg'
 import styles from './styles.module.scss'
@@ -20,15 +20,15 @@ const CategoryModal = ({modalOpen, getCategory}) => {
   const [addressId, setAddressID] = useState([]);
   const slideNext = () => swiperRef.current.slideNext();
   const slidePrev = () => swiperRef.current.slidePrev();
-  const locationRequest = () => dispatch(actions.locationRequestStart());
+  const categoryRequest = () => dispatch(actions.categoryRequestStart());
 
   useEffect(()=>{
-    locationRequest()
+    categoryRequest()
   },[])
 
   const modalCloseHandle = () => setIsModalOpen(false)
 
-  const region = useSelector(state => state.location?.locations);
+  const region = useSelector(state => state.category.category);
 
   function RegionsInRegion(children, name, id) {
     setAddress(address => [...address, name])

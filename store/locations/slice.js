@@ -10,6 +10,9 @@ const locationSlice = createSlice({
   name: 'location',
   initialState,
   reducers: {
+    setLocationId(state,{payload}) {
+      state.location_id = payload
+    },
     locationRequestStart() {},
     locationRequestSuccess(state,{payload}) {
       state.locations = payload

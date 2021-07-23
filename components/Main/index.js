@@ -17,11 +17,10 @@ const Main = ({title = "Лента"}) => {
   const feedRequest = (page) => dispatch(actions.feedRequestStart(page));
 
   const handleScroll = (event) => {
-    console.log("d")
-    // const {scrollTop, clientHeight, scrollHeight} = event.currentTarget;
-    // if (scrollHeight - scrollTop === clientHeight) {
-    //   setPage(prev => prev + 1);
-    // }
+    const {scrollTop, clientHeight, scrollHeight} = event.currentTarget;
+    if (scrollHeight - scrollTop === clientHeight) {
+      setPage(prev => prev + 1);
+    }
   }
 
   useEffect(() => {
@@ -37,7 +36,7 @@ const Main = ({title = "Лента"}) => {
           {title}
         </span>
       </div>
-      <div className={styles.main__container} onClick={handleScroll}>
+      <div className={styles.main__container} onScroll={handleScroll}>
         {is_profile_completed &&
         userPublicationFeed?.map(slide =>
           <Card slideData={slide}

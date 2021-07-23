@@ -1,16 +1,16 @@
 import React, {useState} from "react";
 import classNames from 'classnames';
-import Button from "../../Button";
 import {Form, Field} from 'react-final-form'
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import {actions} from "../../../store/publication/slice";
+import Button from "../../Button";
+import Location from "../../Location";
+import CategoryModal from "../../CategoryModal";
 import CloseIcon from '../../../public/icons/CloseIcon.svg'
 import AddressIcon from '../../../public/icons/address.svg'
 import ImagesSelectIcon from '../../../public/icons/imgAddIcon.svg'
 import styles from './styles.module.scss'
-import {useDispatch} from "react-redux";
-import {actions} from "../../../store/publication/slice";
-import Location from "../../Location";
-import CategoryNavbar from "../../CategoryNavbar";
-import CategoryModal from "../../CategoryModal";
+import Cookies from "js-cookie";
 
 const ImageSelectInput = ({input, setSelectedImages}) => {
   const onChangeImg = (e) => {
@@ -33,34 +33,70 @@ const ImageSelectInput = ({input, setSelectedImages}) => {
   )
 }
 const UserPublicationEdit = ({setEditPublication, edit, add}) => {
-  const [selectedImages, setSelectedImages] = useState([])
   const dispatch = useDispatch();
+  const [selectedImages, setSelectedImages] = useState([])
+  const [region, setRegion] = useState(Cookies.get("regionName"));
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [onMouseOver, setOnMouseOver] = useState(false)
   const [imgIndex, setImgIndex] = useState(0)
   const [categoryModalOpen, setCategoryModalOpen] = useState(false)
-  const [address, setAddress] = useState()
+  const [address, setAddress] = useState({name:region})
   const [category, setCategory] = useState()
-  const userCreatePublicationRequest = (payload) => dispatch(actions.userCreatePublicationRequestStart(payload));
+
+  const publicationId = useSelector((store) => store.publication.publication_id, shallowEqual);
+  const publicationInfo = useSelector((store) => store.publication.publicationInfo, shallowEqual);
+  const categoryId = useSelector((store) => store.category.category_id, shallowEqual);
+  const locationId = useSelector((store) => store.location.location_id, shallowEqual);
+
+  const createPublicationRequest = (payload) => dispatch(actions.createPublicationRequestStart(payload));
+  const updatePublicationRequest = (payload) => dispatch(actions.updatePublicationRequestStart(payload));
 
 
-  const onSubmit = (values) =>
-    new Promise((resolve) => {
-      userCreatePublicationRequest({
-        values,
-        callback: (response) => {
-          if (!response) {
-            console.log(response)
-          } else {
-            resolve(response);
+  const onSubmit = (value) =>{
+    console.log(value)
+    if (edit) {
+      return   new Promise((resolve) => {
+        updatePublicationRequest({
+          id:publicationId,
+          value,
+          callback: (response) => {
+            if (!response) {
+              console.log(response)
+              setEditPublication(false)
+            } else {
+              resolve(response);
+            }
           }
-        }
-      });
-    })
-
-  const removeImg =()=>{
-    // selectedImages
+        });
+      })
+    }
+    if (add) {
+      return   new Promise((resolve) => {
+        createPublicationRequest({
+          values:{
+            location_id:locationId,
+            category_id:categoryId,
+            value
+          },
+          callback: (response) => {
+            if (!response) {
+              console.log(response)
+              setEditPublication(false)
+            } else {
+              resolve(response);
+            }
+          }
+        });
+      })
+    }
   }
+  const removeImg = ( index) => {
+    const newList =selectedImages;
+    newList.splice(index,1)
+   setSelectedImages( newList)
+  }
+  console.log(publicationInfo)
+
   return (
     <>
       <div className={styles.userEditProfile}>
@@ -86,14 +122,14 @@ const UserPublicationEdit = ({setEditPublication, edit, add}) => {
            <Button className={styles.userEditProfile_header_right_buttons}
                    textClassName={styles.userEditProfile_header_right_buttons_text}
                    onClick={() => setIsModalOpen(!isModalOpen)}>
-             Уфа
+
              {address?.name}
              <AddressIcon/>
            </Button>
          </div>}
        </div>
         <div className={styles.userEditProfile__imageContent}>
-          <img src={selectedImages[imgIndex]}/>
+          <img src={selectedImages[imgIndex] ? selectedImages[imgIndex] :'images/img1.png'}/>
         </div>
         <Form
           onSubmit={onSubmit}
@@ -103,7 +139,7 @@ const UserPublicationEdit = ({setEditPublication, edit, add}) => {
                 {
                   selectedImages?.map((file, index) => {
                     return (
-                      <div
+                      <div  key={index}
                         onMouseOver={()=> {
                           setOnMouseOver(true)
                           setImgIndex(index)
@@ -111,10 +147,10 @@ const UserPublicationEdit = ({setEditPublication, edit, add}) => {
                         onMouseLeave={()=>setOnMouseOver(false)}
                         className={classNames(styles.userEditProfile__selectedImageContent_imageBox,
                           {[styles.userEditProfile__selectedImageContent_imageBox_selected]: (onMouseOver && imgIndex===index)})}>
-                        <img src={file} key={index}/>
-                        <CloseIcon
-                          onClick={removeImg}
-                          className={styles.userEditProfile__selectedImageContent_imageBox_deleteImage}/>
+                        <img src={file}/>
+                        {(onMouseOver && imgIndex===index) && <CloseIcon
+                          onClick={() => removeImg(index)}
+                          className={styles.userEditProfile__selectedImageContent_imageBox_deleteImage}/>}
                       </div>
                     )
                   })
@@ -127,14 +163,16 @@ const UserPublicationEdit = ({setEditPublication, edit, add}) => {
                 <Field name="description" component="textarea"
                        className={styles.userEditProfile__descriptionContent_textArea}
                 />
-                {!edit && <Button type="button"
+
+                {!edit &&
+                <Button type="button"
                                  className={styles.userEditProfile__descriptionContent__editButton}
                                  textClassName={styles.userEditProfile__descriptionContent__editButton_text}
                                  onClick={() => onSubmit(values)}
                 >
                  Опубликовать
-                </Button>
-                }
+                </Button>}
+
                 { edit && <Button type="button"
                          className={styles.userEditProfile__descriptionContent__editButton}
                          textClassName={styles.userEditProfile__descriptionContent__editButton_text}

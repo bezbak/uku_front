@@ -79,6 +79,7 @@ function* uploadPublicationImageRequest({payload}) {
 }
 function* createPublicationRequest({payload}) {
   const {values, callback} = payload;
+  console.log(payload)
 
   try {
     const response = yield call(api.post, `publication/create/`, {data: values});
@@ -102,7 +103,7 @@ function* getPublicationInfoRequest({payload}) {
 
 function* updatePublicationRequest({payload}) {
   const {id,values, callback} = payload;
-
+  console.log(payload)
   try {
     const response = yield call(api.put, `publication/${id}/update/`, {data: values});
     yield put(actions.updatePublicationRequestSuccess(response));

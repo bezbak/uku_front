@@ -14,7 +14,7 @@ const animatedHeight = (element, height, callback) => {
 };
 
 const NavCollapse = ({className,onClick,
-                    containerClassName, titleClassName, contentClassName, title = '',
+                    containerClassName, titleClassName, titleActiveClassName,contentClassName, title = '',
                     levelOption, children, disabled, collapseIcon
                   }) => {
   const [isOpen, setOpen] = React.useState(false);
@@ -44,7 +44,7 @@ const NavCollapse = ({className,onClick,
           !disabled &&
           setOpen(!isOpen)
         }}>
-        <div className={classNames( titleClassName)}>
+        <div className={classNames( titleClassName, titleActiveClassName)}>
           <span>
             {title}
           </span>

@@ -79,9 +79,9 @@ const PagePublication = () => {
             Назад
           </Button>
           <div className={styles.pagePublication__header__socialButtonAddress}>
-            <NavLink url={publicationInfo?.user?.telegram}><TelegramIcon/></NavLink>
-            <NavLink url={publicationInfo?.user?.whatsapp}><WhatsAppIcon/></NavLink>
-            <NavLink url={publicationInfo?.user?.instagram}><InstagramIcon/></NavLink>
+            {/*<NavLink url={publicationInfo?.user?.telegram}><TelegramIcon/></NavLink>*/}
+            {/*<NavLink url={publicationInfo?.user?.whatsapp}><WhatsAppIcon/></NavLink>*/}
+            {/*<NavLink url={publicationInfo?.user?.instagram}><InstagramIcon/></NavLink>*/}
           </div>
           <div className={styles.pagePublication__header_editButtons}>
             <Button>Редактировать</Button>

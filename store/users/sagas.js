@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import {parseSubmissionError} from '../../lib/utils/store/sagas';
 import api from '../../lib/api';
 import {actions as toast} from '../toast/slice';
+import {actions as locationActions} from '../locations/slice';
 import {actions} from './slice';
 
 const getPhone = (store) => store.auth.phone;
@@ -109,9 +110,11 @@ function* conformCodeRequest({payload}) {
     const values = Object.assign(value, phone)
     const response = yield call(apiPost, 'account/login-confirm/', values);
     yield put(actions.conformCodeRequestSuccess(response));
+    yield put(locationActions.setLocationId(response.region_detail.id));
     Cookies.set("token", response.token);
     Cookies.set("is_profile_completed", response.is_profile_completed);
-    Cookies.set( JSON.stringify(response.region_detail));
+    Cookies.set( "regionId",JSON.stringify(response.region_detail.id));
+    Cookies.set( "regionName",response.region_detail.name);
 
     yield call(callback, response);
   } catch (e) {
@@ -210,8 +213,11 @@ function* registrationRequest({payload}) {
 }
 
 function* logoutRequest() {
-  Cookies.remove("token",)
+  Cookies.remove("token")
   Cookies.remove("is_profile_completed", false)
+  Cookies.set( "regionId");
+  Cookies.set( "regionName");
+
   // Cookies.remove("region_id", )
   // Cookies.remove("region_name",)
 }

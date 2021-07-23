@@ -1,8 +1,11 @@
-import React, {useState} from "react";
-import Card from "../Card";
-
-import styles from './styles.module.scss'
+import React, {useEffect, useState} from "react";
 import Button from "../Button";
+import Card from "../Card";
+import PlusIcon from '../../public/icons/plus.svg'
+import styles from './styles.module.scss'
+import useIsMobile from "../../hooks/useIsMobile";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import {actions} from "../../store/category/slice";
 
 const sliderData = [
   {
@@ -103,6 +106,29 @@ const sliderData = [
   }
 ]
 const ComponentAds = ({title,setAddPublicationModal, data, publication}) => {
+  const dispatch = useDispatch();
+  const isMobile = useIsMobile();
+  const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(false);
+  const category_id = useSelector((store) => store.category.category_id, shallowEqual);
+  const categoryPublications = useSelector((store) => store.category.categoryPublications, shallowEqual);
+  const categoryPublicationRequest= (page) => dispatch(actions.categoryPublicationsRequestStart({page: page}));
+
+  const handleScroll = (event) => {
+    const {scrollTop, clientHeight, scrollHeight} = event.currentTarget;
+    if (scrollHeight - scrollTop === clientHeight) {
+      setPage(prev => prev + 1);
+    }
+  }
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(()=>{
+      categoryPublicationRequest(page)
+    },1000)
+    setLoading(false)
+  }, [page,category_id])
+
   // const [addPublicationModal,setAddPublicationModal]=useState(false)
   return (
     <div className={styles.ads}>
@@ -112,14 +138,14 @@ const ComponentAds = ({title,setAddPublicationModal, data, publication}) => {
           {title}
         </span>
       </div>
-      <div className={styles.ads__container}>
+      <div className={styles.ads__container} onScroll={handleScroll}>
         <Button className={styles.ads__container__addPublicationButton}
                 textClassName={styles.ads__container__addPublicationButton_text}
                 onClick={ ()=>setAddPublicationModal(true)}>
-          Добавить объявление
+          {isMobile ? <PlusIcon/> :'Добавить объявление'}
         </Button>
         {
-          sliderData.map(slide =>
+          categoryPublications?.results?.map(slide =>
             <Card slideData={slide} key={slide.id} publication/>
           )
         }

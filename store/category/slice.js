@@ -11,7 +11,9 @@ const categorySlice = createSlice({
   name: 'category',
   initialState,
   reducers: {
-
+    setCategoryId(state,{payload}) {
+      state.category_id = payload
+    },
     categoryRequestStart() {},
     categoryRequestSuccess(state,{payload}) {
       state.category = payload
