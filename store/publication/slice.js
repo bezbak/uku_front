@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 const initialState = {
   publication_id:null,
   publicationInfo:{},
-  searchedPublicationInfo:{},
+  searchedPublicationList:{},
   publicationDescription:{},
   userPublication: {},
   publicationCommentList:{},
@@ -54,7 +54,7 @@ const publicationSlice = createSlice({
 
     searchPublicationRequestStart () {},
     searchPublicationRequestSuccess(state, {payload}) {
-      state.searchedPublicationInfo = payload
+      state.searchedPublicationList = payload
     },
     searchPublicationRequestFailure () {},
 

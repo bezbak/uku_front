@@ -4,7 +4,7 @@ const initialState = {
   accountProfile: {},
   publicationCount:null,
   accountPublicationList: {},
-  searchedAccountsList: [],
+  searchedAccountsList: null,
   subscribe: true,
   id: null
 };

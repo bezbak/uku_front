@@ -46,6 +46,13 @@ const Card = ({
     []
   );
 
+  const publicationInfo = (id) => {
+    dispatch(publicationAction.setPublicationId(idPublication))
+    setTimeout(()=>{
+      route.push({pathname:`${pathnames.publicationInfo}/${slideData?.id}`})
+    },1000)
+  };
+
   const getPublicationInfoRequest = (payload) => dispatch(actions.getPublicationInfoRequestStart(payload));
   const deletePublication = (payload) => dispatch(publicationAction.deletePublicationRequestStart(payload));
 
@@ -78,13 +85,6 @@ const Card = ({
     })
     dispatch(accountAction.accountFollowRequestStart({id, changedUserPublicationFeed}));
     setIsSubscribe(slideData?.user.id === account.id ? account.subscribe : isSubscribe)
-  };
-
-  const publicationInfo = (id) => {
-    dispatch(publicationAction.setPublicationId(idPublication))
-    setTimeout(()=>{
-      route.push({pathname:`${pathnames.publicationInfo}/${slideData?.id}`})
-    },1000)
   };
 
   return (

@@ -163,11 +163,11 @@ const EditProfileForm = ({user = false}) => {
       })}>
         <div className={styles.editProfileForm_content}>
           <Button className={styles.editProfileForm__backButton}
-                  textClassName={styles.editProfileForm__backButton__text}>
-            <NavLink>
+                  textClassName={styles.editProfileForm__backButton__text} onClick={closeNavigationMenu}>
               <BackArrow/>
-              Назад
-            </NavLink>
+              <span>
+                Назад
+              </span>
           </Button>
           <Form
             onSubmit={onChangeAvatar}

@@ -28,7 +28,7 @@ const CategoryModal = ({modalOpen, getCategory}) => {
 
   const modalCloseHandle = () => setIsModalOpen(false)
 
-  const region = useSelector(state => state.category.category);
+  const category = useSelector(state => state.category.category);
 
   function RegionsInRegion(children, name, id) {
     setAddress(address => [...address, name])
@@ -42,7 +42,7 @@ const CategoryModal = ({modalOpen, getCategory}) => {
       });
       setSlides(() => [...filterArray, children])
     } else {
-      getAddress({name:(name).toString(),id:id})
+      getCategory({name:(name).toString(),id:id})
       setIsModalOpen(false)
 
     }
@@ -71,14 +71,14 @@ const CategoryModal = ({modalOpen, getCategory}) => {
       <div className={styles.location}>
         <div className={styles.location__headline}>
           <div className={styles.location__headline__title}>
-            <span>Выберите расположение</span>
+            <span>Выберите категории</span>
           </div>
           <Button className={styles.location__headline__closeButton} onClick={modalCloseHandle}>
             <CloseIcon/>
           </Button>
         </div>
         <div className={styles.location__search}>
-          <input placeholder={"Введите название страны"}
+          <input placeholder={"Введите название категории"}
                  value={searchValue}
                  onChange={(e)=>setSearchValue(e.target.value)}/>
         </div>
@@ -94,7 +94,7 @@ const CategoryModal = ({modalOpen, getCategory}) => {
         >
           <SwiperSlide>
             <div className={classNames(styles.location__slide)}>
-              {region?.filter(val => {
+              {category?.filter(val => {
                 if(searchValue === "") {
                   return val
                 }else if (val.name.toLowerCase().includes(searchValue?.toLowerCase())){return val}

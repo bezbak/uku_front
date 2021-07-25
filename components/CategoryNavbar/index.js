@@ -51,7 +51,7 @@ const CategoryNavbar = () => {
                            dispatch(actions.setCategoryId(category.id))
                          }}
             >
-              {category.categories?.map(childCategory => {
+              {categories?.map(childCategory => {
                 return (
                   <NavCollapse title={childCategory.name}
                                collapseIcon={(childCategory.children?.length > 0) ? true : false}
