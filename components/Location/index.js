@@ -22,9 +22,9 @@ const Location = ({modalOpen, getAddress}) => {
   const slidePrev = () => swiperRef.current.slidePrev();
   const locationRequest = () => dispatch(actions.locationRequestStart());
 
-     useEffect(()=>{
-       locationRequest()
-     },[])
+  useEffect(() => {
+    locationRequest()
+  }, [])
 
   const modalCloseHandle = () => setIsModalOpen(false)
 
@@ -42,14 +42,14 @@ const Location = ({modalOpen, getAddress}) => {
       });
       setSlides(() => [...filterArray, children])
     } else {
-      getAddress({name:(name).toString(),id:id})
+      getAddress({name: (name).toString(), id: id})
       setIsModalOpen(false)
 
     }
 
   }
 
-  const childRegionFunction = (children, name,id) => {
+  const childRegionFunction = (children, name, id) => {
     setActiveRegion(name)
     setSearchValue("")
     RegionsInRegion(children, name, id)
@@ -57,17 +57,16 @@ const Location = ({modalOpen, getAddress}) => {
   }
 
   const prevSlide = () => {
-    slidePrev()
-
     setTimeout(() => {
       slides.pop();
-      address.pop()
-    }, 500);
+      address.pop();
+      slidePrev();
+    }, 200);
   }
 
   return (
 
-    <Modal modalOpen={isModalOpen} >
+    <Modal modalOpen={isModalOpen}>
       <div className={styles.location}>
         <div className={styles.location__headline}>
           <div className={styles.location__headline__title}>
@@ -78,9 +77,9 @@ const Location = ({modalOpen, getAddress}) => {
           </Button>
         </div>
         <div className={styles.location__search}>
-         <input placeholder={"Введите название страны"}
-                value={searchValue}
-                onChange={(e)=>setSearchValue(e.target.value)}/>
+          <input placeholder={"Введите название страны"}
+                 value={searchValue}
+                 onChange={(e) => setSearchValue(e.target.value)}/>
         </div>
         <Swiper
           className={styles.location__swiper}
@@ -95,9 +94,11 @@ const Location = ({modalOpen, getAddress}) => {
           <SwiperSlide>
             <div className={classNames(styles.location__slide)}>
               {region?.filter(val => {
-                if(searchValue === "") {
+                if (searchValue === "") {
                   return val
-                }else if (val.name.toLowerCase().includes(searchValue?.toLowerCase())){return val}
+                } else if (val.name.toLowerCase().includes(searchValue?.toLowerCase())) {
+                  return val
+                }
               })?.map((reg, key) => {
                 return (
                   <div key={key}
@@ -118,15 +119,18 @@ const Location = ({modalOpen, getAddress}) => {
               <div className={classNames(styles.location__slide)}>
 
                 {child?.filter(val => {
-                  if(searchValue === "") {
+                  if (searchValue === "") {
                     return val
-                  }else if (val.name.toLowerCase().includes(searchValue?.toLowerCase())){return val}
+                  } else if (val.name.toLowerCase().includes(searchValue?.toLowerCase())) {
+                    return val
+                  }
                 }).map((reg, key) => {
                   return (
                     <div key={key}
                          className={classNames(styles.location__slide__regionWrap,
-                           {[styles.location__slide__regionWrap_activeRegion]: reg.name === address[address.length-1]})}>
-                      <ArrowIcon className={styles.location__slide__regionWrap__arrowLeftIcon} onClick={prevSlide}/>
+                           {[styles.location__slide__regionWrap_activeRegion]: reg.name === address[address.length - 1]})}>
+                      <ArrowIcon className={styles.location__slide__regionWrap__arrowLeftIcon}
+                                 onClick={() => slidePrev()}/>
                       <div className={classNames(styles.location__slide__regionWrap)}
                            onClick={() => childRegionFunction(reg.children, reg.name, reg.id)}>
                         <label className={styles.location__slide__regionWrap_label}>

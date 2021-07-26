@@ -4,6 +4,7 @@ import {actions} from './slice';
 
 const getCategoryId = (store) => store.category.category_id;
 const getLocationId = (store) => store.location.location_id;
+
 function* categoryRequest() {
   try {
     const response = yield call(api.get, 'category/');
@@ -13,6 +14,7 @@ function* categoryRequest() {
     yield put(actions.categoryRequestFailure(e));
   }
 }
+
 function* setCategoryIdRequest({payload}) {
   const {id} = payload;
   yield put(actions.setCategoryId(id));
@@ -23,13 +25,17 @@ function* categoryPublicationsRequest({payload}) {
   try {
     const categoryId = yield select(getCategoryId)
     const locationId = yield select(getLocationId)
-    const response = yield call(api.get, `publication/category/${categoryId}`,{qs:{page,location:locationId}});
+    const response = yield call(api.get, `publication/category/${categoryId}`, {
+      qs: {
+        page: page,
+        location: locationId
+      }
+    });
     yield put(actions.categoryPublicationsRequestSuccess(response));
   } catch (e) {
     yield put(actions.categoryPublicationsRequestFailure(e));
   }
 }
-
 
 
 export default function* categorySagas() {

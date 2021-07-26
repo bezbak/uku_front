@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import classNames from 'classnames'
 import {useDispatch, useSelector} from "react-redux";
+import classNames from 'classnames'
 import NavCollapse from "./NavCollapse";
-import styles from './styles.module.scss';
 import {actions} from "../../store/category/slice";
+import styles from './styles.module.scss';
 
 const CategoryNavbar = () => {
   const dispatch = useDispatch()
@@ -37,55 +37,93 @@ const CategoryNavbar = () => {
   return (
     <div className={styles.navbar}>
       <ul className={styles.navbar__category}>
+        <li
+          className={classNames(styles.navbar__category__title)}
 
-        {categories?.map((category, index) => {
+        > Категория
+        </li>
+        {categories?.filter(childCategory => {
+            if (childCategory.category_type !== "news") {
+              return childCategory
+            }
+          }
+        ).map(childCategory => {
           return (
-            <NavCollapse title={category.name} key={index}
-                         collapseIcon={(category.children?.length > 0) ? true : false}
-                         className={styles.navbar__category__collapse}
-                         titleClassName={styles.navbar__category__title}
-                         titleActiveClassName={classNames({[styles.navbar_activeTitle]: category.id === category_id})}
-
+            <NavCollapse title={childCategory.name}
+                         collapseIcon={(childCategory.children?.length > 0) ? true : false}
+                         className={styles.navbar__subcategory}
+                         contentClassName={styles.navbar__subcategory__content}
+                         titleClassName={styles.navbar__subcategory__title}
+                         titleActiveClassName={classNames({[styles.navbar_activeTitle]: childCategory.id === category_id})}
                          onClick={() => {
-                           setCategory_id(category.id)
-                           dispatch(actions.setCategoryId(category.id))
+                           setCategory_id(childCategory.id)
+                           dispatch(actions.setCategoryId(childCategory.id))
                          }}
             >
-              {categories?.map(childCategory => {
+
+              {childCategory.children?.map(childCategory => {
                 return (
                   <NavCollapse title={childCategory.name}
                                collapseIcon={(childCategory.children?.length > 0) ? true : false}
-                               className={styles.navbar__subcategory}
-                               contentClassName={styles.navbar__subcategory__content}
-                               titleClassName={styles.navbar__subcategory__title}
+                               className={styles.navbar__subsubcategory}
+                               titleClassName={styles.navbar__subsubcategory__title}
+                               contentClassName={styles.navbar__subsubcategory__content}
                                titleActiveClassName={classNames({[styles.navbar_activeTitle]: childCategory.id === category_id})}
                                onClick={() => {
                                  setCategory_id(childCategory.id)
                                  dispatch(actions.setCategoryId(childCategory.id))
                                }}
                   >
-
-                    {childCategory.children?.map(childCategory => {
-                      return (
-                        <NavCollapse title={childCategory.name}
-                                     collapseIcon={(childCategory.children?.length > 0) ? true : false}
-                                     className={styles.navbar__subsubcategory}
-                                     titleClassName={styles.navbar__subsubcategory__title}
-                                     contentClassName={styles.navbar__subsubcategory__content}
-                                     titleActiveClassName={classNames({[styles.navbar_activeTitle]: childCategory.id === category_id})}
-                                     onClick={() => {
-                                       setCategory_id(childCategory.id)
-                                       dispatch(actions.setCategoryId(childCategory.id))
-                                     }}
-                        >
-                          {childCategory.children?.length > 0 && categoriesInCategory(childCategory.children)}
-                        </NavCollapse>
-                      )
-                    })}
-
+                    {childCategory.children?.length > 0 && categoriesInCategory(childCategory.children)}
                   </NavCollapse>
                 )
               })}
+
+            </NavCollapse>
+          )
+        })}
+
+        <li
+          className={classNames(styles.navbar__category__title)}
+        > Новости и статьи
+        </li>
+        {categories?.filter(childCategory => {
+            if (childCategory.category_type === "news") {
+              return childCategory
+            }
+          }
+        ).map(childCategory => {
+          return (
+            <NavCollapse title={childCategory.name}
+                         collapseIcon={(childCategory.children?.length > 0) ? true : false}
+                         className={styles.navbar__subcategory}
+                         contentClassName={styles.navbar__subcategory__content}
+                         titleClassName={styles.navbar__subcategory__title}
+                         titleActiveClassName={classNames({[styles.navbar_activeTitle]: childCategory.id === category_id})}
+                         onClick={() => {
+                           setCategory_id(childCategory.id)
+                           dispatch(actions.setCategoryId(childCategory.id))
+                         }}
+            >
+
+              {childCategory.children?.map(childCategory => {
+                return (
+                  <NavCollapse title={childCategory.name}
+                               collapseIcon={(childCategory.children?.length > 0) ? true : false}
+                               className={styles.navbar__subsubcategory}
+                               titleClassName={styles.navbar__subsubcategory__title}
+                               contentClassName={styles.navbar__subsubcategory__content}
+                               titleActiveClassName={classNames({[styles.navbar_activeTitle]: childCategory.id === category_id})}
+                               onClick={() => {
+                                 setCategory_id(childCategory.id)
+                                 dispatch(actions.setCategoryId(childCategory.id))
+                               }}
+                  >
+                    {childCategory.children?.length > 0 && categoriesInCategory(childCategory.children)}
+                  </NavCollapse>
+                )
+              })}
+
             </NavCollapse>
           )
         })}

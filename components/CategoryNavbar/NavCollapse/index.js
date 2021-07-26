@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import {gsap, refreshScrollTrigger} from '../../../lib/gsap';
 import {getHeight} from '../../../lib/utils';
 import CollapseIcon from '../../../public/icons/collapse.svg'
+import ActiveCollapseIcon from '../../../public/icons/activeCollapse.svg'
 import styles from './styles.module.scss';
 
 const animatedHeight = (element, height, callback) => {
@@ -13,10 +14,11 @@ const animatedHeight = (element, height, callback) => {
   })
 };
 
-const NavCollapse = ({className,onClick,
-                    containerClassName, titleClassName, titleActiveClassName,contentClassName, title = '',
-                    levelOption, children, disabled, collapseIcon
-                  }) => {
+const NavCollapse = ({
+                       className, onClick,
+                       containerClassName, titleClassName, titleActiveClassName, contentClassName, title = '',
+                       levelOption, children, disabled, collapseIcon
+                     }) => {
   const [isOpen, setOpen] = React.useState(false);
   const titleRef = React.useRef(null);
   const collapseRef = React.useRef(null);
@@ -32,9 +34,8 @@ const NavCollapse = ({className,onClick,
 
   return (
     <li
-      onClick={onClick}
       ref={collapseRef}
-      className={classNames(styles.collapse,className)}
+      className={classNames(styles.collapse, className)}
     >
       <div
         ref={titleRef}
@@ -44,14 +45,18 @@ const NavCollapse = ({className,onClick,
           !disabled &&
           setOpen(!isOpen)
         }}>
-        <div className={classNames( titleClassName, titleActiveClassName)}>
+        <div className={classNames(titleClassName, titleActiveClassName)} onClick={onClick}>
           <span>
             {title}
           </span>
         </div>
-        {collapseIcon && <div className={styles.collapse__collapseIcon}>
+        {titleActiveClassName && <div className={styles.collapse__collapseIcon}>
+          <ActiveCollapseIcon/>
+        </div>}
+        {!titleActiveClassName && collapseIcon && <div className={styles.collapse__collapseIcon}>
           <CollapseIcon className={classNames({[styles.collapse__collapseIcon_collapsed]: isOpen})}/>
         </div>}
+
       </div>
 
       <div className={classNames(styles.collapse__content, contentClassName)}>
