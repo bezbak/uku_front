@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import classNames from 'classnames';
 import {Form, Field} from 'react-final-form'
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {actions} from "../../../store/publication/slice";
+import {actions as categoryAction} from "../../../store/category/slice";
+import {actions as locationAction} from "../../../store/locations/slice";
 import Button from "../../Button";
 import Location from "../../Location";
 import CategoryModal from "../../CategoryModal";
@@ -42,13 +44,20 @@ const UserPublicationEdit = ({setEditPublication, editPublicationId, edit, add})
   const [imgIndex, setImgIndex] = useState(0)
   const [categoryModalOpen, setCategoryModalOpen] = useState(false)
   const [address, setAddress] = useState({name: region})
-  const [category, setCategory] = useState()
+  const [category, setCategory] = useState({name: "категория"})
 
   const publicationId = useSelector((store) => store.publication.publication_id, shallowEqual);
   const publicationInfo = useSelector((store) => store.publication.publicationInfo, shallowEqual);
   const categoryId = useSelector((store) => store.category.category_id, shallowEqual);
   const locationId = useSelector((store) => store.location.location_id, shallowEqual);
 
+  useEffect(() => {
+    dispatch(categoryAction.setCategoryId(category.id));
+  }, [category])
+
+  useEffect(() => {
+    dispatch(locationAction.setLocationId(category.id));
+  }, [address])
   const uploadPublicationImageRequest = (payload) => dispatch(actions.uploadPublicationImageRequestStart(payload));
   const createPublicationRequest = (payload) => dispatch(actions.createPublicationRequestStart(payload));
   const updatePublicationRequest = (payload) => dispatch(actions.updatePublicationRequestStart(payload));
@@ -120,8 +129,7 @@ const UserPublicationEdit = ({setEditPublication, editPublicationId, edit, add})
             <Button className={styles.userEditProfile_header_right_buttons}
                     textClassName={styles.userEditProfile_header_right_buttons_text}
                     onClick={() => setCategoryModalOpen(!categoryModalOpen)}>
-              Вещи
-              {category}
+              {category.name}
               {category?.image}
             </Button>
             <Button className={styles.userEditProfile_header_right_buttons}

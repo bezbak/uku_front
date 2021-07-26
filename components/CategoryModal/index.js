@@ -22,9 +22,9 @@ const CategoryModal = ({modalOpen, getCategory}) => {
   const slidePrev = () => swiperRef.current.slidePrev();
   const categoryRequest = () => dispatch(actions.categoryRequestStart());
 
-  useEffect(()=>{
+  useEffect(() => {
     categoryRequest()
-  },[])
+  }, [])
 
   const modalCloseHandle = () => setIsModalOpen(false)
 
@@ -42,14 +42,14 @@ const CategoryModal = ({modalOpen, getCategory}) => {
       });
       setSlides(() => [...filterArray, children])
     } else {
-      getCategory({name:(name).toString(),id:id})
+      getCategory({name: (name).toString(), id: id})
       setIsModalOpen(false)
 
     }
 
   }
 
-  const childRegionFunction = (children, name,id) => {
+  const childRegionFunction = (children, name, id) => {
     setActiveRegion(name)
     setSearchValue("")
     RegionsInRegion(children, name, id)
@@ -67,7 +67,7 @@ const CategoryModal = ({modalOpen, getCategory}) => {
 
   return (
 
-    <Modal modalOpen={isModalOpen} >
+    <Modal modalOpen={isModalOpen}>
       <div className={styles.location}>
         <div className={styles.location__headline}>
           <div className={styles.location__headline__title}>
@@ -80,7 +80,7 @@ const CategoryModal = ({modalOpen, getCategory}) => {
         <div className={styles.location__search}>
           <input placeholder={"Введите название категории"}
                  value={searchValue}
-                 onChange={(e)=>setSearchValue(e.target.value)}/>
+                 onChange={(e) => setSearchValue(e.target.value)}/>
         </div>
         <Swiper
           className={styles.location__swiper}
@@ -95,15 +95,18 @@ const CategoryModal = ({modalOpen, getCategory}) => {
           <SwiperSlide>
             <div className={classNames(styles.location__slide)}>
               {category?.filter(val => {
-                if(searchValue === "") {
+                if (searchValue === "") {
                   return val
-                }else if (val.name.toLowerCase().includes(searchValue?.toLowerCase())){return val}
+                } else if (val.name.toLowerCase().includes(searchValue?.toLowerCase())) {
+                  return val
+                }
               })?.map((reg, key) => {
                 return (
                   <div key={key}
                        className={classNames(styles.location__slide__regionWrap,
                          {[styles.location__slide__regionWrap_activeRegion]: reg.name === activeRegion})}
-                       onClick={() => childRegionFunction(reg.children, reg.name, reg.id)}>
+                       onClick={() => childRegionFunction(reg.children, reg.name, reg.id)}
+                  >
                     <label className={styles.location__slide__regionWrap_label}>{reg.name}</label>
                     {reg.children?.length > 0 &&
                     <ArrowIcon className={styles.location__slide__regionWrap__arrowRightIcon}/>}
@@ -118,14 +121,16 @@ const CategoryModal = ({modalOpen, getCategory}) => {
               <div className={classNames(styles.location__slide)}>
 
                 {child?.filter(val => {
-                  if(searchValue === "") {
+                  if (searchValue === "") {
                     return val
-                  }else if (val.name.toLowerCase().includes(searchValue?.toLowerCase())){return val}
+                  } else if (val.name.toLowerCase().includes(searchValue?.toLowerCase())) {
+                    return val
+                  }
                 }).map((reg, key) => {
                   return (
                     <div key={key}
                          className={classNames(styles.location__slide__regionWrap,
-                           {[styles.location__slide__regionWrap_activeRegion]: reg.name === address[address.length-1]})}>
+                           {[styles.location__slide__regionWrap_activeRegion]: reg.name === address[address.length - 1]})}>
                       <ArrowIcon className={styles.location__slide__regionWrap__arrowLeftIcon} onClick={prevSlide}/>
                       <div className={classNames(styles.location__slide__regionWrap)}
                            onClick={() => childRegionFunction(reg.children, reg.name, reg.id)}>
