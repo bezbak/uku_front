@@ -1,83 +1,30 @@
-import {put, call, select, takeEvery} from 'redux-saga/effects';
-import isEmpty from "lodash/isEmpty";
+import {put, call, takeEvery} from 'redux-saga/effects';
 import api from '../../lib/api';
 import {actions} from './slice';
 
 
-const getToken = (store) => store.auth.token
-
-const checkStatus = (response) => {
-  if (response.ok) return response;
-
-  if (response.status >= HTTP_INTERNAL_SERVER_ERROR_CODE) {
-    return {
-      throwError: true,
-      json: {
-        detail:
-          'Ошибка на сервере! Если ошибка не исчезнет в ближайшее время - обратитесь к администратору',
-      },
-    };
-  }
-
-  return response.json().then((json) => ({
-    json,
-    throwError: true,
-  }));
-};
-
-const checkException = (response) => {
-  if (response.throwError === true) {
-    const errorMessage = Object.keys(response.json).map((key) => response.json[key]);
-    const error = new Error(errorMessage);
-    error.error = response.json;
-    throw error;
-  }
-  return response;
-};
-
-const parseJSON = (response) => {
-  const contentType = response.headers.get('content-type');
-  if (isEmpty(contentType)) return response;
-  if (contentTypeResponseMapping[contentType]) return response;
-  return response.json();
-};
-
-function apiGet(url, token) {
-  console.log(token)
-  const response = fetch(`http://uku.kg/api/v1/${url}`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Token ' + token,
-    },
-  }).then(response => response.json())
-  return response
-}
-
-
-function* userAllFavoriteReques() {
+function* userAllFavoritePublicationsRequest({payload}) {
+  const {page,callback}=payload;
   try {
-    const token = yield select(getToken)
-    const response = yield call(api.get, 'account/favorite/', token);
-    yield put(actions.userAllFavoriteRequestSuccess(response));
+    const response = yield call(api.get, 'account/favorite', {qs:{page:page}});
+    yield put(actions.userAllFavoritePublicationsRequestSuccess(response));
+    yield call(callback);
   } catch (e) {
-    yield put(actions.userFavoriteRequestFailure(e));
+    yield put(actions.userAllFavoritePublicationsRequestFailure(e));
   }
 }
 
-function* userFavoriteAccountRequest({id}) {
+function* userFavoritePublicationRequest({id}) {
   try {
-    const token = yield select(getToken)
-    const response = yield call(api.get, `/account/favorite/${id}`,token);
-    yield put(actions.userFavoriteAccountRequestSuccess(response));
+    const response = yield call(api.get, `/account/favorite/${id}`);
+    yield put(actions.userFavoritePublicationRequestSuccess(response));
   } catch (e) {
-    yield put(actions.userAllFavoriteAccountRequestFailure(e));
+    yield put(actions.userFavoritePublicationRequestFailure(e));
   }
 }
 
 
 export default function* userFavoriteSagas() {
-  yield takeEvery(`${actions.userAllFavoriteRequestStart}`, userAllFavoriteReques);
-  yield takeEvery(`${actions.userFavoriteAccountRequestStart}`, userFavoriteAccountRequest);
+  yield takeEvery(`${actions.userAllFavoritePublicationsRequestStart}`, userAllFavoritePublicationsRequest);
+  yield takeEvery(`${actions.userFavoritePublicationRequestStart}`, userFavoritePublicationRequest);
 }

@@ -4,9 +4,9 @@ import PageProfile from "../components/PageProfile";
 import React from "react";
 import EditProfileForm from "../components/PageProfile/EditProfileForm";
 import {redirectToLogin} from "../lib/utils/auth";
-// import EditProfileForm from "../components/PageProfile/EditProfileForm";
+import Footer from "../components/Footer";
 
-function ProfilePage() {
+function ProfilePage({isAuthenticated}) {
   return (
     <>
       <Meta/>
@@ -14,11 +14,12 @@ function ProfilePage() {
         <Header/>
         <EditProfileForm/>
         <PageProfile/>
+          <Footer  className={"footer"}/>
       </main>
     </>
   )
 }
-// export async function getServerSideProps({ req }) {
-//   return redirectToLogin(req);
-// }
+export async function getServerSideProps({req, res}) {
+  return redirectToLogin(req.cookies.token);
+}
 export default ProfilePage;

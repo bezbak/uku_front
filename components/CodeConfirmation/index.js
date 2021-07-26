@@ -1,52 +1,38 @@
-import React, {useEffect, useRef, useState} from "react";
-import {useDispatch, useSelector, shallowEqual} from 'react-redux';
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from 'react-redux';
 import {useRouter} from "next/router";
-import {Field, Form} from "react-final-form";
-import useCountDown from 'react-countdown-hook';
 import classNames from 'classnames'
+import useCountDown from 'react-countdown-hook';
+import {Field, Form} from "react-final-form";
+import Cookie from "js-cookie";
 import {actions} from '../../store/users/slice';
 import pathnames from "../../constants/pathnames";
+import Modal from "../UI/Modal";
+import Button from "../Button";
 import NavLink from "../NavLink";
 import useIsMobile from "../../hooks/useIsMobile";
+import FinishCheckedIcon from "../../public/icons/finishChecked.svg";
 import styles from "./styles.module.scss";
 
 const CodeConfirmation =()=>{
-  const {push} = useRouter();
+  const router = useRouter();
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
 
   const [codeLength, setCodeLength] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [initialTime, setInitialTime] = useState(60 * 1000)
   const interval = 1000;
   const [timeLeft, {start, pause, resume, reset}] = useCountDown(initialTime, interval);
-  const user = useSelector((store) => store.auth)
+    const user = useSelector((store) => store.auth)
+  const is_profile_completed =Cookie.get("is_profile_completed")
   useEffect(()=> start(initialTime),[])
 
-  const phoneRequest = (payload) => dispatch(actions.phoneRequestStart(payload));
 
   const conformCodeRequest = (payload) => dispatch(actions.conformCodeRequestStart(payload));
   const oldPhoneConformCodeRequest = (payload) => dispatch(actions.oldPhoneConformCodeRequestStart(payload));
   const newPhoneConformCode= (payload) => dispatch(actions.newPhoneConformCodeRequestStart(payload));
-  // const changeOldPhoneRequest = (payload) => dispatch(actions.changeOldPhoneRequestStart(payload));
-  const SendAgain = () => (
-    new Promise((resolve) => {
-        phoneRequest({
-          value: user.phone,
-          callback: (response) => {
-            if (response.token) {
-              if (response?.is_profile_completed) {
-                console.log('---------conform')
-                push(pathnames.main)
-              } else {
-                push(pathnames.registration)
-              }
-            }
-            resolve(response);
-            start(60 * 1000)
-          },
-        })
-    })
-  )
+  const SendAgain = () => dispatch(actions.sendAgainPhoneRequestStart())
 
   const LoginConform = (value) => new Promise((resolve) => {
     conformCodeRequest({
@@ -54,10 +40,9 @@ const CodeConfirmation =()=>{
       callback: (response) => {
         if (response.token) {
           if (response?.is_profile_completed) {
-            console.log('---------conform')
-            push(pathnames.main)
+            router.push(pathnames.main)
           } else {
-            push(pathnames.registration)
+            router.push(pathnames.registration)
           }
         } else {
           resolve(response);
@@ -72,8 +57,7 @@ const CodeConfirmation =()=>{
        value,
       callback: (response) => {
         if (!response) {
-          console.log('---------OldLoginConform')
-          push(pathnames.login)
+          router.push(pathnames.login)
           // start(initialTime);
         } else {
           resolve(response);
@@ -82,19 +66,19 @@ const CodeConfirmation =()=>{
     })
   })
 
-  const NewLoginConform = (value) => console.log('---------OldLoginConform')
-  //   new Promise((resolve) => {
-  //   newPhoneConformCode({
-  //     value,
-  //     callback: (response) => {
-  //       if (!response) {
-  //           push(pathnames.profile)
-  //       } else {
-  //         resolve(response);
-  //       }
-  //     },
-  //   });
-  // })
+  const NewLoginConform = (value) =>
+    new Promise((resolve) => {
+    newPhoneConformCode({
+      value,
+      callback: (response) => {
+        if (!response) {
+          setIsModalOpen(true)
+        }
+          resolve(response);
+
+      },
+    });
+  })
 
   const senConfCode = (value) => {
     if (user.isChangeOldPhone==="phone") {
@@ -108,7 +92,10 @@ const CodeConfirmation =()=>{
     }
 
   }
-
+  const toMainPage = () => {
+    router.push(pathnames.main)
+    setIsModalOpen(false)
+  }
   const maxLengthCheck = (object) => {
     if (object.target.value.length > object.target.maxLength) {
       object.target.value = object.target.value.slice(0, object.target.maxLength)
@@ -119,67 +106,85 @@ const CodeConfirmation =()=>{
   }
 
   return (
-    <div className={styles.codeConfirmForm}>
-      {isMobile &&
-      <div className={styles.codeConfirmForm__logo}>
+<>
+  <div className={styles.codeConfirmForm}>
+    {isMobile &&
+    <div className={styles.codeConfirmForm__logo}>
         <span>
           Uku.kg
         </span>
-      </div>}
-      <div className={styles.codeConfirmForm__formContent}>
-        <div className={styles.codeConfirmForm__codeConfirmFormTitle}>
+    </div>}
+    <div className={styles.codeConfirmForm__formContent}>
+      <div className={styles.codeConfirmForm__codeConfirmFormTitle}>
          <span>
             Подтверждение кода
          </span>
-        </div>
-        <div className={styles.codeConfirmForm__description}>
-          Код был отправлен на номер <br/>
-          <span>
+      </div>
+      <div className={styles.codeConfirmForm__description}>
+        Код был отправлен на номер <br/>
+        <span>
           {user.phone?.phone}
        </span>
-          <NavLink className={styles.codeConfirmForm__description_link} url={"/login"}> Неверный номер?</NavLink>
-        </div>
-        <Form
-          onSubmit={senConfCode}
-          render={({handleSubmit, values, submitting, form, pristine}) => (
-            <form onSubmit={handleSubmit}>
-              <Field
-                name="confirmation_code"
-                component="input"
-                type="number"
-                placeholder="Код"
-                maxLength="6"
-                onInput={maxLengthCheck}
-                className={styles.codeConfirmForm__input}
-              />
+        {!is_profile_completed && <NavLink className={styles.codeConfirmForm__description_link} url={"/login"}> Неверный номер?</NavLink>}
+      </div>
+      <Form
+        onSubmit={senConfCode}
+        render={({handleSubmit, values, submitting, form, pristine}) => (
+          <form onSubmit={handleSubmit}>
+            <Field
+              name="confirmation_code"
+              component="input"
+              type="number"
+              placeholder="Код"
+              maxLength="6"
+              onInput={maxLengthCheck}
+              className={styles.codeConfirmForm__input}
+            />
 
-              <button type="submit"
-                      className={
-                        classNames(styles.codeConfirmForm__button,
-                          styles.codeConfirmForm__button_submitButton
-                        )
-                      }
-                      disabled={codeLength}>
-                Подтвердить
-              </button>
+            <button type="submit"
+                    className={
+                      classNames(styles.codeConfirmForm__button,
+                        styles.codeConfirmForm__button_submitButton
+                      )
+                    }
+                    disabled={codeLength}>
+              Подтвердить
+            </button>
 
-              <div className={styles.codeConfirmForm__label}>Не пришло SMS сообщение?</div>
-              <button type="button"
-                      className={classNames(styles.codeConfirmForm__button,
-                        styles.codeConfirmForm__button_submitAgain,
-                      )}
-                      onClick={SendAgain}
-                      disabled={timeLeft / 1000 ? true : false}>
-                <span>Отправить снова</span>
-                <span className={classNames({[styles.codeConfirmForm__button_submitAgain_timer]: !timeLeft / 1000})}>
+            <div className={styles.codeConfirmForm__label}>Не пришло SMS сообщение?</div>
+            <button type="button"
+                    className={classNames(styles.codeConfirmForm__button,
+                      styles.codeConfirmForm__button_submitAgain,
+                    )}
+                    onClick={SendAgain}
+                    disabled={!!(timeLeft / 1000)}>
+              <span>Отправить снова</span>
+              <span className={classNames({[styles.codeConfirmForm__button_submitAgain_timer]: !timeLeft / 1000})}>
                   0:{timeLeft / 1000}
                 </span>
-              </button>
-            </form>
-          )}
-        />
-      </div>
+            </button>
+          </form>
+        )}
+      />
     </div>
+  </div>
+  <Modal modalOpen={isModalOpen}>
+    <div className={styles.codeConfirmForm__modal}>
+      <FinishCheckedIcon/>
+      <div className={styles.codeConfirmForm__modal__title}>
+            <span>
+             Номер изменен
+            </span>
+      </div>
+      <Button className={styles.codeConfirmForm__modal__button}
+              textClassName={styles.codeConfirmForm__modal__button_text}
+              onClick={toMainPage}
+      >
+        На главную
+      </Button>
+    </div>
+  </Modal>
+</>
   )
 }
 export default CodeConfirmation;

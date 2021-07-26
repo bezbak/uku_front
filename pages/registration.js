@@ -15,7 +15,7 @@ function Registration() {
     </>
   )
 }
-// export async function getServerSideProps({ req }) {
-//   return redirectToLogin(req);
-// }
+export async function getServerSideProps({req, res}) {
+  return redirectToLogin(req.cookies.token);
+}
 export default Registration;

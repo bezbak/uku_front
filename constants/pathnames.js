@@ -1,10 +1,12 @@
 const pathnames = {
-  main:'/',
+  main: '/',
   login: '/login',
   codeConfirmation: '/codeConfirmation',
   profile: '/profile',
+  accountProfile: '/userProfile',
+  publicationInfo: '/publicationInfo',
   registration: '/registration',
-  providers: '/dashboard/providers',
+  search: '/search',
 };
 
 export default pathnames;

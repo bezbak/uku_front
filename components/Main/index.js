@@ -1,119 +1,33 @@
-import React, {useEffect} from "react";
-import Card from "../Card";
+import React, {useEffect, useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import Cookie from "js-cookie";
+import Card from "../Card";
 import {actions} from "../../store/profile/slice";
 import styles from './styles.module.scss'
 
-const sliderData = [
-  {
-    id: 1,
-    name: "Фывова Александра",
-    address: 'Москва',
-    description: 'Want to know more? \n' +
-      'Please reach out to know more details on our ' +
-      'innovations and to arrange for a meeting with our ' +
-      'innovation expert.',
-    commentCount: 1,
-    data: 8,
-    altInfo: 'shoe',
-    slider: [
-      {
-        id: 2,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 3,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 4,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 5,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      }
-    ]
-  },
-  {
-    id: 2,
-    src: 'images/lenta.png',
-    altInfo: 'shoe',
-  },
-  {
-    id: 3,
-    src: 'images/lenta.png',
-    altInfo: 'shoe',
-  },
-  {
-    id: 4,
-    src: 'images/lenta.png',
-    altInfo: 'shoe', slider: [
-      {
-        id: 2,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 3,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 4,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 5,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      }
-    ]
-  },
-  {
-    id: 5,
-    src: 'images/lenta.png',
-    altInfo: 'shoe',
-    slider: [
-      {
-        id: 2,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 3,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 4,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      },
-      {
-        id: 5,
-        src: 'images/lenta.png',
-        altInfo: 'shoe',
-      }
-    ]
-  }
-]
 
 const Main = ({title = "Лента"}) => {
   const dispatch = useDispatch();
-  const is_profile_completed = useSelector((store) => store.auth?.is_profile_completed);
-  const feedRequest = () => dispatch(actions.feedRequestStart());
-  useEffect(() => {
-    if (is_profile_completed)
-      feedRequest()
-  }, [is_profile_completed])
+  const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(false);
+  const userPublicationFeed = useSelector((store) => store.profile.feedPublication, shallowEqual);
+  const maxPage = useSelector((store) => store.profile.count, shallowEqual);
+  const is_profile_completed = Cookie.get("is_profile_completed")
 
-  const userPublicationFeed = useSelector((store) => store.profile.feed, shallowEqual);
+  const feedRequest = (page) => dispatch(actions.feedRequestStart(page));
+
+  const handleScroll = (event) => {
+    const {scrollTop, clientHeight, scrollHeight} = event.currentTarget;
+    if ((scrollTop + clientHeight > scrollHeight - 1) && (maxPage / 12) >= page) {
+      setPage(prev => prev + 1);
+    }
+  }
+
+  useEffect(() => {
+    setLoading(true);
+    feedRequest(page)
+    setLoading(false)
+  }, [page])
 
   return (
     <div className={styles.main}>
@@ -122,13 +36,16 @@ const Main = ({title = "Лента"}) => {
           {title}
         </span>
       </div>
-      <div className={styles.main__container}>
+      <div className={styles.main__container} onScroll={handleScroll}>
         {is_profile_completed &&
-        userPublicationFeed?.results?.map(slide =>
-          <Card slideData={slide} key={slide.id} publication={false}/>
+        userPublicationFeed?.map(slide =>
+          <Card slideData={slide}
+                userPublicationFeed={userPublicationFeed}
+                key={slide.id} publication={false}/>
         )
         }
       </div>
+      {loading && <h4>Loading...</h4>}
     </div>
   )
 }

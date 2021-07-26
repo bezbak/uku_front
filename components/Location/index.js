@@ -57,12 +57,13 @@ const Location = ({modalOpen, getAddress}) => {
   }
 
   const prevSlide = () => {
+    console.log('skdcnlkn')
     slidePrev()
 
     setTimeout(() => {
       slides.pop();
       address.pop()
-    }, 500);
+    }, 200);
   }
 
   return (
@@ -103,7 +104,7 @@ const Location = ({modalOpen, getAddress}) => {
                   <div key={key}
                        className={classNames(styles.location__slide__regionWrap,
                          {[styles.location__slide__regionWrap_activeRegion]: reg.name === activeRegion})}
-                       onClick={() => childRegionFunction(reg.children, reg.name, reg.id)}>
+                       onClick={() =>reg.children?.length && childRegionFunction(reg.children, reg?.name, reg?.id)}>
                     <label className={styles.location__slide__regionWrap_label}>{reg.name}</label>
                     {reg.children?.length > 0 &&
                     <ArrowIcon className={styles.location__slide__regionWrap__arrowRightIcon}/>}
@@ -126,9 +127,9 @@ const Location = ({modalOpen, getAddress}) => {
                     <div key={key}
                          className={classNames(styles.location__slide__regionWrap,
                            {[styles.location__slide__regionWrap_activeRegion]: reg.name === address[address.length-1]})}>
-                      <ArrowIcon className={styles.location__slide__regionWrap__arrowLeftIcon} onClick={prevSlide}/>
+                      <ArrowIcon className={styles.location__slide__regionWrap__arrowLeftIcon} onClick={()=>prevSlide}/>
                       <div className={classNames(styles.location__slide__regionWrap)}
-                           onClick={() => childRegionFunction(reg.children, reg.name, reg.id)}>
+                           onClick={() => childRegionFunction(reg.children, reg?.name, reg?.id)}>
                         <label className={styles.location__slide__regionWrap_label}>
                           {reg.name}
                         </label>

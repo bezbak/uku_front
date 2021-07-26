@@ -19,25 +19,26 @@ const Avatar = ({input}) => {
 
   const {push} = useRouter();
   const dispatch = useDispatch();
-  const [fileAddress, setFileAddress] = useState();
-
+  const userProfile = useSelector((store) => store.profile?.userProfile);
+  const [fileAddress, setFileAddress] = useState(userProfile.avatar);
   const updateAvatarRequest = (payload) => dispatch(profileAction.updateAvatarRequestStart(payload));
 
   const onChangeImg = (e) => {
+    e.preventDefault();
     input.onChange(e.target.value)
-    const image = new Image();
+    const files = Array.from(e.target.files)
+    const formData = new FormData()
+
     setFileAddress(URL.createObjectURL(e.target.files[0]))
-    image.src = e.target.result;
-    image.onload = function () {
-      document.getElementById('avatar').src = image.src;
-    }
+    files.forEach((file, i) => {
+      formData.append('avatar', file)
+    })
     return new Promise((resolve) => {
       updateAvatarRequest({
-        value:e.target.value,
+        value: formData,
         callback: (response) => {
-          console.log(e.target.value)
           if (!response) {
-            setTimeout(()=> push(pathnames.codeConfirmation),2000)
+            setTimeout(() => push(pathnames.profile), 2000)
           }
           resolve(response);
         },
@@ -67,13 +68,11 @@ const Avatar = ({input}) => {
 }
 
 const EditProfileForm = ({user = false}) => {
-  const {push} = useRouter();
   const router = useRouter();
   const dispatch = useDispatch();
   const [isInitialized, setInitialized] = React.useState(false);
+  const [isPhoneNumberModalOpen, setIsPhoneNumberModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPhoneNumberModal, setIsPhoneNumberModal] = useState(false);
-  const [isLOgOutModal, setIsLOgOutModal] = useState(false);
   const [state, actions] = useNavigationMenu();
   const editProfileFormRef = React.useRef();
 
@@ -110,20 +109,23 @@ const EditProfileForm = ({user = false}) => {
     closeNavigationMenu();
   }
   const updateProfileRequest = (payload) => dispatch(profileAction.updateProfileRequestStart(payload));
+
   const sendSmsToOldPhone = (payload) => dispatch(authAction.sendSmsToOldPhoneRequestStart(payload));
 
-  const logoutRequest = (payload) => dispatch(authAction.logoutRequestStart(payload));
+  const logoutRequest = () => dispatch(authAction.logoutRequestStart());
+
   const userInfo = useSelector((store) => store.profile.userProfile);
   const onChangeAvatar = (value) => {
     console.log(value)
   }
+
   const changeProfile = (value) => {
     return new Promise((resolve) => {
       updateProfileRequest({
         value,
         callback: (response) => {
           if (!response) {
-            setTimeout(()=> push(pathnames.profile),2000)
+            setTimeout(() => router.push(pathnames.profile), 2000)
           }
           resolve(response);
         },
@@ -131,39 +133,26 @@ const EditProfileForm = ({user = false}) => {
     })
   }
 
-  const changePhoneNumber = () => {
-    setIsPhoneNumberModal(true)
-    setIsModalOpen(false)
-    return new Promise((resolve) => {
+  const changePhoneNumber = () =>
+    new Promise((resolve) => {
       sendSmsToOldPhone({
         callback: (response) => {
-          console.log(response)
           if (!response) {
-           setTimeout(()=> push(pathnames.codeConfirmation),2000)
+            setTimeout(() => router.push(pathnames.codeConfirmation), 1000)
           }
           resolve(response);
         },
       });
     })
-  }
 
-  const logOutAsk = () =>{
+  const logOutAsk = () => {
     setIsModalOpen(true)
-    setIsLOgOutModal(true)
   }
 
   const logOut = () => {
-    return new Promise((resolve) => {
-      logoutRequest({
-        callback: (response) => {
-          if (!response) {
-            setTimeout(()=> push(pathnames.main),2000)
-            setIsModalOpen(false)
-          }
-          resolve(response);
-        },
-      });
-    })
+    logoutRequest();
+    setIsModalOpen(false);
+    router.push('/')
   }
 
   return (
@@ -174,11 +163,11 @@ const EditProfileForm = ({user = false}) => {
       })}>
         <div className={styles.editProfileForm_content}>
           <Button className={styles.editProfileForm__backButton}
-                  textClassName={styles.editProfileForm__backButton__text}>
-            <NavLink>
+                  textClassName={styles.editProfileForm__backButton__text} onClick={closeNavigationMenu}>
               <BackArrow/>
-              Назад
-            </NavLink>
+              <span>
+                Назад
+              </span>
           </Button>
           <Form
             onSubmit={onChangeAvatar}
@@ -202,7 +191,7 @@ const EditProfileForm = ({user = false}) => {
               className={styles.editProfileForm__form__input}
             />
             <Button className={styles.editProfileForm__editUserPhoneButton}
-                    onClick={() => setIsModalOpen(true)}>
+                    onClick={() => setIsPhoneNumberModalOpen(true)}>
               <UserPhoneEdit/>
             </Button>
           </div>
@@ -260,7 +249,7 @@ const EditProfileForm = ({user = false}) => {
 
         </div>
       </div>
-      <Modal modalOpen={isModalOpen}>
+      <Modal modalOpen={isPhoneNumberModalOpen}>
         <div className={styles.editProfileForm__modal}>
           <div className={styles.editProfileForm__modal__title}>
             <span>
@@ -276,7 +265,7 @@ const EditProfileForm = ({user = false}) => {
             </Button>
             <Button className={styles.editProfileForm__modal__cancelButton}
                     textClassName={styles.editProfileForm__modal__cancelButton_text}
-                    onClick={() => setIsModalOpen(false)}
+                    onClick={() => setIsPhoneNumberModalOpen(false)}
             >Отмена</Button>
           </div>
         </div>

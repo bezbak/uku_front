@@ -2,16 +2,42 @@
 @import "../../public/styles/mixins/index";
 
 .ads{
+  //position: relative;
   display: block;
   &__title{
     //display: none;
   }
   &__container {
+    overflow-y: auto;
     display: grid;
     grid-template-columns: 100%;
     justify-content: space-between;
     column-gap: 16px;
     row-gap: 27.5px;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 0;
+    }
+
+    &__addPublicationButton{
+      position: absolute;
+      right: 0;
+      top: 38vh;
+      height: 60px;
+      width: 60px;
+      background: #E56366;
+      border-radius: 53px;
+      z-index: 2;
+      &_text{
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        color: #FFFFFF;
+      }
+    }
   }
 }
 @include respond-above(sm) {
@@ -30,6 +56,19 @@
       //grid-template-rows: auto;
       column-gap: 16px;
       row-gap: 27.5px;
+      &__addPublicationButton{
+        position: absolute;
+        width: auto;
+        height: 56px;
+        padding: 18px 24px;
+        border-radius: 6px;
+        &_text{
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 19px;
+          color: #FFFFFF;
+        }
+      }
     }
   }
 }

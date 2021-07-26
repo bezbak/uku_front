@@ -1,26 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  allFavorites:{},
-  favorite:{},
+  allFavoritePublications:{},
+  favoritePublication:{},
 };
 
 const userFavorites = createSlice({
-  name: 'favorite',
+  name: 'favorites',
   initialState,
   reducers: {
 
-    userAllFavoriteRequestStart() {},
-    userAllFavoriteRequestSuccess(state,{payload}) {
-      state.allFavorites = payload
+    userAllFavoritePublicationsRequestStart() {},
+    userAllFavoritePublicationsRequestSuccess(state,{payload}) {
+      state.allFavoritePublications = payload
     },
-    userFavoriteRequestFailure() {},
+    userAllFavoritePublicationsRequestFailure() {},
 
-    userFavoriteAccountRequestStart() {},
-    userFavoriteAccountRequestSuccess(state,{payload}) {
-      state.favorite = payload
+    userFavoritePublicationRequestStart() {},
+    userFavoritePublicationRequestSuccess(state,{payload}) {
+      state.favoritePublication = payload
     },
-    userAllFavoriteAccountRequestFailure() {},
+    userFavoritePublicationRequestFailure() {},
 
 
   },

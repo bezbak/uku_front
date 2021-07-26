@@ -5,12 +5,25 @@
 }
 @include respond-above(sm) {
 .navbar {
+  overflow-y: auto;
   margin-right:  48px;
   display: inline-block;
   width: 233px;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 
+  &::-webkit-scrollbar-thumb {
+    width: 0;
+    background: #E0E0E0;
+    border-radius: 2px;
+  }
+  &_activeTitle {
+    color: rgba(229, 99, 102, 1) !important;
+  }
   &__category {
     width: 100%;
+
     &__collapse {
       height: auto;
       border-bottom: 1px solid #E7E7E7;
