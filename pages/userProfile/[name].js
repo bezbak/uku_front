@@ -17,7 +17,7 @@ function AccountProfilePage({isAuthenticated}) {
     </>
   )
 }
-// export async function getServerSideProps({req, res}) {
-//   return redirectToLogin(req.cookies.token);
-// }
+export async function getServerSideProps({req, res}) {
+  return redirectToLogin(req.cookies.token);
+}
 export default AccountProfilePage;

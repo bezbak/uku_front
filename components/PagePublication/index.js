@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import Button from "../Button";
 import {actions} from "../../store/publication/slice";
@@ -16,6 +16,9 @@ import NavLink from "../NavLink";
 import ImagesSelectIcon from "../../public/icons/imgAddIcon.svg";
 import classNames from "classnames";
 import CloseIcon from "../../public/icons/CloseIcon.svg";
+import {actions as accountAction} from "../../store/account/slice";
+import pathnames from "../../constants/pathnames";
+import {useRouter} from "next/router";
 
 const ImageSelectInput = ({setSelectedImages}) => {
   const onChangeImg = (e) => {
@@ -38,7 +41,8 @@ const ImageSelectInput = ({setSelectedImages}) => {
 }
 const PagePublication = () => {
   const dispatch = useDispatch();
-  const ref= useRef();
+  const router = useRouter();
+  const ref = useRef();
   const [selectedImages, setSelectedImages] = useState([])
   const [addCommentText, setAddCommentText] = useState([])
   const [reply, setReply] = useState(false)
@@ -46,7 +50,9 @@ const PagePublication = () => {
   const [commentsAuthorID, setCommentAuthorID] = useState()
   const [showNComment, setShowNComment] = useState(true)
   const [isSelectedImages, setIsSelectedImages] = useState(false)
+
   const publication_id = useSelector((store) => store.publication.publication_id, shallowEqual);
+
   const getPublicationInfoRequest = (payload) => dispatch(actions.getPublicationInfoRequestStart(payload));
   const addCommentPublicationRequest = (payload) => dispatch(actions.addCommentPublicationRequestStart(payload));
   const replyCommentPublicationRequest = (payload) => dispatch(actions.replyCommentPublicationRequestStart(payload));
@@ -54,22 +60,35 @@ const PagePublication = () => {
     getPublicationInfoRequest(publication_id)
   }, [publication_id])
   const publicationInfo = useSelector((store) => store.publication.publicationInfo, shallowEqual);
+
   const getReplyComment = () => {
     setCloseNComment(true)
     setShowNComment(false)
   }
+
   const handleChange = (e) => {
     setAddCommentText(e.target.value)
   }
+
   const addComment = (values) => {
     addCommentPublicationRequest({publication_id, addCommentText, selectedImages})
-    ref.current.value=''
+    ref.current.value = ''
   }
+
   const addReplyComment = (values) => {
-    replyCommentPublicationRequest({publication_id, commentsAuthorID,addCommentText, selectedImages})
-    ref.current.value=''
+    replyCommentPublicationRequest({publication_id, commentsAuthorID, addCommentText, selectedImages})
+    ref.current.value = ''
 
   }
+
+  const accountProfile = useCallback(
+    (account) => {
+      dispatch(accountAction.accountProfileRequestStart({id: account.user.id}));
+      router.push({pathname:`${pathnames.accountProfile}/${account?.user.first_name}${account?.user.last_name}`})
+    },
+    []
+  );
+
   return (
     <Container>
       <div className={styles.pagePublication}>
@@ -90,7 +109,7 @@ const PagePublication = () => {
         </div>
         <div className={styles.pagePublication__infoContent}>
           <div className={styles.pagePublication__infoContent_left}>
-            <div className={styles.pagePublication__infoContent__userInfo}>
+            <div className={styles.pagePublication__infoContent__userInfo} onClick={()=>accountProfile(publicationInfo)}>
               <img src={publicationInfo?.user?.avatar}/>
               <div className={styles.pagePublication__infoContent__userInfo__fioAndAddress}>
                 <span>{publicationInfo?.user?.first_name} {publicationInfo?.user?.last_name}</span>
@@ -130,19 +149,19 @@ const PagePublication = () => {
                     return (
                       <div className={styles.pagePublication__infoContent__commentsBox__comment} key={comment.id}>
                         <img src={comment.author.avatar}/>
-                        <div>
+                        <div >
                           <div className={styles.pagePublication__infoContent__commentsBox__comment_info}>
-                    <span className={styles.pagePublication__infoContent__commentsBox__comment_name}>
-                      {comment.author.first_name} {comment.author.last_name}
-                    </span>
+                            <span className={styles.pagePublication__infoContent__commentsBox__comment_name}>
+                             {comment.author.first_name} {comment.author.last_name}
+                            </span>
                             <span className={styles.pagePublication__infoContent__commentsBox__comment_text}>
                               {comment.text}
                             </span>
                           </div>
                           <div className={styles.pagePublication__infoContent__commentsBox__comment_time}>
-                    <span>
-                      {comment?.created_at}
-                    </span>
+                             <span>
+                              {comment?.created_at}
+                             </span>
                           </div>
                           <div className={styles.pagePublication__infoContent__commentsBox__comment_isAnswer}>
                             <Button className={styles.pagePublication__infoContent__commentsBox__comment_isAnswer}
@@ -164,7 +183,7 @@ const PagePublication = () => {
                                 <div>
                                   <div className={styles.pagePublication__infoContent__commentsBox__comment_info}>
                                      <span className={styles.pagePublication__infoContent__commentsBox__comment_name}>
-                                  @{replyComment.reply_to_user.first_name} {replyComment.reply_to_user.last_name}
+                                  @{replyComment?.reply_to_user.first_name} {replyComment.reply_to_user?.last_name}
                                 </span>
                                     <span className={styles.pagePublication__infoContent__commentsBox__comment_name}>
                                   {replyComment.author.first_name} {replyComment.author.last_name}

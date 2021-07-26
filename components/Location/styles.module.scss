@@ -115,9 +115,12 @@
       }
       &__arrowRightIcon {
         margin-left: auto;
+        cursor: pointer;
+
       }
       &__arrowLeftIcon {
         margin-right: 10px;
+        cursor: pointer;
         transform: rotate(-180deg);
       }
     }
