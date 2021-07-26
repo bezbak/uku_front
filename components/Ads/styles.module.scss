@@ -50,10 +50,10 @@
       margin-bottom: 24px;
     }
     &__container {
+      height: 100%;
       display: grid;
       grid-template-columns: 285px 285px 285px;
       justify-content: space-between;
-      //grid-template-rows: auto;
       column-gap: 16px;
       row-gap: 27.5px;
       &__addPublicationButton{
