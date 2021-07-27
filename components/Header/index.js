@@ -44,7 +44,6 @@ const Header = () => {
           <Button className={styles.header__menuButton} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
             {isMobileMenuOpen ? <CloseIcon/> : <Menu/>}
           </Button>
-
           <div className={styles.header__mobileLogo}>
             <span>Uku.kg</span>
           </div>
