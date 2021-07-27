@@ -10,52 +10,52 @@ import UserPublicationEdit from "./UserPublicationEdit";
 import styles from './styles.module.scss'
 
 function PageProfile() {
-  const [editPublication, setEditPublication] = useState(false)
-  const [toEditPublicationId, setToEditPublicationId] = useState()
-  const dispatch = useDispatch();
-  const profileRequest = () => dispatch(actions.profileRequestStart())
-  const publicationRequest = () => dispatch(actions.publicationRequestStart());
-  const userProfile = useSelector((store) => store.profile?.userProfile);
-  const userPublication = useSelector((store) => store.profile.userPublications, shallowEqual);
-  useEffect(() => {
-    profileRequest();
-    publicationRequest()
-  }, [])
+    const [editPublication, setEditPublication] = useState(false)
+    const [toEditPublicationId, setToEditPublicationId] = useState()
+    const dispatch = useDispatch();
+    const profileRequest = () => dispatch(actions.profileRequestStart())
+    const publicationRequest = () => dispatch(actions.publicationRequestStart());
+    const userProfile = useSelector((store) => store.profile?.userProfile);
+    const userPublication = useSelector((store) => store.profile.userPublications, shallowEqual);
+    useEffect(() => {
+        profileRequest();
+        publicationRequest()
+    }, [])
 
-
-  return (
-    <>
-      <NavContainer>
-        <Nav/>
-      </NavContainer>
-      <Container>
-        <div className={styles.profile__content}>
-          <Profile user={userProfile} userProfile={true}/>
-          {editPublication &&
-          <UserPublicationEdit edit={true} setEditPublication={setEditPublication} editPublicationId={toEditPublicationId}/>}
-          {!editPublication &&
-          <div className={styles.profile__publication}>
-            <div className={styles.profile__publication__title}>
+    return (
+        <>
+            <NavContainer>
+                <Nav/>
+            </NavContainer>
+            <Container>
+                <div className={styles.profile__content}>
+                    <Profile user={userProfile} userProfile={true}/>
+                    {editPublication &&
+                    <UserPublicationEdit edit={true} setEditPublication={setEditPublication}
+                                         editPublicationId={toEditPublicationId}/>}
+                    {!editPublication &&
+                    <div className={styles.profile__publication}>
+                        <div className={styles.profile__publication__title}>
               <span>
               Публикации
               </span>
-            </div>
-            <div className={styles.profile__publication__container}>
-              {
-                userPublication?.results?.map((user, index) =>
-                  <Card slideData={user} key={index} publication={true}
-                        profileCard={true}
-                        setToEditPublicationId={setToEditPublicationId}
-                        setEditPublication={setEditPublication}
-                  />
-                )
-              }
-            </div>
-          </div>}
-        </div>
-      </Container>
-    </>
-  )
+                        </div>
+                        <div className={styles.profile__publication__container}>
+                            {
+                                userPublication?.results?.map((user, index) =>
+                                    <Card slideData={user} key={index} publication={true}
+                                          profileCard={true}
+                                          setToEditPublicationId={setToEditPublicationId}
+                                          setEditPublication={setEditPublication}
+                                    />
+                                )
+                            }
+                        </div>
+                    </div>}
+                </div>
+            </Container>
+        </>
+    )
 }
 
 export default PageProfile;

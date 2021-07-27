@@ -88,7 +88,6 @@ const PagePublication = () => {
     },
     []
   );
-
   return (
     <Container>
       <div className={styles.pagePublication}>

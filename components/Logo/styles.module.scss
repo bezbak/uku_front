@@ -10,6 +10,7 @@
   font-size: 34px;
   line-height: 43px;
   color: #091A2E;
+  cursor: pointer;
 }
 
 @include respond-above(sm) {
