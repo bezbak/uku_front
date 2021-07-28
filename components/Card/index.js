@@ -29,8 +29,6 @@ const Card = ({
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [userId, setUserId] = useState(slideData.user?.id);
   const [idPublication, setIdPublication] = useState(slideData.id)
-
-
   const account = useSelector((store) => store.account, shallowEqual);
   const [isSubscribe, setIsSubscribe] = useState(slideData?.user?.id === account.id ? account.subscribe : slideData?.user?.following)
 
@@ -80,13 +78,10 @@ const Card = ({
   }
 
   const accountFollow = (id) => {
-    const changedUserPublicationFeed = userPublicationFeed?.map(el => {
-      return {...el, user: {...el.user, following: el.user.id === account.id ? !el.user.following : el.user.following}}
-    })
+    const changedUserPublicationFeed = userPublicationFeed
     dispatch(accountAction.accountFollowRequestStart({id, changedUserPublicationFeed}));
     setIsSubscribe(slideData?.user.id === account.id ? account.subscribe : isSubscribe)
   };
-
   return (
     <>
       <div className={styles.card}>
@@ -115,7 +110,7 @@ const Card = ({
             <DeleteIcon/>
           </Button>
         </div>}
-        <SwiperCard data={slideData?.images} onClick={()=>publicationInfo(slideData.id)}/>
+        <SwiperCard data={slideData} onClick={()=>publicationInfo(slideData.id)}/>
         <div className={styles.card__footer} onClick={()=>publicationInfo(slideData.id)}>
           <div className={styles.card__footer__category}>
             <span>Категория/ {slideData?.categories}</span>

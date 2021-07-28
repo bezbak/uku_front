@@ -12,8 +12,6 @@ const Main = ({title = "Лента"}) => {
     const [loading, setLoading] = useState(false);
     const userPublicationFeed = useSelector((store) => store.profile.feedPublication, shallowEqual);
     const maxPage = useSelector((store) => store.profile.count, shallowEqual);
-    // const is_profile_completed = Cookie.get("is_profile_completed")
-
     const feedRequest = (page) => dispatch(actions.feedRequestStart(page));
 
     const handleScroll = (event) => {
@@ -28,7 +26,7 @@ const Main = ({title = "Лента"}) => {
         feedRequest(page)
         setLoading(false)
     }, [page])
-    console.log(userPublicationFeed)
+    // console.log(userPublicationFeed)
 
     return (
         <div className={styles.main}>
@@ -42,7 +40,7 @@ const Main = ({title = "Лента"}) => {
                     <div key={index}>
                         <Card slideData={slide}
                               userPublicationFeed={userPublicationFeed}
-                              key={slide.id} publication={false}/>
+                              publication={false}/>
                     </div>
                 )
                 }

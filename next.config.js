@@ -1,5 +1,6 @@
 const withPlugins = require('next-compose-plugins');
 // const nextTranslate = require('next-translate');
+const withImages = require('next-images')
 
 const nextConfig = {
   webpack: (config, { isServer }) => {

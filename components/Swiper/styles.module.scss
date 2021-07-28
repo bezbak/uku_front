@@ -2,42 +2,13 @@
 @import "../../public/styles/mixins/index";
 
 .swiperCard {
-  width: 100%;
   display: flex;
-  flex-direction: column;
-
-  &__slide {
+  justify-content: space-between;
+  background-size: cover !important;
+  background-position: center;
+  div{
     width: 100%;
-    height: 190px;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-
-    }
-  }
-
-  &__sliderPagination {
-    margin-top: 5px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-
-    &_icon {
-      cursor: pointer;
-      margin-left: 6.5px;
-      margin-right: 6.55px;
-      width: 24px;
-      height: 4px;
-      background: #EAEAEA;
-      border-radius: 4px;
-    }
-
-    &_active {
-      height: 4px;
-      background: #E56366;
-    }
+    height: 200px;
   }
 }
 

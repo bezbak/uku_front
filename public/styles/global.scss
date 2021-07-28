@@ -83,7 +83,6 @@ img {
   display: flex;
   flex-direction: column;
   background: $backgroundColor;
-  overflow: hidden;
 }
 
 .no-pointer{
@@ -91,11 +90,9 @@ img {
 }
 
 .no-scroll {
-  overflow: hidden !important;
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none;
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
@@ -104,7 +101,6 @@ img {
 }
 
 .collapse {
-  overflow: hidden;
 
   &__visible-content {
     &:hover {
@@ -205,4 +201,7 @@ input:-webkit-autofill:active  {
   @include respond-above(2k) {
     padding: 0 177px;
   }
+}
+
+:global(.__next){
 }

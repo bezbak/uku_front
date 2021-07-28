@@ -8,8 +8,9 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 const PublicationImgSlider = ({data, onClick}) => {
   const swiperRef = useRef();
-  const [activeSlideIndex, setActiveSlideIndex] = React.useState(0);
-  const setActiveSlide = (swiper) => setActiveSlideIndex(swiper.activeIndex);
+  // const [activeSlideIndex, setActiveSlideIndex] = React.useState(0);
+  // const setActiveSlide = (swiper) => setActiveSlideIndex(swiper.activeIndex);
+
   return (
     <div className={styles.swiperCard} onClick={onClick}>
       <Swiper
@@ -33,7 +34,7 @@ const PublicationImgSlider = ({data, onClick}) => {
           return (
             <SwiperSlide key={index}>
               <div className={classNames(styles.swiperCard__slide)}>
-                <img src={slide.image}/>
+                <img src={slide.image ? slide.image : placeholder_publication}/>
               </div>
             </SwiperSlide>
           );
