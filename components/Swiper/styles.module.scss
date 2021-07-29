@@ -6,9 +6,33 @@
   justify-content: space-between;
   background-size: cover !important;
   background-position: center;
+
   div{
-    width: 100%;
+    padding-bottom: 20px;
+    width: 80%;
     height: 200px;
+    position: relative;
+    &:after{
+      position: absolute;
+      bottom: -25px;
+      content: "";
+      width: 80%;
+      height: 4px;
+      background: #EAEAEA;
+      border-radius: 6px;
+    }
+    &:hover{
+      &:after{
+        transition: .5s;
+        position: absolute;
+        bottom: -25px;
+        content: "";
+        width: 80%;
+        height: 4px;
+        background-color: #E56366;
+        border-radius: 6px;
+      }
+    }
   }
 }
 
