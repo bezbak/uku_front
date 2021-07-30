@@ -3,20 +3,30 @@
 
 .swiperCard {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   background-size: cover !important;
   background-position: center;
-
+  &:hover{
+    :global(.userPublication){
+      display: flex;
+      position: absolute;
+      float: right;
+      width: 56px;
+      height: 24px;
+      top: 25px;
+      right: 12px;
+      z-index: 2;
+    }
+  }
   div{
-    padding-bottom: 20px;
     width: 80%;
     height: 200px;
     position: relative;
     &:after{
       position: absolute;
-      bottom: -25px;
+      bottom: -5px;
       content: "";
-      width: 80%;
+      width: 90%;
       height: 4px;
       background: #EAEAEA;
       border-radius: 6px;
@@ -25,9 +35,9 @@
       &:after{
         transition: .5s;
         position: absolute;
-        bottom: -25px;
+        bottom: -5px;
         content: "";
-        width: 80%;
+        width: 90%;
         height: 4px;
         background-color: #E56366;
         border-radius: 6px;

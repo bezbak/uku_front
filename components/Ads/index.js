@@ -42,11 +42,11 @@ const ComponentAds = ({title,setAddPublicationModal, data, publication}) => {
         </span>
       </div>
       <div className={styles.ads__container} onScroll={handleScroll}>
-        <Button className={styles.ads__container__addPublicationButton}
-                textClassName={styles.ads__container__addPublicationButton_text}
-                onClick={ ()=>setAddPublicationModal(true)}>
-          {isMobile ? <PlusIcon/> :'Добавить объявление'}
-        </Button>
+        {/*<Button className={styles.ads__container__addPublicationButton}*/}
+        {/*        textClassName={styles.ads__container__addPublicationButton_text}*/}
+        {/*        onClick={ ()=>setAddPublicationModal(true)}>*/}
+        {/*  {isMobile ? <PlusIcon/> :'Добавить объявление'}*/}
+        {/*</Button>*/}
         {
           categoryPublications?.results?.map(slide =>
             <Card slideData={slide} key={slide.id} publication={false}/>

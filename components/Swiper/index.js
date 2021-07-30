@@ -1,8 +1,10 @@
 import React, {useState} from "react";
 import SwiperCore, {Navigation, Pagination, Scrollbar, A11y} from 'swiper';
 import styles from './styles.module.scss'
-// import noImage from '../../public/images/no_image.png'
 import Image from "next/image";
+import Button from "../Button";
+import EditIcon from "../../public/icons/Edit.svg";
+import DeleteIcon from "../../public/icons/CloseIcon.svg";
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 

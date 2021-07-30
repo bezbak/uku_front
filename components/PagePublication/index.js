@@ -92,7 +92,7 @@ const PagePublication = () => {
     <Container>
       <div className={styles.pagePublication}>
         <div className={styles.pagePublication__header}>
-          <Button>
+          <Button onClick={()=>router.push("/")}>
             <ArrowRightIcon/>
             Назад
           </Button>
