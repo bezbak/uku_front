@@ -48,7 +48,9 @@
 
     &__follow {
       margin-left: auto;
-
+      .followed{
+        color: #667689;
+      }
       &_text {
         font-size: 14px;
         line-height: 17px;
@@ -60,7 +62,7 @@
   &__footer {
     display: flex;
     flex-direction: column;
-    padding: 40px 16px 19px 16px;
+    padding: 10px 16px 19px 16px;
 
     &__category {
       font-size: 13px;
@@ -108,8 +110,8 @@
 }
 
 .userPublication {
-  position: absolute;
   display: flex;
+  position: absolute;
   float: right;
   width: 56px;
   height: 24px;
@@ -227,6 +229,6 @@
 
 }
 
-@include respond-above(2k) {
+@include respond-above(2 k) {
 
 }

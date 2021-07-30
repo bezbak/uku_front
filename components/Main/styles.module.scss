@@ -18,44 +18,52 @@
     justify-content: space-between;
     column-gap: 32px;
     row-gap: 30px;
+
     &::-webkit-scrollbar {
       width: 0;
       height: 0;
     }
   }
 }
-.card{
+
+.card {
   display: flex;
   flex-direction: column;
   border: 1px solid #DFDFDF;
   box-sizing: border-box;
   border-radius: 6px 6px 0px 0px;
+
   &__headline {
     width: 100%;
     display: flex;
     align-items: center;
     padding: 10px 16px;
+
     img {
       width: 32px;
       height: 32px;
       margin-right: 8px;
     }
-    &__info{
+
+    &__info {
       display: flex;
       flex-direction: column;
       gap: 4px;
-      &_name{
+
+      &_name {
         font-size: 14px;
         line-height: 17px;
         color: #121213;
       }
-      &_address{
+
+      &_address {
         font-size: 12px;
         line-height: 15px;
         color: #A0A0A0;
       }
     }
-    &__follow{
+
+    &__follow {
       margin-left: auto;
       font-size: 14px;
       line-height: 17px;
@@ -63,15 +71,18 @@
 
     }
   }
-  &__footer{
+
+  &__footer {
     display: flex;
     flex-direction: column;
     padding: 6px 16px 19px 16px;
-    &__category{
+
+    &__category {
       font-size: 13px;
       line-height: 16px;
       color: #818181;
     }
+
     &__description {
       width: 100%;
       margin-top: 8px;
@@ -79,23 +90,28 @@
       line-height: 17px;
       color: #121213;
     }
+
     &__commentary {
       margin-top: 12px;
       font-size: 14px;
       line-height: 17px;
       color: #A5A5A5;
     }
-    &__timeAndView{
+
+    &__timeAndView {
       margin-top: 15.5px;
       width: 100%;
       font-size: 14px;
       line-height: 17px;
       color: #A5A5A5;
-      &_time{
+
+      &_time {
         float: left;
       }
+
       &_view {
         float: right;
+
         & svg {
           margin-right: 7px;
         }
@@ -139,9 +155,10 @@
 
 }
 
-@include respond-above(2k) {
+@include respond-above(2 k) {
 
 }
+
 @include respond-above(sm) {
 
 }
@@ -151,16 +168,16 @@
 }
 
 @include respond-above(lg) {
-.main {
-  &__container {
-    display: grid;
-    grid-template-columns: 368px 368px 368px;
-    justify-content: space-between;
-    //grid-template-rows: auto;
-    column-gap: 32px;
-    row-gap: 30px;
+  .main {
+    &__container {
+      display: grid;
+      grid-template-columns: 368px 368px 368px;
+      justify-content: space-between;
+      //grid-template-rows: auto;
+      column-gap: 32px;
+      row-gap: 30px;
+    }
   }
-}
 }
 
 @include respond-above(mac) {
@@ -179,6 +196,6 @@
 
 }
 
-@include respond-above(2k) {
+@include respond-above(2 k) {
 
 }
