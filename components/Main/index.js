@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import Cookie from "js-cookie";
 import Card from "../Card";
@@ -6,7 +6,10 @@ import {actions} from "../../store/profile/slice";
 import styles from './styles.module.scss'
 
 
+
 const Main = ({title = "Лента"}) => {
+
+
     const dispatch = useDispatch();
     const [page, setPage] = useState(1)
     const [loading, setLoading] = useState(false);
@@ -21,15 +24,15 @@ const Main = ({title = "Лента"}) => {
         }
     }
 
+
     useEffect(() => {
         setLoading(true);
         feedRequest(page)
         setLoading(false)
     }, [page])
-    // console.log(userPublicationFeed)
 
     return (
-        <div className={styles.main}>
+        <div  className={styles.main}>
             <div className={styles.main__title}>
         <span>
           {title}
@@ -45,6 +48,7 @@ const Main = ({title = "Лента"}) => {
                 )
                 }
             </div>
+            {/*<button onClick={()=>Date.now()} className={styles.toTop}/>*/}
             {loading && <h4>Loading...</h4>}
         </div>
     )
