@@ -7,22 +7,26 @@ import Footer from "../components/Footer";
 import NavContainer from "../containers/NavContainer";
 import Cookie from "js-cookie";
 
+const getRefToTop = arg => {
+
+}
+
 function Home() {
-  return (
-    <>
-      <Meta/>
-      <main className="home">
-        <Header/>
-        <NavContainer>
-          <Nav title={"Кого будем искать"}/>
-        </NavContainer>
-        <Container>
-          <Main/>
-        </Container>
-        <Footer className={"footer"}/>
-      </main>
-    </>
-  )
+    return (
+        <>
+            <Meta/>
+            <main className="home">
+                <Header/>
+                <NavContainer>
+                    <Nav title={"Кого будем искать"}/>
+                </NavContainer>
+                <Container>
+                    <Main/>
+                </Container>
+                <Footer className={"footer"}/>
+            </main>
+        </>
+    )
 }
 
 export default Home

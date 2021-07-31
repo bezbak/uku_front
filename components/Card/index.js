@@ -25,10 +25,10 @@ const Card = ({
               }) => {
     const dispatch = useDispatch();
     const route = useRouter();
-    const avatar = slideData.user?.avatar ? slideData.user?.avatar : "icons/avatar.png";
+    const avatar = slideData?.user?.avatar ? slideData.user?.avatar : "icons/avatar.png";
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [userId, setUserId] = useState(slideData.user?.id);
-    const [idPublication, setIdPublication] = useState(slideData.id)
+    const [userId, setUserId] = useState(slideData?.user?.id);
+    const [idPublication, setIdPublication] = useState(slideData?.id)
     const account = useSelector((store) => store.account, shallowEqual);
     const [isSubscribe, setIsSubscribe] = useState(slideData?.user?.id === account.id ? account.subscribe : slideData?.user?.following)
 
@@ -116,7 +116,6 @@ const Card = ({
                     </div>
                     <div className={styles.card__footer__commentary}>
           <span>
-              {console.log(slideData.comment_count)}
               {slideData?.comment_count !== 0 ? "Посмотреть все комментарии" + " " + `(${slideData?.comment_count})` : null}
           </span>
                     </div>
