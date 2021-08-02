@@ -40,7 +40,7 @@ const Main = ({title = "Лента"}) => {
             </div>
             <div className={styles.main__container} onScroll={handleScroll}>
                 {userPublicationFeed?.map((slide, index) =>
-                    <div key={index}>
+                    <div key={index} className={styles.cards}>
                         <Card slideData={slide}
                               userPublicationFeed={userPublicationFeed}
                               publication={false}/>

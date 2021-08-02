@@ -22,7 +22,7 @@ const SwiperCard = ({data, onClick}) => {
                     onMouseOver={(e) => setActive(e.target.id)}/>))
                 :
                 [1].map((item, index) => {
-                    return <Image key={index} src={"/images/no_image.png"} width={'100%'} height={"100%"}/>
+                    return <div key={index} className={styles.noImage}/>
                 })
 
             }

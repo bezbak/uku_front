@@ -9,6 +9,7 @@
   box-sizing: border-box;
   border-radius: 6px;
   z-index: 1;
+  height: 100% !important;
 
   &__headline {
     width: 100%;
@@ -95,12 +96,13 @@
       color: #A5A5A5;
 
       &_time {
-        float: left;
+        display: flex;
+        align-items: center;
       }
 
       &_view {
-        float: right;
-
+        display: flex;
+        align-items: center;
         & svg {
           margin-right: 4px;
         }
@@ -231,4 +233,12 @@
 
 @include respond-above(2 k) {
 
+}
+
+.viewCounter{
+  font-family: Inter, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 16px;
 }

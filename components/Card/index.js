@@ -123,7 +123,10 @@ const Card = ({
           <span className={styles.card__footer__timeAndView_time}>
             {slideData?.created_at}           </span>
                         <span className={styles.card__footer__timeAndView_view}>
-           <EyeIcon/>{slideData.viewed}
+           <EyeIcon/>
+                            <span className={styles.viewCounter}>
+                                {slideData.viewed}
+                            </span>
           </span>
                     </div>
 
