@@ -117,7 +117,8 @@ const getFeed = arg => {
 function* feedRequest({payload}) {
     console.log(payload)
     try {
-        const response = yield call(api.get, 'account/profile/feed/', {qs: {page: payload}});
+        const response = yield call(api.get, `account/profile/feed/?page=${payload}`, {qs: {page: payload}});
+        console.log(response)
         yield put(actions.feedRequestSuccess(response));
     }
     catch (e) {

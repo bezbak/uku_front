@@ -121,3 +121,13 @@
 @include respond-above(2k) {
 
 }
+.searchBody{
+  display: flex;
+  align-items: center;
+  input{
+    margin-right: 10px;
+  }
+  div{
+    font-size: 25px;
+  }
+}
