@@ -16,6 +16,7 @@ const accountProfileSlice = createSlice({
 
     searchAccountRequestStart() {
     },
+
     searchAccountRequestSuccess(state, {payload}) {
       state.searchedAccountsList = payload
     },
@@ -46,7 +47,6 @@ const accountProfileSlice = createSlice({
     accountFollowRequestSuccess(state, {payload}) {
       state.subscribe = payload.subscribe
       state.id = payload.id
-      console.log(payload)
     },
     accountFollowRequestFailure() {
     },

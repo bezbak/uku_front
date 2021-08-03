@@ -47,7 +47,7 @@ const AccountSearch = () => {
 
         if (q !== "") {
             setTimeout(() => {
-                dispatch(accountAction.searchAccountRequestStart({q: q}));
+                dispatch(accountAction.searchAccountRequestStart({q}));
             }, 300)
         }
 
