@@ -25,11 +25,15 @@ const Nav = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [address, setAddress] = useState({name: region, id: regionId})
     const [is_profile_completed, setIs_profile_completed] = useState(Cookies.get("is_profile_completed"));
+    const [authorized, setAuthorized] = useState(false)
+
     const avatarRequest = () => dispatch(profileAction.avatarGetRequestStart());
     const setLocation = (id) => dispatch(locationAction.setLocationId(id));
     useEffect(() => {
         avatarRequest()
-    }, [])
+        setAuthorized(!!Cookies.get("token"))
+    }, [authorized])
+
     useEffect(() => {
         setLocation(address.id)
     }, [address])
@@ -54,17 +58,20 @@ const Nav = () => {
                         </NavLink>
                     </li>}
                     <li className={classNames(styles.nav_right_list, {[styles.nav_right_list_active]: pathname === '/search'})}>
-                        <NavLink url="/search">
-                            <SearchIcon/>
-                            Поиск
-                        </NavLink>
+                        <Link href={"/search"}>
+                            <div style={{cursor:"pointer"}}>
+                                <SearchIcon/>
+                                Поиск
+                            </div>
+                        </Link>
                     </li>
                     <li
                         className={classNames(styles.nav_right_list, styles.nav_right_list_favorite, {[styles.nav_right_list_active]: pathname === '/favorites'})}>
-                        <NavLink url="/favorites">
+                        {authorized ? <NavLink url="/favorites">
                             <HeartIcon/>
                             Избранное
-                        </NavLink>
+                        </NavLink> : null}
+
                     </li>
                     <li
                         className={classNames(styles.nav_right_list, styles.nav_right_listNoBorder, {[styles.nav_right_list_active]: pathname === '/profile'})}>

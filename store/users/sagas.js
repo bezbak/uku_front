@@ -53,7 +53,7 @@ const parseJSON = (response) => {
 };
 
 function apiPost(url, values, token) {
-  return fetch(`http://uku.kg/api/v1/${url}`, {
+  return fetch(`http://api.uku.kg/api/v1/${url}`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',

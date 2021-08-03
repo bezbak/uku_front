@@ -1,6 +1,5 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import Cookie from "js-cookie";
 import Card from "../Card";
 import {actions} from "../../store/profile/slice";
 import styles from './styles.module.scss'
