@@ -1,10 +1,9 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useState} from "react";
 import {useRouter} from "next/router";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import SwiperCard from "../Swiper";
 import Button from "../Button";
 import Modal from "../UI/Modal";
-import Cookies from "js-cookie";
 import pathnames from "../../constants/pathnames";
 
 import {actions} from "../../store/profile/slice";
@@ -87,16 +86,19 @@ const Card = ({
             <div className={styles.card}>
                 {!publication && !profileCard &&
                 <div className={styles.card__headline}>
-                    <img src={avatar} alt="avatar"/>
-                    <div className={styles.card__headline__info} onClick={accountProfile}>
-            <span
-                className={styles.card__headline__info_name}>
-              {slideData?.user?.first_name.slice(0, 10)} {slideData?.user?.firstName?.length > 10 ? "..." : ""}
-                {slideData?.user?.last_name.slice(0, 5)} {slideData?.user?.last_name?.length > 5 ? "..." : ""}
-            </span>
-                        {slideData?.user?.location &&
-                        <span className={styles.card__headline__info_address}>{slideData?.user?.location}</span>}
+                    <div className={styles.cardProfile}>
+                        <img src={avatar} alt="avatar"/>
+                        <div className={styles.card__headline__info} onClick={accountProfile}>
+                            <span
+                                className={styles.card__headline__info_name}>
+                              {slideData?.user?.first_name.slice(0, 10)} {slideData?.user?.firstName?.length > 10 ? "..." : ""}
+                                {slideData?.user?.last_name.slice(0, 5)} {slideData?.user?.last_name?.length > 5 ? "..." : ""}
+                            </span>
+                            {slideData?.user?.location &&
+                            <span className={styles.card__headline__info_address}>{slideData?.user?.location}</span>}
+                        </div>
                     </div>
+
 
                     <Button className={styles.card__headline__follow} textClassName={styles.card__headline__follow_text}
                             onClick={() => accountFollow(slideData?.user.id)}>

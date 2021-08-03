@@ -54,12 +54,12 @@ const Nav = () => {
                     {(pathname === '/search' && pathname !== '') && <li className={classNames(styles.nav_right_list)}>
                         <NavLink url="/search" onClick={() => setIsModalOpen(!isModalOpen)}>
                             <AddressIcon/>
-                            {address.name}
+                            {address.name !== "undefined" ? address.name : "Выберите место"}
                         </NavLink>
                     </li>}
                     <li className={classNames(styles.nav_right_list, {[styles.nav_right_list_active]: pathname === '/search'})}>
                         <Link href={"/search"}>
-                            <div style={{cursor:"pointer"}}>
+                            <div style={{cursor: "pointer"}}>
                                 <SearchIcon/>
                                 Поиск
                             </div>
@@ -70,7 +70,10 @@ const Nav = () => {
                         {authorized ? <NavLink url="/favorites">
                             <HeartIcon/>
                             Избранное
-                        </NavLink> : null}
+                        </NavLink> : <NavLink url="/login">
+                            <HeartIcon/>
+                            Избранное
+                        </NavLink>}
 
                     </li>
                     <li
