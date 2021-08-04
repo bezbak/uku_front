@@ -1,0 +1,18 @@
+@import "styles/modules/mixins/font";
+@import 'styles/modules/variables/colors';
+
+.navigationHeader {
+  padding: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.links {
+  @include font(14px, 400, 19px);
+  display: flex;
+
+  li {
+    margin: 10px 24px 10px 0;
+    cursor: pointer;
+    color: $base-dark;
+  }
+}

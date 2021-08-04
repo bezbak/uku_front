@@ -1,0 +1,31 @@
+@import "styles/modules/mixins/font";
+@import "styles/modules/variables/colors";
+
+.navbar {
+  margin-top: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 20px;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.navbarRight {
+  width: 30%;
+
+  div {
+    cursor: pointer;
+    span{
+      border-right: 1px solid #ccc;
+      padding-right: 10px;
+    }
+    img{
+      margin-right: 10px;
+    }
+    color: $base-black;
+    @include font(18px, 500, 16px)
+  }
+}

@@ -1,0 +1,40 @@
+@import "styles/modules/mixins/font";
+@import "styles/modules/variables/colors";
+
+.title {
+  h1 {
+    @include font(24px, 500, 30px);
+    color: #121213;
+  }
+}
+
+.feed {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.footer {
+  background: #F9F9F9;
+  padding: 30px;
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+
+    img {
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    p {
+      margin: 0 10px;
+      cursor: pointer;
+      @include font(14px, 300, 17px)
+    }
+
+    > div {
+      display: flex;
+      align-items: center;
+    }
+  }
+}

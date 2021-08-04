@@ -1,0 +1,14 @@
+.searchBar{
+  input{
+    background: #F8F8F8;
+    border: 1px solid #E0E0E0;
+    box-sizing: border-box;
+    border-radius: 6px;
+    margin-left: 50px;
+    width: 400px;
+    height: 46px;
+    &:focus{
+      outline: none;
+    }
+  }
+}
