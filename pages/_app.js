@@ -1,20 +1,19 @@
-import {Provider} from 'react-redux'
-import {useStore} from '../redux/store'
 import '/styles/global.scss'
 import 'react-phone-input-2/lib/style.css'
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer} from "react-toastify";
+import React from "react";
+import {RecoilRoot} from "recoil";
 
 export default function App({Component, pageProps}) {
-
-    const store = useStore(pageProps.initialReduxState)
-
     return (
-        <Provider store={store}>
-            <Component {...pageProps} />
+        <React.Fragment>
+            <RecoilRoot>
+                <Component {...pageProps} />
+            </RecoilRoot>
             <ToastContainer
-                position="top-right"
-                autoClose={5000}
+                position="top-center"
+                autoClose={100}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick
@@ -23,6 +22,7 @@ export default function App({Component, pageProps}) {
                 draggable
                 pauseOnHover
             />
-        </Provider>
+        </React.Fragment>
+
     )
 }
