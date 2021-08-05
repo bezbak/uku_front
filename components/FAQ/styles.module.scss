@@ -1,0 +1,7 @@
+@import "styles/modules/mixins/font";
+@import "styles/modules/variables/colors";
+
+.faqBody {
+  @include font(24px, 500, 28px);
+}
+

@@ -12,7 +12,7 @@ const NavigationHeader = () => {
                 <Link href={"/contacts"}>
                     <li>Контакты</li>
                 </Link>
-                <Link href={"/FAQ"}>
+                <Link href={"/faq"}>
                     <li>F.A.Q.</li>
                 </Link>
             </ul>

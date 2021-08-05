@@ -1,0 +1,48 @@
+@import "styles/modules/mixins/font";
+@import "styles/modules/variables/colors";
+
+.spoiler {
+  cursor: pointer;
+  background: #FEFEFE;
+  border: 1px solid #E9E9E9;
+  box-sizing: border-box;
+  border-radius: 6px;
+  padding: 5px;
+  width: 100%;
+  margin: 10px 0;
+
+  .defaultSpoiler {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    img {
+      margin-right: 10px;
+      transition: .5s;
+    }
+
+    h3 {
+      @include font(16px, 500, 22px);
+      margin-left: 10px;
+    }
+
+    p {
+      @include font(14px, 400, 20px);
+      margin-left: 10px;
+    }
+  }
+
+  .spoilerContent {
+    margin-left: 10px;
+    @include font(14px, 400, 20px);
+  }
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
