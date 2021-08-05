@@ -31,7 +31,6 @@
       cursor: pointer;
       @include font(14px, 300, 17px)
     }
-
     > div {
       display: flex;
       align-items: center;
@@ -41,4 +40,15 @@
 
 .contacts {
   height: 70vh;
+}
+
+.authorization {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  img {
+    width: 50%;
+    height: 100%;
+  }
 }

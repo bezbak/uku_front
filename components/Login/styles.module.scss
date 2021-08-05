@@ -1,0 +1,33 @@
+@import "styles/modules/mixins/font";
+@import "styles/modules/variables/colors";
+
+.login{
+  margin: 0 auto;
+}
+.head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h3{
+    @include font(18px, 700, 22px);
+  }
+  button{
+    border: none;
+    background: none;
+    color: #E56366;
+    cursor: pointer;
+  }
+}
+.next{
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #E56366;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  &:disabled{
+    background: gray;
+  }
+}
