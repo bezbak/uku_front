@@ -1,9 +1,13 @@
-import React from 'react';
+import {Header} from "../containers/header";
+import Footer from "../containers/footer";
+import ContactBody from "../components/ContactsBody/ContactBody";
 
 const Contacts = () => {
-    return(
+    return (
         <div>
-            Contacts
+            <Header/>
+            <ContactBody/>
+            <Footer/>
         </div>
     )
 }

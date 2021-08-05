@@ -1,0 +1,50 @@
+@import "styles/modules/mixins/font";
+@import "styles/modules/variables/colors";
+
+.contactBody {
+  height: 70vh;
+}
+
+.title {
+  padding: 25px 0;
+  @include font(32px, 600, 38px)
+}
+
+.aboutBody {
+  display: flex;
+  justify-content: space-between;
+}
+
+.image {
+  margin-right: 32px;
+}
+
+.about {
+  @include font(16px, 500, 20px);
+  margin-bottom: 6px;
+}
+
+.aboutDesc {
+  @include font(14px, 400, 20px)
+}
+
+.aboutContacts {
+  display: flex;
+  justify-content: space-between;
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    @include font(16px, 400, 20px);
+    color: #767676;
+
+    span {
+      margin: 5px 5px;
+    }
+
+    h3 {
+      color: #181818;
+      @include font(17px, 500, 20px)
+    }
+  }
+}
