@@ -8,4 +8,5 @@ export const endpoints = {
     privacy: "/system/privacy",
     terms: "/system/terms-of-use",
     version: "/system/version",
+    feed: "/account/profile/feed"
 }

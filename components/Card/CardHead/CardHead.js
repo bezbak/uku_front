@@ -1,10 +1,11 @@
 import styles from './styles.module.scss'
 
-const CardHead = () => {
+const CardHead = ({user}) => {
+
     return (
         <div className={styles.cardHead}>
-            <div  className={styles.cardName}>
-                <img src="/images/cardAvatar.png" alt=""/>
+            <div className={styles.cardName}>
+                <img src={user && user.avatar} alt=""/>
                 <div>
                     <p>Фывова Александра</p>
                     <span>Москва</span>
