@@ -1,13 +1,17 @@
 import styles from './styles.module.scss'
-import classNames from "classnames";
+import Link from "next/link";
 
 const Footer = () => {
     return (
         <div className={styles.footer}>
             <div className={"container"}>
                 <div>
-                    <p>Контакты</p>
-                    <p>F.A.Q.</p>
+                    <Link href={"/contacts"}>
+                        <p>Контакты</p>
+                    </Link>
+                    <Link href={"/faq"}>
+                        <p>F.A.Q.</p>
+                    </Link>
                 </div>
                 <div>
                     <img src="/images/iOS.png" alt=""/>

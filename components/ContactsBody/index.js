@@ -1,7 +1,18 @@
 import styles from './styles.module.scss'
 import classNames from "classnames";
+import useSWR from "swr";
+import uku from '/adapters/HTTP_Agent'
+import {endpoints} from "../../api/endpoints";
+import {toast} from "react-toastify";
 
-const Index = () => {
+const fetchContacts = url => fetch(url).then(res => res.json().then(data => data))
+
+const ContactsBody = () => {
+
+    const {data, error} = useSWR(uku + endpoints.contact, fetchContacts)
+
+    toast.error(error)
+
     return (
         <div className={classNames("container", styles.contactBody)}>
             <h1 className={styles.title}>Наши контактные данные</h1>
@@ -10,53 +21,44 @@ const Index = () => {
             </div>
             <div className={styles.aboutBody}>
                 <div className={styles.image}>
-                    <img src="/images/aboutImage.png" alt=""/>
+                    <img src={data && data.image} alt=""/>
                 </div>
                 <div>
-                    <p className={styles.about}>О нас</p>
-                    <p className={styles.aboutDesc}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac
-                        scelerisque orci aliquam consectetur
-                        tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare
-                        odio mauris, faucibus consequat tincidunt aliquam enim risus. Est viverraLorem ipsum dolor sit
-                        amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur tristique nec.
-                        Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio mauris,
-                        faucibus consequat tincidunt aliquam enim risus. Est viverra</p>
+                    <p className={styles.about}>{data && data.title}</p>
+                    <p className={styles.aboutDesc}>{data && data.description}</p>
                     <div className={styles.aboutContacts}>
                         <div className={styles.col}>
                             <h3>Наши телефоны</h3>
-                            <span>
+                            {data && data.phone_numbers.map((item) => {
+                                return <span key={item.id}>
                                 <img src="/icons/search.png" alt=""/>
-                                <span>+996 (555) 55 55 55</span>
+                                <span>{item.phone}</span>
                             </span>
-                            <span>
-                                <img src="/icons/search.png" alt=""/>
-                                <span>+996 (555) 55 55 55</span>
-                            </span>
-                            <span>
-                                <img src="/icons/search.png" alt=""/>
-                                <span>+996 (555) 55 55 55</span>
-                            </span>
+                            })}
+
                         </div>
                         <div className={styles.col}>
                             <h3>Мы в соц. сетях:</h3>
                             <span>
                                 <img src="/icons/telegram.png" alt=""/>
-                                <span>Телеграм</span>
+                                <a
+                                    target={"_blank"}
+                                    href={data && data.telegram}>Телеграм</a>
                             </span>
                             <span>
                                 <img src="/icons/whatsapp.png" alt=""/>
-                                <span>WhatsApp</span>
+                                <a target={"_blank"} href={"/"}>WhatsApp</a>
                             </span>
                             <span>
                                 <img src="/icons/instagram.png" alt=""/>
-                                <span>Instagram</span>
+                                <a target={"_blank"} href={data && data.instagram}>Instagram</a>
                             </span>
                         </div>
                         <div className={styles.col}>
                             <h3>Наш адрес:</h3>
                             <div>
                                 <img src="/icons/location.png" alt=""/>
-                                <span>Бишкек, Ахунбаева 125/66</span>
+                                <span>{data && data.address}</span>
                             </div>
 
                         </div>
@@ -67,4 +69,4 @@ const Index = () => {
     )
 }
 
-export default Index;
+export default ContactsBody;
