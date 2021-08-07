@@ -1,8 +1,17 @@
 import {atom} from "recoil";
 
-const login = atom({
+export const login = atom({
     key: "login",
+    default: "toConfirm"
+})
+
+export const phoneNumber = atom({
+    key: "phoneNumber",
     default: ""
 })
 
-export default login
+export const requestLoading = atom({
+    key: "requestLoading",
+    default: ""
+})
+

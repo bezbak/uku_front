@@ -1,16 +1,15 @@
-import React from 'react';
 import {Header} from "../containers/header";
+import Feed from "../containers/feed";
 import Footer from "../containers/footer";
-import FAQ from "../components/FAQ";
 
-const Faq = () => {
+const Favourite = () => {
     return (
         <div>
             <Header/>
-            <FAQ/>
+            <Feed title={"Избранное"}/>
             <Footer/>
         </div>
     )
 }
 
-export default Faq;
+export default Favourite;

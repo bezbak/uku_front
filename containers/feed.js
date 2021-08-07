@@ -8,12 +8,12 @@ const Feed = ({title}) => {
         <div className={classNames("container", styles.title)}>
             <h1>{title}</h1>
             <div className={classNames(styles.feed, "container")}>
-                <Card width={title === "Лента" ? "368px" : "300px"}/>
-                <Card width={title === "Лента" ? "368px" : "300px"}/>
-                <Card width={title === "Лента" ? "368px" : "300px"}/>
-                <Card width={title === "Лента" ? "368px" : "300px"}/>
-                <Card width={title === "Лента" ? "368px" : "300px"}/>
-                <Card width={title === "Лента" ? "368px" : "300px"}/>
+                <Card width={{"Избранное": "368px", "Лента": "368px", "Объявления": "300px"}[title]}/>
+                <Card width={{"Избранное": "368px", "Лента": "368px", "Объявления": "300px"}[title]}/>
+                <Card width={{"Избранное": "368px", "Лента": "368px", "Объявления": "300px"}[title]}/>
+                <Card width={{"Избранное": "368px", "Лента": "368px", "Объявления": "300px"}[title]}/>
+                <Card width={{"Избранное": "368px", "Лента": "368px", "Объявления": "300px"}[title]}/>
+                <Card width={{"Избранное": "368px", "Лента": "368px", "Объявления": "300px"}[title]}/>
             </div>
         </div>
 

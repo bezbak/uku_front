@@ -5,7 +5,9 @@ import SearchPublication from "./SearchPublications/SearchPublication";
 import Favourite from "./Favourite/Favourite";
 import Profile from "./Profile/Profile";
 
-const Index = () => {
+const HeaderNavbar = () => {
+
+
     return (
         <div className={styles.navbar}>
             <div className={'container'}>
@@ -15,7 +17,7 @@ const Index = () => {
                 </div>
                 <div className={styles.navbarRight}>
                     <SearchPublication/>
-                    <Favourite state={"nonAuthorized"}/>
+                    <Favourite state={"authorized"}/>
                     <Profile state={"nonAuthorized"}/>
                 </div>
             </div>
@@ -24,4 +26,4 @@ const Index = () => {
     )
 }
 
-export default Index;
+export default HeaderNavbar;

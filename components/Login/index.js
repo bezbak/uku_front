@@ -5,22 +5,22 @@ import Link from "next/link";
 import uku from '/adapters/HTTP_Agent'
 import {endpoints} from '/api/endpoints'
 import {useRecoilState} from "recoil";
-import loginState from './state'
+import {phoneNumber} from './state'
+import {requestLoading} from "./state";
+import {login} from "./state";
 import Spinner from "../Spinner/Spinner";
 import {toast} from "react-toastify";
 
 
-const Index = () => {
+const Login = () => {
 
-    const [login, setLogin] = useRecoilState(loginState)
-    const [phone, setPhone] = useState("")
-    const [loading, setLoading] = useState(false)
+    const [phone, setPhone] = useRecoilState(phoneNumber)
+    const [loginState, setLoginState] = useRecoilState(login)
+    const [loading, setLoading] = useRecoilState(requestLoading)
     const [error, setError] = useState(false)
 
-    console.log(login)
     const onChangePhone = number => {
         setPhone(number)
-        toast.error("Dalbaeb nahui, che piwew")
         setError(false)
     }
 
@@ -34,7 +34,12 @@ const Index = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({phone: `+${phone}`})
-            }).then(response => setLoading(false)).catch(err => setLoading(false))
+            }).then(response => {
+                setLoading(false)
+                setLoginState("toConfirm")
+            }).catch(err => {
+                setLoading(false)
+            })
         } else {
             setError(!error)
         }
@@ -72,4 +77,4 @@ const Index = () => {
     )
 }
 
-export default Index;
+export default Login;
