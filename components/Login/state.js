@@ -2,7 +2,12 @@ import {atom} from "recoil";
 
 export const login = atom({
     key: "login",
-    default: "toConfirm"
+    default: {
+        state: "login",
+        token: null,
+        is_profile_completed: null,
+        region_detail: null
+    }
 })
 
 export const phoneNumber = atom({
@@ -12,6 +17,17 @@ export const phoneNumber = atom({
 
 export const requestLoading = atom({
     key: "requestLoading",
-    default: ""
+    default: false
 })
 
+export const registrationForm = atom({
+    key: "registrationForm",
+    default: {
+        first_name: "",
+        last_name: "",
+        gender: "",
+        birth_date: "",
+        region: "",
+        region_detail: ""
+    }
+})

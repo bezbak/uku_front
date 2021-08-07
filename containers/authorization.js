@@ -17,7 +17,7 @@ const Authorization = () => {
                     login: <Login/>,
                     toConfirm: <LoginConfirmation/>,
                     register: <Registration/>
-                }[loginState]
+                }[loginState.state]
             }
 
 

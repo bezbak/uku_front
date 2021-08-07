@@ -1,4 +1,71 @@
+@import "styles/modules/mixins/font";
+@import "styles/modules/variables/colors";
+@import "styles/modules/mixins/input";
+@import "styles/modules/mixins/button";
+
 .confirm {
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  h3 {
+    @include font(18px, 700, 22px);
+  }
+
+  p {
+    @include font(14px, 400, 22px);
+    margin: 10px 0;
+    color: #828282;
+  }
+
+  .phone {
+    @include font(14px, 400, 22px);
+    color: #828282;
+
+    span {
+      margin: 0 10px;
+      cursor: pointer;
+    }
+  }
 }
 
+.incorrectNumber {
+  color: #E56366;
+}
+
+.confirmInp {
+  @include input();
+  margin-top: 10px;
+  height: 40px;
+  width: 100%;
+  outline: none;
+}
+
+.confirmBtn {
+  @include btn();
+}
+
+.resend {
+  margin: 10px 0;
+  width: 100%;
+
+  p {
+    @include font(14px, 600, 16px);
+    color: #989797;
+    margin: 10px 0;
+  }
+
+  button {
+    @include btn();
+
+    &:disabled {
+      justify-content: space-between;
+    }
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+}

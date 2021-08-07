@@ -34,11 +34,15 @@ const Login = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({phone: `+${phone}`})
-            }).then(response => {
+            }).then(response => response.json().then(data => {
                 setLoading(false)
-                setLoginState("toConfirm")
-            }).catch(err => {
+                toast.info(data.message)
+                if (response.status === 201 || 200) {
+                    setLoginState(oldState => ({...oldState, state: "toConfirm"}))
+                }
+            })).catch(err => {
                 setLoading(false)
+                toast.error(err.message)
             })
         } else {
             setError(!error)
