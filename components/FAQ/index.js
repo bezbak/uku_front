@@ -2,7 +2,7 @@ import styles from './styles.module.scss'
 import classNames from "classnames";
 import Spoiler from "./Spoiler/Spoiler";
 
-const FAQBody = () => {
+const Index = () => {
     return (
         <div className={classNames("container", styles.faqBody)}>
             <h2>F.A.Q.</h2>
@@ -24,4 +24,4 @@ const FAQBody = () => {
     )
 }
 
-export default FAQBody;
+export default Index;

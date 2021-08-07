@@ -2,7 +2,7 @@ import Link from "next/link";
 import styles from './styles.module.scss'
 import classNames from "classnames";
 
-const NavigationHeader = () => {
+const Index = () => {
     return (
         <div className={styles.navigationHeader}>
             <ul className={classNames(styles.links, "container")}>
@@ -20,4 +20,4 @@ const NavigationHeader = () => {
     )
 }
 
-export default NavigationHeader;
+export default Index;

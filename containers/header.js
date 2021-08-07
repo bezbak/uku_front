@@ -1,5 +1,5 @@
-import NavigationHeader from "../components/NavigationHeader/NavigationHeader";
-import HeaderNavbar from "../components/HeaderNavbar/HeaderNavbar";
+import NavigationHeader from "../components/NavigationHeader";
+import HeaderNavbar from "../components/HeaderNavbar";
 
 
 export const Header = () => {

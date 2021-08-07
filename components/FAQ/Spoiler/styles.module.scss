@@ -1,6 +1,7 @@
 @import "styles/modules/mixins/font";
 @import "styles/modules/variables/colors";
 
+
 .spoiler {
   cursor: pointer;
   background: #FEFEFE;
@@ -9,7 +10,9 @@
   border-radius: 6px;
   padding: 5px;
   width: 100%;
+  height: 100%;
   margin: 10px 0;
+  animation: spoiler 1s;
 
   .defaultSpoiler {
     display: flex;
@@ -38,11 +41,22 @@
   }
 }
 
-.show {
-  display: block;
+.collapsed {
+  max-height: 0;
+  overflow: hidden;
 }
 
-.hide {
-  display: none;
+.expanded {
+  max-height: 2000px;
+  animation: expand 4s;
+}
+
+@keyframes expand {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: 10000px;
+  }
 }
 

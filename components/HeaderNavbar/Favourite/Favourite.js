@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 const Favourite = ({state}) => {
-    //TODO клик переводит на страницу логина, надо исправить
     return {
         authorized:
             <Link href={"/favourite"}>

@@ -18,6 +18,7 @@
 
   div {
     cursor: pointer;
+    user-select: none;
     span{
       border-right: 1px solid #ccc;
       padding-right: 10px;

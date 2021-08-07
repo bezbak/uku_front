@@ -1,7 +1,6 @@
-import Page from '../components/page'
-
+import Home from "./home";
 export default function SSG() {
-  return <Page />
+  return <Home />
 }
 
 // If you build and start the app, the date returned here will have the same

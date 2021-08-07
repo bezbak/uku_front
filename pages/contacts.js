@@ -1,12 +1,12 @@
 import {Header} from "../containers/header";
 import Footer from "../containers/footer";
-import ContactBody from "../components/ContactsBody/ContactBody";
+import Index from "../components/ContactsBody";
 
 const Contacts = () => {
     return (
         <div>
             <Header/>
-            <ContactBody/>
+            <Index/>
             <Footer/>
         </div>
     )

@@ -2,13 +2,13 @@ import React from 'react';
 import {Header} from "../containers/header";
 import Feed from "../containers/feed";
 import Footer from "../containers/footer";
-import FAQBody from "../components/FAQ/FAQBody";
+import Index from "../components/FAQ";
 
 const Faq = () => {
     return (
         <div>
             <Header/>
-            <FAQBody/>
+            <Index/>
             <Footer/>
         </div>
     )

@@ -10,7 +10,7 @@ import Spinner from "../Spinner/Spinner";
 import {toast} from "react-toastify";
 
 
-const Login = () => {
+const Index = () => {
 
     const [login, setLogin] = useRecoilState(loginState)
     const [phone, setPhone] = useState("")
@@ -72,4 +72,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default Index;

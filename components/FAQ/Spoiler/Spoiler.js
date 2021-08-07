@@ -19,8 +19,7 @@ const Spoiler = () => {
                      alt=""/>
             </div>
             <div
-                style={spoiler ? {display: "block", transition: "height 1s"} : {display: "none"}}
-                className={classNames(styles.spoilerContent)}>
+                className={classNames(styles.spoilerContent, spoiler ? styles.expanded : styles.collapsed)}>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac scelerisque orci aliquam consectetur
                     tristique nec. Potenti eu tellus ut odio. Ut a sed ultricies luctus massa faucibus. Cum ornare odio

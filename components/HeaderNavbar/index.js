@@ -5,7 +5,7 @@ import SearchPublication from "./SearchPublications/SearchPublication";
 import Favourite from "./Favourite/Favourite";
 import Profile from "./Profile/Profile";
 
-const HeaderNavbar = () => {
+const Index = () => {
     return (
         <div className={styles.navbar}>
             <div className={'container'}>
@@ -24,4 +24,4 @@ const HeaderNavbar = () => {
     )
 }
 
-export default HeaderNavbar;
+export default Index;

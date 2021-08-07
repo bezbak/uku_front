@@ -1,7 +1,7 @@
 import styles from './styles.module.scss'
 import classNames from "classnames";
 
-const ContactBody = () => {
+const Index = () => {
     return (
         <div className={classNames("container", styles.contactBody)}>
             <h1 className={styles.title}>Наши контактные данные</h1>
@@ -67,4 +67,4 @@ const ContactBody = () => {
     )
 }
 
-export default ContactBody;
+export default Index;
