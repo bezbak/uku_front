@@ -1,10 +1,11 @@
 import Modal from "../../../Modal/Modal";
 import styles from './styles.module.scss'
-import {useState} from "react";
+import {modalState} from "../../../UI/modalState";
+import {useRecoilState} from "recoil";
 
 const Region = () => {
 
-    const [modal, setModal] = useState(false)
+    const [modal, setModal] = useRecoilState(modalState)
 
     return <div className={styles.region}>
         <input
@@ -12,8 +13,6 @@ const Region = () => {
             onClick={() => setModal(!modal)}
             type="text"/>
         <Modal
-            modal={modal}
-            setModal={setModal}
             type={"region"}/>
     </div>
 }

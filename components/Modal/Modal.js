@@ -6,10 +6,13 @@ import {endpoints} from "../../api/endpoints";
 import fetcher from "../../adapters/getFetcher";
 import {toast} from "react-toastify";
 import {login} from "../Login/state";
+import {useRecoilState} from "recoil";
+import {modalState} from "../UI/modalState";
 
 
-const Modal = ({type, modal, setModal}) => {
+const Modal = ({type}) => {
 
+    const [modal, setModal] = useRecoilState(modalState)
     const {data, error} = useSWR(uku + endpoints.location, fetcher)
 
     if (error) toast.error('Выбор региона недоступен')
@@ -23,7 +26,11 @@ const Modal = ({type, modal, setModal}) => {
                     <div className={styles.regions}>
                         <div className={styles.region}>
                             {data && data.map(place => {
-                                return <RegionMenu key={place.id} place={place}/>
+                                return <RegionMenu
+                                    key={place.id}
+                                    place={place}
+                                    setModal={setModal}
+                                    modal={modal}/>
                             })}
                         </div>
                     </div>

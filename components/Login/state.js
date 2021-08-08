@@ -28,6 +28,6 @@ export const registrationForm = atom({
         gender: "",
         birth_date: "",
         region: "",
-        region_detail: ""
+        checkbox: true
     }
 })

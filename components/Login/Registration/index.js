@@ -7,6 +7,7 @@ import {login} from "../state";
 import {useRouter} from "next/router";
 import Region from "./Region/Region";
 import Select from "react-select";
+import {registrationForm} from '../state'
 
 const Registration = () => {
 
@@ -15,6 +16,7 @@ const Registration = () => {
 
     const [loading, setLoading] = useRecoilState(requestLoading)
     const [loginState, setLoginState] = useRecoilState(login)
+    const [form, setForm] = useRecoilState(registrationForm)
     const [phone] = useRecoilState(phoneNumber)
 
     if (loginState.is_profile_completed) router.push("/")
@@ -28,9 +30,10 @@ const Registration = () => {
     // console.log(loginState)
 
     const onChangeForm = (key, value) => {
-        console.log(value)
+        setForm(oldState => ({...oldState, [key]: value}))
     }
 
+    // console.log(form)
     const customStyles = {
         control: base => ({
             ...base,
@@ -49,8 +52,8 @@ const Registration = () => {
         }),
         placeholder: base => ({
             ...base,
-            top: "50%",
-            position: 'relative'
+            top: "60%",
+            position: 'absolute'
         })
     };
 
@@ -65,27 +68,38 @@ const Registration = () => {
             <div><h3>Регистрация</h3></div>
             <form className={styles.form} onSubmit={e => onSubmitForm(e)}>
                 <input value={phone} type="text" disabled={true}/>
-                <input type="text" placeholder="Фамилия*" name="last_name"/>
-                <input type="text" placeholder="Имя*" name="first_name"/>
+                <input type="text"
+                       placeholder="Фамилия*"
+                       name="last_name"
+                       onChange={({target: {value}}) => onChangeForm("last_name", value)}/>
+                <input
+                    type="text"
+                    placeholder="Имя*"
+                    name="first_name"
+                    onChange={({target: {value}}) => onChangeForm("first_name", value)}
+                />
                 <div className={styles.group}>
                     <Select
                         options={options}
                         className={"gender"}
                         placeholder={"Выберите пол"}
                         styles={customStyles}
-                        onChange={({value}) => console.log(value)}
+                        onChange={({value}) => onChangeForm("gender", value)}
                         instanceId={"uniqueid"}
                     />
                     <input
-                        placeholder={"Дата рождения"}
+                        onChange={({target: {value}}) => onChangeForm("birth_date", value)}
+                        placeholder={"Дата рождения (дд.мм.гггг)"}
                         type="text"/>
                 </div>
                 <Region/>
                 <div className={styles.check}>
-                    <input type="checkbox"/>
+                    <input
+                        onChange={({target: {checked}}) => onChangeForm("checkbox", !checked)}
+                        type="checkbox"/>
                     <span>Принимаю правила программы лояльности</span>
                 </div>
-                <button>
+                <button disabled={form.checkbox}>
                     {loading ? <Spinner/> : "Сохранить"}
                 </button>
             </form>
