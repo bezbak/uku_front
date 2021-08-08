@@ -1,0 +1,95 @@
+@import '/styles/modules/mixins/navButton';
+@import "/styles/modules/mixins/font";
+
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+
+  button {
+    @include navButton();
+    margin: 0 10px;
+    cursor: pointer;
+  }
+
+  .navBack {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    img {
+      margin: 0 10px 0 0;
+    }
+  }
+}
+
+.detailInfo {
+  height: 700px;
+  border: 1px solid #DFDFDF;
+  margin: 30px 0;
+  display: flex;
+
+  .left {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.leftHead {
+  display: flex;
+  margin: 10px 0 10px 10px;
+
+  img {
+    margin-right: 10px;
+  }
+}
+
+.leftHeadName {
+  @include font(14px, 400, 16px);
+  color: #091A2E;
+}
+
+.leftHeadPlace {
+  color: #888888;
+  @include font(14px, 400, 16px);
+}
+
+.swiper {
+  margin-top: 10px;
+  height: 100%;
+}
+
+.right {
+  margin-left: 25px;
+}
+
+.category {
+  p {
+    color: #818181;
+    @include font(14px, 400, 16px);
+    margin: 10px 0;
+  }
+}
+
+.detailDesc {
+
+}
+
+.desc {
+  h3 {
+    @include font(24px, 500, 30px);
+    color: #121213;
+  }
+
+  p {
+    @include font(16px, 400, 24px);
+    color: #3E3E3E;
+  }
+}
+
+.comment {
+  @include font(24px, 500, 30px);
+  color: #000000;
+}
