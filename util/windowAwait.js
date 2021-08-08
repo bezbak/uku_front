@@ -1,0 +1,1 @@
+export const awaitWindow = () => typeof window !== "undefined"

@@ -8,6 +8,12 @@ import {useRouter} from "next/router";
 import Region from "./Region/Region";
 import Select from "react-select";
 import {registrationForm} from '../state'
+import {registrationSchema} from "../../../adapters/schemes";
+import {toast} from "react-toastify";
+import uku from "../../../adapters/HTTP_Agent";
+import {endpoints} from "../../../api/endpoints";
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
 
 const Registration = () => {
 
@@ -60,7 +66,47 @@ const Registration = () => {
 
     const onSubmitForm = e => {
         e.preventDefault()
-
+        registrationSchema.isValid({
+            first_name: form.first_name,
+            last_name: form.last_name,
+            gender: form.gender,
+            birth_date: form.birth_date,
+            region: form.region.id
+        }).then(valid => {
+            if (valid) {
+                setLoading(true)
+                fetch(uku + endpoints.accountPatch, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Token ${loginState.token}`
+                    },
+                    body: JSON.stringify({
+                        first_name: form.first_name,
+                        last_name: form.last_name,
+                        gender: form.gender,
+                        birth_date: moment(form.birth_date).format("YYYY-MM-DD"),
+                        region: form.region.id
+                    })
+                }).then(response => response.json().then(data => {
+                    setLoading(false)
+                    console.log(data)
+                    if (response.status === 200) {
+                        router.push("/")
+                    }
+                })).catch(err => {
+                    setLoading(false)
+                    toast.error(err.message)
+                })
+            }
+        })
+        registrationSchema.validate({
+            first_name: form.first_name,
+            last_name: form.last_name,
+            gender: form.gender,
+            birth_date: form.birth_date,
+            region: form.region.id
+        }).catch(err => toast.error("Введите корректные данные"))
     }
 
     return (
@@ -87,10 +133,12 @@ const Registration = () => {
                         onChange={({value}) => onChangeForm("gender", value)}
                         instanceId={"uniqueid"}
                     />
-                    <input
-                        onChange={({target: {value}}) => onChangeForm("birth_date", value)}
-                        placeholder={"Дата рождения (дд.мм.гггг)"}
-                        type="text"/>
+                    <DatePicker selected={form.birth_date}
+                                onChange={(date) => setForm(oldState => ({...oldState, birth_date: date}))}/>
+                    {/*<input*/}
+                    {/*    onChange={({target: {value}}) => onChangeForm("birth_date", value)}*/}
+                    {/*    placeholder={"Дата рождения (дд.мм.гггг)"}*/}
+                    {/*    type="date"/>*/}
                 </div>
                 <Region/>
                 <div className={styles.check}>

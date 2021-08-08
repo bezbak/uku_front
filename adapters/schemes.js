@@ -5,5 +5,5 @@ export const registrationSchema = yup.object().shape({
     last_name: yup.string().required(),
     gender: yup.string().required(),
     birth_date: yup.string().required(),
-    region: yup.string().required()
+    region: yup.number().required()
 })

@@ -3,7 +3,7 @@ import {atom} from "recoil";
 export const login = atom({
     key: "login",
     default: {
-        state: "register",
+        state: "login",
         token: null,
         is_profile_completed: null,
         region_detail: null
@@ -26,8 +26,11 @@ export const registrationForm = atom({
         first_name: "",
         last_name: "",
         gender: "",
-        birth_date: "",
-        region: "",
+        birth_date: new Date(),
+        region: {
+            id: "",
+            name: ""
+        },
         checkbox: true
     }
 })

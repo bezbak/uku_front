@@ -6,10 +6,11 @@ const SubCategories = ({subCategory, subCategoryId}) => {
 
     const [selected, setSelected] = useRecoilState(selectedCategory)
 
-    const nestedCategories = (subCategory && subCategory.children || []).map(subCategory => {
-        console.log(subCategory)
-        return <SubCategories key={subCategory.id} subCategory={subCategory} subCategoryId={subCategory.id}/>
-    })
+    const nestedCategories = (subCategory && subCategory.children || []).map(subCategory => (
+        <SubCategories
+            key={subCategory.id}
+            subCategory={subCategory}
+            subCategoryId={subCategory.id}/>))
 
     return (
         <ul style={{marginLeft: "10px"}}>

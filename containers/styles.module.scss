@@ -1,5 +1,6 @@
 @import "styles/modules/mixins/font";
 @import "styles/modules/variables/colors";
+@import '/styles/modules/mixins/button';
 
 .title {
   h1 {
@@ -59,5 +60,17 @@
 .header {
   @media (max-width: 768px) {
     display: none;
+  }
+}
+
+.profilePage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  button {
+    @include btn();
+    width: 200px;
+    height: 40px;
   }
 }

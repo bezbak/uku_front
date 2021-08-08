@@ -17,8 +17,10 @@ const HeaderNavbar = () => {
                 </div>
                 <div className={styles.navbarRight}>
                     <SearchPublication/>
-                    <Favourite state={"authorized"}/>
-                    <Profile state={"nonAuthorized"}/>
+                    <Favourite
+                        state={typeof window !== "undefined" && !!window.localStorage.getItem("token") ? "authorized" : "nonAuthorized"}/>
+                    <Profile
+                        state={typeof window !== "undefined" && !!window.localStorage.getItem("token") ? "authorized" : "nonAuthorized"}/>
                 </div>
             </div>
         </div>

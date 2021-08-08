@@ -9,7 +9,7 @@ const Card = ({width, data}) => {
         <>
             {
                 data && data.results.map(item => {
-                    return <div className={styles.card} style={{width: width}}>
+                    return <div key={item.id} className={styles.card} style={{width: width}}>
                         <CardHead user={item.user}/>
                         <CardSlider images={item.images}/>
                         <CardBody categories={item.categories} description={item.description}/>
