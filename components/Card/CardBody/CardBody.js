@@ -7,7 +7,7 @@ const CardBody = ({categories, description}) => {
                 {categories || ""}
             </div>
             <div className={styles.description}>
-                {description.length > 100 ? description.slice(0, 100) + "..." : description}
+                {description.length > 100 ? description.slice(0, 100).trim() + "..." : description}
             </div>
         </div>
     )

@@ -9,12 +9,11 @@ const Card = ({width, data}) => {
         <>
             {
                 data && data.results.map(item => {
-                    console.log(item)
                     return <div className={styles.card} style={{width: width}}>
                         <CardHead user={item.user}/>
                         <CardSlider images={item.images}/>
                         <CardBody categories={item.categories} description={item.description}/>
-                        <CardFooter/>
+                        <CardFooter created_at={item.created_at} comment_count={item.comment_count}/>
                     </div>
                 })
             }

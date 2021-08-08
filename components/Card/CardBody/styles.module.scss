@@ -1,22 +1,33 @@
+@import "styles/modules/variables/colors";
+@import "styles/modules/mixins/font";
+
 .cardBody {
   margin: 10px 0 0 5px;
 }
 
 .category {
+  @include font(14px, 400, 16px);
+  color: #818181;
   margin: 5px 0;
 }
 
 .description {
   margin: 5px 0;
+  @include font(14px, 400, 18px)
 }
 
 .comments {
-  margin: 5px 0;
+  margin: 10px 0 0 5px;
+  color: #A5A5A5;
+  @include font(14px, 500, 16px);
 }
 
 .info {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 5px 0;
+
+  div {
+    margin: 10px 5px;
+  }
 }
