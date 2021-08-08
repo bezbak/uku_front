@@ -8,12 +8,8 @@ import uku from '/adapters/HTTP_Agent'
 import {endpoints} from "../../../api/endpoints";
 import {useRouter} from "next/router";
 import useSWR from "swr";
-import PhoneIndicator from "./PhoneIndicator/PhoneIndicator";
-import LastNameInp from "./LastNameInp/LastNameInp";
-import FirstNameInp from "./FirstNameInp/FirstNameInp";
-import Gender from "./Gender/Gender";
-import Date from "./Date/Date";
 import Region from "./Region/Region";
+import Select from "react-select";
 
 const fetchLocation = url => fetch(url).then(res => res.json().then(data => data))
 
@@ -27,10 +23,33 @@ const Registration = () => {
     const [loginState, setLoginState] = useRecoilState(login)
     const [phone] = useRecoilState(phoneNumber)
 
+    const options = [
+        {value: '', label: 'Выберите пол'},
+        {value: 'male', label: 'Мужской'},
+        {value: 'female', label: 'Женский'}
+    ]
+
     console.log(loginState)
     const onChangeForm = (key, value) => {
         console.log(value)
     }
+
+    const customStyles = {
+        control: base => ({
+            ...base,
+            height: 40,
+            minHeight: 40
+        }),
+        valueContainer: base => ({
+            ...base,
+            height: 40,
+            minHeight: 40,
+        }),
+        singleValue: base => ({
+            ...base,
+            top: 35
+        })
+    };
 
     // if (loginState.is_profile_completed) router.push("/")
 
@@ -42,13 +61,20 @@ const Registration = () => {
     return (
         <div className={styles.registration}>
             <div><h3>Регистрация</h3></div>
-            <PhoneIndicator/>
-            <form onSubmit={e => onSubmitForm(e)}>
-                <LastNameInp/>
-                <FirstNameInp/>
-                <div>
-                    <Gender/>
-                    <Date/>
+            <form className={styles.form} onSubmit={e => onSubmitForm(e)}>
+                <input value={phone} type="text" disabled={true}/>
+                <input type="text" placeholder="Фамилия*" name="last_name"/>
+                <input type="text" placeholder="Имя*" name="first_name"/>
+                <div className={styles.group}>
+                    <Select
+                        options={options}
+                        className={"gender"}
+                        placeholder={"Выберите пол"}
+                        styles={customStyles}
+                    />
+                    <input
+                        placeholder={"Дата рождения"}
+                        type="text"/>
                 </div>
                 <Region/>
                 <div className={styles.check}>

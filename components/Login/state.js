@@ -3,7 +3,7 @@ import {atom} from "recoil";
 export const login = atom({
     key: "login",
     default: {
-        state: "login",
+        state: "register",
         token: null,
         is_profile_completed: null,
         region_detail: null

@@ -40,7 +40,7 @@
   input {
     @include input();
     height: 40px;
-    padding: 5px 70px;
+    padding: 5px 25px;
     margin: 10px 0;
   }
 
@@ -63,3 +63,25 @@
     @include font(14px, 400, 18px)
   }
 }
+
+.form {
+  width: 50%;
+
+  &:before {
+    content: "Номер телефона";
+    @include font(12px, 500, 14px);
+    color: #667689;
+  }
+
+  .group {
+    display: flex;
+    align-items: center;
+
+    input {
+      width: 80%;
+      margin-left: 20px;
+    }
+  }
+
+}
+

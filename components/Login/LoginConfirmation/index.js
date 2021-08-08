@@ -102,7 +102,7 @@ const LoginConfirmation = () => {
                     disabled={time || loading}
                 >
                     {time ?
-                        <div>Отправить через <span>{time}</span></div> : loading ? <Spinner/> : "Отправить"}
+                        <div>Переотправить через <span>{time}</span></div> : loading ? <Spinner/> : "Отправить"}
                 </button>
             </div>
         </div>

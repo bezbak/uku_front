@@ -1,3 +1,9 @@
+@import "styles/modules/mixins/font";
+@import "styles/modules/variables/colors";
+@import "styles/modules/mixins/input";
+@import "styles/modules/mixins/button";
+
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -35,4 +41,18 @@ html {
 .error {
   display: block;
   color: red;
+}
+
+.gender {
+  width: 100%;
+  padding: 0;
+
+  .css-yk16xz-control {
+    padding: 0;
+    @include input();
+  }
+}
+
+.css-1okebmr-indicatorSeparator {
+  display: none;
 }
