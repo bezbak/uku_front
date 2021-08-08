@@ -5,7 +5,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  p{
+
+  p {
     color: #E56366;
     margin-right: 10px;
     cursor: pointer;
@@ -16,15 +17,22 @@
 .cardName {
   display: flex;
   margin-top: 5px;
+  margin-bottom: 5px;
   cursor: pointer;
+
   img {
     margin: 5px 10px 0 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
   }
+
   div {
     p {
       color: #121213;
       @include font(14px, 400, 17px);
     }
+
     span {
       color: #A0A0A0;
       @include font(14px, 400, 17px);

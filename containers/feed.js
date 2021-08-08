@@ -16,9 +16,9 @@ const Feed = ({title}) => {
     const [cardsData, setCardsData] = useRecoilState(cards)
     const {data, error} = useSWR(uku + endpoints.feed + `?page=${currentPage}`, fetcher)
 
-    console.log(data)
     setCardsData(data)
-    console.log(cardsData, 'recoil')
+
+
     return (
         <div className={classNames("container", styles.title)}>
             <h1>{title}</h1>

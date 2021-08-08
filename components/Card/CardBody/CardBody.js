@@ -1,13 +1,13 @@
 import styles from './styles.module.scss'
 
-const CardBody = () => {
+const CardBody = ({categories, description}) => {
     return (
         <div className={styles.cardBody}>
             <div className={styles.category}>
-                Категория/Подкатегория
+                {categories || ""}
             </div>
             <div className={styles.description}>
-                В бизнес комплекс срочно требуется уборщицы за наличку
+                {description.length > 100 ? description.slice(0, 100) + "..." : description}
             </div>
         </div>
     )

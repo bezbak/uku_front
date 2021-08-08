@@ -5,14 +5,20 @@ import CardBody from "./CardBody/CardBody";
 import CardFooter from "./CardFooter/CardFooter";
 
 const Card = ({width, data}) => {
-    console.log(data, "props")
     return (
-        <div className={styles.card} style={{width: width}}>
-            <CardHead user={data && data.user}/>
-            <CardSlider images={data && data.images}/>
-            <CardBody/>
-            <CardFooter/>
-        </div>
+        <>
+            {
+                data && data.results.map(item => {
+                    console.log(item)
+                    return <div className={styles.card} style={{width: width}}>
+                        <CardHead user={item.user}/>
+                        <CardSlider images={item.images}/>
+                        <CardBody categories={item.categories} description={item.description}/>
+                        <CardFooter/>
+                    </div>
+                })
+            }
+        </>
     )
 }
 

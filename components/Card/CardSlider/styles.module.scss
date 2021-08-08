@@ -1,5 +1,41 @@
+@import "styles/modules/mixins/font";
+@import "styles/modules/variables/colors";
+
 .image {
   height: 190px;
   width: 100%;
-  background: #000;
+  display: flex;
+  justify-content: space-between;
+  background-size: cover !important;
+  background-position: center !important;
+  position: relative;
+}
+
+.col {
+  width: 100%;
+  position: relative;
+
+  &:after {
+    position: absolute;
+    bottom: -3px;
+    content: "";
+    background-color: $base-gray;
+    width: 100%;
+    border-radius: 6px;
+    height: 3px;
+    transition: background-color .3s;
+  }
+
+  &:hover {
+    &:after {
+      background-color: $red;
+    }
+  }
+
+}
+
+.more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

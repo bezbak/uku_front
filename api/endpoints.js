@@ -8,5 +8,7 @@ export const endpoints = {
     privacy: "/system/privacy",
     terms: "/system/terms-of-use",
     version: "/system/version",
-    feed: "/account/profile/feed"
+    feed: "/account/profile/feed",
+    followID: "/account/follow/", //{id}
+
 }
