@@ -4,24 +4,20 @@ import {useRecoilState} from "recoil";
 import {requestLoading} from "../state";
 import {phoneNumber} from "../state";
 import {login} from "../state";
-import uku from '/adapters/HTTP_Agent'
-import {endpoints} from "../../../api/endpoints";
 import {useRouter} from "next/router";
-import useSWR from "swr";
 import Region from "./Region/Region";
 import Select from "react-select";
 
-const fetchLocation = url => fetch(url).then(res => res.json().then(data => data))
-
 const Registration = () => {
 
-    const {data, error} = useSWR(uku + endpoints.location, fetchLocation)
-
     const router = useRouter()
+
 
     const [loading, setLoading] = useRecoilState(requestLoading)
     const [loginState, setLoginState] = useRecoilState(login)
     const [phone] = useRecoilState(phoneNumber)
+
+    if (loginState.is_profile_completed) router.push("/")
 
     const options = [
         {value: '', label: 'Выберите пол'},
@@ -29,7 +25,8 @@ const Registration = () => {
         {value: 'female', label: 'Женский'}
     ]
 
-    console.log(loginState)
+    // console.log(loginState)
+
     const onChangeForm = (key, value) => {
         console.log(value)
     }
@@ -38,7 +35,8 @@ const Registration = () => {
         control: base => ({
             ...base,
             height: 40,
-            minHeight: 40
+            minHeight: 40,
+            borderColor: "#E6EFF9"
         }),
         valueContainer: base => ({
             ...base,
@@ -48,10 +46,14 @@ const Registration = () => {
         singleValue: base => ({
             ...base,
             top: 35
+        }),
+        placeholder: base => ({
+            ...base,
+            top: "50%",
+            position: 'relative'
         })
     };
 
-    // if (loginState.is_profile_completed) router.push("/")
 
     const onSubmitForm = e => {
         e.preventDefault()
@@ -71,6 +73,8 @@ const Registration = () => {
                         className={"gender"}
                         placeholder={"Выберите пол"}
                         styles={customStyles}
+                        onChange={({value}) => console.log(value)}
+                        instanceId={"uniqueid"}
                     />
                     <input
                         placeholder={"Дата рождения"}
