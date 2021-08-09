@@ -6,25 +6,30 @@ import SwiperCore, {
 } from 'swiper/core';
 
 SwiperCore.use([Pagination]);
-const SwiperContainer = () => {
+
+
+const SwiperContainer = ({user, images, location}) => {
+
 
     return (
         <div>
             <div className={styles.leftHead}>
-                <img width={'36px'} height={"36px"} src="/images/noAvatar.png" alt=""/>
+                <img
+                    className={styles.avatar}
+                    width={'36px'}
+                    height={"36px"}
+                    src={user && user.avatar}
+                    alt=""/>
                 <div>
-                    <p className={styles.leftHeadName}>Lorem ipsum.</p>
-                    <p className={styles.leftHeadPlace}>Lorem ipsum dolor sit.</p>
+                    <p className={styles.leftHeadName}>{user && user.last_name} {user && user.first_name}</p>
+                    <p className={styles.leftHeadPlace}>{location && location.name}</p>
                 </div>
             </div>
             <div>
-                <Swiper pagination={true} className="mySwiper">
-                    <SwiperSlide><img src="/images/swiper.png" alt=""/></SwiperSlide>
-                    <SwiperSlide><img src="/images/swiper.png" alt=""/></SwiperSlide>
-                    <SwiperSlide><img src="/images/swiper.png" alt=""/></SwiperSlide>
-                    <SwiperSlide><img src="/images/swiper.png" alt=""/></SwiperSlide>
-                    <SwiperSlide><img src="/images/swiper.png" alt=""/></SwiperSlide>
-                    <SwiperSlide><img src="/images/swiper.png" alt=""/></SwiperSlide>
+                <Swiper pagination={true} className={styles.swiper}>
+                    {images && images.map((image, index) => {
+                        return <SwiperSlide key={index}><img src={image && image.image} alt=""/></SwiperSlide>
+                    })}
                 </Swiper>
             </div>
         </div>

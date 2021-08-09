@@ -8,7 +8,7 @@ import fetcher from "../adapters/getFetcher";
 import {page} from "../components/Card/state";
 import {useRecoilState} from "recoil";
 import {cards} from "../components/Card/state";
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
 
 
 const Feed = ({title}) => {
@@ -16,11 +16,16 @@ const Feed = ({title}) => {
     const [currentPage, setCurrentPage] = useRecoilState(page)
     const [cardsData, setCardsData] = useRecoilState(cards)
 
+
     const {data, error} = useSWR(uku + endpoints.feed + `?page=${currentPage}`, fetcher)
 
     useEffect(() => {
         setCardsData(data)
     }, [])
+
+
+    const ref = useRef()
+
 
     return (
         <div className={classNames("container", styles.title)}>

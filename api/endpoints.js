@@ -12,7 +12,8 @@ export const endpoints = {
     feed: "/account/profile/feed/",
     followID: "/account/follow/", //{id}
     userAvatar: "/account/avatar/",
-    userProfile: "/account/profile/"
+    userProfile: "/account/profile/",
+    publicationDetails: "/publication/"
 
 
 }

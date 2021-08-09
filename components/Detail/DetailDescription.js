@@ -2,21 +2,19 @@ import Comment from "./Comment";
 import CommentInput from "./CommentInput";
 import styles from './styles.module.scss'
 
-const DetailDescription = () => {
+const DetailDescription = ({category, description, comment}) => {
     return (
         <div className={styles.detailDesc}>
             <div className={styles.category}>
-                <p>Категория/ Подкатегория 1</p>
+                <p>{category && category.name}</p>
             </div>
             <div className={styles.desc}>
                 <h3>Описание</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid assumenda at consequatur cum dicta
-                    eius facere harum iusto minima molestiae odit officia perspiciatis, quas, recusandae sit vel, vitae
-                    voluptatum. Numquam!</p>
+                <p>{description && description}</p>
             </div>
             <div className={styles.comment}>
                 <h3>Комментарии</h3>
-                <Comment/>
+                <Comment comments={comment && comment}/>
             </div>
             <div>
                 <CommentInput/>

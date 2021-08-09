@@ -41,8 +41,9 @@
   display: flex;
   margin: 10px 0 10px 10px;
 
-  img {
-    margin-right: 10px;
+  .avatar {
+    margin: 0 10px;
+    border-radius: 50%;
   }
 }
 
@@ -58,7 +59,11 @@
 
 .swiper {
   margin-top: 10px;
-  height: 100%;
+
+  img {
+    width: 400px;
+    height: 600px;
+  }
 }
 
 .right {
@@ -92,4 +97,37 @@
 .comment {
   @include font(24px, 500, 30px);
   color: #000000;
+
+  img {
+    margin-right: 10px;
+  }
+
+  .commentsData {
+    display: flex;
+    flex-direction: column;
+
+    p {
+      @include font(14px, 400, 20px);
+    }
+  }
+
+  .comments {
+    display: flex;
+    overflow: auto;
+  }
+}
+
+.commentTime {
+  color: #A5A5A5;
+  @include font(14px, 400, 16px);
+}
+
+.answer {
+  color: #A5A5A5;
+  @include font(14px, 600, 16px);
+}
+
+.showComments {
+  color: #A5A5A5;
+  @include font(14px, 400, 16px);
 }
