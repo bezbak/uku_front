@@ -6,9 +6,38 @@
     @include font(20px, 600, 24px);
   }
 
-  overflow-x: auto;
-  margin-right: 20px;
-  width: 20%;
+  .catBody {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  li {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    cursor: pointer;
+    user-select: none;
+
+    .btn {
+      width: 24px;
+      height: 24px;
+      background: none;
+      border: none;
+      margin-left: auto;
+      transition: all .4s;
+      cursor: pointer;
+    }
+  }
+
+  img {
+    margin-right: 5px;
+    width: 24px;
+    height: 24px;
+  }
+
+  width: 25%;
 }
 
 .categoryTitle {

@@ -2,6 +2,8 @@ import Search from "../components/Search";
 
 const Searchbox = () => {
 
+
+
     return (
         <div className={'container'}>
             <Search/>

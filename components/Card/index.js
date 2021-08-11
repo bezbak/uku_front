@@ -7,7 +7,6 @@ import Link from "next/link";
 
 const Card = ({width, data}) => {
 
-
     return (
         <>
             {
