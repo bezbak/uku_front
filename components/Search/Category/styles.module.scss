@@ -5,6 +5,7 @@
   h2 {
     @include font(20px, 600, 24px);
   }
+
   overflow-x: auto;
   margin-right: 20px;
   width: 20%;
@@ -19,6 +20,9 @@
   justify-content: space-between;
   flex-direction: column;
   user-select: none;
+  padding: 5px 5px;
+
+
   ul {
     li {
       @include font(14px, 400, 16px);
@@ -30,11 +34,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  .categoryBody{
+
+  .categoryBody {
     display: flex;
     align-items: center;
   }
-  img{
+
+  img {
     margin-right: 5px;
   }
 }

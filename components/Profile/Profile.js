@@ -6,7 +6,7 @@ import getAuthorized from "../../adapters/authorizedFetch";
 import {awaitWindow} from "../../util/windowAwait";
 import useSWR from "swr";
 
-import {useEffect, useState} from "react";
+import {useEffect, useLayoutEffect, useState} from "react";
 import classNames from "classnames";
 
 
@@ -24,7 +24,6 @@ const Profile = () => {
         }).then(res => res.json().then(data => setProfile(data)))
     }, [])
 
-    console.log(profile)
 
     return (
         <div className={classNames(styles.profilePage, "container")}>
@@ -36,7 +35,7 @@ const Profile = () => {
                     <p>{profile.first_name} {profile.last_name}</p>
                 </div>
                 <div className={styles.age}>
-                    <p>Lorem ipsum dolor.</p>
+                    <p>{profile.gender} Возраст: {profile.age}</p>
                 </div>
                 <div className={styles.phone}>
                     <p>Тел: {profile.phone}</p>

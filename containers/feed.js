@@ -8,7 +8,7 @@ import fetcher from "../adapters/getFetcher";
 import {page} from "../components/Card/state";
 import {useRecoilState} from "recoil";
 import {cards} from "../components/Card/state";
-import {useEffect, useRef} from "react";
+import {useEffect} from "react";
 
 
 const Feed = ({title}) => {
@@ -22,9 +22,6 @@ const Feed = ({title}) => {
     useEffect(() => {
         setCardsData(data)
     }, [])
-
-
-    const ref = useRef()
 
 
     return (
