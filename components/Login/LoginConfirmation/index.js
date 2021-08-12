@@ -50,8 +50,7 @@ const LoginConfirmation = () => {
             body: JSON.stringify({phone: `+${phone}`, confirmation_code: code})
         }).then(response => response.json().then(data => {
             setLoading(false)
-            console.log(data)
-            if (response.status === 201 || 200) {
+            if (data.token) {
                 setLoginState(({...data, state: "register"}))
                 window && window.localStorage.setItem("token", JSON.stringify(data.token))
             }
