@@ -41,3 +41,33 @@
   display: flex;
   justify-content: space-between;
 }
+
+.list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #EEEEEE;
+  margin: 5px 0;
+  @include font(18px, 500, 22px);
+  color: $base-dark;
+
+  .regionMenuBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    background: none;
+    cursor: pointer;
+    border: none;
+    transition: all .5s;
+  }
+
+  span {
+    cursor: pointer;
+  }
+
+  button {
+    width: 10%;
+    padding: 0 20px;
+  }
+}

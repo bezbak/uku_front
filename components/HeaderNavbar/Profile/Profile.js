@@ -25,14 +25,17 @@ const Profile = ({state}) => {
         authorized:
             <Link href={"/myProfile"}>
                 <div className={styles.profile}>
-                    <img src={avatar ? avatar : "/icons/no_avatar.png"} alt=""/>
+                    <img width={"24px"} height={"24px"} style={{borderRadius: "50%"}}
+                         src={avatar ? avatar : "/icons/no_avatar.png"} alt=""/>
                     <span>Профиль</span>
                 </div>
             </Link>,
         nonAuthorized:
             <Link href={"/login"}>
-                <div>
-                    <img src="/icons/no_avatar.png" alt=""/>
+                <div className={styles.profileAvatar}>
+                    <img width={"24px"} height={"24px"}
+                         style={{borderRadius: "50%"}}
+                         src="/icons/no_avatar.png" alt=""/>
                     <p>Войти</p>
                 </div>
             </Link>

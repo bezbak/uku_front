@@ -4,38 +4,59 @@ import {registrationForm} from "../../state";
 import {modalState} from "../../../UI/modalState";
 import {useState} from "react";
 
-const RegionMenu = ({place}) => {
+
+const RegionMenu = ({items}) => {
 
     const [modal, setModal] = useRecoilState(modalState)
     const [form, setForm] = useRecoilState(registrationForm)
-    // const [active, setActive] = useState("main")
+    const [displayChildren, setDisplayChildren] = useState({})
 
-    const nestedRegions = (place && place.children || []).map(place => (
-            <RegionMenu key={place.id} place={place} type={"child"}/>
-        )
-    )
+    const listHandler = (e, name) => {
 
-    const onClickRegion = (id, name) => {
-        setForm(oldState => ({...oldState, region: {id, name}}))
+        e.preventDefault()
+        e.stopPropagation()
+
+        setDisplayChildren({
+            ...displayChildren,
+            [name]: !displayChildren[name],
+        });
+    }
+
+
+    const onClickPlace = (e, place) => {
+
+        e.preventDefault()
+        e.stopPropagation()
+
+        setForm(old => ({...old, region: {id: place.id, name: place.name}}))
         setModal(!modal)
+
     }
 
     return (
-        <ul
-            className={styles.regionMenu}
-            style={{"marginTop": "10px", marginLeft: "15px"}}>
-            <li key={place && place.id}>
-                <div
-                    className={styles.regionItem}>
-                    <span
-                        id={place.id}
-                        onClick={({target: {id}}) => onClickRegion(id, place.name)}>
-                        {place && place.name}
-                    </span>
-                    <img src="/icons/arrow.png" alt=""/>
-                </div>
-                {nestedRegions}
-            </li>
+        <ul style={{marginLeft: "10px"}}>
+            {items && items.map(item => {
+                return (
+                    <li key={item.id}>
+                        <div className={styles.list}>
+                            <span onClick={(e) => onClickPlace(e, item)}>{item.name}</span>
+                            {item.children && (
+                                item.children.length !== 0 ?
+                                    <button
+                                        className={styles.regionMenuBtn}
+                                        style={displayChildren[item.name] ?
+                                            {
+                                                background: `url(/icons/arrow.png) no-repeat`,
+                                                transform: "rotate(90deg)"
+                                            } :
+                                            {background: `url(/icons/arrow.png) no-repeat`}}
+                                        onClick={(e) => listHandler(e, item.name)}/> : null
+                            )}
+                        </div>
+                        {displayChildren[item.name] && item.children && <RegionMenu items={item.children}/>}
+                    </li>
+                );
+            })}
         </ul>
     )
 }

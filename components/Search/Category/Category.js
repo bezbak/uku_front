@@ -33,9 +33,7 @@ const Category = ({items}) => {
                                     }}
                                     style={displayChildren[item.name] ?
                                         {background: `url(/icons/categoryArrow.png)`, transform: "rotate(90deg)"} :
-                                        {background: `url(/icons/categoryArrow.png)`}}
-                                >
-                                </button>
+                                        {background: `url(/icons/categoryArrow.png)`}}/>
                             )}
                         </div>
                         {displayChildren[item.name] && item.children && <Category items={item.children}/>}

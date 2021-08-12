@@ -29,7 +29,8 @@ const Profile = () => {
         <div className={classNames(styles.profilePage, "container")}>
             <div className={styles.profileInfo}>
                 <div>
-                    <img src={profile.avatar ? profile.avatar : "/images/noAvatar.png"} alt=""/>
+                    <img width={"140px"} height={"140px"} style={{borderRadius: "50%"}}
+                         src={profile.avatar ? profile.avatar : "/images/noAvatar.png"} alt=""/>
                 </div>
                 <div className={styles.fio}>
                     <p>{profile.first_name} {profile.last_name}</p>

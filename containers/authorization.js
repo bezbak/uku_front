@@ -7,7 +7,7 @@ import Registration from "../components/Login/Registration";
 
 const Authorization = () => {
 
-    const [loginState, setLoginState] = useRecoilState(login)
+    const [loginState] = useRecoilState(login)
 
     return (
         <div className={styles.authorization}>

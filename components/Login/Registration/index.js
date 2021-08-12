@@ -14,9 +14,12 @@ import uku from "../../../adapters/HTTP_Agent";
 import {endpoints} from "../../../api/endpoints";
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import * as ru from 'date-fns/locale/ru'
+import {registerLocale} from "react-datepicker";
 
 const Registration = () => {
 
+    registerLocale("ru", ru);
     const router = useRouter()
 
 
@@ -133,13 +136,17 @@ const Registration = () => {
                         onChange={({value}) => onChangeForm("gender", value)}
                         instanceId={"uniqueid"}
                     />
-                    <DatePicker selected={form.birth_date}
-                                onChange={(date) => setForm(oldState => ({...oldState, birth_date: date}))}/>
-                    {/*<input*/}
-                    {/*    onChange={({target: {value}}) => onChangeForm("birth_date", value)}*/}
-                    {/*    placeholder={"Дата рождения (дд.мм.гггг)"}*/}
-                    {/*    type="date"/>*/}
+                    <DatePicker
+                        selected={form.birth_date}
+                        onChange={(date) => setForm(old => ({...old, birth_date: date}))}
+                        peekNextMonth
+                        showMonthDropdown
+                        locale={ru}
+                        showYearDropdown
+                        dropdownMode="select"
+                    />
                 </div>
+                {/*Region picker*/}
                 <Region/>
                 <div className={styles.check}>
                     <input
@@ -147,7 +154,7 @@ const Registration = () => {
                         type="checkbox"/>
                     <span>Принимаю правила программы лояльности</span>
                 </div>
-                <button disabled={form.checkbox}>
+                <button disabled={form.checkbox} className={styles.regButton}>
                     {loading ? <Spinner/> : "Сохранить"}
                 </button>
             </form>
