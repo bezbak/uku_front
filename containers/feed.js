@@ -66,8 +66,8 @@ const Feed = ({title}) => {
                     }[title]}
                       data={cardsData}
                 />
+                <div className={"observer"} ref={loader}/>
             </div>
-            <div className={"observer"} ref={loader}/>
         </div>
 
     )

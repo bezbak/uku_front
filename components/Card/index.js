@@ -6,7 +6,6 @@ import CardFooter from "./CardFooter/CardFooter";
 import Link from "next/link";
 
 const Card = ({width, data}) => {
-
     return (
         <>
             {

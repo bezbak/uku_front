@@ -5,6 +5,7 @@ import useSWR from "swr";
 import uku from "../../adapters/HTTP_Agent";
 import {endpoints} from "../../api/endpoints";
 import fetcher from "../../adapters/getFetcher";
+import CreatePublication from "../CreatePublication";
 
 const Search = () => {
 

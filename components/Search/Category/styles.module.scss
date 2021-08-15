@@ -16,9 +16,11 @@
     margin: 10px 0;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     width: 200px;
     cursor: pointer;
     user-select: none;
+
 
     .btn {
       width: 24px;
@@ -80,4 +82,16 @@
 
 .hide {
   display: none;
+}
+
+.selected {
+  color: #E56366;
+  &:after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background:#E56366 ;
+
+  }
 }

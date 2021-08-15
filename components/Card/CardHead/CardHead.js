@@ -18,10 +18,6 @@ const fetchFollow = id => fetch(uku + endpoints.followID + id, {
 
 const CardHead = ({user}) => {
 
-    const [currentPage, setCurrentPage] = useRecoilState(page)
-    const [cardsData, setCardsData] = useRecoilState(cards)
-
-
     const onClickFollow = id => {
         fetchFollow(id).then(response => {
             if (response.status === 401) {
