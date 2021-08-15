@@ -3,11 +3,24 @@ import uku from '/adapters/HTTP_Agent'
 import {endpoints} from "../../../api/endpoints";
 import Link from "next/link";
 import {toast} from "react-toastify";
+import {useRecoilState} from "recoil";
+import {cards, page} from "../state";
+import {useEffect, useState} from "react";
 
 
-const fetchFollow = id => fetch(uku + endpoints.followID + id).then(res => res)
+const fetchFollow = id => fetch(uku + endpoints.followID + id, {
+    method: 'GET',
+    headers: {
+        Authorization: `Token ${JSON.parse(window.localStorage.getItem("token"))}`,
+        "Content-Type": "application/json"
+    }
+})
 
 const CardHead = ({user}) => {
+
+    const [currentPage, setCurrentPage] = useRecoilState(page)
+    const [cardsData, setCardsData] = useRecoilState(cards)
+
 
     const onClickFollow = id => {
         fetchFollow(id).then(response => {
@@ -15,7 +28,7 @@ const CardHead = ({user}) => {
                 toast.error("Требуется авторизация")
             }
             if (response.status === 200) {
-                console.log("Отписан или подписан") //TODO
+                // TODO сделать логику подписки
             }
         })
     }
@@ -28,8 +41,11 @@ const CardHead = ({user}) => {
                     <span>{user.location}</span>
                 </div>
             </div>
-            {user.following && <p onClick={() => onClickFollow(user.id)}>Отписаться</p>}
-            {!user.following && <p onClick={() => onClickFollow(user.id)}>Подписаться</p>}
+            {user.following && <p
+                className={styles.unSub}
+                onClick={() => onClickFollow(user.id)}>Отписаться</p>}
+            {!user.following && <p
+                onClick={() => onClickFollow(user.id)}>Подписаться</p>}
 
         </div>
     )

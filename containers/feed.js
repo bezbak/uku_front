@@ -32,7 +32,15 @@ const Feed = ({title}) => {
     }, [])
 
     useEffect(() => {
-        fetch(uku + endpoints.feed + `?page=${currentPage}`)
+        fetch({
+            "Публикации": uku + endpoints.profileFeed,
+            "Лента": uku + endpoints.feed,
+            "Избранное": uku + endpoints.favorites
+        }[title] + `?page=${currentPage}`, {
+            headers: {
+                Authorization: title === "Лента" ? null : `Token ${JSON.parse(window.localStorage.getItem("token"))}`
+            }
+        })
             .then(res => res.json()
                 .then(data => {
                     if (data.next) {
@@ -58,8 +66,8 @@ const Feed = ({title}) => {
                     }[title]}
                       data={cardsData}
                 />
-                <div className={"observer"} ref={loader}/>
             </div>
+            <div className={"observer"} ref={loader}/>
         </div>
 
     )

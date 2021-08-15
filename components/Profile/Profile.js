@@ -2,11 +2,8 @@ import Feed from "../../containers/feed";
 import styles from './styles.module.scss'
 import uku from '/adapters/HTTP_Agent'
 import {endpoints} from "../../api/endpoints";
-import getAuthorized from "../../adapters/authorizedFetch";
-import {awaitWindow} from "../../util/windowAwait";
-import useSWR from "swr";
 
-import {useEffect, useLayoutEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import classNames from "classnames";
 
 
@@ -14,12 +11,11 @@ const Profile = () => {
 
     const [profile, setProfile] = useState("")
 
-
     useEffect(() => {
         fetch(uku + endpoints.userProfile, {
             method: "GET",
             headers: {
-                "Authorization": `Token ${JSON.parse(localStorage.getItem("token"))}`
+                Authorization: `Token ${JSON.parse(localStorage.getItem("token"))}`
             }
         }).then(res => res.json().then(data => setProfile(data)))
     }, [])

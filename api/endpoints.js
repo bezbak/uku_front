@@ -10,6 +10,8 @@ export const endpoints = {
     terms: "/system/terms-of-use/",
     version: "/system/version/",
     feed: "/account/profile/feed/",
+    favorites: "/account/favorite/",
+    profileFeed: "/account/profile/publication",
     followID: "/account/follow/", //{id}
     userAvatar: "/account/avatar/",
     userProfile: "/account/profile/",
