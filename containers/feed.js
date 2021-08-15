@@ -1,27 +1,45 @@
 import styles from './styles.module.scss'
 import classNames from "classnames";
 import Card from "../components/Card";
-import useSWR from "swr";
 import uku from '/adapters/HTTP_Agent'
 import {endpoints} from "../api/endpoints";
-import fetcher from "../adapters/getFetcher";
-import {page} from "../components/Card/state";
+import {cards, page} from "../components/Card/state";
 import {useRecoilState} from "recoil";
-import {cards} from "../components/Card/state";
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
 
 
 const Feed = ({title}) => {
-
+    const loader = useRef(null)
     const [currentPage, setCurrentPage] = useRecoilState(page)
     const [cardsData, setCardsData] = useRecoilState(cards)
-
-
-    const {data, error} = useSWR(uku + endpoints.feed + `?page=${currentPage}`, fetcher)
+    const handleObserver = entities => {
+        const target = entities[0]
+        if (target.isIntersecting) {
+            setCurrentPage(old => old + 1)
+        }
+    }
 
     useEffect(() => {
-        setCardsData(data)
+        let options = {
+            root: null,
+            rootMargin: '20px',
+            threshold: 1.0
+        }
+        const observer = new IntersectionObserver(handleObserver, options)
+        if (loader.current) {
+            observer.observe(loader.current)
+        }
     }, [])
+
+    useEffect(() => {
+        fetch(uku + endpoints.feed + `?page=${currentPage}`)
+            .then(res => res.json()
+                .then(data => {
+                    if (data.next) {
+                        setCardsData(old => ({...old, results: [...old.results, ...data.results]}))
+                    }
+                }))
+    }, [currentPage])
 
 
     return (
@@ -38,8 +56,9 @@ const Feed = ({title}) => {
                         "Объявления": "300px",
                         "Публикации": "300px"
                     }[title]}
-                      data={data}
+                      data={cardsData}
                 />
+                <div className={"observer"} ref={loader}/>
             </div>
         </div>
 

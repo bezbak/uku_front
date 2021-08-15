@@ -17,15 +17,18 @@ const CardSlider = ({images}) => {
                 }
             }
             className={styles.image}>
-            {images && images.slice(0, 5).map((item) => {
+            {images && images.slice(0, 5).map((item, index, arr) => {
+                if (arr.length === 1) {
+                    return <div
+                        key={item.id}
+                        onMouseOver={() => onMouseOverCol(item.image)}
+                        className={styles.colOne}/>
+                }
                 return <div
                     key={item.id}
                     onMouseOver={() => onMouseOverCol(item.image)}
                     className={styles.col}/>
             })}
-            {/*{images.length > 5 ? <div*/}
-            {/*    onMouseOver={() => onMouseOverCol("/images/moreImage.png")}*/}
-            {/*    className={styles.more}><span>Внутри еще {images.length - 5}</span></div> : null}*/}
         </div>
     )
 }
