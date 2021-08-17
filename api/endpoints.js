@@ -15,7 +15,6 @@ export const endpoints = {
     followID: "/account/follow/", //{id}
     userAvatar: "/account/avatar/",
     userProfile: "/account/profile/",
-    publicationDetails: "/publication/"
-
-
+    publicationDetails: "/publication/",
+    searchUser: "/account/search/",
 }

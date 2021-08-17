@@ -60,3 +60,7 @@ html {
 .swiper-pagination-bullet-active {
   background-color: #E56366 !important;
 }
+
+:global(.hide) {
+  display: none !important;
+}
