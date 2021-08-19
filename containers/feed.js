@@ -12,12 +12,17 @@ const Feed = ({title}) => {
     const loader = useRef(null)
     const [currentPage, setCurrentPage] = useRecoilState(page)
     const [cardsData, setCardsData] = useRecoilState(cards)
+
     const handleObserver = entities => {
         const target = entities[0]
         if (target.isIntersecting) {
             setCurrentPage(old => old + 1)
         }
     }
+    useEffect(() => {
+        setCardsData(old => ({...old, results: []}))
+        setCurrentPage(0)
+    }, [title])
 
     useEffect(() => {
         let options = {
@@ -38,15 +43,14 @@ const Feed = ({title}) => {
             "Избранное": uku + endpoints.favorites
         }[title] + `?page=${currentPage}`, {
             headers: {
-                Authorization: title === "Лента" ? null : `Token ${JSON.parse(window.localStorage.getItem("token"))}`
+                Authorization: title === "Лента" ? `Token ${JSON.parse(window.localStorage.getItem("token"))}` : `Token ${JSON.parse(window.localStorage.getItem("token"))}`
             }
-        })
-            .then(res => res.json()
-                .then(data => {
-                    if (data.next) {
-                        setCardsData(old => ({...old, results: [...old.results, ...data.results]}))
-                    }
-                }))
+        }).then(res => res.json()
+            .then(data => {
+                if (data.next) {
+                    setCardsData(old => ({...old, results: [...old.results, ...data.results]}))
+                }
+            }))
     }, [currentPage])
 
 
@@ -54,7 +58,7 @@ const Feed = ({title}) => {
         <div className={classNames("container", styles.title)}>
             <div className={title === "Публикации" ? styles.profilePage : null}>
                 <h1>{title}</h1>
-                {title === "Публикации" ? <button>Подписаться</button> : null}
+                {/*{title === "Публикации" ? <button>Подписаться</button> : null}*/}
             </div>
             <div className={classNames(styles.feed, "container")}>
                 <Card width={

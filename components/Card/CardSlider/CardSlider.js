@@ -2,11 +2,14 @@ import styles from './styles.module.scss'
 import {useState} from "react";
 
 const CardSlider = ({images}) => {
-
     const [currentImage, setCurrentImage] = useState(null)
 
     const onMouseOverCol = imgUrl => {
         setCurrentImage(imgUrl)
+    }
+
+    const onClickFavourite = id => {
+
     }
     return (
         <div

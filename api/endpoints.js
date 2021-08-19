@@ -11,6 +11,7 @@ export const endpoints = {
     version: "/system/version/",
     feed: "/account/profile/feed/",
     favorites: "/account/favorite/",
+    favouriteID: "/account/favorite/",
     profileFeed: "/account/profile/publication",
     followID: "/account/follow/", //{id}
     userAvatar: "/account/avatar/",

@@ -11,8 +11,8 @@ const DetailInfo = () => {
 
 
     const router = useRouter()
-    const {data, error} = useSWR(uku + endpoints.publicationDetails + `${router.query.detail}`, fetcher)
-
+    const {data, error} = useSWR(uku + endpoints.publicationDetails + router.query.detail, fetcher)
+    console.log(data)
     return (
         <div className={styles.detailInfo}>
             <div className={styles.left}>

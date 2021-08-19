@@ -5,10 +5,11 @@ export const page = atom({
     default: 0
 })
 
-export const cards = atom({
+export let cards = atom({
     key: "cards",
     default: {
         results: []
-    }
+    },
+    dangerouslyAllowMutability: true
 })
 

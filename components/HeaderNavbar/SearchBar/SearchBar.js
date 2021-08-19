@@ -2,9 +2,10 @@ import styles from './styles.module.scss'
 import {useState} from "react";
 import uku from '../../../adapters/HTTP_Agent'
 import {endpoints} from "../../../api/endpoints";
+import {useRouter} from "next/router";
 
 const SearchBar = () => {
-
+    const router = useRouter()
     const [text, setText] = useState("")
     const [data, setData] = useState([])
 
@@ -24,9 +25,12 @@ const SearchBar = () => {
                     onChange={({target: {value}}) => onChangeInput(value)}
                     type="text"
                     width={200}/>
-                <div className={text ? styles.dropDown : styles.hide}>
+                <div className={text && data.length !== 0 ? styles.dropDown : styles.hide}>
                     {data.map((item) => {
-                        return <div key={item.id} className={styles.profile}>
+                        return <div
+                            onClick={() => router.push(`/profile/${item.id}`)}
+                            key={item.id}
+                            className={styles.profile}>
                             <div>
                                 <img src={item.avatar || "/images/noAvatar.png"} alt=""/>
                             </div>

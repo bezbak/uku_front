@@ -4,4 +4,16 @@
   border-radius: 6px;
   margin: 10px 0px;
   cursor: pointer;
+  position: relative;
+}
+
+.favorite {
+  position: absolute;
+  inset: 14% 0 0 90%;
+  width: 32px;
+  height: 32px;
+}
+
+.content {
+  position: relative;
 }
