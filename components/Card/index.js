@@ -6,27 +6,22 @@ import CardFooter from "./CardFooter/CardFooter";
 import Link from "next/link";
 import uku from '/adapters/HTTP_Agent'
 import {endpoints} from "../../api/endpoints";
-import {useEffect, useState} from "react";
 import {useRecoilState} from "recoil";
 import {cards} from "./state";
+import {toast} from "react-toastify";
 
-const Card = ({width, data}) => {
+const Card = ({width}) => {
     const [recoilState, setRecoilState] = useRecoilState(cards)
-    console.log(recoilState, "recoil")
-    useEffect(() => {
-        // setRecoilState(old => ([...old, ...data.results]))
-    }, [data])
 
 
     const onClickFavourite = (id, index) => {
-        // setRecoilState(old => {
-        //     return {...old, results: [...old.results]}
-        // })
-        console.log(index)
+        if (!!!localStorage.getItem("token")) {
+            toast.error("Требуется авторизация")
+            return
+        }
         setRecoilState(old => {
             const newObj = {...old}
             newObj.results[index].is_favorite = !newObj.results[index].is_favorite
-            console.log(newObj)
             return newObj
         })
         fetch(uku + endpoints.favouriteID + id, {
@@ -35,10 +30,12 @@ const Card = ({width, data}) => {
             }
         }).then(res => {
             res.json().then(data => {
+                toast.info(data.message)
             })
+        }).catch(e => {
+            toast.error("Ошибка добавления в избранное")
         })
     }
-
     return (
         <>
             {
@@ -52,7 +49,8 @@ const Card = ({width, data}) => {
                             <div className={styles.content}>
                                 <CardSlider images={item.images}/>
                                 <CardBody categories={item.categories} description={item.description}/>
-                                <CardFooter created_at={item.created_at} comment_count={item.comment_count}/>
+                                <CardFooter created_at={item.created_at} comment_count={item.comment_count}
+                                            viewed={item.viewed}/>
                             </div>
                         </Link>
                         <img

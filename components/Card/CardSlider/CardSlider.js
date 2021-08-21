@@ -8,9 +8,6 @@ const CardSlider = ({images}) => {
         setCurrentImage(imgUrl)
     }
 
-    const onClickFavourite = id => {
-
-    }
     return (
         <div
             style={

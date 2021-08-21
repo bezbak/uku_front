@@ -13,6 +13,8 @@ const Feed = ({title}) => {
     const [currentPage, setCurrentPage] = useRecoilState(page)
     const [cardsData, setCardsData] = useRecoilState(cards)
 
+    console.log(cardsData)
+
     const handleObserver = entities => {
         const target = entities[0]
         if (target.isIntersecting) {
@@ -20,39 +22,51 @@ const Feed = ({title}) => {
         }
     }
     useEffect(() => {
+        setCurrentPage(1)
         setCardsData(old => ({...old, results: []}))
-        setCurrentPage(0)
-    }, [title])
-
-    useEffect(() => {
-        let options = {
-            root: null,
-            rootMargin: '20px',
-            threshold: 1.0
+        const token = JSON.parse(window.localStorage.getItem("token"))
+        const header = {
+            headers: {
+                Authorization: `Token ${token}`
+            }
         }
-        const observer = new IntersectionObserver(handleObserver, options)
-        if (loader.current) {
-            observer.observe(loader.current)
-        }
-    }, [])
-
-    useEffect(() => {
         fetch({
             "Публикации": uku + endpoints.profileFeed,
             "Лента": uku + endpoints.feed,
             "Избранное": uku + endpoints.favorites
-        }[title] + `?page=${currentPage}`, {
+        }[title] + `?page=${currentPage}`, token ? header : null).then(res => res.json()
+            .then(data => {
+                setCardsData(old => ({...old, results: [...old.results, ...data.results], next: data.next}))
+            }))
+        setCurrentPage(1)
+    }, [title])
+
+    useEffect(() => {
+        let options = {root: null, rootMargin: '20px', threshold: 1.0}
+        const observer = new IntersectionObserver(handleObserver, options)
+        loader.current && observer.observe(loader.current)
+    }, [])
+
+    console.log(cardsData)
+
+    useEffect(() => {
+        const token = JSON.parse(window.localStorage.getItem("token"))
+        const header = {
             headers: {
-                Authorization: title === "Лента" ? `Token ${JSON.parse(window.localStorage.getItem("token"))}` : `Token ${JSON.parse(window.localStorage.getItem("token"))}`
+                Authorization: `Token ${token}`
             }
-        }).then(res => res.json()
+        }
+        fetch({
+            "Публикации": uku + endpoints.profileFeed,
+            "Лента": uku + endpoints.feed,
+            "Избранное": uku + endpoints.favorites
+        }[title] + `?page=${currentPage}`, token ? header : null).then(res => res.json()
             .then(data => {
                 if (data.next) {
-                    setCardsData(old => ({...old, results: [...old.results, ...data.results]}))
+                    setCardsData(old => ({...old, results: [...old.results, ...data.results], next: data.next}))
                 }
             }))
     }, [currentPage])
-
 
     return (
         <div className={classNames("container", styles.title)}>
@@ -61,6 +75,7 @@ const Feed = ({title}) => {
                 {/*{title === "Публикации" ? <button>Подписаться</button> : null}*/}
             </div>
             <div className={classNames(styles.feed, "container")}>
+                {cardsData.results.length === 0 ? <div className={styles.placeholder}/> : null}
                 <Card width={
                     {
                         "Избранное": "368px",
@@ -70,8 +85,8 @@ const Feed = ({title}) => {
                     }[title]}
                       data={cardsData}
                 />
-                <div className={"observer"} ref={loader}/>
             </div>
+            <div className={"observer"} ref={loader}/>
         </div>
 
     )
