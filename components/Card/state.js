@@ -2,13 +2,14 @@ import {atom} from "recoil";
 
 export const page = atom({
     key: 'page',
-    default: 0
+    default: 1
 })
 
 export let cards = atom({
     key: "cards",
     default: {
-        results: []
+        results: [],
+        next: true
     },
     dangerouslyAllowMutability: true
 })

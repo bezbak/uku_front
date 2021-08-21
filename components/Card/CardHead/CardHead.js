@@ -3,8 +3,8 @@ import uku from '/adapters/HTTP_Agent'
 import {endpoints} from "../../../api/endpoints";
 import {toast} from "react-toastify";
 import {useEffect, useState} from "react";
-import {login} from "../../Login/state";
-
+import {useRecoilState} from "recoil";
+import {cards} from "../state";
 
 const fetchFollow = id => fetch(uku + endpoints.followID + id, {
     method: 'GET',
@@ -15,25 +15,40 @@ const fetchFollow = id => fetch(uku + endpoints.followID + id, {
 })
 
 const CardHead = ({user}) => {
-    const [follow, setFollow] = useState(false)
-    useEffect(() => {
-        setFollow(user.following)
-    }, [user.following])
+    const [recoilState, setRecoilState] = useRecoilState(cards)
+    const [userState, setUserState] = useState({
+        avatar: "",
+        first_name: "",
+        following: null,
+        id: null,
+        last_name: "",
+        location: ""
+    })
 
-    const onClickFollow = id => {
+    useEffect(() => {
+        setUserState(user)
+    }, [user])
+
+
+    const onClickFollow = (id) => {
         fetchFollow(id).then(response => {
             if (response.status === 401) {
                 toast.error("Требуется авторизация")
                 return
             }
             response.json().then(data => {
-                if (data.message === "Вы подписались") {
-                    setFollow(true)
-                }
-                if (data.message === "Вы отписались") {
-                    setFollow(false)
-                }
-
+                setRecoilState(old => {
+                    let newObj = {...old}
+                    newObj.results = newObj.results.map(item => {
+                        if (item.user.id === id) {
+                            return {...item, user: {...item.user, following: !item.user.following}}
+                        }
+                        return item
+                    })
+                    return newObj
+                })
+            }).catch(e => {
+                toast.error("Ошибка сервера")
             })
         })
     }
@@ -49,8 +64,8 @@ const CardHead = ({user}) => {
                 </div>
             </div>
             <p
-                className={follow ? "" : styles.unSub}
-                onClick={() => onClickFollow(user.id)}>{follow ? "Подписаться" : "Отписаться"}</p>
+                className={!userState?.following ? "" : styles.unSub}
+                onClick={() => onClickFollow(user.id)}>{!userState?.following ? "Подписаться" : "Вы подписаны"}</p>
 
         </div>
     )
