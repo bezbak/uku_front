@@ -1,6 +1,7 @@
 import styles from "../CardBody/styles.module.scss";
 
-const CardFooter = ({created_at, comment_count}) => {
+const CardFooter = ({created_at, comment_count, viewed}) => {
+
     return (
         <div>
             <div className={styles.comments}>
@@ -10,8 +11,9 @@ const CardFooter = ({created_at, comment_count}) => {
                 <div>
                     {created_at}
                 </div>
-                <div>
+                <div className={styles.views}>
                     <img src="/icons/eye.png" alt=""/>
+                    <span>{viewed}</span>
                 </div>
             </div>
         </div>
