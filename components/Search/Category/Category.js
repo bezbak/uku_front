@@ -11,15 +11,19 @@ const Category = ({items}) => {
     const [displayChildren, setDisplayChildren] = useState({})
     const [create, setCreate] = useRecoilState(createWindow)
 
-
     const onClickHandler = (item, e) => {
         e.preventDefault()
         e.stopPropagation()
         console.log(displayChildren)
         setDisplayChildren({
-            ...displayChildren,
             [item.name]: !displayChildren[item.name],
         });
+        console.log(displayChildren)
+        if (!displayChildren[item.name]) {
+            setCreate(old => ({...old, bottomPanel: true}))
+        } else {
+            setCreate(old => ({...old, bottomPanel: false}))
+        }
     }
 
     const selectedClass = (item) => {
@@ -28,6 +32,14 @@ const Category = ({items}) => {
         })
     }
 
+    const arrowStyleActive = {
+        background: `url(/icons/categoryArrow.png)`,
+        transform: "rotate(90deg)",
+    }
+
+    const arrowStyleDefault = {
+        background: `url(/icons/categoryArrow.png)`
+    }
     return (
         <ul style={{marginLeft: "10px"}} className={styles.category}>
             {items && items.map(item => {
@@ -41,12 +53,8 @@ const Category = ({items}) => {
                             {item.children && (
                                 <button
                                     className={styles.btn}
-                                    style={displayChildren[item.name] ?
-                                        {
-                                            background: `url(/icons/categoryArrow.png)`,
-                                            transform: "rotate(90deg)",
-                                        } :
-                                        {background: `url(/icons/categoryArrow.png)`}}
+                                    style={displayChildren[item.name] ? arrowStyleActive : arrowStyleDefault
+                                    }
                                 />
                             )}
                         </div>

@@ -6,7 +6,7 @@ import CreatePublication from "../../CreatePublication";
 const Publications = () => {
     return (
         <div className={styles.publications}>
-            <CreatePublication/>
+            <CreatePublication edit={false}/>
             <Feed title={"Объявления"}/>
         </div>
     )

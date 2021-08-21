@@ -2,6 +2,7 @@
 @import "styles/modules/variables/colors";
 
 .category {
+  margin-right: 20px;
   h2 {
     @include font(20px, 600, 24px);
   }
@@ -14,10 +15,6 @@
 
   li {
     margin: 10px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 200px;
     cursor: pointer;
     user-select: none;
 
@@ -39,7 +36,7 @@
     height: 24px;
   }
 
-  width: 25%;
+  width: inherit;
 }
 
 .categoryTitle {
@@ -86,12 +83,13 @@
 
 .selected {
   color: #E56366;
+
   &:after {
     content: "";
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background:#E56366 ;
+    background: #E56366;
 
   }
 }
