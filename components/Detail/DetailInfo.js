@@ -7,12 +7,8 @@ import uku from "../../adapters/HTTP_Agent";
 import {endpoints} from "../../api/endpoints";
 import fetcher from "../../adapters/getFetcher";
 
-const DetailInfo = () => {
+const DetailInfo = (data) => {
 
-
-    const router = useRouter()
-    const {data, error} = useSWR(uku + endpoints.publicationDetails + router.query.detail, fetcher)
-    console.log(data)
     return (
         <div className={styles.detailInfo}>
             <div className={styles.left}>
@@ -22,11 +18,8 @@ const DetailInfo = () => {
                     location={data && data.location}/>
             </div>
             <div className={styles.right}>
-                <DetailDescription
-                    category={data && data.category}
-                    description={data && data.description}
-                    comment={data && data.comment}
-                />
+                <DetailDescription {...data}/>
+
             </div>
         </div>
     )

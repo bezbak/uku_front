@@ -9,15 +9,11 @@ SwiperCore.use([Pagination]);
 
 
 const SwiperContainer = ({user, images, location}) => {
-
-
     return (
         <div>
             <div className={styles.leftHead}>
                 <img
                     className={styles.avatar}
-                    width={'36px'}
-                    height={"36px"}
                     src={user && user.avatar}
                     alt=""/>
                 <div>

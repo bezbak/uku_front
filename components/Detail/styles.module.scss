@@ -17,7 +17,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    margin-left: 0;
     img {
       margin: 0 10px 0 0;
     }
@@ -25,15 +25,16 @@
 }
 
 .detailInfo {
-  height: 700px;
+  min-height: 400px;
   border: 1px solid #DFDFDF;
+  border-radius: 6px;
   margin: 30px 0;
   display: flex;
-
   .left {
-    width: 50%;
+    width: 54%;
     display: flex;
     flex-direction: column;
+    border-right: 1px solid #DFDFDF;
   }
 }
 
@@ -59,42 +60,56 @@
 
 .swiper {
   margin-top: 10px;
-
+  height: 660px;
   img {
-    width: 400px;
-    height: 600px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
+    padding: 0;
   }
 }
 
 .right {
-  margin-left: 25px;
+  width: 46%;
+  padding: 16px 6px 0 0;
 }
 
 .category {
   p {
     color: #818181;
     @include font(14px, 400, 16px);
-    margin: 10px 0;
   }
 }
-
-.detailDesc {
-
+.detailDesc{
+  height: 635px;
+  overflow-x: auto;
+  margin-left: 24px;
 }
-
+.detailDesc::-webkit-scrollbar {
+  width: 6px; /* ширина для вертикального скролла */
+  height: 1px; /* высота для горизонтального скролла */
+  background-color: #fff;
+}
+.detailDesc::-webkit-scrollbar-thumb {
+  background-color: #A6A6A6;
+  border-radius: 6px;
+}
 .desc {
+  margin-top: 24px;
   h3 {
     @include font(24px, 500, 30px);
     color: #121213;
   }
-
   p {
     @include font(16px, 400, 24px);
     color: #3E3E3E;
+    margin-top: 12px;
   }
 }
 
 .comment {
+  margin-top: 12px;
   @include font(24px, 500, 30px);
   color: #000000;
 
@@ -105,29 +120,114 @@
   .commentsData {
     display: flex;
     flex-direction: column;
-
+    span{
+      font-weight: 700;
+      margin-right: 5px;
+    }
     p {
       @include font(14px, 400, 20px);
+    }
+    .imagesInComment{
+      width: 240px;
+      height: 180px;
+      border-right: 6px;
+      margin: 4px 0;
+      padding: 0;
     }
   }
 
   .comments {
     display: flex;
     overflow: auto;
+    margin-top: 10px;
+  }
+  .info_times{
+    margin-top: 6px;
   }
 }
-
 .commentTime {
   color: #A5A5A5;
+  margin: 0;
+  padding: 0;
   @include font(14px, 400, 16px);
 }
 
 .answer {
   color: #A5A5A5;
   @include font(14px, 600, 16px);
+  margin-left: 32px;
+  cursor: pointer;
 }
 
 .showComments {
+  cursor: pointer;
+  margin-top: 5px;
   color: #A5A5A5;
   @include font(14px, 400, 16px);
+}
+.social_block{
+  display: flex;
+  .social_block_item{
+    margin-left: 12px;
+    cursor: pointer;
+  }
+}
+.sendComment{
+  border-top: 1px solid #E9E9E9;
+  .sendCommentInner{
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    width: 100%;
+    position: relative;
+    .fileHover{
+      cursor: pointer;
+      img{
+        margin-right: 14px;
+        width: 22px;
+        height: 19px;
+      }
+      input{
+        position: absolute;
+        bottom: 15px;
+        left: 25px;
+        width: 23px;
+        opacity: 0;
+      }
+    }
+    form{
+      display: flex;
+      align-items: center;
+      input{
+        border: none;
+        width: 300px;
+        outline: none;
+      }
+      input::placeholder{
+        color: #C5C5C5;
+      }
+      .btn{
+        background-color: #E56366;
+        margin-left: 40px;
+        border: none;
+        border-radius: 6px;
+        color: #fff;
+        padding: 11px 24px;
+        opacity: 0.5;
+      }
+      .btnActive{
+        background-color: #E56366;
+        margin-left: 40px;
+        border: none;
+        border-radius: 6px;
+        color: #fff;
+        padding: 11px 24px;
+      }
+    }
+  }
+}
+.avatar{
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
 }
