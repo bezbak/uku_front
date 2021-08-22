@@ -16,6 +16,7 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import * as ru from 'date-fns/locale/ru'
 import {registerLocale} from "react-datepicker";
+import {modalState} from "../../UI/modalState";
 
 const Registration = () => {
 
@@ -27,6 +28,7 @@ const Registration = () => {
     const [loginState, setLoginState] = useRecoilState(login)
     const [form, setForm] = useRecoilState(registrationForm)
     const [phone] = useRecoilState(phoneNumber)
+    const [modal, setModal] = useRecoilState(modalState)
 
     if (loginState.is_profile_completed) router.push("/")
 
@@ -147,7 +149,10 @@ const Registration = () => {
                     />
                 </div>
                 {/*Region picker*/}
-                <Region/>
+                <Region
+                    modal={modal}
+                    setModal={setModal}
+                    form={form}/>
                 <div className={styles.check}>
                     <input
                         onChange={({target: {checked}}) => onChangeForm("checkbox", !checked)}

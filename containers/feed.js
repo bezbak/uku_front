@@ -13,8 +13,6 @@ const Feed = ({title}) => {
     const [currentPage, setCurrentPage] = useRecoilState(page)
     const [cardsData, setCardsData] = useRecoilState(cards)
 
-    console.log(cardsData)
-
     const handleObserver = entities => {
         const target = entities[0]
         if (target.isIntersecting) {
@@ -37,7 +35,9 @@ const Feed = ({title}) => {
             "Объявления": uku + endpoints.publicationSearch
         }[title] + `?page=${currentPage}`, token ? header : null).then(res => res.json()
             .then(data => {
-                setCardsData(old => ({...old, results: [...old.results, ...data.results], next: data.next}))
+                if (data.next) {
+                    setCardsData(old => ({...old, results: [...old.results, ...data.results], next: data.next}))
+                }
             }))
         setCurrentPage(1)
     }, [title])

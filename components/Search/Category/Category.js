@@ -14,11 +14,11 @@ const Category = ({items}) => {
     const onClickHandler = (item, e) => {
         e.preventDefault()
         e.stopPropagation()
-        console.log(displayChildren)
+        // setCreate(old => ({...old, category: item}))
         setDisplayChildren({
             [item.name]: !displayChildren[item.name],
         });
-        console.log(displayChildren)
+        setCreate(old => ({...old, category: item.id}))
         if (!displayChildren[item.name]) {
             setCreate(old => ({...old, bottomPanel: true}))
         } else {

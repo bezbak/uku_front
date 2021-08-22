@@ -4,9 +4,19 @@ import styles from './styles.module.scss'
 import SearchPublication from "./SearchPublications/SearchPublication";
 import Favourite from "./Favourite/Favourite";
 import Profile from "./Profile/Profile";
+import Location from "./Location";
+import {useRouter} from "next/router";
+import {useEffect} from "react";
+import {getProfileInfo} from "../Profile/getProfileInfo";
 
 const HeaderNavbar = () => {
 
+
+    const router = useRouter()
+    useEffect(async () => {
+        const data = await getProfileInfo()
+        console.log(data)
+    }, [])
 
     return (
         <div className={styles.navbar}>
@@ -16,6 +26,7 @@ const HeaderNavbar = () => {
                     <SearchBar/>
                 </div>
                 <div className={styles.navbarRight}>
+                    {router.route === "/search" ? < Location/> : null}
                     <SearchPublication/>
                     <Favourite
                         state={typeof window !== "undefined" && !!window.localStorage.getItem("token") ? "authorized" : "nonAuthorized"}/>

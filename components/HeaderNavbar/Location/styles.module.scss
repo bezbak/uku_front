@@ -1,0 +1,7 @@
+@import "/styles/modules/mixins/font";
+
+.location {
+  span {
+    @include font(14px, 500, 18px);
+  }
+}
