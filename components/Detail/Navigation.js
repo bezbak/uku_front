@@ -1,13 +1,16 @@
 import styles from './styles.module.scss'
 import {useRouter} from "next/router";
+import {useRecoilState} from "recoil";
+import {commentState, modalDelete} from "./state";
 
-
-const Navigation = (data) => {
-
+const Navigation = () => {
+    const [recoilState, setRecoilState] = useRecoilState(commentState)
+    const [modalState, setModalState] = useRecoilState(modalDelete)
+    const deleteItemHandler = (flag) => {
+        setModalState(old=> ({...old, flag: flag}))
+    }
     const router = useRouter()
-
     return (
-
         <div className={styles.navigation}>
             <div>
                 <button
@@ -15,11 +18,11 @@ const Navigation = (data) => {
                     className={styles.navBack}><img src="/icons/leftArrow.png" alt=""/>Назад
                 </button>
             </div>
-            {data.is_owner
+            {recoilState.is_owner
             ?
                 <div>
                     <button>Редактировать</button>
-                    <button>Удалить</button>
+                    <button onClick={() => deleteItemHandler(true)}>Удалить</button>
                 </div>
              :
                 <div className={styles.social_block}>
@@ -46,3 +49,4 @@ const Navigation = (data) => {
 }
 
 export default Navigation;
+

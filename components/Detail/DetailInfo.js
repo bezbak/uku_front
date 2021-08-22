@@ -7,19 +7,14 @@ import uku from "../../adapters/HTTP_Agent";
 import {endpoints} from "../../api/endpoints";
 import fetcher from "../../adapters/getFetcher";
 
-const DetailInfo = (data) => {
-
+const DetailInfo = () => {
     return (
         <div className={styles.detailInfo}>
             <div className={styles.left}>
-                <SwiperContainer
-                    user={data && data.user}
-                    images={data && data.images}
-                    location={data && data.location}/>
+                <SwiperContainer/>
             </div>
             <div className={styles.right}>
-                <DetailDescription {...data}/>
-
+                <DetailDescription/>
             </div>
         </div>
     )

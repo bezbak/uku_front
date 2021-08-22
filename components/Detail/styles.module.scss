@@ -126,6 +126,10 @@
     }
     p {
       @include font(14px, 400, 20px);
+      a{
+        text-decoration: none;
+        color: #000000;
+      }
     }
     .imagesInComment{
       width: 240px;
@@ -142,7 +146,7 @@
     margin-top: 10px;
   }
   .info_times{
-    margin-top: 6px;
+    margin-top: 0px;
   }
 }
 .commentTime {
