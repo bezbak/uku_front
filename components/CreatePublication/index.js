@@ -7,11 +7,18 @@ import {useEffect, useState} from "react";
 const CreatePublication = ({edit}) => {
 
     const [create, setCreate] = useRecoilState(createWindow)
+    const [images, setImages] = useState({
+        preview: "",
+        images: ""
+    })
     const [form, setForm] = useState({
-        text: "",
-        image: "",
+        category: null,
+        location: "",
+        description: "",
 
     })
+
+    console.log(images)
 
     useEffect(() => {
         if (create.fullWindow) {
@@ -26,9 +33,15 @@ const CreatePublication = ({edit}) => {
         "hide": !create.fullWindow
     })
 
-    const inputFileHandler = image => {
-        console.log(image)
+    const inputFileHandler = e => {
+        console.log(URL.createObjectURL(e.target.files[0]))
+        setImages(old => ({...old, preview: URL.createObjectURL(e.target.files[0])}))
     }
+
+    const fileInputClass = cs({
+        [styles.addImage]: !images.preview,
+        "hide": images.preview
+    })
 
     const addMoreImage = cs({
         [styles.addMoreImage]: true,
@@ -36,7 +49,8 @@ const CreatePublication = ({edit}) => {
     })
 
     return (
-        <>
+
+        <div>
             <div className={createClass}>
                 <div className={styles.top}>
                     <div
@@ -45,18 +59,24 @@ const CreatePublication = ({edit}) => {
                     <h3>Просмотр</h3>
                 </div>
                 <div className={styles.image}>
+                    <img src={images.preview} alt=""/>
                 </div>
                 <div className={styles.images}>
                     <div className={addMoreImage}/>
                 </div>
             </div>
             <div className={create.bottomPanel ? styles.createPanel : "hide"}>
-                <label htmlFor="upload-photo" className={styles.addImage}>
-                    <img src="/icons/addImage.png" alt=""/>
-                    <input onChange={e => inputFileHandler(e)} type="file" id="upload-photo"/>
-                </label>
+                <div>
+                    <label htmlFor="upload-photo" className={styles.addImage}>
+                        <img src="/icons/addImage.png" alt=""/>
+                        <input
+                            style={{display: "none"}}
+                            onChange={e => inputFileHandler(e)} type="file" id="upload-photo"/>
+                    </label>
+                </div>
                 <textarea
                     onFocus={() => setCreate(old => ({...old, fullWindow: true}))}
+                    onChange={({target: {value}}) => setForm(value)}
                     placeholder={"Введите описание объявления"}
                     name="desc"
                     id="desc"
@@ -64,8 +84,7 @@ const CreatePublication = ({edit}) => {
                     rows="3"/>
                 <button className={styles.publishBtn}>Опубликовать</button>
             </div>
-        </>
-
+        </div>
     )
 }
 

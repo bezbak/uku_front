@@ -1,11 +1,18 @@
 @import "../../styles/modules/mixins/font";
 @import "../../styles/modules/mixins/button";
 
+
+.box {
+  position: fixed;
+  width: 65%;
+  z-index: 10;
+  height: 70%;
+}
+
 .create {
-  position: fixed !important;
   height: 70vh;
-  width: 52%;
   background: #ECECEC;
+  width: inherit;
   overflow: auto;
   z-index: 2;
 
@@ -29,7 +36,17 @@
 .image {
   margin-top: 25px;
   height: 65%;
+  z-index: 10;
+  width: 100%;
   background: #ECECEC;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 60%;
+    height: 80%;
+  }
 }
 
 .images {
@@ -50,10 +67,10 @@
   z-index: 3;
   background: #E7E7E7;
   bottom: 0;
-  width: 50%;
   display: flex;
   padding: 20px 20px;
   align-items: center;
+  width: inherit;
   justify-content: space-between;
 
   textarea {
