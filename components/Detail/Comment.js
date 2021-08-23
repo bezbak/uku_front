@@ -1,16 +1,25 @@
 import styles from './styles.module.scss'
 import {useState} from "react";
+import {useRecoilState} from "recoil";
+import {commentState} from "./state";
+import Link from "next/link";
 
-const Comment = ({comments,handleSelectedOptions,showMoreHandler,selectedOption}) => {
+const Comment = ({handleSelectedOptions,showMoreHandler,selectedOption}) => {
+    const [recoilState, setRecoilState] = useRecoilState(commentState)
+    console.log(recoilState)
     return (
         <>
-            {comments && comments.map(item => {
+            {recoilState.comments && recoilState.comments.map(item => {
                 return(
                     <div className={styles.comments} key={item.id}>
                         <img src={`http://api.uku.kg/` + item.author.avatar} className={styles.avatar} alt="#"/>
                         <div className={styles.commentsData}>
                             <p>
-                                <span>{item.author.first_name}  {item.author.last_name}</span>
+                                <Link href={`/profile/${item.author.id}`}>
+                                    <a>
+                                        <span>{item.author.first_name}  {item.author.last_name}</span>
+                                    </a>
+                                </Link>
                                 {item.text}
                             </p>
                             {item.image !== null ? <img src={`http://api.uku.kg/` + item.image} alt="#" className={styles.imagesInComment}/> : null}
@@ -27,22 +36,24 @@ const Comment = ({comments,handleSelectedOptions,showMoreHandler,selectedOption}
                                     console.log(item,'pod')
                                     return(
                                         <div className={styles.comments} key={item.id}>
-                                            <img src={`http://api.uku.kg/` + item.reply_to_user.avatar} className={styles.avatar} alt="#" width={'10px'}/>
+                                            <img src={`http://api.uku.kg/` + item.author.avatar} className={styles.avatar} alt="#" width={'10px'}/>
                                             <div className={styles.commentsData}>
                                                 <p>
-                                                    <span>{item.reply_to_user.first_name}  {item.reply_to_user.last_name}</span>
+                                                    <Link href={`/profile/${item.author.id}`}>
+                                                        <a>
+                                                            <span>{item.author.first_name}  {item.author.last_name}</span>
+                                                        </a>
+                                                    </Link>
                                                     {item.text}
                                                 </p>
                                                 {item.image !== null ? <img src="/images/Rectangle 44.jpg" alt="#" className={styles.imagesInComment}/> : null}
                                                 <div className={styles.info_times}>
                                                     <span className={styles.commentTime}>{item.created_at}</span>
-                                                    {/*
                                                      <span
                                                         className={styles.answer}
                                                         onClick={()=>handleSelectedOptions("answer",item.id, (`@${item.reply_to_user.first_name}_${item.reply_to_user.last_name}`))}>
                                                             Ответить
                                                     </span>
-                                                    */}
                                                 </div>
                                             </div>
                                         </div>

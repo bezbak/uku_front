@@ -2,33 +2,25 @@ import Navigation from "./Navigation";
 import DetailInfo from "./DetailInfo";
 import styles from './styles.module.scss'
 import classNames from "classnames";
-import uku from "../../adapters/HTTP_Agent";
-import {endpoints} from "../../api/endpoints";
 import {useEffect, useState} from "react";
+import {getComments} from "./request";
+import {useRecoilState} from "recoil";
+import {commentState} from "./state";
+import ModalDelete from "../ModalDelete/ModalDelete";
 
 const Detail = () => {
-    let path
-    const [data, setData] = useState([])
-    useEffect(() => {
-        console.log(window.location)
-        path = window.location.href.split('/').pop()
-        console.log(path, 'path')
-        fetch(uku + endpoints.publicationDetails + path,
-            {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Token ${JSON.parse(localStorage.getItem("token"))}`,
-                    },
-                }
-            ).then(res => res.json().then(data => setData(data)))
-    },[])
+    const [recoilState, setRecoilState] = useRecoilState(commentState)
+    useEffect(async () => {
+        const detail = await getComments()
+        setRecoilState(detail)
+        },[])
     return (
         <div className={classNames("container", styles.detail)}>
-            {data &&
+            {recoilState &&
                 <>
-                    <Navigation {...data}/>
-                    <DetailInfo {...data}/>
+                    <Navigation {...recoilState}/>
+                    <DetailInfo {...recoilState}/>
+                    <ModalDelete/>
                 </>
             }
         </div>
