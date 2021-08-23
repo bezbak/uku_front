@@ -4,11 +4,15 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import SwiperCore, {
     Pagination
 } from 'swiper/core';
+import {useRecoilState} from "recoil";
+import {commentState} from "./state";
 
 SwiperCore.use([Pagination]);
 
 
-const SwiperContainer = ({user, images, location}) => {
+const SwiperContainer = () => {
+    const [recoilState, setRecoilState] = useRecoilState(commentState)
+    const {user, images,location} = recoilState
     return (
         <div>
             <div className={styles.leftHead}>
