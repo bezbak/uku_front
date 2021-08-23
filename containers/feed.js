@@ -13,8 +13,6 @@ const Feed = ({title}) => {
     const [currentPage, setCurrentPage] = useRecoilState(page)
     const [cardsData, setCardsData] = useRecoilState(cards)
 
-    console.log(cardsData)
-
     const handleObserver = entities => {
         const target = entities[0]
         if (target.isIntersecting) {
@@ -33,10 +31,13 @@ const Feed = ({title}) => {
         fetch({
             "Публикации": uku + endpoints.profileFeed,
             "Лента": uku + endpoints.feed,
-            "Избранное": uku + endpoints.favorites
+            "Избранное": uku + endpoints.favorites,
+            "Объявления": uku + endpoints.publicationSearch
         }[title] + `?page=${currentPage}`, token ? header : null).then(res => res.json()
             .then(data => {
-                setCardsData(old => ({...old, results: [...old.results, ...data.results], next: data.next}))
+                if (data.next) {
+                    setCardsData(old => ({...old, results: [...old.results, ...data.results], next: data.next}))
+                }
             }))
         setCurrentPage(1)
     }, [title])
@@ -47,7 +48,6 @@ const Feed = ({title}) => {
         loader.current && observer.observe(loader.current)
     }, [])
 
-    console.log(cardsData)
 
     useEffect(() => {
         const token = JSON.parse(window.localStorage.getItem("token"))
@@ -57,9 +57,10 @@ const Feed = ({title}) => {
             }
         }
         fetch({
-            "Публикации": uku + endpoints.profileFeed,
+            "Объявления": uku + endpoints.publicationSearch,
             "Лента": uku + endpoints.feed,
-            "Избранное": uku + endpoints.favorites
+            "Избранное": uku + endpoints.favorites,
+            "Публикации": uku + endpoints.profileFeed
         }[title] + `?page=${currentPage}`, token ? header : null).then(res => res.json()
             .then(data => {
                 if (data.next) {

@@ -5,11 +5,8 @@ import {useRecoilState} from "recoil";
 import {registrationForm} from "../../state";
 
 
-const Region = () => {
+const Region = ({form, modal, setModal}) => {
 
-
-    const [form, setForm] = useRecoilState(registrationForm)
-    const [modal, setModal] = useRecoilState(modalState)
 
     return <div className={styles.region}>
         <input

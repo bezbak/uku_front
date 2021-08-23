@@ -1,0 +1,19 @@
+@import "styles/modules/mixins/modal";
+@import "styles/modules/mixins/font";
+
+.modal {
+  @include modal();
+}
+
+.modalContent {
+  @include modalContent();
+
+  span {
+    @include font(16px, 500, 20px);
+  }
+
+  .close {
+    margin-left: 80%;
+    cursor: pointer;
+  }
+}

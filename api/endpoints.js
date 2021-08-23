@@ -12,10 +12,11 @@ export const endpoints = {
     feed: "/account/profile/feed/",
     favorites: "/account/favorite/",
     favouriteID: "/account/favorite/",
-    profileFeed: "/account/profile/publication",
+    profileFeed: "/publication/search",
     followID: "/account/follow/", //{id}
     userAvatar: "/account/avatar/",
     userProfile: "/account/profile/",
     publicationDetails: "/publication/",
     searchUser: "/account/search/",
+    publicationSearch: "/publication/search/"
 }

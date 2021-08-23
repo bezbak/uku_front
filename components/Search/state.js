@@ -10,3 +10,8 @@ export const selectedSubCategory = atom({
     default: ""
 })
 
+export const modalAtom = atom({
+    key: "modalAtom",
+    default: false
+})
+

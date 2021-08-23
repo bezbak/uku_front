@@ -53,6 +53,7 @@ const LoginConfirmation = () => {
             if (data.token) {
                 setLoginState(({...data, state: "register"}))
                 window && window.localStorage.setItem("token", JSON.stringify(data.token))
+                window && window.localStorage.setItem("authData", JSON.stringify((data)))
             }
             if (response.status >= 400) toast.error("Неверный код")
         })).catch(err => {

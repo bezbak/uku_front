@@ -2,6 +2,10 @@ import {atom} from "recoil";
 
 const createWindow = atom({
     key: "create",
-    default: null
+    default: {
+        bottomPanel: false,
+        fullWindow: false,
+        category: null
+    }
 })
 export default createWindow
