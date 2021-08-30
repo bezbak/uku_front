@@ -1,15 +1,17 @@
 import {Header} from "../containers/header";
-import Feed from "../containers/feed";
 import Footer from "../containers/footer";
+import FavoriteFeed from "../containers/favoriteFeed";
 
 const Favourite = () => {
-    return (
-        <div>
-            <Header/>
-            <Feed title={"Избранное"}/>
-            <Footer/>
-        </div>
-    )
+
+
+  return (
+    <div>
+      <Header/>
+      <FavoriteFeed/>
+      <Footer/>
+    </div>
+  )
 }
 
 export default Favourite;

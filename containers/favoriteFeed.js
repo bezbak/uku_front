@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
 import Card from "../components/Card";
 import styles from './styles.module.scss'
-import {getCards} from "../util/getCards";
+import {getFavoriteCards} from "../util/getFavoriteCards";
 import {cb, options} from "../util/interSectionObserver";
 
-const Mainfeed = () => {
+const FavoriteFeed = () => {
   const [data, setData] = useState({
     results: [],
     currentPage: 1,
@@ -15,13 +15,8 @@ const Mainfeed = () => {
   const ref = useRef(null)
 
   useEffect(() => {
-    getCards(data.currentPage).then(data => {
-      if (data.next) {
-        setData(old => ({
-          ...old,
-          results: old.results.concat(data.results),
-        }))
-      }
+    getFavoriteCards(data.currentPage).then(data => {
+      console.log(data)
     })
   }, [data.currentPage])
 
@@ -34,19 +29,17 @@ const Mainfeed = () => {
 
   }, [])
 
+
   return (
-    <div className={"container"}>
-      <h2>Лента</h2>
-      {data.results.length ? null : <div className={styles.placeholder}/>}
+    <div className="container">
+      <h2>Избранное</h2>
+      <div className={styles.placeholder}/>
       <div className={styles.feed}>
-        <Card
-          width={"368px"}
-          cards={data.results}
-        />
+        <Card width={"368px"} cards={data.results}/>
       </div>
       <div ref={ref}/>
     </div>
   )
 }
 
-export default Mainfeed;
+export default FavoriteFeed;

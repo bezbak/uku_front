@@ -7,7 +7,7 @@ import Link from "next/link";
 
 
 const Card = ({cards, width}) => {
-
+  if (!cards) return <div></div>
 
   return (
     <>

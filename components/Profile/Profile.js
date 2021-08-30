@@ -9,7 +9,6 @@ import {useRouter} from "next/router";
 
 const Profile = () => {
     const router = useRouter()
-    console.log(router)
 
     const [profile, setProfile] = useState("")
 
