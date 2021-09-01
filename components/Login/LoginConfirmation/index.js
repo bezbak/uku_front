@@ -4,7 +4,7 @@ import {login} from "../state";
 import {requestLoading} from "../state";
 import {useRecoilState} from "recoil";
 import {useEffect, useState} from "react";
-import uku from "../../../adapters/HTTP_Agent";
+import uku from "../../../util/HTTP_Agent";
 import {endpoints} from "../../../api/endpoints";
 import {toast} from "react-toastify";
 import Spinner from "../../Spinner/Spinner";

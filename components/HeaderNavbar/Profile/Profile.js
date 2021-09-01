@@ -1,5 +1,5 @@
 import Link from "next/link";
-import uku from '/adapters/HTTP_Agent'
+import uku from '/util/HTTP_Agent'
 import {endpoints} from "../../../api/endpoints";
 import styles from './styles.module.scss'
 import {useEffect, useState} from "react";

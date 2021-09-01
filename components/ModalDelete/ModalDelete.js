@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './ModalDelete.module.scss'
 import {useRecoilState} from "recoil";
 import {modalDelete} from "../Detail/state";
-import uku from "../../adapters/HTTP_Agent";
+import uku from "../../util/HTTP_Agent";
 import {toast} from "react-toastify";
 import {useRouter} from "next/router";
 

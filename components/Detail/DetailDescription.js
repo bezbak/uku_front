@@ -1,7 +1,7 @@
 import Comment from "./Comment";
 import styles from './styles.module.scss'
 import {createRef, Fragment, useState} from "react";
-import uku from "../../adapters/HTTP_Agent";
+import uku from "../../util/HTTP_Agent";
 import {toast} from "react-toastify";
 import classNames from "classnames";
 import {getComments} from "./request";

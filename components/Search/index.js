@@ -2,9 +2,9 @@ import Category from "./Category/Category";
 import Publications from "./Publications/Publications";
 import styles from './styles.module.scss'
 import useSWR from "swr";
-import uku from "../../adapters/HTTP_Agent";
+import uku from "../../util/HTTP_Agent";
 import {endpoints} from "../../api/endpoints";
-import fetcher from "../../adapters/getFetcher";
+import fetcher from "../../util/getFetcher";
 import Modal from "../UI/Modal/Modal";
 import {useState} from "react";
 import {useRecoilState} from "recoil";

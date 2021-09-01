@@ -3,9 +3,9 @@ import DetailDescription from "./DetailDescription";
 import SwiperContainer from "./Swiper";
 import {useRouter} from "next/router";
 import useSWR from "swr";
-import uku from "../../adapters/HTTP_Agent";
+import uku from "../../util/HTTP_Agent";
 import {endpoints} from "../../api/endpoints";
-import fetcher from "../../adapters/getFetcher";
+import fetcher from "../../util/getFetcher";
 
 const DetailInfo = () => {
     return (

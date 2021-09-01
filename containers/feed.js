@@ -1,7 +1,7 @@
 import styles from './styles.module.scss'
 import classNames from "classnames";
 import Card from "../components/Card";
-import uku from '/adapters/HTTP_Agent'
+import uku from '/util/HTTP_Agent'
 import {endpoints} from "../api/endpoints";
 import {cards, page} from "../components/Card/state";
 import {useRecoilState} from "recoil";

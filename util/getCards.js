@@ -1,4 +1,4 @@
-import uku from "../adapters/HTTP_Agent";
+import uku from "./HTTP_Agent";
 import {endpoints} from "../api/endpoints";
 
 export async function getCards(page) {

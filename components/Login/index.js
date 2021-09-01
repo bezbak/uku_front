@@ -2,7 +2,7 @@ import PhoneInput from "react-phone-input-2";
 import styles from './styles.module.scss'
 import {useState} from "react";
 import Link from "next/link";
-import uku from '/adapters/HTTP_Agent'
+import uku from '/util/HTTP_Agent'
 import {endpoints} from '/api/endpoints'
 import {useRecoilState} from "recoil";
 import {phoneNumber} from './state'

@@ -1,5 +1,5 @@
 import styles from './styles.module.scss'
-import uku from '/adapters/HTTP_Agent'
+import uku from '/util/HTTP_Agent'
 import {endpoints} from "../../../api/endpoints";
 import {toast} from "react-toastify";
 import {useEffect, useState} from "react";
