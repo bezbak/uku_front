@@ -2,7 +2,7 @@ import uku from "./HTTP_Agent";
 import {endpoints} from "../api/endpoints";
 
 export async function getCards(page) {
-  const token = window.localStorage.getItem("token")
+  const token = JSON.parse(window.localStorage.getItem("token"))
   const headers = {
     headers: {
       Authorization: `Token ${token}`

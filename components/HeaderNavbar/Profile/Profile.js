@@ -3,8 +3,8 @@ import uku from '/util/HTTP_Agent'
 import {endpoints} from "../../../api/endpoints";
 import styles from './styles.module.scss'
 import {useEffect, useState} from "react";
-import {getProfileInfo} from "../../Profile/getProfileInfo";
-import {getAvatar} from "../../Profile/getAvatar";
+import {getProfileInfo} from "../../MyProfile/getProfileInfo";
+import {getAvatar} from "../../MyProfile/getAvatar";
 
 
 const Profile = ({state}) => {

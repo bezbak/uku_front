@@ -40,6 +40,9 @@ const Login = () => {
         if (data.message === "User создан! Сообщение отправлено") {
           setLoginState(oldState => ({...oldState, state: "toConfirm"}))
         }
+        if (data.message === "Сообщение отправлено") {
+          setLoginState(oldState => ({...oldState, state: "toConfirm"}))
+        }
       })).catch(err => {
         setLoading(false)
         toast.error(err.message)
@@ -50,34 +53,34 @@ const Login = () => {
   }
 
   return (
-      <div className={styles.login}>
-        <div className={styles.head}>
-          <h3>Вход</h3>
-          <Link href={"/"}>
-            <button>Отмена</button>
-          </Link>
-        </div>
-        <form onSubmit={e => onSubmitHandler(e)}>
-          <span className={error ? "error" : "hide"}>Проверьте правильность введенного номера</span>
-          <PhoneInput
-              country={'kg'}
-              value={phone}
-              inputProps={{
-                required: true,
-                name: "phone",
-                autoFocus: true,
-                maxLength: 16
-              }}
-              onChange={num => onChangePhone(num)}
-          />
-          <button
-              disabled={phone.length !== 12}
-              type="submit"
-              className={styles.next}>
-            {loading ? <Spinner/> : "Далее"}
-          </button>
-        </form>
+    <div className={styles.login}>
+      <div className={styles.head}>
+        <h3>Вход</h3>
+        <Link href={"/"}>
+          <button>Отмена</button>
+        </Link>
       </div>
+      <form onSubmit={e => onSubmitHandler(e)}>
+        <span className={error ? "error" : "hide"}>Проверьте правильность введенного номера</span>
+        <PhoneInput
+          country={'kg'}
+          value={phone}
+          inputProps={{
+            required: true,
+            name: "phone",
+            autoFocus: true,
+            maxLength: 16
+          }}
+          onChange={num => onChangePhone(num)}
+        />
+        <button
+          disabled={phone.length !== 12}
+          type="submit"
+          className={styles.next}>
+          {loading ? <Spinner/> : "Далее"}
+        </button>
+      </form>
+    </div>
   )
 }
 

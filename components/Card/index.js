@@ -7,7 +7,7 @@ import Link from "next/link";
 
 
 const Card = ({cards, width}) => {
-  if (!cards) return <div></div>
+  if (!cards) return <div/>
 
   return (
     <>
@@ -17,19 +17,19 @@ const Card = ({cards, width}) => {
             key={index}
             className={styles.card}
             style={{width}}>
-            <CardHead user={item.user}/>
+            {item.user || item.is_owner ? <CardHead user={item.user}/> : null}
             <Link href={`/detail/${item.id}`}>
               <div className={styles.content}>
                 <CardSlider images={item.images}/>
+                <img
+                  className={styles.favorite}
+                  src={item.is_favorite ? "/icons/isFavourite.png" : "/icons/heart.png"}
+                  alt=""/>
                 <CardBody categories={item.categories} description={item.description}/>
                 <CardFooter created_at={item.created_at} comment_count={item.comment_count}
                             viewed={item.viewed}/>
               </div>
             </Link>
-            <img
-              className={styles.favorite}
-              src={item.is_favorite ? "/icons/isFavourite.png" : "/icons/heart.png"}
-              alt=""/>
           </div>
         })
       }

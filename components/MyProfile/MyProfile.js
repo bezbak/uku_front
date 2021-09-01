@@ -1,4 +1,3 @@
-import Feed from "../../containers/feed";
 import styles from './styles.module.scss'
 import uku from '/util/HTTP_Agent'
 import {endpoints} from "../../api/endpoints";
@@ -7,7 +6,7 @@ import classNames from "classnames";
 import {useRouter} from "next/router";
 
 
-const Profile = () => {
+const MyProfile = () => {
     const router = useRouter()
 
     const [profile, setProfile] = useState("")

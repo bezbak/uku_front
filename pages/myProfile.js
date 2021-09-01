@@ -1,6 +1,6 @@
 import {Header} from "../containers/header";
 import Footer from "../containers/footer";
-import Profile from "../components/Profile/Profile";
+import Profile from "../components/MyProfile/MyProfile";
 
 const MyProfile = () => {
     return (

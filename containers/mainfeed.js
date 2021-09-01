@@ -8,21 +8,25 @@ const Mainfeed = () => {
   const [data, setData] = useState({
     results: [],
     currentPage: 1,
-    next: null,
+    next: 1,
     previous: null,
     count: null
   })
+
   const ref = useRef(null)
 
   useEffect(() => {
-    getCards(data.currentPage).then(data => {
-      if (data.next) {
-        setData(old => ({
-          ...old,
-          results: old.results.concat(data.results),
-        }))
-      }
-    })
+    if (data.next !== null) {
+      getCards(data.currentPage).then(data => {
+        setData(old => ({...old, next: data.next}))
+        if (data.results) {
+          setData(old => ({
+            ...old,
+            results: old.results.concat(data.results),
+          }))
+        }
+      })
+    }
   }, [data.currentPage])
 
   useEffect(() => {
@@ -31,7 +35,6 @@ const Mainfeed = () => {
     return () => {
       if (ref.current) observer.unobserve(ref.current)
     }
-
   }, [])
 
   return (

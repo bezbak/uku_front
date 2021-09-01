@@ -7,7 +7,7 @@ import Profile from "./Profile/Profile";
 import Location from "./Location";
 import {useRouter} from "next/router";
 import {useEffect} from "react";
-import {getProfileInfo} from "../Profile/getProfileInfo";
+import {getProfileInfo} from "../MyProfile/getProfileInfo";
 
 const HeaderNavbar = () => {
 
@@ -15,7 +15,6 @@ const HeaderNavbar = () => {
     const router = useRouter()
     useEffect(async () => {
         const data = await getProfileInfo()
-        console.log(data)
     }, [])
 
     return (
