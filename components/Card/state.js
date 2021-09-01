@@ -5,11 +5,14 @@ export const page = atom({
     default: 1
 })
 
-export let cards = atom({
-    key: "cards",
+export let mainFeed = atom({
+    key: "mainFeed",
     default: {
         results: [],
-        next: true
+        currentPage: 1,
+        next: 1,
+        previous: null,
+        count: null
     },
     dangerouslyAllowMutability: true
 })

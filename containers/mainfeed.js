@@ -3,16 +3,12 @@ import Card from "../components/Card";
 import styles from './styles.module.scss'
 import {getCards} from "../util/getCards";
 import {cb, options} from "../util/interSectionObserver";
+import {mainFeed} from "../components/Card/state";
+import {useRecoilState} from "recoil";
+import Heart from '../public/icons/Heart.svg'
 
 const Mainfeed = () => {
-  const [data, setData] = useState({
-    results: [],
-    currentPage: 1,
-    next: 1,
-    previous: null,
-    count: null
-  })
-
+  const [data, setData] = useRecoilState(mainFeed)
   const ref = useRef(null)
 
   useEffect(() => {

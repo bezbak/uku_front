@@ -2,7 +2,8 @@ import {toast} from "react-toastify";
 import uku from "../../util/HTTP_Agent";
 import {endpoints} from "../../api/endpoints";
 
-export const onClickFavourite = (id, index, setRecoilState) => {
+export const onClickFavourite = (id, index, setRecoilState, e) => {
+  e.stopPropagation()
   if (!!!localStorage.getItem("token")) {
     toast.error("Требуется авторизация")
     return
