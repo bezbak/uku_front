@@ -39,8 +39,6 @@ const Mainfeed = () => {
     }
   }, [data.next])
 
-  // console.log(data)
-
   return (
     <div className={"container"}>
       <h2>Лента</h2>

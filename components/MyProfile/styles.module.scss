@@ -73,3 +73,12 @@
 .profileFeedContainer {
   width: 100%;
 }
+
+.feed {
+  display: flex;
+  flex-wrap: wrap;
+
+  > div {
+    margin: 10px 10px;
+  }
+}

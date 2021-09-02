@@ -10,11 +10,12 @@ import ProfileCards from "./ProfileCards";
 
 const Profile = () => {
   const [profile, setProfile] = useState(null)
+  const router = useRouter()
 
   useEffect(() => {
     const id = window.location.pathname.split("/").pop()
     fetchProfile(id).then(data => setProfile(data))
-  }, [window.location.pathname.split("/").pop()])
+  }, [router.query.profile])
 
   if (!profile) return <div>...</div>
 
@@ -26,7 +27,7 @@ const Profile = () => {
         <ProfileSocial profile={profile}/>
       </div>
       <div className={styles.profileFeedContainer}>
-        <ProfileCards/>
+        <ProfileCards profile={profile} setProfile={setProfile}/>
       </div>
     </div>
   )

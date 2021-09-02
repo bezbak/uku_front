@@ -19,11 +19,13 @@ const FavoriteFeed = () => {
 
   useEffect(() => {
     getFavoriteCards(data.currentPage).then(res => res.json().then(value => {
-      setData(old => ({
-        ...old,
-        ...value,
-        results: [...old.results, ...value.results],
-      }))
+      if (value.results !== undefined) {
+        setData(old => ({
+          ...old,
+          ...value,
+          results: [...old.results, ...value.results],
+        }))
+      }
     }))
   }, [data.currentPage])
 

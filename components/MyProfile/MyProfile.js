@@ -1,71 +1,58 @@
 import styles from './styles.module.scss'
 import uku from '/util/HTTP_Agent'
 import {endpoints} from "../../api/endpoints";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import classNames from "classnames";
 import {useRouter} from "next/router";
 import Card from "../Card";
+import {cb, options} from "../../util/interSectionObserver";
+import {useRecoilState} from "recoil";
+import {myProfileFeed} from "../Card/state";
+import {getMyProfileInfo} from "./getMyProfileInfo";
+import MyProfileInfo from "./MyProfileInfo";
+import {getMyProfileFeed} from "./getMyProfileFeed";
 
 
 const MyProfile = () => {
-  const router = useRouter()
-
   const [profile, setProfile] = useState("")
+  const [data, setData] = useRecoilState(myProfileFeed)
+  const ref = useRef(null)
 
   useEffect(() => {
-    fetch(uku + endpoints.userProfile, {
-      method: "GET",
-      headers: {
-        Authorization: `Token ${JSON.parse(localStorage.getItem("token"))}`
-      }
-    }).then(res => res.json().then(data => setProfile(data)))
+    getMyProfileInfo().then(res => res.json().then(data => setProfile(data)))
   }, [])
 
+  useEffect(() => {
+    getMyProfileFeed(data.currentPage).then(json => {
+      if (json.results !== undefined) {
+        setData(old => ({...old, ...json, results: [...old.results, ...json.results]}))
+      }
+    })
+  }, [data.currentPage])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => cb(entry, setData), options)
+    if (ref && ref.current && data.next) {
+      observer.observe(ref.current)
+    }
+    return () => {
+      if (ref.current) observer.unobserve(ref.current)
+    }
+  }, [data.next])
 
   return (
     <div className={classNames(styles.profilePage, "container")}>
-      <div className={styles.profileInfo}>
-        <div>
-          <img width={"140px"} height={"140px"} style={{borderRadius: "50%"}}
-               src={profile.avatar ? profile.avatar : "/images/noAvatar.png"} alt=""/>
-        </div>
-        <div className={styles.fio}>
-          <p>{profile?.first_name} {profile?.last_name}</p>
-        </div>
-        <div className={styles.age}>
-          <p>{profile?.gender} Возраст: {profile?.age}</p>
-        </div>
-        <div className={styles.phone}>
-          <p>Тел: {profile?.phone}</p>
-        </div>
-        <div className={styles.subs}>
-          <div>
-            <span className={styles.title}>Подписчики</span>
-            <span>{profile?.followers_count}</span>
-          </div>
-          <div>
-            <span className={styles.title}>Подписки</span>
-            <span>{profile?.following_count}</span>
-          </div>
-          <div>
-            <span className={styles.title}>Публикации</span>
-            <span>{profile?.publications_count}</span>
-          </div>
-        </div>
-        <div className={styles.social}>
-          <a href={profile?.telegram} target={"_blank"}>
-            <img src="/icons/profileTelegram.png" alt=""/>
-          </a>
-          <a href={profile?.whatsapp} target={"_blank"}>
-            <img src="/icons/profileWhatsapp.png" alt=""/>
-          </a>
-          <a href={profile?.instagram} target={"_blank"}>
-            <img src="/icons/profileInstagram.png" alt=""/>
-          </a>
-        </div>
-      </div>
+      <MyProfileInfo profile={profile}/>
       <div>
-        {/*<Card/>*/}
+        <h1>Мои публикации</h1>
+        <div className={styles.feed}>
+          <Card
+            width={"280px"}
+            cards={data.results}
+            setRecoilState={setData}
+          />
+        </div>
+        <div ref={ref}/>
       </div>
     </div>
   )
