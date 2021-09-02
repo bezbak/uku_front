@@ -15,7 +15,7 @@ const fetchFollow = id => fetch(uku + endpoints.followID + id, {
   }
 })
 
-const CardHead = ({user}) => {
+const CardHead = ({user, setRecoilState}) => {
   const [userState, setUserState] = useState({
     avatar: "",
     first_name: "",
@@ -30,11 +30,31 @@ const CardHead = ({user}) => {
   }, [user])
 
 
+  const onClickSub = id => {
+    console.log(user)
+    fetchFollow(id).then(res => {
+      if (res.status === 401) {
+        toast.error("Требуется авторизация")
+        return
+      }
+      setRecoilState(old => {
+        let newObj = {...old}
+        newObj.results = newObj.results.map(item => {
+          if (item.user.id === id) {
+            return {...item, user: {...item.user, following: !item.user.following}}
+          }
+          return item
+        })
+        return newObj
+      })
+    })
+  }
+
   return (
     <div className={styles.cardHead}>
       <Link href={`/profile/${user && user.id}`}>
         <div className={styles.cardName}>
-          <img src={user?.avatar} alt=""/>
+          <img src={user.avatar ? user?.avatar : null} alt=""/>
           <div>
             <p>{user && user?.last_name?.length > 10 ?
               user.last_name.slice(0, 10) + "..." : user?.last_name + " "}
@@ -44,8 +64,9 @@ const CardHead = ({user}) => {
         </div>
       </Link>
       <p
-        className={false ? "" : styles.unSub}>
-        {false ? "Подписаться" : "Вы подписаны"}
+        onClick={() => onClickSub(user.id)}
+        className={userState.following ? styles.unSub : ""}>
+        {userState.following ? "Вы подписаны" : "Подписаться"}
       </p>
 
     </div>

@@ -23,7 +23,7 @@ const Profile = ({state}) => {
 
   return {
     authorized:
-      <Link href={`/profile/${id}`}>
+      <Link href={`/myProfile`}>
         <div className={styles.profile}>
           <img width={"24px"} height={"24px"} style={{borderRadius: "50%"}}
                src={avatar ? avatar : "/icons/no_avatar.png"} alt=""/>

@@ -1,15 +1,19 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import Card from "../components/Card";
 import styles from './styles.module.scss'
 import {getCards} from "../util/getCards";
 import {cb, options} from "../util/interSectionObserver";
 import {mainFeed} from "../components/Card/state";
-import {useRecoilState} from "recoil";
-import Heart from '../public/icons/Heart.svg'
+import {useRecoilState, useResetRecoilState} from "recoil";
 
 const Mainfeed = () => {
   const [data, setData] = useRecoilState(mainFeed)
+  const resetMainfeed = useResetRecoilState(mainFeed)
+
   const ref = useRef(null)
+  useEffect(() => {
+    resetMainfeed()
+  }, [])
 
   useEffect(() => {
     if (data.next !== null) {
@@ -27,11 +31,15 @@ const Mainfeed = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => cb(entry, setData), options)
-    if (ref.current) observer.observe(ref.current)
+    if (ref && ref.current && data.next) {
+      observer.observe(ref.current)
+    }
     return () => {
       if (ref.current) observer.unobserve(ref.current)
     }
-  }, [])
+  }, [data.next])
+
+  // console.log(data)
 
   return (
     <div className={"container"}>
@@ -41,6 +49,7 @@ const Mainfeed = () => {
         <Card
           width={"368px"}
           cards={data.results}
+          setRecoilState={setData}
         />
       </div>
       <div ref={ref}/>
