@@ -1,8 +1,18 @@
 @import "styles/modules/mixins/font";
 @import "styles/modules/variables/colors";
 
+.mainMenu {
+  width: 20%;
+  div{
+    width: 100%;
+  }
+  ul {
+    width: 100%;
+  }
+}
+
 .category {
-  margin-right: 20px;
+
   h2 {
     @include font(20px, 600, 24px);
   }
@@ -11,6 +21,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+
   }
 
   li {
@@ -24,7 +35,6 @@
       height: 24px;
       background: none;
       border: none;
-      margin-left: auto;
       transition: all .4s;
       cursor: pointer;
     }
@@ -36,7 +46,6 @@
     height: 24px;
   }
 
-  width: inherit;
 }
 
 .categoryTitle {
@@ -49,7 +58,6 @@
   flex-direction: column;
   user-select: none;
   padding: 5px 5px;
-
 
   ul {
     li {
@@ -83,13 +91,15 @@
 
 .selected {
   color: #E56366;
+  position: relative;
 
   &:after {
     content: "";
+    position: absolute;
     width: 6px;
     height: 6px;
     border-radius: 50%;
     background: #E56366;
-
+    right: 10px;
   }
 }

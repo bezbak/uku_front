@@ -1,17 +1,19 @@
 import {atom} from "recoil";
 
-export const selectedCategory = atom({
-    key: "selectedCategory",
-    default: ""
-})
-
-export const selectedSubCategory = atom({
-    key: "selectedSubCategory",
-    default: ""
+export const publicationFeed = atom({
+  key: "publicationFeed",
+  default: {
+    results: [],
+    currentPage: 1,
+    next: null,
+    previous: null,
+    count: null,
+  },
+  dangerouslyAllowMutability: true,
 })
 
 export const modalAtom = atom({
-    key: "modalAtom",
-    default: false
+  key: "modalAtom",
+  default: false
 })
 
