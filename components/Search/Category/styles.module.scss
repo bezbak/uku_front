@@ -3,9 +3,11 @@
 
 .mainMenu {
   width: 20%;
-  div{
+
+  div {
     width: 100%;
   }
+
   ul {
     width: 100%;
   }
@@ -19,9 +21,8 @@
 
   .catBody {
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
-
+    justify-content: flex-start;
   }
 
   li {
@@ -92,14 +93,13 @@
 .selected {
   color: #E56366;
   position: relative;
+}
 
-  &:after {
-    content: "";
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #E56366;
-    right: 10px;
-  }
+.round {
+  width: 6px;
+  max-width: 6px;
+  margin-left: 10px;
+  height: 6px;
+  border-radius: 50%;
+  background: #E56366;
 }

@@ -21,4 +21,5 @@ export const endpoints = {
   searchUser: "/account/search/",
   publicationSearch: "/publication/search/",
   profileID: "/publication/user/", //id
+  postPublication: "/publication/create/",
 }

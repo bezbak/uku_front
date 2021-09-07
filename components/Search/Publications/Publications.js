@@ -5,6 +5,7 @@ import {publicationFeed} from "../state";
 import {useEffect, useRef} from "react";
 import {getPublications} from "./getPublications";
 import {cb, options} from "../../../util/interSectionObserver";
+import CreatePublicationWithoutPhoto from "../CreatePublicationWithoutPhoto";
 
 const Publications = () => {
   const [data, setData] = useRecoilState(publicationFeed)
@@ -17,7 +18,6 @@ const Publications = () => {
 
   useEffect(() => {
     getPublications(data.currentPage).then(data => {
-      console.log(data)
       setData(old => ({...old, ...data, results: [...old.results, ...data.results]}))
     })
   }, [data.currentPage])
@@ -43,6 +43,7 @@ const Publications = () => {
         />
       </div>
       <div ref={ref}/>
+      <CreatePublicationWithoutPhoto/>
     </div>
   )
 }
