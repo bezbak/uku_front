@@ -1,7 +1,15 @@
 import {atom} from "recoil";
 
-const categoryAtom = atom({
+export const categoryAtom = atom({
   key: "create",
-  default: null
+  default: null,
 })
-export default categoryAtom
+
+export const photosAtom = atom({
+  key: "photosAtom",
+  default: {
+    files: [],
+    preview: 0,
+  },
+  dangerouslyAllowMutability: true,
+})

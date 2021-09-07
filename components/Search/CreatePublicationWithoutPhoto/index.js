@@ -1,16 +1,18 @@
 import styles from "./styles.module.scss"
 import {useRecoilState, useRecoilValue, useResetRecoilState} from "recoil";
-import categoryAtom from "../../CreatePublication/state";
+import {categoryAtom, photosAtom} from "../../CreatePublication/state";
 import {postPublication} from "./functions";
 import {locationAtom} from "../../HeaderNavbar/Location/state";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
+import {toast} from "react-toastify";
 
 
 const CreatePublicationWithoutPhoto = () => {
   const category = useRecoilValue(categoryAtom)
   const resetCategory = useResetRecoilState(categoryAtom)
   const [{locationID}, setLocation] = useRecoilState(locationAtom)
+  const [photos, setPhotos] = useRecoilState(photosAtom)
   const [description, setDescription] = useState("")
 
   const router = useRouter()
@@ -21,11 +23,20 @@ const CreatePublicationWithoutPhoto = () => {
   }, [])
 
   const onClickSendPublication = (categoryID, locationID, description) => {
+    if (!description) {
+      toast.error("Напишите описание")
+      return
+    }
     postPublication(categoryID, locationID, description).then(res => {
       if (res.is_created) {
         router.push(`/detail/${res.publication_id}`)
       }
     })
+  }
+
+  const onInputFile = ({target: {files}}) => {
+    setPhotos(old => ({...old, files}))
+    router.push("/createPublication")
   }
 
   return (
@@ -34,6 +45,7 @@ const CreatePublicationWithoutPhoto = () => {
       <input
         type="file"
         name="photo"
+        onChange={onInputFile}
         id="upload-photo"/>
       <textarea
         onChange={({target: {value}}) => setDescription(value)}

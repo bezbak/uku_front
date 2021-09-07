@@ -22,4 +22,5 @@ export const endpoints = {
   publicationSearch: "/publication/search/",
   profileID: "/publication/user/", //id
   postPublication: "/publication/create/",
+  uploadImages: "/publication/image/upload/"
 }

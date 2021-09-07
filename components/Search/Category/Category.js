@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import cs from 'classnames'
 import classNames from "classnames";
 import {useRecoilState} from "recoil";
-import categoryAtom from "../../CreatePublication/state";
+import {categoryAtom} from "../../CreatePublication/state";
 
 
 const Category = ({items}) => {

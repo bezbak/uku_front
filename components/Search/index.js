@@ -8,15 +8,16 @@ import fetcher from "../../util/getFetcher";
 import Modal from "../UI/Modal/Modal";
 import {useRecoilState} from "recoil";
 import {modalAtom} from "./state";
+import CreatePublication from "../CreatePublication";
 
-const Search = () => {
+const Search = ({createPublication = false}) => {
   const {data, error} = useSWR(uku + endpoints.categories, fetcher)
   const [modal, setModal] = useRecoilState(modalAtom)
 
   return (
     <div className={styles.search}>
       <Category items={data}/>
-      <Publications/>
+      {createPublication ? <CreatePublication/> : <Publications/>}
       <Modal
         title={"Выберите город"}
         modal={modal}
