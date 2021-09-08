@@ -36,6 +36,7 @@ const CreatePublicationWithoutPhoto = () => {
 
   const onInputFile = ({target: {files}}) => {
     setPhotos(old => ({...old, files}))
+    resetCategory()
     router.push("/createPublication")
   }
 

@@ -2,21 +2,38 @@ import uku from '/util/HTTP_Agent'
 import {endpoints} from "../../api/endpoints";
 import {getUserToken} from "../../util/getUserToken";
 
-export const createPublication = async (categoryID, locationID, description, images) => {
+export const uploadImages = async (arr) => {
   const token = getUserToken()
-  const formData = new FormData()
-
-  for (const file of images) {
-    formData.append(file.name, file)
+  const images = new FormData()
+  console.log(arr)
+  for (const file of arr) {
+    images.append("images", file)
   }
+
 
   const uploadImagesResponse = await fetch(uku + endpoints.uploadImages, {
     method: "POST",
-    body: formData,
+    body: images,
     headers: {
-      // "Content-Type": "multipart/form-data; boundary=something;",
       "Authorization": `Token ${token}`
     }
   })
   return await uploadImagesResponse.json()
+}
+
+export const createPublication = async (category, location, description, images) => {
+  const res = await fetch(uku + endpoints.postPublication, {
+    headers: {
+      "Authorization": `Token ${getUserToken()}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify({
+      category,
+      location,
+      description,
+      images
+    }),
+  })
+  return res.json();
 }

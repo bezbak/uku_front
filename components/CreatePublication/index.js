@@ -1,26 +1,59 @@
 import styles from './styles.module.scss'
 import {useRecoilState, useRecoilValue} from "recoil";
 import {categoryAtom, photosAtom} from "./state";
-import {createPublication} from "./functions";
+import {createPublication, uploadImages} from "./functions";
 import {locationAtom} from "../HeaderNavbar/Location/state";
 import {useState} from "react";
+import {toast} from "react-toastify";
+import {useRouter} from "next/router";
 
 const CreatePublication = () => {
   const [photos, setPhotos] = useRecoilState(photosAtom)
   const category = useRecoilValue(categoryAtom)
   const [{locationID}, setLocation] = useRecoilState(locationAtom)
   const [description, setDescription] = useState("")
+  const router = useRouter()
 
   const onInputFile = file => {
     setPhotos(old => ({...old, files: [...old.files, ...file]}))
   }
 
+  console.log(photos)
+
   const onClickCreatePublication = (categoryID, locationID, description, images) => {
-    createPublication(categoryID, locationID, description, images).then(data => {
-      console.log(data)
+
+    setPhotos(old => {
+      let newObj = {...old}
+      let b = newObj.files[0];
+      newObj.files[0] = newObj.files[old.preview];
+      newObj.files[old.preview] = b;
+      newObj.preview = 0
+      return newObj
+    })
+
+    if (!description) {
+      toast.error("Заполните описание публикации")
+      return
+    }
+    if (!categoryID) {
+      toast.error("Выберите категорию")
+      return
+    }
+
+    uploadImages(images).then(images => {
+      createPublication(categoryID, locationID, description, images).then(data => {
+        if (data.is_created) {
+          router.push(`/detail/${data.publication_id}`)
+        } else {
+          toast.error("Что-то пошло не так")
+        }
+      })
     })
   }
 
+  const onClickImageForPreview = index => {
+    setPhotos(old => ({...old, preview: index}))
+  }
   return (
     <div>
       <div className={styles.createBox}>
@@ -49,11 +82,12 @@ const CreatePublication = () => {
           {Array.from(photos.files).map((image, index) => {
             return <img
               style={photos.preview === index ? {border: "1px solid red"} : {}}
-              onClick={() => setPhotos(old => ({...old, preview: index}))}
+              onClick={() => onClickImageForPreview(index)}
               className={styles.imagesList}
               key={index}
               src={URL.createObjectURL(image)}
-              alt=""/>
+              alt=""
+            />
           })}
         </div>
         <div className={styles.bottomPanel}>
@@ -65,7 +99,7 @@ const CreatePublication = () => {
             onChange={({target: {value}}) => setDescription(value)}
           />
           <button
-            onClick={() => onClickCreatePublication(category.id, locationID, description, photos.files)}>
+            onClick={() => onClickCreatePublication(category && category.id, locationID, description, photos.files)}>
             Опубликовать
           </button>
         </div>
