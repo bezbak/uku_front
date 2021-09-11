@@ -1,40 +1,38 @@
-import styles from './styles.module.scss'
-import {useEffect, useState} from "react";
-import cs from 'classnames'
-import classNames from "classnames";
+import React, {useState} from 'react';
 import {useRecoilState} from "recoil";
-import {categoryAtom} from "../../CreatePublication/state";
+import {categoryAtom, newsAtom} from "../../CreatePublication/state";
+import cs from "classnames";
+import styles from "../Category/styles.module.scss";
+import classNames from "classnames";
 import {currentCategoryAtom} from "../state";
 
-
-const Category = ({items}) => {
+const News = ({items}) => {
   const [displayChildren, setDisplayChildren] = useState({})
+  const [news, setNews] = useRecoilState(newsAtom)
   const [selectedCategory, setSelectedCategory] = useRecoilState(categoryAtom)
   const [currentCategory, setCurrentCategory] = useRecoilState(currentCategoryAtom)
-
   // console.group("Current category")
   // console.log("Current category is", currentCategory)
-  // console.log("Current category === ad?", JSON.stringify(currentCategory).includes("аd"))
-  // console.log("Current category === news?", currentCategory === "news")
-  // console.log("typeof", typeof currentCategory)
+  // console.log("Current category === ad?", currentCategory === "ad")
   // console.groupEnd()
 
   const onClickHandler = (item, e) => {
     e.preventDefault()
     e.stopPropagation()
+
     setCurrentCategory(item.category_type)
     setDisplayChildren({[item.name]: !displayChildren[item.name]});
 
     if (!displayChildren[item.name] && !item.children.length) {
-      setSelectedCategory(item)
+      setSelectedCategory(() => ({...item, currentCategoryType: item.category_type}))
     } else {
-      setSelectedCategory(null)
+      setSelectedCategory(old => ({currentCategoryType: ""}))
     }
   }
 
   const selectedClass = item => {
     return cs({
-      [styles.selected]: displayChildren[item.name] && !item.children.length && currentCategory.includes("d")
+      [styles.selected]: displayChildren[item.name] && !item.children.length && currentCategory === "news"
     })
   }
 
@@ -52,8 +50,7 @@ const Category = ({items}) => {
     <div className={styles.mainMenu}>
       <ul style={{marginLeft: "10px"}} className={classNames(styles.category)}>
         {items && items.map(item => {
-
-          if (item.category_type === "news") {
+          if (item.category_type !== "news") {
             return null
           }
 
@@ -62,7 +59,7 @@ const Category = ({items}) => {
               key={item.id}
               onClick={e => onClickHandler(item, e)}>
               <div className={classNames(styles.catBody, selectedClass(item))}>
-                {item.image ? <img src={item.image} alt=""/> : null}
+                {item.image ? <img src={item.image} className={styles.img} alt=""/> : null}
                 {item.name}{' '}
                 {item.children.length ? (
                   <button
@@ -72,9 +69,9 @@ const Category = ({items}) => {
                   />
                 ) : null}
                 <div
-                  className={displayChildren[item.name] && !item.children.length && currentCategory?.includes("d") ? styles.round : 'hide'}/>
+                  className={displayChildren[item.name] && !item.children.length && currentCategory === "news" ? styles.round : 'hide'}/>
               </div>
-              {displayChildren[item.name] && item.children && <Category items={item.children}/>}
+              {displayChildren[item.name] && item.children && <News items={item.children}/>}
             </li>
           );
         })}
@@ -84,4 +81,4 @@ const Category = ({items}) => {
   )
 }
 
-export default Category;
+export default News;

@@ -15,7 +15,6 @@ const LocationPicker = () => {
   useEffect(async () => {
     const data = await getLocations()
     setItem(data)
-    console.log(data)
   }, [])
 
   const listHandler = (e, name) => {

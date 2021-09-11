@@ -28,6 +28,9 @@ const Card = ({cards, width, setRecoilState, page = ""}) => {
     <>
       {
         cards.map((item, index) => {
+          if (item.publication_type === 'news') {
+            return null
+          }
           return <div
             key={index}
             className={styles.card}

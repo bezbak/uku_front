@@ -41,7 +41,7 @@ const CreatePublicationWithoutPhoto = () => {
   }
 
   return (
-    <div className={category ? styles.bottomPanel : "hide"}>
+    <div className={category?.category_type?.includes("d") ? styles.bottomPanel : "hide"}>
       <label htmlFor="upload-photo"/>
       <input
         type="file"
