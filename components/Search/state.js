@@ -17,3 +17,8 @@ export const modalAtom = atom({
   default: false
 })
 
+export const currentCategoryAtom = atom({
+  key: "currentCategory",
+  default: ""
+})
+

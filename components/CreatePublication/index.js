@@ -10,15 +10,15 @@ import {useRouter} from "next/router";
 const CreatePublication = () => {
   const [photos, setPhotos] = useRecoilState(photosAtom)
   const category = useRecoilValue(categoryAtom)
-  const [{locationID}, setLocation] = useRecoilState(locationAtom)
+  const [{locationID}] = useRecoilState(locationAtom)
   const [description, setDescription] = useState("")
   const router = useRouter()
+
 
   const onInputFile = file => {
     setPhotos(old => ({...old, files: [...old.files, ...file]}))
   }
 
-  console.log(photos)
 
   const onClickCreatePublication = (categoryID, locationID, description, images) => {
 
@@ -90,7 +90,7 @@ const CreatePublication = () => {
             />
           })}
         </div>
-        <div className={styles.bottomPanel}>
+        <div className={category?.category_type.includes("d") ? "hide" : styles.bottomPanel}>
           <textarea
             name="text"
             id="text"

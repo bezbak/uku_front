@@ -5,6 +5,11 @@ export const categoryAtom = atom({
   default: null,
 })
 
+export const newsAtom = atom({
+  key: "news",
+  default: null
+})
+
 export const photosAtom = atom({
   key: "photosAtom",
   default: {
