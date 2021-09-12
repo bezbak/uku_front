@@ -4,4 +4,27 @@
   border-radius: 6px;
   margin: 10px 0px;
   cursor: pointer;
+  position: relative;
+}
+
+.favorite {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+}
+
+.content {
+  position: relative;
+}
+
+.btnGroup {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  > svg {
+    margin: 0 5px;
+  }
 }

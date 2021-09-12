@@ -1,54 +1,79 @@
 import styles from './styles.module.scss'
-import uku from '/adapters/HTTP_Agent'
+import uku from '/util/HTTP_Agent'
 import {endpoints} from "../../../api/endpoints";
-import Link from "next/link";
 import {toast} from "react-toastify";
-import {useRecoilState} from "recoil";
-import {cards, page} from "../state";
 import {useEffect, useState} from "react";
+import {useRecoilState} from "recoil";
+import {cards} from "../state";
+import Link from "next/link";
 
-
-const fetchFollow = id => fetch(uku + endpoints.followID + id, {
-    method: 'GET',
-    headers: {
-        Authorization: `Token ${JSON.parse(window.localStorage.getItem("token"))}`,
-        "Content-Type": "application/json"
-    }
+export const fetchFollow = id => fetch(uku + endpoints.followID + id, {
+  method: 'GET',
+  headers: {
+    Authorization: `Token ${JSON.parse(window.localStorage.getItem("token"))}`,
+    "Content-Type": "application/json"
+  }
 })
 
-const CardHead = ({user}) => {
+const CardHead = ({user, setRecoilState}) => {
+  const [userState, setUserState] = useState({
+    avatar: "",
+    first_name: "",
+    following: null,
+    id: null,
+    last_name: "",
+    location: ""
+  })
 
-    const [currentPage, setCurrentPage] = useRecoilState(page)
-    const [cardsData, setCardsData] = useRecoilState(cards)
+  useEffect(() => {
+    setUserState(user)
+  }, [user])
 
 
-    const onClickFollow = id => {
-        fetchFollow(id).then(response => {
-            if (response.status === 401) {
-                toast.error("Требуется авторизация")
-            }
-            if (response.status === 200) {
-                // TODO сделать логику подписки
-            }
+  const onClickSub = id => {
+    fetchFollow(id).then(res => {
+      if (res.status === 401) {
+        toast.error("Требуется авторизация")
+        return
+      }
+      if (res.status === 200) {
+        res.json().then(data => {
+          toast.info(data.message)
         })
-    }
-    return (
-        <div className={styles.cardHead}>
-            <div className={styles.cardName}>
-                <img src={user.avatar} alt=""/>
-                <div>
-                    <p>{user.last_name.length > 10 ? user.last_name.slice(0, 10) + "..." : user.last_name} {user.first_name.length > 10 ? user.first_name.slice(0, 10) + "..." : user.first_name}</p>
-                    <span>{user.location}</span>
-                </div>
-            </div>
-            {user.following && <p
-                className={styles.unSub}
-                onClick={() => onClickFollow(user.id)}>Отписаться</p>}
-            {!user.following && <p
-                onClick={() => onClickFollow(user.id)}>Подписаться</p>}
-
+        setRecoilState(old => {
+          let newObj = {...old}
+          newObj.results = newObj.results.map(item => {
+            if (item.user.id === id) {
+              return {...item, user: {...item.user, following: !item.user.following}}
+            }
+            return item
+          })
+          return newObj
+        })
+      }
+    })
+  }
+  return (
+    <div className={styles.cardHead}>
+      <Link href={`/profile/${userState && userState.id}`}>
+        <div className={styles.cardName}>
+          <img src={userState && userState.avatar ? user?.avatar : null} alt=""/>
+          <div>
+            <p>{userState && userState.last_name?.length > 10 ?
+              userState.last_name.slice(0, 10) + "..." : userState && userState.last_name + " "}
+              {userState && userState.first_name.length > 10 ? userState && userState.first_name.slice(0, 10) + "..." : userState && userState.first_name}</p>
+            <span>{userState && userState.location}</span>
+          </div>
         </div>
-    )
+      </Link>
+      <p
+        onClick={() => onClickSub(user.id)}
+        className={userState && userState.following ? styles.unSub : ""}>
+        {userState && userState.following ? "Вы подписаны" : "Подписаться"}
+      </p>
+
+    </div>
+  )
 
 }
 

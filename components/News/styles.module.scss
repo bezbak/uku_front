@@ -1,0 +1,12 @@
+.newsCard {
+  min-width: 285px;
+  border: 1px solid #DFDFDF;
+  width: 290px;
+  height: 322px;
+  border-radius: 6px;
+}
+
+.newsCardBig {
+  @extend .newsCard;
+  width: 542px;
+}

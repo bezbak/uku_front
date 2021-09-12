@@ -4,27 +4,63 @@ import CardSlider from "./CardSlider/CardSlider";
 import CardBody from "./CardBody/CardBody";
 import CardFooter from "./CardFooter/CardFooter";
 import Link from "next/link";
+import {onClickFavourite} from "./functions";
+import Edit from '../../public/icons/Edit.svg'
+import Delete from '../../public/icons/Delete.svg'
+import HeartFill from '../../public/icons/HeartFill.svg'
+import Heart from '../../public/icons/Heart.svg'
 
-const Card = ({width, data}) => {
+const Card = ({cards, width, setRecoilState, page = ""}) => {
 
-    return (
-        <>
-            {
-                data && data.results.map(item => {
-                    return <div key={item.id} className={styles.card} style={{width: width}}>
-                        <CardHead user={item.user}/>
-                        <Link href={`/detail/${item.id}`}>
-                            <div>
-                                <CardSlider images={item.images}/>
-                                <CardBody categories={item.categories} description={item.description}/>
-                                <CardFooter created_at={item.created_at} comment_count={item.comment_count}/>
-                            </div>
-                        </Link>
-                    </div>
-                })
-            }
-        </>
-    )
+  if (!cards) return <div/>
+
+  function onClickEdit(e, id) {
+    e.stopPropagation()
+  }
+
+  function onClickDelete(e, id) {
+    e.stopPropagation()
+  }
+
+  return (
+    <>
+      {
+        cards.map((item, index) => {
+          if (item.publication_type === 'news') {
+            return null
+          }
+          return <div
+            key={index}
+            className={styles.card}
+            style={{width}}>
+            {item.user && !item.is_owner ?
+              <CardHead user={item.user} setRecoilState={setRecoilState} index={index}/> : null}
+            <Link href={`/detail/${item.id}`}>
+              <div className={styles.content}>
+                <CardSlider images={item.images}/>
+                {item && item.is_owner && false ? null : <div
+                  onClick={(e) => onClickFavourite(item.id, index, setRecoilState, e, page)}
+                  style={item.is_owner ? {top: "50px"} : {}}
+                  className={styles.favorite}
+                >
+                  {item.is_favorite ? <HeartFill/> : <Heart/>}
+                </div>}
+                {item && item.is_owner ? <div
+                  className={styles.btnGroup}
+                >
+                  <Edit onClick={e => onClickEdit(e, item.id)}/>
+                  <Delete onClick={e => onClickDelete(e, item.id)}/>
+                </div> : null}
+                <CardBody categories={item.categories} description={item.description}/>
+                <CardFooter created_at={item.created_at} comment_count={item.comment_count}
+                            viewed={item.viewed}/>
+              </div>
+            </Link>
+          </div>
+        })
+      }
+    </>
+  )
 }
 
 export default Card;

@@ -1,16 +1,15 @@
 import {Header} from "../containers/header";
-import Feed from "../containers/feed";
 import Footer from "../containers/footer";
+import Mainfeed from "../containers/mainfeed";
 
 const Home = () => {
-
-    return (
-        <div>
-            <Header/>
-            <Feed title={"Лента"}/>
-            <Footer/>
-        </div>
-    )
+  return (
+    <div>
+      <Header/>
+      <Mainfeed/>
+      <Footer/>
+    </div>
+  )
 }
 
 export default Home;

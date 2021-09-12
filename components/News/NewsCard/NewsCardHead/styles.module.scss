@@ -1,0 +1,19 @@
+.newsCardHead {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+
+  img {
+    margin-right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: 400;
+    color: #091A2E;
+  }
+}

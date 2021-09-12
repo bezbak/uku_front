@@ -5,4 +5,16 @@
   h2 {
     @include font(24px, 500, 30px);
   }
+
+  width: 100%;
+  position: relative;
+}
+
+.feed {
+  display: flex;
+  flex-wrap: wrap;
+
+  > div {
+    margin: 10px;
+  }
 }

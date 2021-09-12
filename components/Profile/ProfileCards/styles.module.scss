@@ -1,0 +1,28 @@
+.profileFeed {
+  display: flex;
+  flex-wrap: wrap;
+
+  > div {
+    margin: 10px;
+  }
+}
+
+.profileFeedTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    background: #E56366;
+    color: #FFFFFF;
+    padding: 8px 32px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+}
+
+.profileTitle {
+  display: flex;
+  justify-content: space-between;
+}

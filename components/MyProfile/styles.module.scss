@@ -1,0 +1,341 @@
+@import "styles/modules/mixins/font";
+@import "styles/modules/variables/colors";
+@import '/styles/modules/mixins/button';
+@import '/styles/modules/mixins/modal';
+
+.profilePage {
+  display: flex;
+}
+
+.profileInfo {
+  position: relative;
+  margin-right: 10px;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+
+}
+
+.social {
+  margin-top: 10px;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+
+  a {
+    cursor: pointer;
+  }
+
+  img {
+    margin: 10px 10px 0 0;
+  }
+}
+
+.subs {
+  margin: 10px 0;
+  display: flex;
+  border: 1px solid #F0F0F0;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+
+    .title {
+      color: #7E7E7E;
+      @include font(14px, 500, 16px);
+    }
+
+    span {
+      @include font(14px, 500, 16px);
+    }
+  }
+}
+
+.fio {
+  @include font(18px, 500, 22px);
+  margin: 10px 0;
+}
+
+.age {
+  color: #495360;
+  @include font(16px, 500, 20px);
+  margin: 10px 0;
+}
+
+.phone {
+  color: #091A2E;
+  @include font(16px, 400, 20px);
+}
+
+.profileFeedContainer {
+  width: 100%;
+}
+
+.feed {
+  display: flex;
+  flex-wrap: wrap;
+
+  > div {
+    margin: 10px 10px;
+  }
+}
+
+
+.modalAvatar {
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  transition: all 1s;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  visibility: visible;
+
+  .close {
+    user-select: none;
+    background: #FFFFFF;
+    width: 36px;
+    height: 36px;
+    font-size: 30px;
+    color: #121213;
+    z-index: 1000 !important;
+    cursor: pointer;
+    position: absolute;
+    right: 24%;
+    top: 23%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+  }
+
+  img {
+    border-radius: 6px;
+    width: 50%;
+    height: 50%;
+    border: 5px solid #D4D4D4;
+  }
+}
+
+.editProfile {
+  cursor: pointer;
+  background: url("/images/editProfile.svg");
+  width: 44px;
+  height: 44px;
+  position: absolute;
+  right: 70px;
+  top: 100px;
+}
+
+.show {
+  transform: translateX(0);
+  transition: transform 1s;
+}
+
+.hide {
+  transform: translateX(-600px);
+  transition: transform 1s;
+}
+
+.leftSideBar {
+  transition: transform 1s;
+  position: fixed;
+  width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #F1F1F1;
+  height: 100vh;
+  z-index: 10;
+  top: -10px;
+  left: 0;
+
+  h3 {
+    margin: 20px 0 20px 0;
+  }
+}
+
+
+.socialInp {
+  display: flex;
+  flex-direction: column;
+
+  span {
+    margin: 15px 0;
+  }
+
+  input {
+    background: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    box-sizing: border-box;
+    border-radius: 8px;
+    padding: 10px 12px 10px 16px;
+    width: 100%;
+    outline: none;
+  }
+
+  .insta {
+    position: relative;
+
+    &:after {
+      font-family: Inter, sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+      color: #AAAAAA;
+      content: "Инстаграм";
+      position: absolute;
+      left: 10px;
+      top: -20px;
+    }
+  }
+
+  .whatsapp {
+    position: relative;
+
+    &:after {
+      font-family: Inter, sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+      color: #AAAAAA;
+      content: "Номер Whats App";
+      position: absolute;
+      left: 10px;
+      top: -20px;
+    }
+  }
+
+  .telegram {
+    position: relative;
+
+    &:after {
+      font-family: Inter, sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+      color: #AAAAAA;
+      content: "Telegram";
+      position: absolute;
+      left: 10px;
+      top: -20px;
+    }
+  }
+}
+
+.currentPhone {
+  background: #FFFFFF;
+  border: 1px solid #E0E0E0;
+  box-sizing: border-box;
+  border-radius: 6px;
+  padding: 12px 16px;
+}
+
+.phoneInput {
+  position: relative;
+
+  .changeNumber {
+    cursor: pointer;
+    position: absolute;
+    background: url("/icons/changeNumber.svg");
+    width: 24px;
+    height: 24px;
+    top: 5px;
+    right: 15px;
+  }
+}
+
+.btns {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    margin: 10px 0;
+    cursor: pointer;
+  }
+
+  .save {
+    background: #E56366;
+    border-radius: 6px;
+    padding: 15px 20px;
+    color: #FFFFFF;
+    border: none;
+  }
+
+  .logout {
+    border: 1px solid #E56366;
+    box-sizing: border-box;
+    border-radius: 6px;
+    padding: 15px 20px;
+    color: #E56366;
+  }
+}
+
+.editAvatar {
+  label {
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+
+  .placeholderHover {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+
+    span {
+      font-family: Inter, sans-serif;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 17px;
+      color: #FFFFFF;
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+}
+
+.filter {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #AEAEAE;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: 0.7;
+}

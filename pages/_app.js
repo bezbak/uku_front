@@ -25,6 +25,5 @@ export default function App({Component, pageProps}) {
                 pauseOnHover
             />
         </React.Fragment>
-
     )
 }

@@ -1,14 +1,72 @@
-.searchBar{
-  input{
+@import "styles/modules/mixins/dropdown";
+@import "styles/modules/mixins/font";
+
+.searchBar {
+  position: relative;
+  margin-left: 50px;
+}
+
+.searchBarContent {
+  input {
+    z-index: 0;
     background: #F8F8F8;
     border: 1px solid #E0E0E0;
     box-sizing: border-box;
     border-radius: 6px;
-    margin-left: 50px;
     width: 400px;
     height: 46px;
-    &:focus{
+
+    &:focus {
       outline: none;
     }
   }
+}
+
+.dropDown {
+  @include dropdown();
+  align-items: flex-start !important;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  overflow: auto;
+  z-index: 2;
+  height: 200px;
+  width: 100%;
+  border-radius: 6px;
+  top: 100%;
+
+  .profile {
+    cursor: pointer;
+    margin: 10px 20px;
+    padding: 10px 0;
+    width: 100%;
+    justify-content: flex-start;
+    border-bottom: 1px solid #EEEEEE;
+
+    img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+    }
+
+    .fio {
+      display: flex;
+      flex-direction: column;
+      margin-left: 30px;
+
+      p {
+        @include font(14px, 400, 16px);
+        color: #2D2727;
+      }
+
+      span {
+        @include font(12px, 400, 16px);
+        color: #5A5A5A;
+      }
+    }
+  }
+}
+
+.hide {
+  display: none !important;
 }

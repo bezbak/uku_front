@@ -12,7 +12,9 @@
 .feed {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  >div{
+    margin: 10px 10px;
+  }
 }
 
 .footer {
@@ -73,4 +75,8 @@
     width: 200px;
     height: 40px;
   }
+}
+
+.placeholder {
+  height: 100vh;
 }
