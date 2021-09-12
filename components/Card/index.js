@@ -16,19 +16,16 @@ const Card = ({cards, width, setRecoilState, page = ""}) => {
 
   function onClickEdit(e, id) {
     e.stopPropagation()
-    console.log(id)
   }
 
   function onClickDelete(e, id) {
     e.stopPropagation()
-    console.log(id)
   }
 
   return (
     <>
       {
         cards.map((item, index) => {
-          console.log(item)
           if (item.publication_type === 'news') {
             return null
           }

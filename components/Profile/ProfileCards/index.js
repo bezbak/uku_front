@@ -14,7 +14,6 @@ const ProfileCards = ({profile, setProfile}) => {
   const resetProfileFeed = useResetRecoilState(profileFeed)
   const ref = useRef(null)
 
-
   useEffect(() => {
     resetProfileFeed()
   }, [])

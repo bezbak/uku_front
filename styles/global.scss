@@ -67,5 +67,10 @@ html {
 }
 
 :global(.hide) {
-  display: none !important;
+  visibility: hidden;
+  opacity: 0;
+}
+
+:global(.changePhoneNumber) {
+  display: none;
 }
