@@ -19,20 +19,21 @@ const CreatePublication = () => {
     setPhotos(old => ({...old, files: [...old.files, ...file]}))
   }
 
-
   const onClickCreatePublication = (categoryID, locationID, description, images) => {
 
-    setPhotos(old => {
-      let newObj = {...old}
-      let b = newObj.files[0];
-      newObj.files[0] = newObj.files[old.preview];
-      newObj.files[old.preview] = b;
-      newObj.preview = 0
-      return newObj
-    })
+    if (images.length !== 1) {
+      setPhotos(old => {
+        let newObj = {...old}
+        let b = newObj.files[0];
+        newObj.files[0] = newObj.files[old.preview];
+        newObj.files[old.preview] = b;
+        newObj.preview = 0
+        return newObj
+      })
+    }
 
     if (!description) {
-      toast.error("Заполните описание публикации")
+      toast.error("Напишите описание публикации")
       return
     }
     if (!categoryID) {
@@ -54,12 +55,15 @@ const CreatePublication = () => {
   const onClickImageForPreview = index => {
     setPhotos(old => ({...old, preview: index}))
   }
+
   return (
     <div>
       <div className={styles.createBox}>
         <div className={styles.topPanel}>
                     <span
-                      className={styles.close}>&times;</span>
+                      onClick={() => router.back()}
+                      className={styles.close}>&times;
+                    </span>
           <span className={styles.title}>Просмотр</span>
         </div>
 
@@ -90,7 +94,7 @@ const CreatePublication = () => {
             />
           })}
         </div>
-        <div className={category?.category_type.includes("d") ? "hide" : styles.bottomPanel}>
+        <div className={styles.bottomPanel}>
           <textarea
             name="text"
             id="text"

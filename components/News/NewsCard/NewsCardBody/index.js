@@ -2,31 +2,31 @@ import styles from './styles.module.scss'
 import {
   stylesForBlurBackgroundSmall,
   stylesForSmall,
-  stylesForBig,
-  stylesForBlurBackgroundBig,
-  stylesForDescriptionBig,
   stylesForDescriptionSmall
 } from "./styles";
+import Link from "next/link";
+import {useRouter} from "next/router";
 
-const NewsCardBody = ({isEven, data}) => {
+const NewsCardBody = ({data}) => {
+
+  const router = useRouter()
+
+  const onClickNews = () => {
+    router.push(`detail/${data.id}`)
+  }
 
   return (
-    <div style={isEven ? stylesForSmall : stylesForBig}
+    <div onClick={onClickNews} style={stylesForSmall(data && data.images)}
          className={styles.newsCardBody}>
-      <div style={isEven ? stylesForBlurBackgroundSmall : stylesForBlurBackgroundBig}
+      <div style={stylesForBlurBackgroundSmall}
            className={styles.blurBackground}/>
-      <div style={isEven ? stylesForDescriptionSmall : stylesForDescriptionBig} className={styles.description}>
-        <h4>{data && data.title}</h4>
+      <div style={stylesForDescriptionSmall} className={styles.description}>
         <p>{data && data.description.length > 100 ? data.description.slice(0, 100) + "..." : data.description}</p>
         <div className={styles.footer}>
           <span>
             {data && data.created_at}
           </span>
           <div>
-            <span>
-              <img src="/icons/newsComments.svg" alt=""/>
-              {data && data.comment_count}
-            </span>
             <span>
               <img src="/icons/eye.svg" alt=""/>
               {data && data.viewed}

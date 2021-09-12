@@ -28,6 +28,7 @@ const Card = ({cards, width, setRecoilState, page = ""}) => {
     <>
       {
         cards.map((item, index) => {
+          console.log(item)
           if (item.publication_type === 'news') {
             return null
           }
@@ -40,15 +41,17 @@ const Card = ({cards, width, setRecoilState, page = ""}) => {
             <Link href={`/detail/${item.id}`}>
               <div className={styles.content}>
                 <CardSlider images={item.images}/>
-                {item && item.is_owner ? null : <div
+                {item && item.is_owner && false ? null : <div
                   onClick={(e) => onClickFavourite(item.id, index, setRecoilState, e, page)}
+                  style={item.is_owner ? {top: "50px"} : {}}
                   className={styles.favorite}
                 >
                   {item.is_favorite ? <HeartFill/> : <Heart/>}
                 </div>}
                 {item && item.is_owner ? <div
                   className={styles.btnGroup}
-                ><Edit onClick={e => onClickEdit(e, item.id)}/>
+                >
+                  <Edit onClick={e => onClickEdit(e, item.id)}/>
                   <Delete onClick={e => onClickDelete(e, item.id)}/>
                 </div> : null}
                 <CardBody categories={item.categories} description={item.description}/>
