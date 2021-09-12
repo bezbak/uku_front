@@ -1,9 +1,6 @@
 import styles from './styles.module.scss'
-import uku from '/util/HTTP_Agent'
-import {endpoints} from "../../api/endpoints";
 import {useEffect, useRef, useState} from "react";
 import classNames from "classnames";
-import {useRouter} from "next/router";
 import Card from "../Card";
 import {cb, options} from "../../util/interSectionObserver";
 import {useRecoilState} from "recoil";
