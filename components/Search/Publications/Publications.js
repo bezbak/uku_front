@@ -6,25 +6,38 @@ import {useEffect, useRef} from "react";
 import {getPublications} from "./getPublications";
 import {cb, options} from "../../../util/interSectionObserver";
 import CreatePublicationWithoutPhoto from "../CreatePublicationWithoutPhoto";
-import News from "../News";
-import NewsFeed from "../../News";
 import NewsCard from "../../News";
+import {categoryAtom} from "../../CreatePublication/state";
 
 const Publications = () => {
   const [data, setData] = useRecoilState(publicationFeed)
-  const resetMainfeed = useResetRecoilState(publicationFeed)
-  const [currentCategory, setCurrentCategory] = useRecoilState(currentCategoryAtom)
+  const [currentCategory] = useRecoilState(currentCategoryAtom)
+  const [selectedCategory] = useRecoilState(categoryAtom)
+
   const ref = useRef(null)
 
-
+  // INITIAL LOAD
   useEffect(() => {
-    resetMainfeed()
+    getPublications(false, 1).then(data => {
+      setData(old => ({...old, ...data, results: [...data.results]}))
+    })
   }, [])
 
   useEffect(() => {
-    getPublications(data.currentPage).then(data => {
-      setData(old => ({...old, ...data, results: [...old.results, ...data.results]}))
+    getPublications(selectedCategory?.id, 1).then(data => {
+      setData(old => ({currentPage: null, ...data, results: [...data.results]}))
     })
+  }, [selectedCategory?.id])
+
+  useEffect(() => {
+    if (data.currentPage) {
+      getPublications(selectedCategory?.id, data.currentPage).then(data => {
+        if (data.next) {
+          setData(old => ({...old, ...data, results: [...old.results, ...data.results]}))
+        }
+      })
+    }
+
   }, [data.currentPage])
 
   useEffect(() => {
@@ -51,7 +64,6 @@ const Publications = () => {
           <NewsCard
             news={data.results}
           />}
-
       </div>
       <div ref={ref}/>
       <CreatePublicationWithoutPhoto/>

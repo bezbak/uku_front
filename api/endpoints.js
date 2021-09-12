@@ -13,7 +13,7 @@ export const endpoints = {
   favorites: "/account/favorite/",
   favouriteID: "/account/favorite/",
   profileFeed: "/publication/search",
-  followID: "/account/follow/", //{id}
+  followID: "/account/follow/", //id
   userAvatar: "/account/avatar/",
   userProfile: "/account/profile/",
   myProfilePublication: "/account/profile/publication/", //page
@@ -22,5 +22,6 @@ export const endpoints = {
   publicationSearch: "/publication/search/",
   profileID: "/publication/user/", //id
   postPublication: "/publication/create/",
-  uploadImages: "/publication/image/upload/"
+  uploadImages: "/publication/image/upload/",
+  fetchCategoryID: "/publication/category/" //id
 }

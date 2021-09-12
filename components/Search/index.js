@@ -9,7 +9,6 @@ import Modal from "../UI/Modal/Modal";
 import {useRecoilState} from "recoil";
 import {modalAtom} from "./state";
 import CreatePublication from "../CreatePublication";
-import News from "./News";
 
 const Search = ({createPublication = false}) => {
   const {data, error} = useSWR(uku + endpoints.categories, fetcher)
@@ -21,10 +20,6 @@ const Search = ({createPublication = false}) => {
         <div className={styles.category}>
           <h3>Категории</h3>
           <Category items={data}/>
-        </div>
-        <div className={styles.news}>
-          <h3>Новости и статьи</h3>
-          <News items={data}/>
         </div>
       </div>
       {createPublication ? <CreatePublication/> : <Publications/>}

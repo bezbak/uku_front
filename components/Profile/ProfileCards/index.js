@@ -48,9 +48,11 @@ const ProfileCards = ({profile, setProfile}) => {
 
   return (
     <div className={'container'}>
-      <h1>Публикации</h1>
-      <div className={classNames(styles.profileFeedTitle)}>
-        <button onClick={() => onClickFollowProfile()}>{profile.following ? "Отписаться" : "Подписаться"}</button>
+      <div className={styles.profileTitle}>
+        <h1>Публикации</h1>
+        <div className={classNames(styles.profileFeedTitle)}>
+          <button onClick={() => onClickFollowProfile()}>{profile.following ? "Отписаться" : "Подписаться"}</button>
+        </div>
       </div>
       <div className={styles.profileFeed}>
         <Card

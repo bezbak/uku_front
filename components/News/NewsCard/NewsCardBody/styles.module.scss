@@ -7,14 +7,14 @@
   align-items: flex-end;
   justify-content: flex-end;
   color: #FFFFFF;
+  cursor: pointer;
 }
 
 .blurBackground {
   position: relative;
-  background: linear-gradient(180deg, rgba(102, 102, 102, 0) -83.44%, #3E3E3E 188.57%);
-  background-blend-mode: multiply;
+  background: #000000;
+  opacity: 0.2;
   backdrop-filter: blur(6px);
-  border-radius: 6px;
 }
 
 .description {
