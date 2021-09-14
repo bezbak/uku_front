@@ -3,15 +3,24 @@ import styles from "./styles.module.scss";
 import ProfileInfo from "./ProfileInfo";
 import PhoneInput from "react-phone-input-2";
 import {useRouter} from "next/router";
-import {changePhoneNumber, isAvatarExist, logout, onClickSaveProfile, onUploadAvatar} from "./functions";
+import {
+  changePhoneNumber,
+  isAvatarExist,
+  logout,
+  onClickSaveProfile,
+  onConfirmChangePhone,
+  onUploadAvatar
+} from "./functions";
 import Spinner from "../Spinner/Spinner";
 import cs from 'classnames'
 import classNames from "classnames";
+import Alert from "../Alert";
 
-const MyProfileInfo = ({profile}) => {
+const MyProfileInfo = ({profile, setProfile}) => {
   const [profileImage, setProfileImage] = useState(null)
   const [showSidebar, setShowSidebar] = useState(false)
   const [phoneNumber, setPhoneNumber] = useState("")
+  const [modalReset, setModalReset] = useState(false)
   const [form, setForm] = useState({
     instagram: "",
     whatsapp: "",
@@ -41,7 +50,6 @@ const MyProfileInfo = ({profile}) => {
     }
   }, [ref])
 
-
   const sidebarClass = cs({
     [styles.show]: showSidebar,
     [styles.hide]: !showSidebar,
@@ -57,7 +65,8 @@ const MyProfileInfo = ({profile}) => {
         <div className={styles.editAvatar}>
           <label
             htmlFor="avatar">
-            <input onChange={({target: {files}}) => onUploadAvatar(files, setProfileImage)} type="file" name="avatar"
+            <input onChange={({target: {files}}) => onUploadAvatar(files, setProfileImage, setProfile)} type="file"
+                   name="avatar"
                    id="avatar" style={{display: "none"}}/>
           </label>
           <div className={styles.filter}/>
@@ -81,7 +90,7 @@ const MyProfileInfo = ({profile}) => {
               }}
               onChange={number => setPhoneNumber(number)}
             />
-            <div className={styles.changeNumber} onClick={() => changePhoneNumber(phoneNumber, router)}/>
+            <div className={styles.changeNumber} onClick={() => changePhoneNumber(phoneNumber, setModalReset)}/>
           </div>
 
           <h3>Контактные данные</h3>
@@ -113,6 +122,12 @@ const MyProfileInfo = ({profile}) => {
           </div>
         </form>
       </div>
+      <Alert
+        modal={modalReset}
+        setModal={setModalReset}
+        onConfirmChangePhone={onConfirmChangePhone}
+        phoneNumber={phoneNumber}
+      />
     </div>
   )
 }

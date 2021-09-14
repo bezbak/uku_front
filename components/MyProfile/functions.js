@@ -65,7 +65,7 @@ export const onClickSaveProfile = (e, data, setLoading) => {
   })
 }
 
-export const onUploadAvatar = (files, setProfileImage) => {
+export const onUploadAvatar = (files, setProfileImage, setProfile) => {
 
   setProfileImage(files[0])
   const formData = new FormData()
@@ -73,18 +73,46 @@ export const onUploadAvatar = (files, setProfileImage) => {
 
   uploadAvatar(formData).then(data => {
     toast.success("Аватар успешно загружен")
+    setProfile(old => ({...old, updated: !old.updated}))
   }).catch(e => {
     toast.error("Ошибка загрузки")
   })
 }
 
-export const changePhoneNumber = (number, router) => {
+export const changePhoneNumber = (number, setModalReset) => {
+
+
   if (number.length !== 12) {
     toast.error("Введите корректный номер телефона, +996 700 200 300")
-    return
+  } else {
+    setModalReset(old => !old)
   }
-  router.push({
-    pathname: '/resetPassword',
-    query: {number},
+}
+
+export const onConfirmChangePhone = (number, router) => {
+  const token = getUserToken()
+  const headers = {
+    "Authorization": `Token ${token}`,
+  }
+
+  fetch(uku + endpoints.changePhoneRequest, {
+    headers,
+  }).then(res => {
+    if (res.status === 429) {
+      toast.error("Слишком много запросов отправки сообщения, повторите позже")
+    }
+
+    if (res.status === 200) {
+      toast.success("Сообщение отправлено")
+      router.push({
+        pathname: '/resetPassword',
+        query: {number},
+      })
+    }
+  }).catch(e => {
+    console.log(e.status)
+    if (e.status === 429) {
+      toast.error("Слишком много запросов отправки сообщения, повторите позже")
+    }
   })
 }

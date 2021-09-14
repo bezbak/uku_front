@@ -25,5 +25,9 @@ export const endpoints = {
   uploadImages: "/publication/image/upload/",
   fetchCategoryID: "/publication/category/", //id
   updateProfile: "/account/profile/update/",
-  uploadAvatar: "/account/avatar/"
+  uploadAvatar: "/account/avatar/",
+  oldPhoneConfirm: "/account/old-phone-confirm/",
+  newPhoneConfirm: "/account/new-phone-confirm/",
+  changePhoneRequest: "/account/send-sms-to-old-phone/",
+  changeOldPhone: "/account/change-old-phone/",
 }
