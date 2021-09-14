@@ -11,13 +11,15 @@ import {getMyProfileFeed} from "./getMyProfileFeed";
 
 
 const MyProfile = () => {
-  const [profile, setProfile] = useState("")
+  const [profile, setProfile] = useState({
+    updated: false
+  })
   const [data, setData] = useRecoilState(myProfileFeed)
   const ref = useRef(null)
 
   useEffect(() => {
-    getMyProfileInfo().then(res => res.json().then(data => setProfile(data)))
-  }, [])
+    getMyProfileInfo().then(res => res.json().then(data => setProfile(old => ({...old, ...data}))))
+  }, [profile.updated])
 
   useEffect(() => {
     getMyProfileFeed(data.currentPage).then(json => {
@@ -39,7 +41,10 @@ const MyProfile = () => {
 
   return (
     <div className={classNames(styles.profilePage, "container")}>
-      <MyProfileInfo profile={profile}/>
+      <MyProfileInfo
+        profile={profile}
+        setProfile={setProfile}
+      />
       <div>
         <h1>Мои публикации</h1>
         <div className={styles.feed}>
