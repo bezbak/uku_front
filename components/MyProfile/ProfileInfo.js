@@ -32,13 +32,13 @@ const ProfileInfo = ({profile}) => {
         </div>
       </div>
       <div className={styles.social}>
-        <a href={profile?.telegram} target={"_blank"}>
+        <a href={`http://t.me/${profile?.telegram}`} target={"_blank"}>
           <img src="/icons/profileTelegram.png" alt=""/>
         </a>
-        <a href={profile?.whatsapp} target={"_blank"}>
+        <a href={`https://wa.me/${profile?.whatsapp}`} target={"_blank"}>
           <img src="/icons/profileWhatsapp.png" alt=""/>
         </a>
-        <a href={profile?.instagram} target={"_blank"}>
+        <a href={`https://instagram.com/${profile?.instagram}`} target={"_blank"}>
           <img src="/icons/profileInstagram.png" alt=""/>
         </a>
       </div>
