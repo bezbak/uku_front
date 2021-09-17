@@ -71,10 +71,10 @@ const MyProfileInfo = ({profile, setProfile}) => {
           </label>
           <div className={styles.filter}/>
           <div className={styles.placeholderHover}>
-            <img src="/images/avatarCamera.svg" alt=""/>
+            <img src="/images/avatarCamera.svg" width="24px" height="24px" alt=""/>
             <span>Изменить фото профиля</span>
           </div>
-          <img src={profileImage ? isAvatarExist(profileImage) : "/images/avatarPlaceholder.png"} alt=""/>
+          <img src={profile.avatar ? isAvatarExist(profile.avatar) : "/images/avatarPlaceholder.png"} alt=""/>
         </div>
         <form onSubmit={e => onClickSaveProfile(e, form, setLoading)} name="editProfile" id="editProfile">
           <h2>Номер</h2>
@@ -84,13 +84,15 @@ const MyProfileInfo = ({profile, setProfile}) => {
               country={'kg'}
               inputProps={{
                 required: true,
+                disabled: true,
+                value: profile.phone,
                 name: "phone",
                 autoFocus: true,
                 maxLength: 16
               }}
               onChange={number => setPhoneNumber(number)}
             />
-            <div className={styles.changeNumber} onClick={() => changePhoneNumber(phoneNumber, setModalReset)}/>
+            <div className={styles.changeNumber} onClick={() => changePhoneNumber(profile.phone, setModalReset)}/>
           </div>
 
           <h3>Контактные данные</h3>
@@ -102,10 +104,17 @@ const MyProfileInfo = ({profile, setProfile}) => {
                      type="text"/>
             </span>
             <span className={styles.whatsapp}>
-              <input name="whatsapp" onChange={({target: {name, value}}) => onChangeSocialInputs(name, value)}
-                     placeholder="Номер телефона"
-                     required={true}
-                     type="text"/>
+               <PhoneInput
+                 containerClass="changePhoneNumber"
+                 country={'kg'}
+                 inputProps={{
+                   required: true,
+                   name: "phone",
+                   autoFocus: true,
+                   maxLength: 16
+                 }}
+                 onChange={number => setForm(old => ({...old, whatsapp: number}))}
+               />
             </span>
             <span className={styles.telegram}>
               <input name="telegram" onChange={({target: {name, value}}) => onChangeSocialInputs(name, value)}
@@ -126,7 +135,7 @@ const MyProfileInfo = ({profile, setProfile}) => {
         modal={modalReset}
         setModal={setModalReset}
         onConfirmChangePhone={onConfirmChangePhone}
-        phoneNumber={phoneNumber}
+        phoneNumber={profile.phone}
       />
     </div>
   )

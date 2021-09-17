@@ -2,12 +2,12 @@ import React from 'react';
 import styles from "./styles.module.scss";
 import Spinner from "../../Spinner/Spinner";
 import {useRecoilState} from "recoil";
-import {resetPasswordAtom} from "../state";
+import {changeNumberAtom} from "../state";
 import {onConfirmCodeReset, onResendConfirmCode} from "./functions";
 import {toast} from "react-toastify";
 
 const ConfirmReset = ({number}) => {
-  const [resetPasswordState, setResetPasswordState] = useRecoilState(resetPasswordAtom)
+  const [resetPasswordState, setResetPasswordState] = useRecoilState(changeNumberAtom)
   const [code, setCode] = React.useState('')
   const [time, setTime] = React.useState(60)
   const [loading, setLoading] = React.useState(false)
@@ -50,7 +50,7 @@ const ConfirmReset = ({number}) => {
       <h3>Подтверждение кода</h3>
       <p>Код был отправлен на номер</p>
       <span className={styles.phone}>
-        {"+" + String(number && number.match(/.{1,3}/g)).split(",").join(" ")}
+        {String(number).slice(0,4) + " " + String(number).slice(4)}
       </span>
       <input
         onChange={({target: {value}}) => setCode(value)}

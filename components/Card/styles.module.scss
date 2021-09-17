@@ -1,5 +1,5 @@
 .card {
-  height: 395px;
+  height: 355px;
   border: 1px solid #DFDFDF;
   border-radius: 6px;
   margin: 10px 0px;
@@ -17,6 +17,10 @@
 
 .content {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 80%;
 }
 
 .btnGroup {

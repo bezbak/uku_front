@@ -1,6 +1,6 @@
 import React from 'react';
 import {useRecoilState} from "recoil";
-import {resetPasswordAtom} from "./state";
+import {changeNumberAtom, newPhoneAtom} from "./state";
 import {useRouter} from "next/router";
 import styles from './styles.module.scss'
 import ConfirmReset from "./ConfirmReset";
@@ -8,8 +8,9 @@ import NewNumber from "./NewNumber/NewNumber";
 import ConfirmNewPhone from "./ConfirmNewPhone";
 
 const ResetPassword = () => {
-  const [resetPasswordState] = useRecoilState(resetPasswordAtom)
+  const [changeNumberState] = useRecoilState(changeNumberAtom)
   const router = useRouter()
+  const [phone, setPhone] = useRecoilState(newPhoneAtom)
   const {number} = router.query
 
   return (
@@ -19,8 +20,8 @@ const ResetPassword = () => {
         {
           confirm: <ConfirmReset number={number}/>,
           newNumber: <NewNumber/>,
-          confirmNewPhone: <ConfirmNewPhone/>
-        }[resetPasswordState]
+          confirmNewPhone: <ConfirmReset number={phone}/>
+        }[changeNumberState]
       }
 
     </div>

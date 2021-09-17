@@ -80,10 +80,10 @@ export const onUploadAvatar = (files, setProfileImage, setProfile) => {
 }
 
 export const changePhoneNumber = (number, setModalReset) => {
+  console.log(number.length)
 
-
-  if (number.length !== 12) {
-    toast.error("Введите корректный номер телефона, +996 700 200 300")
+  if (number.length < 12) {
+    toast.error("Введите корректный номер телефона, Например +996 700 200 300")
   } else {
     setModalReset(old => !old)
   }

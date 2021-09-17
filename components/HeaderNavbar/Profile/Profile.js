@@ -14,12 +14,11 @@ const Profile = ({state}) => {
 
 
   useEffect(() => {
-    // getAvatar(setAvatar)
+    getAvatar(setAvatar)
     getProfileInfo().then(data => {
       setId(data.id)
     })
   }, [])
-
 
   return {
     authorized:

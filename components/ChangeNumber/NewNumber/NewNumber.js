@@ -4,24 +4,31 @@ import Spinner from "../../Spinner/Spinner";
 import PhoneInput from "react-phone-input-2";
 import {changePhoneNumber} from "./functions";
 import {useRouter} from "next/router";
-import PhoneChangeModal from "./PhoneChangeModal";
 import {useRecoilState} from "recoil";
-import {resetPasswordAtom} from "../state";
+import {changeNumberAtom, newPhoneAtom} from "../state";
 import {toast} from "react-toastify";
 
 const NewNumber = () => {
   const [loading, setLoading] = React.useState(false)
-  const [phone, setPhone] = React.useState("")
-  const [resetPasswordState, setResetPasswordState] = useRecoilState(resetPasswordAtom)
+  const [phone, setPhone] = useRecoilState(newPhoneAtom)
+  const [changeNumberState, setChangeNumberState] = useRecoilState(changeNumberAtom)
   const router = useRouter()
 
   const onClickChangePhoneNumber = (setLoading, phone) => {
     changePhoneNumber(setLoading, phone).then(res => {
-      console.log(res)
-      if (res === "Сообщение отправлено") {
+      if (res.message === "Сообщение отправлено") {
         toast.success(res)
-        setResetPasswordState("confirmNewPhone")
+        setChangeNumberState("confirmNewPhone")
       }
+
+      if (res.message === "Такой номер телефона уже существует") {
+        toast.error(res.message)
+      }
+
+      if (res.message === "Вы слишком часто отправляете сообщение") {
+        toast.error(res.message)
+      }
+    }).catch(err => {
     }).finally(() => {
       setLoading(false)
     })

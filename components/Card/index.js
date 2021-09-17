@@ -37,23 +37,27 @@ const Card = ({cards, width, setRecoilState, page = ""}) => {
               <CardHead user={item.user} setRecoilState={setRecoilState} index={index}/> : null}
             <Link href={`/detail/${item.id}`}>
               <div className={styles.content}>
-                <CardSlider images={item.images}/>
-                {item && item.is_owner && false ? null : <div
-                  onClick={(e) => onClickFavourite(item.id, index, setRecoilState, e, page)}
-                  style={item.is_owner ? {top: "50px"} : {}}
-                  className={styles.favorite}
-                >
-                  {item.is_favorite ? <HeartFill/> : <Heart/>}
-                </div>}
-                {item && item.is_owner ? <div
-                  className={styles.btnGroup}
-                >
-                  <Edit onClick={e => onClickEdit(e, item.id)}/>
-                  <Delete onClick={e => onClickDelete(e, item.id)}/>
-                </div> : null}
-                <CardBody categories={item.categories} description={item.description}/>
-                <CardFooter created_at={item.created_at} comment_count={item.comment_count}
-                            viewed={item.viewed}/>
+                <div>
+                  <CardSlider images={item.images}/>
+                  {item && item.is_owner && false ? null : <div
+                    onClick={(e) => onClickFavourite(item.id, index, setRecoilState, e, page)}
+                    style={item.is_owner ? {top: "50px"} : {}}
+                    className={styles.favorite}
+                  >
+                    {item.is_favorite ? <HeartFill/> : <Heart/>}
+                  </div>}
+                  {item && item.is_owner ? <div
+                    className={styles.btnGroup}
+                  >
+                    <Edit onClick={e => onClickEdit(e, item.id)}/>
+                    <Delete onClick={e => onClickDelete(e, item.id)}/>
+                  </div> : null}
+                  <CardBody categories={item.categories} description={item.description}/>
+                </div>
+                <div>
+                  <CardFooter created_at={item.created_at} comment_count={item.comment_count}
+                              viewed={item.viewed}/>
+                </div>
               </div>
             </Link>
           </div>
