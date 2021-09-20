@@ -80,3 +80,12 @@
 .placeholder {
   height: 100vh;
 }
+
+@media only screen and (max-width: 600px) {
+  .authorization{
+    img{
+      display: none;
+    }
+  }
+}
+
