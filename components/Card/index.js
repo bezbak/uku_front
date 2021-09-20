@@ -9,8 +9,13 @@ import Edit from '../../public/icons/Edit.svg'
 import Delete from '../../public/icons/Delete.svg'
 import HeartFill from '../../public/icons/HeartFill.svg'
 import Heart from '../../public/icons/Heart.svg'
+import {useState} from "react";
+import ModalDeleteCard from "./ModalDeleteCard";
 
 const Card = ({cards, width, setRecoilState, page = ""}) => {
+  const [state, setState] = useState({
+    modalDelete: false
+  })
 
   if (!cards) return <div/>
 
@@ -18,8 +23,10 @@ const Card = ({cards, width, setRecoilState, page = ""}) => {
     e.stopPropagation()
   }
 
-  function onClickDelete(e, id) {
+  function onClickDelete(e) {
     e.stopPropagation()
+    e.preventDefault()
+    setState(old => ({...old, modalDelete: !old.modalDelete}))
   }
 
   return (
@@ -50,7 +57,7 @@ const Card = ({cards, width, setRecoilState, page = ""}) => {
                     className={styles.btnGroup}
                   >
                     <Edit onClick={e => onClickEdit(e, item.id)}/>
-                    <Delete onClick={e => onClickDelete(e, item.id)}/>
+                    <Delete onClick={onClickDelete}/>
                   </div> : null}
                   <CardBody categories={item.categories} description={item.description}/>
                 </div>
@@ -60,6 +67,7 @@ const Card = ({cards, width, setRecoilState, page = ""}) => {
                 </div>
               </div>
             </Link>
+            <ModalDeleteCard modalState={state.modalDelete} id={item.id} setState={setState}/>
           </div>
         })
       }

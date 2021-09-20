@@ -1,16 +1,18 @@
 import React from 'react';
 import {useRecoilState} from "recoil";
-import {changeNumberAtom, newPhoneAtom} from "./state";
+import {changeNumberAtom, modalSuccessAtom, newPhoneAtom} from "./state";
 import {useRouter} from "next/router";
 import styles from './styles.module.scss'
 import ConfirmReset from "./ConfirmReset";
 import NewNumber from "./NewNumber/NewNumber";
 import ConfirmNewPhone from "./ConfirmNewPhone";
+import ModalPhoneChanged from "../ModalPhoneChanged";
 
 const ResetPassword = () => {
   const [changeNumberState] = useRecoilState(changeNumberAtom)
+  const [modalSuccess] = useRecoilState(modalSuccessAtom)
+  const [phone] = useRecoilState(newPhoneAtom)
   const router = useRouter()
-  const [phone, setPhone] = useRecoilState(newPhoneAtom)
   const {number} = router.query
 
   return (
@@ -18,11 +20,12 @@ const ResetPassword = () => {
       <img src="/images/loginImage.jpg" alt=""/>
       {
         {
-          confirm: <ConfirmReset number={number}/>,
+          confirm: <ConfirmReset number={number} isOld={true}/>,
           newNumber: <NewNumber/>,
-          confirmNewPhone: <ConfirmReset number={phone}/>
+          confirmNewPhone: <ConfirmReset number={phone} isOld={false}/>
         }[changeNumberState]
       }
+      {modalSuccess ? <ModalPhoneChanged/> : null}
 
     </div>
   )

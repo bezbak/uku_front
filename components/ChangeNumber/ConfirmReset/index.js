@@ -2,12 +2,13 @@ import React from 'react';
 import styles from "./styles.module.scss";
 import Spinner from "../../Spinner/Spinner";
 import {useRecoilState} from "recoil";
-import {changeNumberAtom} from "../state";
+import {changeNumberAtom, modalSuccessAtom} from "../state";
 import {onConfirmCodeReset, onResendConfirmCode} from "./functions";
 import {toast} from "react-toastify";
 
-const ConfirmReset = ({number}) => {
+const ConfirmReset = ({number, isOld}) => {
   const [resetPasswordState, setResetPasswordState] = useRecoilState(changeNumberAtom)
+  const [modalSuccess, setModalSuccess] = useRecoilState(modalSuccessAtom)
   const [code, setCode] = React.useState('')
   const [time, setTime] = React.useState(60)
   const [loading, setLoading] = React.useState(false)
@@ -19,7 +20,7 @@ const ConfirmReset = ({number}) => {
   const confirmCode = code => {
     setLoading(true)
 
-    onConfirmCodeReset(code).then(res => {
+    onConfirmCodeReset(code, isOld).then(res => {
       res.json().then(data => {
         if (data.success) {
           toast.success(data.message)
@@ -27,6 +28,11 @@ const ConfirmReset = ({number}) => {
         }
         if (res.status == 403) {
           toast.error(data.message)
+        }
+        console.log(data)
+          if(data.message==="New phone is confirmed"){
+            setModalSuccess(true)
+          toast.info("Новый номер подтвержден")
         }
       })
     }).catch(e => {

@@ -3,14 +3,14 @@ import {endpoints} from "../../../api/endpoints";
 import {getUserToken} from "../../../util/getUserToken";
 import {toast} from "react-toastify";
 
-export const onConfirmCodeReset = (confirmation_code) => {
+export const onConfirmCodeReset = (confirmation_code, isOld) => {
   const token = getUserToken()
   const headers = {
     "Authorization": `Token ${token}`,
     "Content-Type": "application/json",
   }
 
-  return fetch(uku + endpoints.oldPhoneConfirm, {
+  return fetch(`${uku}${isOld ? endpoints.oldPhoneConfirm : endpoints.newPhoneConfirm}`, {
     method: "POST",
     headers,
     body: JSON.stringify({

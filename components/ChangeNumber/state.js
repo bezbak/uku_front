@@ -9,3 +9,8 @@ export const newPhoneAtom = atom({
   key: "newPhoneAtom",
   default: ""
 })
+
+export const modalSuccessAtom = atom({
+  key: "modalSuccessAtom",
+  default: false,
+})

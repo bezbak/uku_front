@@ -20,14 +20,7 @@ const NewNumber = () => {
         toast.success(res)
         setChangeNumberState("confirmNewPhone")
       }
-
-      if (res.message === "Такой номер телефона уже существует") {
-        toast.error(res.message)
-      }
-
-      if (res.message === "Вы слишком часто отправляете сообщение") {
-        toast.error(res.message)
-      }
+      toast.info(res.message)
     }).catch(err => {
     }).finally(() => {
       setLoading(false)
