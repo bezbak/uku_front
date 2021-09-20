@@ -12,7 +12,7 @@ const Comment = ({handleSelectedOptions,showMoreHandler,selectedOption}) => {
             {recoilState.comments && recoilState.comments.map(item => {
                 return(
                     <div className={styles.comments} key={item.id}>
-                        <img src={`http://api.uku.kg/` + item.author.avatar} className={styles.avatar} alt="#"/>
+                        <img src={item.author.avatar} className={styles.avatar} alt="#"/>
                         <div className={styles.commentsData}>
                             <p>
                                 <Link href={`/profile/${item.author.id}`}>
@@ -22,7 +22,7 @@ const Comment = ({handleSelectedOptions,showMoreHandler,selectedOption}) => {
                                 </Link>
                                 {item.text}
                             </p>
-                            {item.image !== null ? <img src={`http://api.uku.kg/` + item.image} alt="#" className={styles.imagesInComment}/> : null}
+                            {item.image !== null ? <img src={item.image} alt="#" className={styles.imagesInComment}/> : null}
                             <div className={styles.info_times}>
                                 <span className={styles.commentTime}>{item.created_at}</span>
                                 <span
