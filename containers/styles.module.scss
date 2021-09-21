@@ -2,7 +2,17 @@
 @import "styles/modules/variables/colors";
 @import '/styles/modules/mixins/button';
 
+.mainfeed{
+  @media (max-width: 600px) {
+    padding-top: 120px;
+    h2{
+      display: none;
+    }
+  }
+}
 .title {
+  @media (max-width: 600px) {
+  }
   h1 {
     @include font(24px, 500, 30px);
     color: #121213;
@@ -12,12 +22,16 @@
 .feed {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   >div{
     margin: 10px 10px;
   }
 }
 
 .footer {
+  @media (max-width: 600px) {
+    display: none;
+  }
   background: #F9F9F9;
   padding: 30px;
 

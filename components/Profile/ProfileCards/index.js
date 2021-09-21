@@ -44,7 +44,7 @@ const ProfileCards = ({profile, setProfile}) => {
       setProfile(old => ({...old, following: !old.following}))
     }))
   }
-
+  console.log(profile)
   return (
     <div className={'container'}>
       <div className={styles.profileTitle}>

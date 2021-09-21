@@ -6,16 +6,12 @@ import Favourite from "./Favourite/Favourite";
 import Profile from "./Profile/Profile";
 import Location from "./Location";
 import {useRouter} from "next/router";
-import {useEffect} from "react";
-import {getProfileInfo} from "../MyProfile/getProfileInfo";
+import MobileHeader from "../MobileHeader";
 
 const HeaderNavbar = () => {
 
 
   const router = useRouter()
-  useEffect(async () => {
-    const data = await getProfileInfo()
-  }, [])
 
   return (
     <div className={styles.navbar}>
