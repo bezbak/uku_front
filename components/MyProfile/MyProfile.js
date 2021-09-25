@@ -45,7 +45,7 @@ const MyProfile = () => {
         profile={profile}
         setProfile={setProfile}
       />
-      <div>
+      <div className={styles.myProfileFeed}>
         <h1>Мои публикации</h1>
         <div className={styles.feed}>
           <Card

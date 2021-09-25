@@ -1,10 +1,14 @@
 .card {
-  height: 355px;
+  height: auto;
   border: 1px solid #DFDFDF;
   border-radius: 6px;
   margin: 10px 0px;
   cursor: pointer;
   position: relative;
+}
+
+.noContent {
+  font-family: Inter, sans-serif;
 }
 
 .favorite {

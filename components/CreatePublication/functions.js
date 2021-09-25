@@ -5,7 +5,7 @@ import {getUserToken} from "../../util/getUserToken";
 export const uploadImages = async (arr) => {
   const token = getUserToken()
   const images = new FormData()
-  console.log(arr)
+
   for (const file of arr) {
     images.append("images", file)
   }

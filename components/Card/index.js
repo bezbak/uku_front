@@ -18,6 +18,7 @@ const Card = ({cards, width, setRecoilState, page = ""}) => {
   })
 
   if (!cards) return <div/>
+  if(!cards.length) return <h3 className={styles.noContent}>Нет публикаций</h3>
 
   function onClickEdit(e, id) {
     e.stopPropagation()

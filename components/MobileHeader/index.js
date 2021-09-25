@@ -1,17 +1,19 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styles from './styles.module.scss'
 import Link from "next/link";
+import {useRouter} from "next/router";
 
 const MobileHeader = () => {
   const ref = useRef(null)
+  const router = useRouter()
 
-  useEffect(()=>{
-    ref.current.checked=false
-  }, [window.location.pathname])
+  useEffect(() => {
+    ref.current.checked = false
+  }, [router.pathname])
 
   return (
     <nav className={styles.nav}>
-      <Link href="/profile">
+      <Link href="/">
         <h2>Uku.kg</h2>
       </Link>
       <img src="/icons/search.svg" alt=""/>
@@ -51,11 +53,20 @@ const MobileHeader = () => {
               Избранное
             </li>
           </Link>
-          <Link href="/myProfile">
-            <li>
-              Профиль
-            </li>
-          </Link>
+          {typeof window !== "undefined" && !!window.localStorage.getItem("token") ? <div>
+            <Link href="/myProfile">
+              <li>
+                Профиль
+              </li>
+            </Link>
+          </div> : <div>
+            <Link href="/login">
+              <li>
+                Войти
+              </li>
+            </Link>
+          </div>}
+
         </ul>
       </div>
     </nav>
