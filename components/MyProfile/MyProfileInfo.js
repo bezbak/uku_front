@@ -55,13 +55,14 @@ const MyProfileInfo = ({profile, setProfile}) => {
     [styles.hide]: !showSidebar,
   })
 
-  if (!profile) return <div/>
+  if (!profile) return null
 
   return (
     <div className={styles.profileInfo}>
       <div onClick={() => setShowSidebar(old => !old)} className={styles.editProfile}/>
-      <ProfileInfo profile={profile}/>
+      <ProfileInfo profile={profile} setShowSidebar={setShowSidebar}/>
       <div ref={ref} className={classNames(styles.leftSideBar, sidebarClass)}>
+        <button onClick={()=>setShowSidebar(old=>!old)} className={styles.editBack}><span>&#8592;</span>Назад</button>
         <div className={styles.editAvatar}>
           <label
             htmlFor="avatar">
@@ -76,7 +77,8 @@ const MyProfileInfo = ({profile, setProfile}) => {
           </div>
           <img src={profile.avatar ? isAvatarExist(profile.avatar) : "/images/avatarPlaceholder.png"} alt=""/>
         </div>
-        <form onSubmit={e => onClickSaveProfile(e, form, setLoading)} name="editProfile" id="editProfile">
+        <form className={styles.editProfileForm} onSubmit={e => onClickSaveProfile(e, form, setLoading)}
+              name="editProfile" id="editProfile">
           <h2>Номер</h2>
           <div className={styles.phoneInput}>
             <PhoneInput
@@ -136,6 +138,8 @@ const MyProfileInfo = ({profile, setProfile}) => {
         setModal={setModalReset}
         onConfirmChangePhone={onConfirmChangePhone}
         phoneNumber={profile.phone}
+        loading={loading}
+        setLoading={setLoading}
       />
     </div>
   )

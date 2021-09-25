@@ -8,4 +8,10 @@
     width: 50%;
     height: 100%;
   }
+
+  @media (max-width: 600px) {
+    img {
+      display: none !important;
+    }
+  }
 }

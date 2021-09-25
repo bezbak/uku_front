@@ -31,3 +31,13 @@
     @include font(18px, 500, 16px)
   }
 }
+.burgerMenu{
+  display: none !important;
+  width: 40px;
+  height: 40px;
+  background: red;
+
+  //@media (max-width: 600px) {
+  //  display: block;
+  //}
+}

@@ -45,7 +45,7 @@ export const isAvatarExist = avatar => {
 }
 
 export const logout = (router) => {
-  localStorage.setItem("token", "")
+  localStorage.removeItem("token")
   setTimeout(() => {
     router.push("/")
   }, 100)
@@ -89,12 +89,13 @@ export const changePhoneNumber = (number, setModalReset) => {
   }
 }
 
-export const onConfirmChangePhone = (number, router) => {
+export const onConfirmChangePhone = (number, router, setLoading) => {
   const token = getUserToken()
   const headers = {
     "Authorization": `Token ${token}`,
   }
 
+  setLoading(true)
   fetch(uku + endpoints.changePhoneRequest, {
     headers,
   }).then(res => {
@@ -114,5 +115,7 @@ export const onConfirmChangePhone = (number, router) => {
     if (e.status === 429) {
       toast.error("Слишком много запросов отправки сообщения, повторите позже")
     }
+  }).finally(() => {
+    setLoading(false)
   })
 }

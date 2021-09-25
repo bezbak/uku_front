@@ -35,11 +35,10 @@ const Feed = ({title}) => {
             "Объявления": uku + endpoints.publicationSearch
         }[title] + `?page=${currentPage}`, token ? header : null).then(res => res.json()
             .then(data => {
-                if (data.next) {
+                if (data.next ?? data.results.length) {
                     setCardsData(old => ({...old, results: [...old.results, ...data.results], next: data.next}))
                 }
             }))
-        setCurrentPage(1)
     }, [title])
 
     useEffect(() => {

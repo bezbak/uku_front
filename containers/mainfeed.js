@@ -5,6 +5,7 @@ import {getCards} from "../util/getCards";
 import {cb, options} from "../util/interSectionObserver";
 import {mainFeed} from "../components/Card/state";
 import {useRecoilState, useResetRecoilState} from "recoil";
+import classNames from "classnames";
 
 const Mainfeed = () => {
   const [data, setData] = useRecoilState(mainFeed)
@@ -19,7 +20,7 @@ const Mainfeed = () => {
     if (data.next !== null) {
       getCards(data.currentPage).then(data => {
         setData(old => ({...old, next: data.next}))
-        if (data.results) {
+        if (data.results && data.results.length) {
           setData(old => ({
             ...old,
             results: old.results.concat(data.results),
@@ -40,7 +41,7 @@ const Mainfeed = () => {
   }, [data.next])
 
   return (
-    <div className={"container"}>
+    <div className={classNames("container", styles.mainfeed)}>
       <h2>Лента</h2>
       {data.results.length ? null : <div className={styles.placeholder}/>}
       <div className={styles.feed}>
