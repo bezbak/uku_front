@@ -23,6 +23,7 @@ export const endpoints = {
   profileID: "/publication/user/", //id
   postPublication: "/publication/create/",
   uploadImages: "/publication/image/upload/",
+// <<<<<<< Updated upstream
   fetchCategoryID: "/publication/category/", //id
   updateProfile: "/account/profile/update/",
   uploadAvatar: "/account/avatar/",
@@ -30,4 +31,6 @@ export const endpoints = {
   newPhoneConfirm: "/account/new-phone-confirm/",
   changePhoneRequest: "/account/send-sms-to-old-phone/",
   changeOldPhone: "/account/change-old-phone/",
+// =======
+// >>>>>>> Stashed changes
 }
