@@ -6,11 +6,7 @@ import {locationAtom} from "./state";
 
 const Location = () => {
   const [modal, setModal] = useRecoilState(modalAtom)
-  const [location, setLocation] = useRecoilState(locationAtom)
-
-  useEffect(() => {
-    setLocation(old => ({...old, name: JSON.parse(localStorage.getItem("authData")).region_detail.name}))
-  }, [])
+  const [location] = useRecoilState(locationAtom)
 
   return (
     <div onClick={() => setModal(!modal)} className={styles.location}>
