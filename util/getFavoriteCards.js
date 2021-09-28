@@ -1,8 +1,9 @@
 import uku from "./HTTP_Agent";
 import {endpoints} from "../api/endpoints";
+import {getUserToken} from "./getUserToken";
 
 export async function getFavoriteCards(page) {
-  const token = JSON.parse(window.localStorage.getItem("token"))
+  const token = getUserToken()
   const headers = {
     headers: {
       Authorization: `Token ${token}`
