@@ -1,14 +1,18 @@
 import {atom} from "recoil";
 
-export const commentState = atom({
-    key: "commentState",
+export const detailPublicationState = atom({
+    key: "detailPublicationState",
     default: [],
 })
 
-export const modalDelete = atom({
+
+export const modalStateFlag = atom({
     key: "modalDelete",
     default: {
-        flag: false,
+        updateModal: false,
+        deletePublicationModal: false,
+        deleteImageModal: false,
+        imageId: null
     }
 })
 

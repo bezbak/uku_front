@@ -5,13 +5,13 @@ import SwiperCore, {
     Pagination
 } from 'swiper/core';
 import {useRecoilState} from "recoil";
-import {commentState} from "./state";
+import {commentState, detailPublicationState} from "./state";
 
 SwiperCore.use([Pagination]);
 
 
 const SwiperContainer = () => {
-    const [recoilState, setRecoilState] = useRecoilState(commentState)
+    const [recoilState, setRecoilState] = useRecoilState(detailPublicationState)
     const {user, images,location} = recoilState
     return (
         <div>

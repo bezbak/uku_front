@@ -4,21 +4,21 @@ import {createRef, Fragment, useState} from "react";
 import uku from "../../util/HTTP_Agent";
 import {toast} from "react-toastify";
 import classNames from "classnames";
-import {getComments} from "./request";
 import {useRecoilState} from "recoil";
-import {commentState} from "./state";
+import {detailPublicationState} from "./state";
 
 const DetailDescription = () => {
     const [file, setFile] = useState(null)
-    console.log(file)
     const inputRef = createRef()
-    const [recoilState, setRecoilState] = useRecoilState(commentState)
+    const [recoilState, setRecoilState] = useRecoilState(detailPublicationState)
+    const id =  recoilState.id
     const [selectedOption, setSelectedOption] = useState({
         options: "input",
         id: null,
         onFocus: false,
         value: '',
         showMore: false,
+        showMoreId: null
     })
 
     const handleSelectedOptions = (options, id, value) => {
@@ -28,41 +28,45 @@ const DetailDescription = () => {
     }
 
 
-    const showMoreHandler = (flag) => {
-        setSelectedOption(oldState => ({...oldState, [flag]: !oldState[flag]}))
+    const showMoreHandler = (flag, id) => {
+        setSelectedOption(oldState => (
+            {...oldState, [flag]: !oldState[flag], showMoreId: id}
+        ))
     }
     const handleFile = fileList => {
         setFile(fileList[0])
     }
-    console.log(file)
 
     const addCommentHandler = () => {
         const token = JSON.parse(window.localStorage.getItem("token"))
+        const formData = new FormData()
+        formData.append("image", file ? file : '')
+        formData.append("text", selectedOption.value)
+        formData.append("id", selectedOption.id || id)
+
         if (!token) {
             toast.error('Вы не авторизованы')
             return
         }else{
             if (selectedOption.options === 'input') {
-                fetch(uku + `/publication/comment/${recoilState.id}/add_comment/`, {
+                fetch(uku + `/publication/comment/${id}/add_comment/`, {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json",
                         Authorization: `Token ${token}`,
                     },
-                    body: JSON.stringify({text: selectedOption.value})
+                    body: formData
                 })
-                    .then(res => {getComments().then(data => setRecoilState(data))})
                     .then(() => {setSelectedOption({options: "input", id: null, onFocus: false, value: '', showMore: false,})})
                     .catch(err => {toast.error(err.message)})
             } else if (selectedOption.options === "answer") {
-                fetch(uku + `/publication/comment/${recoilState.id}/add_comment/?comment_id=${selectedOption.id}`, {
+                fetch(uku + `/publication/comment/${id}/add_comment/?comment_id=${selectedOption.id}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Token ${JSON.parse(localStorage.getItem("token"))}`,
                     },
-                    body: JSON.stringify({text: selectedOption.value})})
-                    .then(res => {getComments().then(data => setRecoilState(data))})
+                    body: formData
+                })
                     .then(() => {setSelectedOption({options: "input", id: null, onFocus: false, value: '', showMore: true,})})
                     .catch(err => {toast.error(err.message)})
             }

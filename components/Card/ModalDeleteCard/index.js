@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "../../ModalDelete/ModalDelete.module.scss";
+import styles from "../../ModalDeletePublication/ModalDeletePublication.module.scss";
 import uku from "../../../util/HTTP_Agent";
 import {toast} from "react-toastify";
 

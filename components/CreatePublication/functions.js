@@ -37,3 +37,20 @@ export const createPublication = async (category, location, description, images)
   })
   return res.json();
 }
+
+export const updatePublication = async (category, location, description, images, id) => {
+  const res = await fetch(uku + `/publication/${id}/update/`, {
+    headers: {
+      "Authorization": `Token ${getUserToken()}`,
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    body: JSON.stringify({
+      category,
+      location,
+      description,
+      images
+    }),
+  })
+  return res;
+}

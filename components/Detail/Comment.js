@@ -1,12 +1,10 @@
 import styles from './styles.module.scss'
-import {useState} from "react";
 import {useRecoilState} from "recoil";
-import {commentState} from "./state";
+import {detailPublicationState} from "./state";
 import Link from "next/link";
 
 const Comment = ({handleSelectedOptions,showMoreHandler,selectedOption}) => {
-    const [recoilState, setRecoilState] = useRecoilState(commentState)
-    console.log(recoilState)
+    const [recoilState, setRecoilState] = useRecoilState(detailPublicationState)
     return (
         <>
             {recoilState.comments && recoilState.comments.map(item => {
@@ -31,12 +29,11 @@ const Comment = ({handleSelectedOptions,showMoreHandler,selectedOption}) => {
                                         Ответить
                                 </span>
                             </div>
-                            {selectedOption.showMore ?
+                            {selectedOption.showMore && selectedOption.showMoreId === item.id ?
                                 item.replies.map(item => {
-                                    console.log(item,'pod')
                                     return(
                                         <div className={styles.comments} key={item.id}>
-                                            <img src={`http://api.uku.kg/` + item.author.avatar} className={styles.avatar} alt="#" width={'10px'}/>
+                                            <img src={item.author.avatar} className={styles.avatar} alt="#" width={'10px'}/>
                                             <div className={styles.commentsData}>
                                                 <p>
                                                     <Link href={`/profile/${item.author.id}`}>
@@ -66,8 +63,8 @@ const Comment = ({handleSelectedOptions,showMoreHandler,selectedOption}) => {
                              item.replies.length !== 0
                                  ?
                                  <p className={styles.showComments}
-                                    onClick={()=>showMoreHandler("showMore")}>
-                                     ---- {selectedOption.showMore ? "Скрыть" : "Показать"} все {item.replies.length } комментариев
+                                    onClick={()=>showMoreHandler("showMore",item.id)}>
+                                     ---- {selectedOption.showMore && selectedOption.showMoreId === item.id ? "Скрыть" : "Показать"} все {item.replies.length } комментариев
                                  </p>
                                  :
                                  null

@@ -2,30 +2,35 @@ import Navigation from "./Navigation";
 import DetailInfo from "./DetailInfo";
 import styles from './styles.module.scss'
 import classNames from "classnames";
-import {useEffect, useState} from "react";
-import {getComments} from "./request";
+import {useEffect} from "react";
+import {getDetailPublication} from "./request";
 import {useRecoilState} from "recoil";
-import {commentState} from "./state";
-import ModalDelete from "../ModalDelete/ModalDelete";
+import {detailPublicationState} from "./state";
+import ModalDeletePublication from "../ModalDeletePublication/ModalDeletePublication";
+import ModalUpdatePublication from "../ModalUpdatePublication";
+import ModalDeleteImages from "../ModalDeleteImages";
 
 const Detail = () => {
-  const [recoilState, setRecoilState] = useRecoilState(commentState)
-  useEffect(async () => {
-    const detail = await getComments()
-    setRecoilState(detail)
-  }, [])
-  console.log(recoilState)
-  return (
-    <div className={classNames("container", styles.detail)}>
-      {recoilState &&
-      <>
-        <Navigation {...recoilState}/>
-        <DetailInfo {...recoilState}/>
-        <ModalDelete/>
-      </>
-      }
-    </div>
-  )
+    const [recoilState, setRecoilState] = useRecoilState(detailPublicationState)
+
+    useEffect(async () => {
+        const detail = await getDetailPublication()
+        setRecoilState(detail)
+        },[])
+
+    return (
+        <div className={classNames("container", styles.detail)}>
+            {recoilState &&
+                <>
+                    <Navigation/>
+                    <DetailInfo/>
+                    <ModalDeletePublication/>
+                    <ModalUpdatePublication/>
+                    <ModalDeleteImages/>
+                </>
+            }
+        </div>
+    )
 }
 
 export default Detail;
