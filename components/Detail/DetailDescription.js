@@ -42,7 +42,7 @@ const DetailDescription = () => {
         const formData = new FormData()
         formData.append("image", file ? file : '')
         formData.append("text", selectedOption.value)
-        // formData.append("id", selectedOption.id || id)
+        formData.append("id", selectedOption.id || id)
 
         if (!token) {
             toast.error('Вы не авторизованы')
