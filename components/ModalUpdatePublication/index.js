@@ -4,6 +4,7 @@ import {useRecoilState} from "recoil";
 import {detailPublicationState, modalStateFlag} from "../Detail/state";
 import {updatePublication, uploadImages} from "../CreatePublication/functions";
 import {toast} from "react-toastify";
+import {getDetailPublication} from "../Detail/request";
 
 const ModalUpdatePublication = () => {
     const [modalState, setModalState] = useRecoilState(modalStateFlag)
@@ -14,31 +15,37 @@ const ModalUpdatePublication = () => {
     const locationID = recoilState?.location?.id
     const description = recoilState?.description
     const publicationId = recoilState?.id
-    console.log(recoilState)
+
     React.useEffect(() => {
         setPhotosId(recoilState?.images?.map(item => {
             return item.id
         }))
     },[recoilState.images])
 
+    React.useEffect(async () => {
+        const detail = await getDetailPublication()
+        setRecoilState(detail)
+    },[modalState.deleteImageModal, modalState.updateModal])
+
     const deleteImageHandler = (key, flag,id) => {
         setModalState(old => ({...old, [key]: flag, imageId: id}))
     }
 
     const onInputFile = (file) => {
+        console.log(file)
         setPhotosState(old => ([...old, ...file]))
     }
 
     const onClickUpdatePublication = () => {
-        uploadImages(photosState).then(photosState => {
-            setPhotosId(old => ([...old, ...photosState]))
-            updatePublication(categoryID, locationID, description, photosId, publicationId).then(res => {
+        uploadImages(photosState).then(responseID => {
+            updatePublication(categoryID, locationID, description, [...photosId, ...responseID], publicationId).then(res => {
+                setPhotosState([])
                 if (res.ok) {
-                    console.log(photosId)
                     setModalState(old => ({...old, updateModal: false}))
+                    setPhotosState([])
                     toast.success("Успешно изменено")
                 } else {
-                    toast.error("Что-то пошло не так")
+                    toast.error("Загруженный файл не является корректным файлом")
                 }
             })
         })
@@ -78,7 +85,7 @@ const ModalUpdatePublication = () => {
                                             </div>
                                         ))
                                     }
-                                    {Array.from(photosState).map((item, index) => {
+                                    {Array.from(photosState)?.map((item, index) => {
                                         return <div className={styles.content_main_imageItem}><img src={URL.createObjectURL(item)} alt="imageItem" key={index}/>
                                             <span className={styles.deleteImage} onClick={() => deleteImageLocal(item)}>&times;</span>
                                         </div>
@@ -105,7 +112,7 @@ const ModalUpdatePublication = () => {
                                 </div>
                             </div>
                             <div className={styles.content_footer}>
-                                <textarea>{recoilState.title}</textarea>
+                                <textarea>{recoilState.description}</textarea>
                                 <button onClick={() => onClickUpdatePublication()}>Изменить</button>
                             </div>
                         </>

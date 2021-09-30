@@ -13,8 +13,8 @@ import ModalDeleteImages from "../ModalDeleteImages";
 const Detail = () => {
     const [recoilState, setRecoilState] = useRecoilState(detailPublicationState)
 
-    useEffect(async () => {
-        const detail = await getDetailPublication()
+    useEffect( () => {
+        const detail =  getDetailPublication()
         setRecoilState(detail)
         },[])
 
