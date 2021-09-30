@@ -6,7 +6,6 @@ import { detailPublicationState, modalStateFlag} from "./state";
 const Navigation = () => {
     const [recoilState, setRecoilState] = useRecoilState(detailPublicationState)
     const [modalState, setModalState] = useRecoilState(modalStateFlag)
-
     const showModalHandler = (key,flag) => {
         setModalState(old=> ({...old, [key]: flag}))
     }

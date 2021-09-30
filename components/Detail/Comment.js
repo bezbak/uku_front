@@ -1,13 +1,10 @@
 import styles from './styles.module.scss'
-import {useRecoilState} from "recoil";
-import {detailPublicationState} from "./state";
 import Link from "next/link";
 
-const Comment = ({handleSelectedOptions,showMoreHandler,selectedOption}) => {
-    const [recoilState, setRecoilState] = useRecoilState(detailPublicationState)
+const Comment = ({handleSelectedOptions,showMoreHandler,selectedOption,comments}) => {
     return (
         <>
-            {recoilState.comments && recoilState.comments.map(item => {
+            {comments?.map(item => {
                 return(
                     <div className={styles.comments} key={item.id}>
                         <img src={item.author.avatar} className={styles.avatar} alt="#"/>
@@ -43,12 +40,12 @@ const Comment = ({handleSelectedOptions,showMoreHandler,selectedOption}) => {
                                                     </Link>
                                                     {item.text}
                                                 </p>
-                                                {item.image !== null ? <img src="/images/Rectangle 44.jpg" alt="#" className={styles.imagesInComment}/> : null}
+                                                {item.image !== null ? <img src={item.image} alt="#" className={styles.imagesInComment}/> : null}
                                                 <div className={styles.info_times}>
                                                     <span className={styles.commentTime}>{item.created_at}</span>
                                                      <span
                                                         className={styles.answer}
-                                                        onClick={()=>handleSelectedOptions("answer",item.id, (`@${item.reply_to_user.first_name}_${item.reply_to_user.last_name}`))}>
+                                                        onClick={()=>handleSelectedOptions("answer",item.id, (`@${item.author.first_name}_${item.author.last_name}`))}>
                                                             Ответить
                                                     </span>
                                                 </div>

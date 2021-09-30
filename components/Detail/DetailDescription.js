@@ -1,3 +1,4 @@
+import React, {useEffect} from "react";
 import Comment from "./Comment";
 import styles from './styles.module.scss'
 import {createRef, Fragment, useState} from "react";
@@ -12,6 +13,7 @@ const DetailDescription = () => {
     const inputRef = createRef()
     const [recoilState, setRecoilState] = useRecoilState(detailPublicationState)
     const id =  recoilState.id
+    const [comments, setComments] = useState([])
     const [selectedOption, setSelectedOption] = useState({
         options: "input",
         id: null,
@@ -21,12 +23,15 @@ const DetailDescription = () => {
         showMoreId: null
     })
 
+    React.useEffect(() => {
+        setComments(recoilState.comments)
+    },[recoilState.comments])
+
     const handleSelectedOptions = (options, id, value) => {
-        (setSelectedOption({options: options, id: id, onFocus: false, value: value, showMore: false,}))
-        if (value === '') {(setSelectedOption({options: "input", id: null, onFocus: false, value: value,showMore: false,}))}
+        (setSelectedOption(old => ({...old, options: options, id: id, onFocus: false, value: value})))
+        if (value === '') {(setSelectedOption({options: "input", id: null, onFocus: false, value: value}))}
         inputRef.current.focus()
     }
-
 
     const showMoreHandler = (flag, id) => {
         setSelectedOption(oldState => (
@@ -40,34 +45,39 @@ const DetailDescription = () => {
     const addCommentHandler = () => {
         const token = JSON.parse(window.localStorage.getItem("token"))
         const formData = new FormData()
-        formData.append("image", file ? file : '')
+        if(file){
+            formData.append("image", file ? file : null)
+        }
         formData.append("text", selectedOption.value)
         formData.append("id", selectedOption.id || id)
-
         if (!token) {
             toast.error('Вы не авторизованы')
             return
         }else{
             if (selectedOption.options === 'input') {
-                fetch(uku + `/publication/comment/${id}/add_comment/`, {
+                fetch(uku + `/publication/comment/${id}/add_comment/`,
+                    {
+                        method: "POST",
+                        headers: {
+                            Authorization: `Token ${token}`,
+                        },
+                        body: formData
+                    })
+                    .then((res) => {return res.json()})
+                    .then((data) => {setRecoilState(old => ({...old, comments: [...old.comments, data]}))})
+                    .then(() => {setSelectedOption({options: "input", id: null, onFocus: false, value: '', showMore: false,})})
+                    .then(() => {setFile(null)})
+                    .catch(err => {toast.error(err.message)})
+            } else if (selectedOption.options === "answer") {
+                fetch(uku + `/publication/comment/${id}/add_comment/?comment_id=${selectedOption.id}`, {
                     method: "POST",
                     headers: {
                         Authorization: `Token ${token}`,
                     },
                     body: formData
                 })
-                    .then(() => {setSelectedOption({options: "input", id: null, onFocus: false, value: '', showMore: false,})})
-                    .catch(err => {toast.error(err.message)})
-            } else if (selectedOption.options === "answer") {
-                fetch(uku + `/publication/comment/${id}/add_comment/?comment_id=${selectedOption.id}`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Token ${JSON.parse(localStorage.getItem("token"))}`,
-                    },
-                    body: formData
-                })
                     .then(() => {setSelectedOption({options: "input", id: null, onFocus: false, value: '', showMore: true,})})
+                    .then(() => {setFile(null)})
                     .catch(err => {toast.error(err.message)})
             }
         }
@@ -88,6 +98,7 @@ const DetailDescription = () => {
                 <div className={styles.comment}>
                     <h3>Комментарии</h3>
                     <Comment
+                        comments={comments}
                         selectedOption={selectedOption}
                         handleSelectedOptions={handleSelectedOptions}
                         showMoreHandler={showMoreHandler}
@@ -124,3 +135,6 @@ const DetailDescription = () => {
 }
 
 export default DetailDescription;
+
+
+
