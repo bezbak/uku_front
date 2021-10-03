@@ -7,7 +7,7 @@ const ProfileInfo = ({profile, setShowSidebar}) => {
 
   return (
     <React.Fragment>
-      <div>
+      <div className={styles.profileAvatar}>
         <img onClick={() => setModalAvatar(old => !old)} width={"140px"} height={"140px"}
              style={{borderRadius: "50%", cursor: "pointer"}}
              src={profile.avatar ? profile.avatar : "/images/noAvatar.png"} alt=""/>

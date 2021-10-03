@@ -1,5 +1,4 @@
 import {Header} from "../../containers/header";
-import Footer from "../../containers/footer";
 import Detail from "../../components/Detail";
 
 const DetailPage = () => {
@@ -7,7 +6,6 @@ const DetailPage = () => {
         <div>
             <Header/>
             <Detail/>
-            <Footer/>
         </div>
     )
 }

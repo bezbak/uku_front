@@ -8,7 +8,6 @@ const Faq = () => {
         <div>
             <Header/>
             <FAQ/>
-            <Footer/>
         </div>
     )
 }

@@ -15,6 +15,7 @@
     border-radius: 6px;
     width: 400px;
     height: 46px;
+    text-indent: 16px;
 
     &:focus {
       outline: none;
@@ -27,6 +28,7 @@
   align-items: flex-start !important;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start !important;
   background: #FFFFFF;
   overflow: auto;
   z-index: 2;
@@ -39,7 +41,7 @@
     cursor: pointer;
     margin: 10px 20px;
     padding: 10px 0;
-    width: 100%;
+    width: 80%;
     justify-content: flex-start;
     border-bottom: 1px solid #EEEEEE;
 
@@ -47,6 +49,7 @@
       width: 36px;
       height: 36px;
       border-radius: 50%;
+      object-fit: cover;
     }
 
     .fio {
@@ -69,4 +72,25 @@
 
 .hide {
   display: none !important;
+}
+
+.dropDown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dropDown::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.dropDown::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.clear {
+  font-size: 20px;
+  position: absolute;
+  right: 15px;
+  top: 12px;
+  cursor: pointer;
 }

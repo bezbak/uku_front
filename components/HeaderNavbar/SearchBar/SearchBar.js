@@ -14,7 +14,6 @@ const SearchBar = () => {
     fetch(uku + endpoints.searchUser + `?q=${text}`)
       .then(res => res.json().then(data => {
         setData(data)
-        console.log(data)
       }))
   }
 
@@ -43,13 +42,14 @@ const SearchBar = () => {
                 <img src={item.avatar || "/images/noAvatar.png"} alt=""/>
               </div>
               <div className={styles.fio}>
-                <p>{item.last_name}</p>
-                <span>{item.first_name}</span>
+                <p>{item.last_name} {item.first_name}</p>
               </div>
             </div>
           })}
-
         </div>
+        <div
+          onClick={() => setText("")}
+          className={text ? styles.clear : styles.hide}>&times;</div>
       </div>
 
     </div>

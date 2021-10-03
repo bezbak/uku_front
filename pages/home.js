@@ -7,7 +7,6 @@ const Home = () => {
     <div>
       <Header/>
       <Mainfeed/>
-      <Footer/>
     </div>
   )
 }

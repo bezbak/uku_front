@@ -7,7 +7,6 @@ const MyProfile = () => {
     <div>
       <Header/>
       <Profile/>
-      <Footer/>
     </div>
   )
 }

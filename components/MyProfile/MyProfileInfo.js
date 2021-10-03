@@ -17,9 +17,9 @@ import classNames from "classnames";
 import Alert from "../Alert";
 
 const MyProfileInfo = ({profile, setProfile}) => {
-  const [profileImage, setProfileImage] = useState(null)
+  const [, setProfileImage] = useState(null)
   const [showSidebar, setShowSidebar] = useState(false)
-  const [phoneNumber, setPhoneNumber] = useState("")
+  const [, setPhoneNumber] = useState("")
   const [modalReset, setModalReset] = useState(false)
   const [form, setForm] = useState({
     instagram: "",
@@ -62,7 +62,8 @@ const MyProfileInfo = ({profile, setProfile}) => {
       <div onClick={() => setShowSidebar(old => !old)} className={styles.editProfile}/>
       <ProfileInfo profile={profile} setShowSidebar={setShowSidebar}/>
       <div ref={ref} className={classNames(styles.leftSideBar, sidebarClass)}>
-        <button onClick={()=>setShowSidebar(old=>!old)} className={styles.editBack}><span>&#8592;</span>Назад</button>
+        <button onClick={() => setShowSidebar(old => !old)} className={styles.editBack}><span>&#8592;</span>Назад
+        </button>
         <div className={styles.editAvatar}>
           <label
             htmlFor="avatar">
@@ -72,10 +73,10 @@ const MyProfileInfo = ({profile, setProfile}) => {
           </label>
           <div className={styles.filter}/>
           <div className={styles.placeholderHover}>
-            <img src="/images/avatarCamera.svg" width="24px" height="24px" alt=""/>
+            <img style={{objectFit: "cover"}} src="/images/avatarCamera.svg" width="24px" height="24px" alt=""/>
             <span>Изменить фото профиля</span>
           </div>
-          <img src={profile.avatar ? isAvatarExist(profile.avatar) : "/images/avatarPlaceholder.png"} alt=""/>
+          <img style={{objectFit: "cover"}} src={profile.avatar ? isAvatarExist(profile.avatar) : "/images/avatarPlaceholder.png"} alt=""/>
         </div>
         <form className={styles.editProfileForm} onSubmit={e => onClickSaveProfile(e, form, setLoading)}
               name="editProfile" id="editProfile">

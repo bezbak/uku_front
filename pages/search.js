@@ -7,7 +7,6 @@ const Search = () => {
         <div>
             <Header/>
             <Searchbox/>
-            <Footer/>
         </div>
     )
 }

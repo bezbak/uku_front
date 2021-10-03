@@ -25,13 +25,23 @@
   flex-direction: column;
   justify-content: space-between;
   height: 80%;
-}
 
-.btnGroup {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  > svg {
-    margin: 0 5px;
+  &:hover {
+    .btnGroup {
+      opacity: 1;
+    }
+  }
+
+  .btnGroup {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    opacity: 0;
+    transition: opacity .3s;
+
+    > svg {
+      margin: 0 5px;
+    }
   }
 }
+

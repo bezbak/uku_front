@@ -46,7 +46,7 @@ const Card = ({cards, width, setRecoilState, page = ""}) => {
             <Link href={`/detail/${item.id}`}>
               <div className={styles.content}>
                 <div>
-                  <CardSlider images={item.images}/>
+                  <CardSlider images={item.images} owner={item.is_owner}/>
                   {item && item.is_owner && false ? null : <div
                     onClick={(e) => onClickFavourite(item.id, index, setRecoilState, e, page)}
                     style={item.is_owner ? {top: "50px"} : {}}

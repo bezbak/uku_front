@@ -7,6 +7,7 @@ import {favoriteFeed} from "../components/Card/state";
 import {useRecoilState, useResetRecoilState} from "recoil";
 import {getCards} from "../util/getCards";
 import {value} from "lodash/seq";
+import classNames from "classnames";
 
 const FavoriteFeed = () => {
   const [data, setData] = useRecoilState(favoriteFeed)
@@ -40,7 +41,7 @@ const FavoriteFeed = () => {
   }, [data.next])
 
   return (
-    <div className="container">
+    <div className={classNames("container", styles.favorite)}>
       <h2>Избранное</h2>
       {data.results.length ? null : <div className={styles.placeholder}/>}
       <div className={styles.feed}>

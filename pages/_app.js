@@ -11,8 +11,8 @@ import MobileHeader from "../components/MobileHeader";
 
 export default function App({Component, pageProps}) {
 
-  useEffect(()=>{
-    if(window.localStorage.getItem("token")===""){
+  useEffect(() => {
+    if (window.localStorage.getItem("token") === "") {
       window.localStorage.removeItem("token")
     }
   }, [])
@@ -32,6 +32,7 @@ export default function App({Component, pageProps}) {
         pauseOnFocusLoss
         draggable
         pauseOnHover
+        limit={1}
       />
     </React.Fragment>
   )

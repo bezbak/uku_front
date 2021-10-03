@@ -4,6 +4,7 @@
 @import '/styles/modules/mixins/modal';
 
 .profilePage {
+  padding-top: 150px;
   display: flex;
   @media (max-width: 600px) {
     flex-direction: column;
@@ -142,8 +143,8 @@
 .editProfile {
   cursor: pointer;
   background: url("/images/editProfile.svg");
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
   position: absolute;
   right: 70px;
   top: 100px;
@@ -179,6 +180,7 @@
 }
 
 .leftSideBar {
+  padding-top: 150px;
   transition: transform .5s;
   position: fixed;
   width: 600px;
@@ -213,12 +215,13 @@
     }
   }
 
-  .editBack{
-    span{
-      font-size: 20px;
+  .editBack {
+    span {
+      font-size: 14px;
       margin-right: 10px;
       margin-bottom: 2px;
     }
+
     display: none;
     @media (max-width: 600px) {
       display: flex;
@@ -383,7 +386,6 @@
     align-items: center;
     flex-direction: column;
 
-
     span {
       font-family: Inter, sans-serif;
       font-style: normal;
@@ -427,6 +429,7 @@
 
 .editProfileForm {
   padding-bottom: 200px !important;
+
   h2 {
     font-family: Inter, sans-serif;
 
@@ -438,9 +441,15 @@
       font-size: 14px;
       text-align: left;
     }
-    h3{
+    h3 {
       font-size: 14px;
       text-align: left;
     }
+  }
+}
+
+.profileAvatar{
+  img{
+    object-fit: cover;
   }
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import {Header} from "../../containers/header";
-import Footer from "../../containers/footer";
 import Profile from "../../components/Profile";
 
 const ProfileDetail = () => {
@@ -8,7 +7,6 @@ const ProfileDetail = () => {
     <div>
       <Header/>
       <Profile/>
-      <Footer/>
     </div>
   )
 

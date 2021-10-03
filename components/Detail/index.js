@@ -11,26 +11,26 @@ import ModalUpdatePublication from "../ModalUpdatePublication";
 import ModalDeleteImages from "../ModalDeleteImages";
 
 const Detail = () => {
-    const [recoilState, setRecoilState] = useRecoilState(detailPublicationState)
+  const [recoilState, setRecoilState] = useRecoilState(detailPublicationState)
 
-    useEffect( () => {
-        const detail =  getDetailPublication()
-        setRecoilState(detail)
-        },[])
+  useEffect(() => {
+    const detail = getDetailPublication()
+    setRecoilState(detail)
+  }, [])
 
-    return (
-        <div className={classNames("container", styles.detail)}>
-            {recoilState &&
-                <>
-                    <Navigation/>
-                    <DetailInfo/>
-                    <ModalDeletePublication/>
-                    <ModalUpdatePublication/>
-                    <ModalDeleteImages/>
-                </>
-            }
-        </div>
-    )
+  return (
+    <div className={classNames("container", styles.detail)}>
+      {recoilState &&
+      <>
+        <Navigation/>
+        <DetailInfo/>
+        <ModalDeletePublication/>
+        <ModalUpdatePublication/>
+        <ModalDeleteImages/>
+      </>
+      }
+    </div>
+  )
 }
 
 export default Detail;
