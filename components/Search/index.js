@@ -11,7 +11,7 @@ import {modalAtom} from "./state";
 import CreatePublication from "../CreatePublication";
 
 const Search = ({createPublication = false}) => {
-  const {data, error} = useSWR(uku + endpoints.categories, fetcher)
+  const {data} = useSWR(uku + endpoints.categories, fetcher)
   const [modal, setModal] = useRecoilState(modalAtom)
 
   return (

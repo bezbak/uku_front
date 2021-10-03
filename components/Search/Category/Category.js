@@ -52,8 +52,10 @@ const Category = ({items}) => {
               key={item.id}
               onClick={e => onClickHandler(item, e)}>
               <div className={classNames(styles.catBody, selectedClass(item))}>
-                {item.image ? <img src={item.image} alt=""/> : null}
-                {item.name}{' '}
+                <div>
+                  {item.image ? <img src={item.image} alt=""/> : null}
+                  {item.name}{' '}
+                </div>
                 {item.children.length ? (
                   <button
                     className={styles.btn}
@@ -61,8 +63,8 @@ const Category = ({items}) => {
                     }
                   />
                 ) : null}
-                <div
-                  className={displayChildren[item.name] && selectedCategory?.name === item.name ? styles.round : 'hide'}/>
+                {/*<div*/}
+                {/*  className={displayChildren[item.name] && selectedCategory?.name === item.name ? styles.round : 'hide'}/>*/}
               </div>
               {displayChildren[item.name] && item.children && <Category items={item.children}/>}
             </li>

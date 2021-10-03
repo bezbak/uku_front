@@ -11,8 +11,8 @@ import {toast} from "react-toastify";
 const CreatePublicationWithoutPhoto = () => {
   const category = useRecoilValue(categoryAtom)
   const resetCategory = useResetRecoilState(categoryAtom)
-  const [{locationID}, setLocation] = useRecoilState(locationAtom)
-  const [photos, setPhotos] = useRecoilState(photosAtom)
+  const [{locationID}] = useRecoilState(locationAtom)
+  const [, setPhotos] = useRecoilState(photosAtom)
   const [description, setDescription] = useState("")
 
   const router = useRouter()
