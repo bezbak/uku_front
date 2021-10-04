@@ -7,7 +7,6 @@ const Contacts = () => {
         <div>
             <Header/>
             <ContactsBody/>
-            <Footer/>
         </div>
     )
 }

@@ -11,18 +11,27 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  button {
-    background: #E56366;
-    color: #FFFFFF;
-    padding: 8px 32px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
 }
 
 .profileTitle {
   display: flex;
   justify-content: space-between;
+}
+
+.subscribed {
+  background: #cccccc;
+  color: #FFFFFF;
+  padding: 8px 32px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.default {
+  background: #E56366;
+  color: #FFFFFF;
+  padding: 8px 32px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }

@@ -18,11 +18,11 @@ const ProfileContacts = ({profile}) => {
     [styles.modalAvatar]: modal,
     "hide": !modal
   })
-  console.log(profile)
+
   return (
     <div>
       <div>
-        <img onClick={onClickAvatar} width={"140px"} height={"140px"} style={{borderRadius: "50%"}}
+        <img className={styles.profilePhoto} onClick={onClickAvatar} width={"140px"} height={"140px"} style={{borderRadius: "50%", objectFit: "coverD"}}
              src={profile.avatar ? profile.avatar : "/images/noAvatar.png"} alt=""/>
       </div>
       <div className={styles.fio}>

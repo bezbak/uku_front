@@ -9,7 +9,6 @@ const Favourite = () => {
     <div>
       <Header/>
       <FavoriteFeed/>
-      <Footer/>
     </div>
   )
 }

@@ -2,17 +2,20 @@
 @import "styles/modules/variables/colors";
 @import '/styles/modules/mixins/button';
 
-.mainfeed{
+.mainfeed {
+  padding-top: 150px;
   @media (max-width: 600px) {
     padding-top: 120px;
-    h2{
+    h2 {
       display: none;
     }
   }
 }
+
 .title {
   @media (max-width: 600px) {
   }
+
   h1 {
     @include font(24px, 500, 30px);
     color: #121213;
@@ -22,9 +25,12 @@
 .feed {
   display: flex;
   flex-wrap: wrap;
-  >div{
+  justify-content: flex-end;
+
+  > div {
     margin: 10px 10px;
   }
+
   @media (max-width: 600px) {
     display: flex;
     justify-content: center !important;
@@ -77,6 +83,10 @@
 }
 
 .header {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  background-color: #FFFFFF;
   @media (max-width: 768px) {
     display: none;
   }
@@ -87,7 +97,7 @@
   align-items: center;
   justify-content: space-between;
   @media (max-width: 600px) {
-    h1{
+    h1 {
       text-align: center;
     }
   }
@@ -104,10 +114,23 @@
 }
 
 @media only screen and (max-width: 600px) {
-  .authorization{
-    img{
+  .authorization {
+    img {
       display: none;
     }
   }
+}
+
+.favorite {
+  padding-top: 150px;
+}
+
+.search {
+  padding-top: 150px;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
 }
 

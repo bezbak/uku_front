@@ -16,6 +16,7 @@
 
 .cardName {
   display: flex;
+  align-items: center;
   margin-top: 5px;
   margin-bottom: 5px;
   cursor: pointer;
@@ -40,5 +41,6 @@
   }
 }
 .unSub{
+  font-size: 12px !important;
   color: #24475A !important;
 }

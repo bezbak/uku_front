@@ -1,6 +1,4 @@
 import Link from "next/link";
-import uku from '/util/HTTP_Agent'
-import {endpoints} from "../../../api/endpoints";
 import styles from './styles.module.scss'
 import {useEffect, useState} from "react";
 import {getProfileInfo} from "../../MyProfile/getProfileInfo";
@@ -24,9 +22,9 @@ const Profile = ({state}) => {
     authorized:
       <Link href={`/myProfile`}>
         <div className={styles.profile}>
-          <img width={"24px"} height={"24px"} style={{borderRadius: "50%"}}
+          <img className={styles.profileAvatar} width={"24px"} height={"24px"} style={{borderRadius: "50%", objectFit: "cover"}}
                src={avatar ? avatar : "/icons/no_avatar.png"} alt=""/>
-          <span>Профиль</span>
+          <span className={styles.profileLink} >Профиль</span>
         </div>
       </Link>,
     nonAuthorized:

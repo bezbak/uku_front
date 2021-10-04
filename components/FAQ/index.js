@@ -10,28 +10,28 @@ const fetchFaq = url => fetch(url).then(res => res.json().then(data => data))
 
 const FAQ = () => {
 
-    const {data, error} = useSWR(uku + endpoints.faq, fetchFaq)
+  const {data, error} = useSWR(uku + endpoints.faq, fetchFaq)
 
-    toast.error(error)
+  toast.error(error)
 
-    return (
-        <div className={classNames("container", styles.faqBody)}>
-            <h2>F.A.Q.</h2>
-            <div className={styles.box}>
-                {
-                    data && data.map((item, index) => {
-                        return (
-                            <div key={index}>
-                                <Spoiler
-                                    info={item}
-                                />
-                            </div>
-                        )
-                    })
-                }
-            </div>
-        </div>
-    )
+  return (
+    <div className={classNames("container", styles.faqBody)}>
+      <h2>F.A.Q.</h2>
+      <div className={styles.box}>
+        {
+          data && data.map((item, index) => {
+            return (
+              <div key={index}>
+                <Spoiler
+                  info={item}
+                />
+              </div>
+            )
+          })
+        }
+      </div>
+    </div>
+  )
 }
 
 export default FAQ;

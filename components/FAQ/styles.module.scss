@@ -2,6 +2,7 @@
 @import "styles/modules/variables/colors";
 
 .faqBody {
+  padding-top: 150px;
   @include font(24px, 500, 28px);
 }
 

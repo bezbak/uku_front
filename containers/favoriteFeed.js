@@ -5,8 +5,9 @@ import {getFavoriteCards} from "../util/getFavoriteCards";
 import {cb, options} from "../util/interSectionObserver";
 import {favoriteFeed} from "../components/Card/state";
 import {useRecoilState, useResetRecoilState} from "recoil";
-import {getCards} from "../util/getCards";
-import {value} from "lodash/seq";
+import classNames from "classnames";
+import Loader from "../components/Loader";
+import LoaderComponent from "../components/Loader";
 
 const FavoriteFeed = () => {
   const [data, setData] = useRecoilState(favoriteFeed)
@@ -16,17 +17,19 @@ const FavoriteFeed = () => {
   useEffect(() => {
     resetFavorite()
   }, [])
-
+  console.log(data)
   useEffect(() => {
+    setData(old => ({...old, loading: !old.loading}))
     getFavoriteCards(data.currentPage).then(res => res.json().then(value => {
-      if (value.results !== undefined) {
+      console.log(value)
+      if (value.next !== null && value?.results?.length) {
         setData(old => ({
           ...old,
           ...value,
           results: [...old.results, ...value.results],
         }))
       }
-    }))
+    })).finally(() => setData(old => ({...old, loading: !old.loading})))
   }, [data.currentPage])
 
   useEffect(() => {
@@ -40,7 +43,7 @@ const FavoriteFeed = () => {
   }, [data.next])
 
   return (
-    <div className="container">
+    <div className={classNames("container", styles.favorite)}>
       <h2>Избранное</h2>
       {data.results.length ? null : <div className={styles.placeholder}/>}
       <div className={styles.feed}>
@@ -50,6 +53,7 @@ const FavoriteFeed = () => {
               page={"favorite"}
         />
       </div>
+      <LoaderComponent loading={data.loading}/>
       <div ref={ref}/>
     </div>
   )

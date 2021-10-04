@@ -9,7 +9,6 @@ const CreatePublication = () => {
       <div className={"container"}>
         <Search createPublication={true}/>
       </div>
-      <Footer/>
     </div>
   )
 }

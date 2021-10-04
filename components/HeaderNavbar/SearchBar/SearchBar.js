@@ -1,5 +1,5 @@
 import styles from './styles.module.scss'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import uku from '../../../util/HTTP_Agent'
 import {endpoints} from "../../../api/endpoints";
 import {useRouter} from "next/router";
@@ -9,14 +9,12 @@ const SearchBar = () => {
   const [text, setText] = useState("")
   const [data, setData] = useState([])
 
-  const onChangeInput = value => {
-    setText(value)
+  useEffect(() => {
     fetch(uku + endpoints.searchUser + `?q=${text}`)
       .then(res => res.json().then(data => {
         setData(data)
-        console.log(data)
       }))
-  }
+  }, [text])
 
   function onClickUser(id) {
     router.push(`/profile/${id}`)
@@ -29,7 +27,7 @@ const SearchBar = () => {
     <div className={styles.searchBar}>
       <div className={styles.searchBarContent}>
         <input
-          onChange={({target: {value}}) => onChangeInput(value)}
+          onChange={({target: {value}}) => setText(value)}
           type="text"
           value={text}
           width={200}/>
@@ -43,13 +41,14 @@ const SearchBar = () => {
                 <img src={item.avatar || "/images/noAvatar.png"} alt=""/>
               </div>
               <div className={styles.fio}>
-                <p>{item.last_name}</p>
-                <span>{item.first_name}</span>
+                <p>{item.last_name} {item.first_name}</p>
               </div>
             </div>
           })}
-
         </div>
+        <div
+          onClick={() => setText("")}
+          className={text ? styles.clear : styles.hide}>&times;</div>
       </div>
 
     </div>

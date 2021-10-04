@@ -8,6 +8,7 @@ import {profileFeed} from "../../Card/state";
 import {cb, options} from "../../../util/interSectionObserver";
 import {fetchFollow} from "../../Card/CardHead/CardHead";
 import {toast} from "react-toastify";
+import cs from 'classnames'
 
 const ProfileCards = ({profile, setProfile}) => {
   const [data, setData] = useRecoilState(profileFeed)
@@ -44,13 +45,22 @@ const ProfileCards = ({profile, setProfile}) => {
       setProfile(old => ({...old, following: !old.following}))
     }))
   }
-  console.log(profile)
+
+  const subsClass = isSub => cs({
+    [styles.subscribed]: isSub,
+    [styles.default]: !isSub
+  })
+
+
   return (
     <div className={'container'}>
       <div className={styles.profileTitle}>
         <h1>Публикации</h1>
         <div className={classNames(styles.profileFeedTitle)}>
-          <button onClick={() => onClickFollowProfile()}>{profile.following ? "Отписаться" : "Подписаться"}</button>
+          <button
+            className={subsClass(profile.following)}
+            onClick={() => onClickFollowProfile()}>{profile.following ? "Отписаться" : "Подписаться"}
+          </button>
         </div>
       </div>
       <div className={styles.profileFeed}>

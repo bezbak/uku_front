@@ -57,7 +57,7 @@ const CardHead = ({user, setRecoilState}) => {
     <div className={styles.cardHead}>
       <Link href={`/profile/${userState && userState.id}`}>
         <div className={styles.cardName}>
-          <img src={userState && userState.avatar ? user?.avatar : null} alt=""/>
+          <img style={{objectFit: "cover"}} src={userState && userState.avatar ? user?.avatar : null} alt=""/>
           <div>
             <p>{userState && userState.last_name?.length > 10 ?
               userState.last_name.slice(0, 10) + "..." : userState && userState.last_name + " "}

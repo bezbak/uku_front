@@ -13,7 +13,7 @@ const Profile = () => {
   const router = useRouter()
 
   useEffect(() => {
-    const id = window.location.pathname.split("/").pop()
+    const id = router.query.profile
     fetchProfile(id).then(data => setProfile(data))
   }, [router.query.profile])
 

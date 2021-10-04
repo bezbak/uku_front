@@ -10,11 +10,14 @@
 
   ul {
     width: 100%;
+    margin: 0 !important;
   }
 }
 
 .category {
-
+  ul{
+    margin: 0 !important;
+  }
   h2 {
     @include font(20px, 600, 24px);
   }
@@ -22,11 +25,13 @@
   .catBody {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
+    >div{
+    }
   }
 
   li {
-    margin: 10px 0;
+    margin: 10px 0 10px 10px;
     cursor: pointer;
     user-select: none;
 

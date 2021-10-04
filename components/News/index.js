@@ -8,7 +8,7 @@ const NewsCard = ({news}) => {
   {
     return news && news.map((item, index) => {
       if (item.publication_type === "news") {
-        return <React.Fragment key={item.id}>
+        return <React.Fragment key={index}>
           <div className={styles.newsCard}>
             <NewsCardHead
               user={item.user}
