@@ -11,14 +11,15 @@ const Favourite = ({state}) => {
       <Link href={"/favourite"}>
         <div>
           {router.asPath === "/favourite" ? <img src="/icons/heartSelected.png" alt=""/> :
-            <img src="/icons/heart.svg" alt=""/>}
-          <span className={styles.favoriteLink} style={router.asPath === "/favourite" ? {color: "#E56366"} : {}}>Избранное</span>
+            <img src="/icons/defaultHeart.png" alt=""/>}
+          <span className={styles.favoriteLink}
+                style={router.asPath === "/favourite" ? {color: "#E56366"} : {}}>Избранное</span>
         </div>
       </Link>,
     nonAuthorized:
       <Link href={"/login"}>
         <div>
-          <img src="/icons/heart.png" alt=""/>
+          <img src="/icons/defaultHeart.png" alt=""/>
           <p>Избранное</p>
         </div>
       </Link>

@@ -6,6 +6,8 @@ import {cb, options} from "../util/interSectionObserver";
 import {mainFeed} from "../components/Card/state";
 import {useRecoilState, useResetRecoilState} from "recoil";
 import classNames from "classnames";
+import Loader from "../components/Loader";
+
 
 const Mainfeed = () => {
   const [data, setData] = useRecoilState(mainFeed)
@@ -18,6 +20,7 @@ const Mainfeed = () => {
 
   useEffect(() => {
     if (data.next !== null) {
+      setData(old => ({...old, loading: !old.loading}))
       getCards(data.currentPage).then(data => {
         setData(old => ({...old, next: data.next}))
         if (data.results && data.results.length) {
@@ -26,6 +29,8 @@ const Mainfeed = () => {
             results: old.results.concat(data.results),
           }))
         }
+      }).finally(() => {
+        setData(old => ({...old, loading: !old.loading}))
       })
     }
   }, [data.currentPage])
@@ -51,6 +56,7 @@ const Mainfeed = () => {
           setRecoilState={setData}
         />
       </div>
+      <Loader loading={data?.loading}/>
       <div ref={ref}/>
     </div>
   )

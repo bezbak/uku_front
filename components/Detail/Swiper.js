@@ -38,7 +38,9 @@ const SwiperContainer = () => {
           scrollbar={{draggable: true}}
           className={styles.swiper}>
           {images && images.map((image, index) => {
-            return <SwiperSlide key={index}><img src={image && image.image} alt="image"/></SwiperSlide>
+            return <SwiperSlide key={index}>
+              <img src={image && image.image} alt="image"/>
+            </SwiperSlide>
           })}
         </Swiper>
       </div>

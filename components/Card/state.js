@@ -12,7 +12,8 @@ export let mainFeed = atom({
     currentPage: 1,
     next: 1,
     previous: null,
-    count: null
+    count: null,
+    loading: false,
   },
   dangerouslyAllowMutability: true
 })
@@ -25,6 +26,7 @@ export let favoriteFeed = atom({
     next: null,
     previous: null,
     count: null,
+    loading: false,
   },
   dangerouslyAllowMutability: true
 })

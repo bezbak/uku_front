@@ -8,6 +8,7 @@ export const publicationFeed = atom({
     next: null,
     previous: null,
     count: null,
+    loading: false,
   },
   dangerouslyAllowMutability: true,
 })

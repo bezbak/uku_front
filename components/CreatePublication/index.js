@@ -16,7 +16,6 @@ const CreatePublication = () => {
 
 
   const onInputFile = file => {
-    console.log(photos)
     setPhotos(old => ({...old, files: [...old.files, ...file]}))
   }
 
