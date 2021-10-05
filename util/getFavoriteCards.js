@@ -9,5 +9,6 @@ export async function getFavoriteCards(page) {
       Authorization: `Token ${token}`
     }
   }
-  return await fetch(uku + endpoints.favorites + `?page=${page}`, headers)
+  const res = await fetch(uku + endpoints.favorites + `?page=${page}`, headers)
+  return await res.json()
 }

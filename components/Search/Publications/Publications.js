@@ -1,87 +1,52 @@
 import styles from './styles.module.scss'
 import Card from "../../Card";
-import {useRecoilState, useResetRecoilState} from "recoil";
-import {currentCategoryAtom, publicationFeed} from "../state";
 import {useEffect, useRef} from "react";
-import {getPublications} from "./getPublications";
-import {cb, options} from "../../../util/interSectionObserver";
+import {options} from "../../../util/interSectionObserver";
 import CreatePublicationWithoutPhoto from "../CreatePublicationWithoutPhoto";
-import NewsCard from "../../News";
-import LoaderComponent from "../../Loader";
+import {useRecoilState} from "recoil";
+import {getPublications} from "./getPublications";
 import {categoryAtom} from "../../CreatePublication/state";
+import {searchData} from "../state";
 
-const Publications = () => {
-  const [data, setData] = useRecoilState(publicationFeed)
-  const [currentCategory] = useRecoilState(currentCategoryAtom)
+const SearchPublication = () => {
+  const [{data, loading, currentPage}, setSearchState] = useRecoilState(searchData)
   const [selectedCategory] = useRecoilState(categoryAtom)
   const ref = useRef(null)
 
   useEffect(() => {
-    setData(old => ({...old, loading: !old.loading}))
-    getPublications(false, data.currentPage).then(data => {
-      setData(old => ({...old, ...data, results: [...data.results]}))
-    }).finally(() => setData(old => ({...old, loading: !old.loading})))
-  }, [])
-
-  useEffect(() => {
-    setData(old => ({...old, loading: !old.loading}))
-    getPublications(selectedCategory?.id, 1).then(data => {
-      setData(old => ({currentPage: null, ...data, results: [...data.results], loading: !old.loading}))
-    })
-  }, [selectedCategory?.id])
-
-  useEffect(() => {
-    setData(old => ({...old, loading: !old.loading}))
-    if (data.currentPage) {
-      getPublications(selectedCategory?.id, data.currentPage).then(data => {
-        if (data.next) {
-          setData(old => ({...old, ...data, results: [...old.results, ...data.results]}))
+    getPublications(selectedCategory?.id ?? false, currentPage).then(response => {
+      setSearchState(old => ({
+        ...old, data: {
+          ...response,
+          results: [...old.data.results, ...response.results]
         }
-      }).finally(() => setData(old => ({...old, loading: !old.loading})))
-    }
-  }, [data.currentPage])
+      }))
+    })
+  }, [currentPage, selectedCategory?.id])
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => cb(entry, setData), options)
-    if (ref && ref.current && data.next) {
-      observer.observe(ref.current)
-    }
-    return () => {
-      if (ref.current) observer.unobserve(ref.current)
-    }
-  }, [data.next])
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !loading) {
+        setSearchState(old => ({...old, currentPage: old.currentPage + 1}))
+      }
+    }, options)
+    if (ref && ref.current && data?.next && !loading) observer.observe(ref.current)
+    return () => ref.current ? observer.unobserve(ref.current) : null
+  }, [data?.next])
 
   return (
     <div className={styles.publications}>
-      <h1>{currentCategory?.includes("d") ? "Публикации" : "Новости и статьи"}</h1>
+      <h1>{selectedCategory?.name ?? "Публикации"}</h1>
       <div className={styles.feed}>
-
-        {currentCategory?.includes("d") ?
-          <Card
-            cards={data.results}
-            setRecoilState={setData}
-            width={"280px"}
-          />
-          :
-          null}
-
-        {currentCategory?.includes("news") ?
-          <NewsCard
-            news={data.results}
-          /> : null}
-
-        {!currentCategory ? <Card
-          cards={data.results}
-          setRecoilState={setData}
-          width={"280px"}
-        /> : null}
-
+        <Card
+          cards={data && data?.results}
+          setRecoilState={setSearchState}
+          width={"280px"}/>
       </div>
-      <LoaderComponent loading={data.loading}/>
       <div ref={ref}/>
       <CreatePublicationWithoutPhoto/>
     </div>
   )
 }
 
-export default Publications;
+export default SearchPublication;

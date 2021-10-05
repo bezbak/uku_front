@@ -2,44 +2,43 @@ import React, {useEffect, useRef} from 'react';
 import Card from "../components/Card";
 import styles from './styles.module.scss'
 import {getFavoriteCards} from "../util/getFavoriteCards";
-import {cb, options} from "../util/interSectionObserver";
+import {options} from "../util/interSectionObserver";
 import {favoriteFeed} from "../components/Card/state";
 import {useRecoilState, useResetRecoilState} from "recoil";
 import classNames from "classnames";
-import Loader from "../components/Loader";
-import LoaderComponent from "../components/Loader";
+import {toast} from "react-toastify";
 
 const FavoriteFeed = () => {
-  const [data, setData] = useRecoilState(favoriteFeed)
+  const [{data, currentPage, loading}, setData] = useRecoilState(favoriteFeed)
   const resetFavorite = useResetRecoilState(favoriteFeed)
   const ref = useRef(null)
 
   useEffect(() => {
     resetFavorite()
   }, [])
-  console.log(data)
-  useEffect(() => {
-    setData(old => ({...old, loading: !old.loading}))
-    getFavoriteCards(data.currentPage).then(res => res.json().then(value => {
-      console.log(value)
-      if (value.next !== null && value?.results?.length) {
-        setData(old => ({
-          ...old,
-          ...value,
-          results: [...old.results, ...value.results],
-        }))
-      }
-    })).finally(() => setData(old => ({...old, loading: !old.loading})))
-  }, [data.currentPage])
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => cb(entry, setData), options)
-    if (ref && ref.current && data.next) {
-      observer.observe(ref.current)
-    }
-    return () => {
-      if (ref.current) observer.unobserve(ref.current)
-    }
+    setData(old => ({...old, loading: !old.loading}))
+    getFavoriteCards(currentPage).then(response => {
+      if (response.detail) {
+        toast.error("Сбой при загрузке данных...")
+        return
+      }
+      setData(old => ({
+        ...old,
+        data: {next: response?.next ?? null, results: [...old.data.results, ...response.results]}
+      }))
+    }).finally(() => setData(old => ({...old, loading: !old.loading})))
+  }, [currentPage])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !loading && data?.next) {
+        setData(old => ({...old, currentPage: old.currentPage + 1}))
+      }
+    }, options)
+    if (ref && ref.current && data.next && !data.loading) observer.observe(ref.current)
+    return () => ref.current ? observer.unobserve(ref.current) : null
   }, [data.next])
 
   return (
@@ -53,7 +52,7 @@ const FavoriteFeed = () => {
               page={"favorite"}
         />
       </div>
-      <LoaderComponent loading={data.loading}/>
+      {/*<LoaderComponent loading={data.loading}/>*/}
       <div ref={ref}/>
     </div>
   )

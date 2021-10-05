@@ -6,7 +6,15 @@
 
 .profileLink {
   font-size: 14px;
+  border-right: none !important;
 }
-.profileAvatar{
+
+.profileAvatar {
+  border-right: none !important;
+
+  img {
+    object-fit: cover;
+  }
+
   object-fit: cover;
 }

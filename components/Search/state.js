@@ -1,25 +1,17 @@
 import {atom} from "recoil";
 
-export const publicationFeed = atom({
-  key: "publicationFeed",
+export const searchData = atom({
+  key: "searchData",
   default: {
-    results: [],
-    currentPage: 1,
-    next: null,
-    previous: null,
-    count: null,
+    data: {
+      results: []
+    },
+    error: null,
     loading: false,
+    currentPage: 1,
   },
   dangerouslyAllowMutability: true,
 })
 
-export const modalAtom = atom({
-  key: "modalAtom",
-  default: false
-})
 
-export const currentCategoryAtom = atom({
-  key: "currentCategory",
-  default: ""
-})
 

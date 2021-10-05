@@ -8,11 +8,11 @@ export const page = atom({
 export let mainFeed = atom({
   key: "mainFeed",
   default: {
-    results: [],
+    data: {
+      results: []
+    },
     currentPage: 1,
-    next: 1,
-    previous: null,
-    count: null,
+    error: null,
     loading: false,
   },
   dangerouslyAllowMutability: true
@@ -21,12 +21,12 @@ export let mainFeed = atom({
 export let favoriteFeed = atom({
   key: "favoriteFeed",
   default: {
-    results: [],
-    currentPage: 1,
-    next: null,
-    previous: null,
-    count: null,
+    data: {
+      results: []
+    },
+    error: null,
     loading: false,
+    currentPage: 1,
   },
   dangerouslyAllowMutability: true
 })
@@ -34,11 +34,12 @@ export let favoriteFeed = atom({
 export let profileFeed = atom({
   key: "profileFeed",
   default: {
-    results: [],
+    data: {
+      results: []
+    },
+    loading: false,
+    error: null,
     currentPage: 1,
-    next: null,
-    previous: null,
-    count: null,
   },
   dangerouslyAllowMutability: true
 })
@@ -46,11 +47,12 @@ export let profileFeed = atom({
 export let myProfileFeed = atom({
   key: "myProfileFeed",
   default: {
-    results: [],
+    data: {
+      results: []
+    },
+    loading: false,
+    error: null,
     currentPage: 1,
-    next: null,
-    previous: null,
-    count: null,
   },
   dangerouslyAllowMutability: true
 })

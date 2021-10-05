@@ -9,27 +9,35 @@ import {cb, options} from "../../../util/interSectionObserver";
 import {fetchFollow} from "../../Card/CardHead/CardHead";
 import {toast} from "react-toastify";
 import cs from 'classnames'
+import {useRouter} from "next/router";
 
 const ProfileCards = ({profile, setProfile}) => {
-  const [data, setData] = useRecoilState(profileFeed)
+  const [{data, loading, currentPage}, setData] = useRecoilState(profileFeed)
   const resetProfileFeed = useResetRecoilState(profileFeed)
   const ref = useRef(null)
+  const router = useRouter()
 
   useEffect(() => {
     resetProfileFeed()
   }, [])
 
   useEffect(() => {
-    const id = window.location.pathname.split("/").pop()
-    getProfileCards(id, data.currentPage).then(response => setData(old => ({
-      ...old, ...response,
-      results: [...old.results, ...response.results]
+    const {query: {profile}} = router
+    getProfileCards(profile, currentPage).then(response => setData(old => ({
+      ...old, data: {
+        next: response?.next ?? null,
+        results: [...old.data.results, ...response.results]
+      }
     })))
-  }, [data.currentPage])
+  }, [currentPage])
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => cb(entry, setData), options)
-    if (ref && ref.current && data.next) {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && data.next && !loading) {
+        setData(old => ({...old, currentPage: old.currentPage + 1}))
+      }
+    }, options)
+    if (ref && ref.current && data?.next) {
       observer.observe(ref.current)
     }
     return () => {

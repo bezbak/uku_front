@@ -2,21 +2,21 @@ import styles from './styles.module.scss'
 import {useEffect, useState} from "react";
 import cs from 'classnames'
 import classNames from "classnames";
-import {useRecoilState, useSetRecoilState} from "recoil";
+import {useRecoilState, useResetRecoilState, useSetRecoilState} from "recoil";
 import {categoryAtom} from "../../CreatePublication/state";
-import {currentCategoryAtom} from "../state";
+import {currentCategoryAtom, searchData} from "../state";
 
 
 const Category = ({items}) => {
   const [displayChildren, setDisplayChildren] = useState({})
   const [selectedCategory, setSelectedCategory] = useRecoilState(categoryAtom)
-  const setCurrentCategory = useSetRecoilState(currentCategoryAtom)
+  const resetSearchData = useResetRecoilState(searchData)
 
   const onClickHandler = (item, e) => {
     e.preventDefault()
     e.stopPropagation()
-
-    setCurrentCategory(item.category_type)
+    resetSearchData()
+    setSelectedCategory(item.category_type)
     setDisplayChildren({[item.name]: !displayChildren[item.name]});
 
     if (!displayChildren[item.name]) {
@@ -63,8 +63,6 @@ const Category = ({items}) => {
                     }
                   />
                 ) : null}
-                {/*<div*/}
-                {/*  className={displayChildren[item.name] && selectedCategory?.name === item.name ? styles.round : 'hide'}/>*/}
               </div>
               {displayChildren[item.name] && item.children && <Category items={item.children}/>}
             </li>

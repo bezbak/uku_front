@@ -1,19 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import styles from './styles.module.scss'
-import {useRecoilState} from "recoil";
-import {modalAtom} from "../../Search/state";
-import {locationAtom} from "./state";
 
-const Location = () => {
-  const [modal, setModal] = useRecoilState(modalAtom)
-  const [location] = useRecoilState(locationAtom)
-
+const Location = ({modal, setModal}) => {
   return (
     <div onClick={() => setModal(!modal)} className={styles.location}>
       <img
         src="/icons/locationIcon.png"
         alt=""/>
-      <span>{location.name}</span>
+      <span>Выбор</span>
     </div>
   )
 }

@@ -5,7 +5,7 @@ import styles from './styles.module.scss'
 const Searchbox = () => {
 
   return (
-    <div className={classNames('container',styles.search)}>
+    <div className={classNames('container', styles.search)}>
       <Search/>
     </div>
   )
