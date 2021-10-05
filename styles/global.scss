@@ -67,8 +67,7 @@ html {
 }
 
 :global(.hide) {
-  visibility: hidden;
-  opacity: 0;
+  display: none !important;
 }
 
 :global(.changePhoneNumber) {

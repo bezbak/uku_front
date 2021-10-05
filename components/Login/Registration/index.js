@@ -24,7 +24,7 @@ const Registration = () => {
   const router = useRouter()
 
   const [loading, setLoading] = useRecoilState(requestLoading)
-  const [loginState, setLoginState] = useRecoilState(login)
+  const [loginState] = useRecoilState(login)
   const [form, setForm] = useRecoilState(registrationForm)
   const [phone] = useRecoilState(phoneNumber)
   const [modal, setModal] = useRecoilState(modalState)

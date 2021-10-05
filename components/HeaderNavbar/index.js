@@ -6,9 +6,11 @@ import Favourite from "./Favourite/Favourite";
 import Profile from "./Profile/Profile";
 import Location from "./Location";
 import {useRouter} from "next/router";
+import LocationModal from "../UI/Modal/Modal";
+import React, {useState} from "react";
 
 const HeaderNavbar = () => {
-
+  const [locationModal, setLocationModal] = useState(false)
 
   const router = useRouter()
 
@@ -20,7 +22,8 @@ const HeaderNavbar = () => {
           <SearchBar/>
         </div>
         <div className={styles.navbarRight}>
-          {router.route === "/search" || router.route === "/createPublication" ? < Location/> : null}
+          {router.route === "/search" || router.route === "/createPublication" ?
+            <Location modal={locationModal} setModal={setLocationModal}/> : null}
           <SearchPublication/>
           <Favourite
             state={typeof window !== "undefined" && !!window.localStorage.getItem("token") ? "authorized" : "nonAuthorized"}/>
@@ -28,6 +31,7 @@ const HeaderNavbar = () => {
             state={typeof window !== "undefined" && !!window.localStorage.getItem("token") ? "authorized" : "nonAuthorized"}/>
         </div>
       </div>
+      <LocationModal title="Выберите город" modal={locationModal} setModal={setLocationModal}/>
     </div>
 
   )

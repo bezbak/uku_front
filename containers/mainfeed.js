@@ -10,45 +10,42 @@ import Loader from "../components/Loader";
 
 
 const Mainfeed = () => {
-  const [data, setData] = useRecoilState(mainFeed)
+  const [{data, loading, currentPage}, setData] = useRecoilState(mainFeed)
   const resetMainfeed = useResetRecoilState(mainFeed)
-
   const ref = useRef(null)
+
   useEffect(() => {
     resetMainfeed()
   }, [])
 
   useEffect(() => {
-    if (data.next !== null) {
-      setData(old => ({...old, loading: !old.loading}))
-      getCards(data.currentPage).then(data => {
-        setData(old => ({...old, next: data.next}))
-        if (data.results && data.results.length) {
-          setData(old => ({
-            ...old,
-            results: old.results.concat(data.results),
-          }))
-        }
-      }).finally(() => {
-        setData(old => ({...old, loading: !old.loading}))
-      })
-    }
-  }, [data.currentPage])
+
+    setData(old => ({...old, loading: !old.loading}))
+
+    getCards(currentPage).then(response => {
+      setData(old => ({
+        ...old,
+        data: {results: [...old.data.results, ...response.results], next: response?.next ?? null}
+      }))
+    }).finally(() => setData(old => ({...old, loading: !old.loading})))
+  }, [currentPage])
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => cb(entry, setData), options)
-    if (ref && ref.current && data.next) {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !loading && data?.next) {
+        setData(old => ({...old, currentPage: old.currentPage + 1}))
+      }
+    }, options)
+    if (ref && ref.current && data.next && !loading) {
       observer.observe(ref.current)
     }
-    return () => {
-      if (ref.current) observer.unobserve(ref.current)
-    }
-  }, [data.next])
+    return () => ref.current ? observer.unobserve(ref.current) : null
+  }, [data?.next])
 
   return (
     <div className={classNames("container", styles.mainfeed)}>
       <h2>Лента</h2>
-      {data.results.length ? null : <div className={styles.placeholder}/>}
+      {!data.results.length && !loading ? <div className={styles.placeholder}/> : null}
       <div className={styles.feed}>
         <Card
           width={"368px"}

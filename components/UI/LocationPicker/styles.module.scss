@@ -60,6 +60,15 @@
     cursor: pointer;
     border: none;
     transition: all .5s;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .regionMenuBtnActive {
+    transform: rotate(90deg);
   }
 
   span {

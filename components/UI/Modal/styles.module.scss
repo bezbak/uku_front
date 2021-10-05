@@ -3,10 +3,15 @@
 
 .modal {
   @include modal();
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
 }
 
 .modalContent {
   @include modalContent();
+  display: block !important;
+
 
   span {
     @include font(16px, 500, 20px);
@@ -17,4 +22,13 @@
     cursor: pointer;
     font-size: 36px;
   }
+}
+
+.titleTimes {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hide {
+  display: none !important;
 }

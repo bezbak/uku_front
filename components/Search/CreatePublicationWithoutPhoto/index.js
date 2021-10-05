@@ -14,13 +14,7 @@ const CreatePublicationWithoutPhoto = () => {
   const [{locationID}] = useRecoilState(locationAtom)
   const [, setPhotos] = useRecoilState(photosAtom)
   const [description, setDescription] = useState("")
-
   const router = useRouter()
-
-  // useEffect(() => {
-  //   setLocation(old => ({...old, id: JSON.parse(localStorage.getItem("authData")).region_detail.id}))
-  //   resetCategory()
-  // }, [])
 
   const onClickSendPublication = (categoryID, locationID, description) => {
     if (!description) {

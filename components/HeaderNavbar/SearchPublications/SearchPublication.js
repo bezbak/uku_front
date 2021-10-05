@@ -3,7 +3,6 @@ import {useRouter} from "next/router";
 import styles from '../styles.module.scss'
 
 const SearchPublication = () => {
-
   const router = useRouter()
 
   return (

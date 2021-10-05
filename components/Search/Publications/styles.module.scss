@@ -2,6 +2,7 @@
 @import "styles/modules/variables/colors";
 
 .publications {
+  margin-left: 25px;
   h2 {
     @include font(24px, 500, 30px);
   }
@@ -13,7 +14,7 @@
 .feed {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
 
   > div {
     margin: 10px;

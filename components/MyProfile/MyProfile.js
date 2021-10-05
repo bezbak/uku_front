@@ -14,7 +14,7 @@ const MyProfile = () => {
   const [profile, setProfile] = useState({
     updated: false
   })
-  const [data, setData] = useRecoilState(myProfileFeed)
+  const [{data, loading, currentPage}, setData] = useRecoilState(myProfileFeed)
   const ref = useRef(null)
 
   useEffect(() => {
@@ -22,22 +22,24 @@ const MyProfile = () => {
   }, [profile.updated])
 
   useEffect(() => {
-    getMyProfileFeed(data.currentPage).then(json => {
-      if (json.results !== undefined) {
-        setData(old => ({...old, ...json, results: [...old.results, ...json.results]}))
-      }
+    getMyProfileFeed(currentPage).then(response => {
+      setData(old => ({...old, data: {next: response.next, results: [...old.data.results, ...response.results]}}))
     })
-  }, [data.currentPage])
+  }, [currentPage])
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => cb(entry, setData), options)
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && data?.next && !loading) {
+        setData(old => ({...old, currentPage: old.currentPage + 1}))
+      }
+    }, options)
     if (ref && ref.current && data.next) {
       observer.observe(ref.current)
     }
     return () => {
       if (ref.current) observer.unobserve(ref.current)
     }
-  }, [data.next])
+  }, [data?.next])
 
   return (
     <div className={classNames(styles.profilePage, "container")}>

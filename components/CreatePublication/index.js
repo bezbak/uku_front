@@ -66,7 +66,6 @@ const CreatePublication = () => {
                     </span>
           <span className={styles.title}>Просмотр</span>
         </div>
-
         <div className={styles.preview}>
           {!!photos.files.length ? <img src={URL.createObjectURL(photos.files[photos.preview])} alt=""/> : null}
         </div>
