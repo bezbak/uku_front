@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss'
 
-const Location = ({modal, setModal}) => {
+const Location = ({modal, setModal, locationAtom}) => {
   const [location, setLocation] = useState({})
+
+  console.log(locationAtom)
 
   useEffect(() => {
     const locationData = JSON.parse(window.localStorage.getItem("authData"))
@@ -14,7 +16,7 @@ const Location = ({modal, setModal}) => {
       <img
         src="/icons/locationIcon.png"
         alt=""/>
-      <span>{location?.region_detail?.name ?? "Выбор"}</span>
+      <span>{locationAtom?.region?.name ?? location?.region_detail?.name ?? "Выбор"}</span>
     </div>
   )
 }

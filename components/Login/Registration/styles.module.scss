@@ -89,3 +89,74 @@
 }
 
 
+.nested {
+  p {
+    @include font(14px, 500, 16px);
+    cursor: pointer;
+  }
+
+}
+
+.region {
+  width: 100%;
+
+  input {
+    width: 100%;
+    cursor: pointer;
+  }
+}
+
+.regionMenu {
+  li {
+    @include font(18px, 500, 22px);
+    cursor: pointer;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-direction: column;
+    border-bottom: 1px solid #EEEEEE;;
+    margin: 10px 0;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.regionItem {
+  display: flex;
+  justify-content: space-between;
+}
+
+.list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #EEEEEE;
+  margin: 5px 0;
+  @include font(18px, 500, 22px);
+  color: $base-dark;
+
+  .regionMenuBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    background: none;
+    cursor: pointer;
+    border: none;
+    transition: all .5s;
+  }
+
+  span {
+    cursor: pointer;
+  }
+
+  button {
+    width: 10%;
+    padding: 0 20px;
+  }
+}
+
+

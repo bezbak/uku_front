@@ -3,11 +3,14 @@ import {useEffect, useState} from "react";
 import uku from '../../../util/HTTP_Agent'
 import {endpoints} from "../../../api/endpoints";
 import {useRouter} from "next/router";
+import {useRecoilState} from "recoil";
+import {searchInputAtom} from "../../Search/state";
 
 const SearchBar = () => {
   const router = useRouter()
   const [text, setText] = useState("")
   const [data, setData] = useState([])
+  const [search, setSearch] = useRecoilState(searchInputAtom)
 
   useEffect(() => {
     fetch(uku + endpoints.searchUser + `?q=${text}`)
@@ -23,13 +26,21 @@ const SearchBar = () => {
     }, 200)
   }
 
+  const onChangeInput = value => {
+    if (router.pathname.includes("search")) {
+      setSearch(value)
+      return
+    }
+    setText(value)
+  }
+
   return (
     <div className={styles.searchBar}>
       <div className={styles.searchBarContent}>
         <input
-          onChange={({target: {value}}) => setText(value)}
+          onChange={({target: {value}}) => onChangeInput(value)}
           type="text"
-          value={text}
+          value={router.pathname.includes("search") ? search : text}
           width={200}/>
         <div className={text && data.length !== 0 ? styles.dropDown : styles.hide}>
           {data.map((item) => {

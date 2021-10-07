@@ -17,6 +17,8 @@ import moment from 'moment'
 import * as ru from 'date-fns/locale/ru'
 import {registerLocale} from "react-datepicker";
 import {modalState} from "../../UI/modalState";
+import {useState} from "react";
+import LocationModal from "../../UI/Modal/LocationModal";
 
 const Registration = () => {
 
@@ -27,7 +29,7 @@ const Registration = () => {
   const [loginState] = useRecoilState(login)
   const [form, setForm] = useRecoilState(registrationForm)
   const [phone] = useRecoilState(phoneNumber)
-  const [modal, setModal] = useRecoilState(modalState)
+  const [locationModal, setLocationModal] = useState(false)
 
   if (loginState.is_profile_completed) router.push("/")
 
@@ -135,10 +137,17 @@ const Registration = () => {
           />
         </div>
         {/*Region picker*/}
-        <Region
-          modal={modal}
-          setModal={setModal}
-          form={form}/>
+        <div className={styles.region}>
+          <input
+            placeholder={"Выбор региона"}
+            onClick={() => setLocationModal(!locationModal)}
+            type="text"
+            value={form.region.name}
+            readOnly={true}
+          />
+          <LocationModal title="Выбор локации" modal={locationModal} setModal={setLocationModal}
+                         setLocation={setForm}/>
+        </div>
         <div className={styles.check}>
           <input
             onChange={({target: {checked}}) => onChangeForm("checkbox", !checked)}

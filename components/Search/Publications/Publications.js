@@ -6,23 +6,27 @@ import CreatePublicationWithoutPhoto from "../CreatePublicationWithoutPhoto";
 import {useRecoilState} from "recoil";
 import {getPublications} from "./getPublications";
 import {categoryAtom} from "../../CreatePublication/state";
-import {searchData} from "../state";
+import {locationAtom, searchData, searchInputAtom} from "../state";
 
 const SearchPublication = () => {
   const [{data, loading, currentPage}, setSearchState] = useRecoilState(searchData)
   const [selectedCategory] = useRecoilState(categoryAtom)
+  const [location] = useRecoilState(locationAtom)
+  const [search] = useRecoilState(searchInputAtom)
   const ref = useRef(null)
 
   useEffect(() => {
-    getPublications(selectedCategory?.id ?? false, currentPage).then(response => {
+    getPublications(selectedCategory?.id, currentPage, location?.region?.id, search).then(response => {
       setSearchState(old => ({
         ...old, data: {
           ...response,
-          results: [...old.data.results, ...response.results]
+          results: old.currentPage !== currentPage ? [...old.data.results, ...response.results] : [...response.results]
         }
       }))
     })
-  }, [currentPage, selectedCategory?.id])
+  }, [currentPage, selectedCategory?.id, location?.region, search])
+
+  console.log(data)
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
