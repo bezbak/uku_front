@@ -5,6 +5,9 @@
   margin: 10px 0px;
   cursor: pointer;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .noContent {
@@ -24,7 +27,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 80%;
 
   &:hover {
     .btnGroup {

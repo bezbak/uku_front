@@ -18,7 +18,7 @@ export const fetchStatus = id => {
 }
 // **********************************************************************
 export const onClickFavourite = (id, index, setRecoilState, e, page) => {
-
+  console.log(id, index, setRecoilState)
   e.stopPropagation()
 
   if (!!!localStorage.getItem("token")) {
@@ -32,15 +32,13 @@ export const onClickFavourite = (id, index, setRecoilState, e, page) => {
       newObj.results.splice(index, 1)
       return newObj
     })
-
     fetchStatus(id)
-
     return
   }
 
   setRecoilState(old => {
     const newObj = {...old}
-    newObj.results[index].is_favorite = !newObj.results[index].is_favorite
+    newObj.data.results[index].is_favorite = !newObj.data.results[index].is_favorite
     return newObj
   })
 

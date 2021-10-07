@@ -1,7 +1,9 @@
 .search {
   display: flex;
   justify-content: flex-start;
+  min-height: 100vh;
 }
-.leftBox{
+
+.leftBox {
   width: 25%;
 }

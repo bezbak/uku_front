@@ -5,9 +5,17 @@
   padding: 20px 0;
   height: 50px;
   justify-content: space-around;
-  width: 50%;
+  width: 49%;
   z-index: 10;
   bottom: 0;
+
+  button {
+    width: 200px;
+    &:disabled {
+      opacity: .5;
+    }
+  }
+
 
   label {
     cursor: pointer;

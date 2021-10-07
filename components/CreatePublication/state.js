@@ -18,3 +18,8 @@ export const photosAtom = atom({
   },
   dangerouslyAllowMutability: true,
 })
+
+export const textAtom = atom({
+  key: "textAtom",
+  default: ""
+})

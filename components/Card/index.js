@@ -41,34 +41,34 @@ const Card = ({cards, width, setRecoilState, page = ""}) => {
             key={index}
             className={styles.card}
             style={{width}}>
-            {item.user && !item.is_owner ?
-              <CardHead user={item.user} setRecoilState={setRecoilState} index={index}/> : null}
-            <Link href={`/detail/${item.id}`}>
-              <div className={styles.content}>
-                <div>
-                  <CardSlider images={item.images} owner={item.is_owner}/>
-                  {item && item.is_owner && false ? null : <div
-                    onClick={(e) => onClickFavourite(item.id, index, setRecoilState, e, page)}
-                    style={item.is_owner ? {top: "50px"} : {}}
-                    className={styles.favorite}
-                  >
-                    {item.is_favorite ? <HeartFill/> : <Heart/>}
-                  </div>}
-                  {item && item.is_owner ? <div
-                    className={styles.btnGroup}
-                  >
-                    <Edit onClick={e => onClickEdit(e, item.id)}/>
-                    <Delete onClick={onClickDelete}/>
-                  </div> : null}
-                  <CardBody categories={item.categories} description={item.description}/>
+            <div>
+              {item.user && !item.is_owner ?
+                <CardHead user={item.user} setRecoilState={setRecoilState} index={index}/> : null}
+              <Link href={`/detail/${item.id}`}>
+                <div className={styles.content}>
+                  <div>
+                    <CardSlider images={item.images} owner={item.is_owner}/>
+                    {item && item.is_owner && false ? null : <div
+                      onClick={(e) => onClickFavourite(item.id, index, setRecoilState, e, page)}
+                      style={item.is_owner ? {top: "50px"} : {}}
+                      className={styles.favorite}
+                    >
+                      {item.is_favorite ? <HeartFill/> : <Heart/>}
+                    </div>}
+                    {item && item.is_owner ? <div
+                      className={styles.btnGroup}
+                    >
+                      <Edit onClick={e => onClickEdit(e, item.id)}/>
+                      <Delete onClick={onClickDelete}/>
+                    </div> : null}
+                    <CardBody categories={item.categories} description={item.description}/>
+                  </div>
                 </div>
-                <div>
-                  <CardFooter created_at={item.created_at} comment_count={item.comment_count}
-                              viewed={item.viewed}/>
-                </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
             <ModalDeleteCard modalState={state.modalDelete} id={item.id} setState={setState}/>
+            <CardFooter created_at={item.created_at} comment_count={item.comment_count}
+                        viewed={item.viewed}/>
           </div>
         })
       }

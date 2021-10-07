@@ -1,11 +1,12 @@
 import styles from "./styles.module.scss"
 import {useRecoilState, useRecoilValue, useResetRecoilState} from "recoil";
-import {categoryAtom, photosAtom} from "../../CreatePublication/state";
+import {categoryAtom, photosAtom, textAtom} from "../../CreatePublication/state";
 import {postPublication} from "./functions";
 import {locationAtom} from "../../HeaderNavbar/Location/state";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {toast} from "react-toastify";
+import Spinner from "../../Spinner/Spinner";
 
 
 const CreatePublicationWithoutPhoto = () => {
@@ -13,24 +14,33 @@ const CreatePublicationWithoutPhoto = () => {
   const resetCategory = useResetRecoilState(categoryAtom)
   const [{locationID}] = useRecoilState(locationAtom)
   const [, setPhotos] = useRecoilState(photosAtom)
-  const [description, setDescription] = useState("")
+  const [description, setDescription] = useRecoilState(textAtom)
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
+
+  useEffect(() => {
+    if (router.pathname !== "/search") {
+      resetCategory()
+    }
+  }, [router.pathname])
 
   const onClickSendPublication = (categoryID, locationID, description) => {
     if (!description) {
       toast.error("Напишите описание")
       return
     }
+    setLoading(true)
     postPublication(categoryID, locationID, description).then(res => {
       if (res.is_created) {
         router.push(`/detail/${res.publication_id}`)
       }
+    }).finally(() => {
+      setLoading(false)
     })
   }
 
   const onInputFile = ({target: {files}}) => {
     setPhotos(old => ({...old, files}))
-    resetCategory()
     router.push("/createPublication")
   }
 
@@ -47,10 +57,12 @@ const CreatePublicationWithoutPhoto = () => {
         name="text"
         id="text"
         cols="80"
+        value={description}
         rows="1"/>
       <button
+        disabled={!!!description}
         onClick={() => onClickSendPublication(category.id, locationID, description)}>
-        Опубликовать
+        {loading ? <Spinner/> : "Опубликовать"}
       </button>
     </div>
   )

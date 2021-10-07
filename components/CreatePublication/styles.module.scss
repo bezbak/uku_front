@@ -4,7 +4,6 @@
 .createBox {
   background: #ECECEC;
   width: 100%;
-  height: 715px;
   z-index: 10;
   margin-left: 26px;
 }
@@ -31,8 +30,10 @@
   align-items: center;
 
   img {
-    width: 60%;
-    height: 90%;
+    width: 422px;
+    height: 422px;
+    padding: 20px 0;
+    object-fit: cover;
   }
 }
 
@@ -52,6 +53,7 @@
     margin: 0 10px;
     width: 78px;
     height: 78px;
+    object-fit: cover;
   }
 
   input[type="file"] {
@@ -80,7 +82,7 @@
 .bottomPanel {
   display: flex;
   background: #ECECEC;
-  padding: 20px 0;
+  padding: 20px 0 50px 0;
   height: 50px;
   justify-content: space-around;
   width: 100%;
@@ -105,6 +107,7 @@
     background: #F8F8F8;
     border: 1px solid #E0E0E0;
     box-sizing: border-box;
+    min-height: 50px;
   }
 
   button {
@@ -113,7 +116,34 @@
     background: #E56366;
     color: #FFFFFF;
     border: none;
+    width: 150px;
     border-radius: 6px;
     cursor: pointer;
+
+    &:disabled {
+      opacity: .5;
+    }
+  }
+}
+
+.imageItem {
+  position: relative;
+
+  img {
+    margin: 0;
+  }
+
+  span {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #FFFFFF;
+    font-size: 36px;
+    cursor: pointer;
+
+    &:hover {
+      color: red;
+      transition: color .5s;
+    }
   }
 }
