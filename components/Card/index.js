@@ -11,17 +11,24 @@ import HeartFill from '../../public/icons/HeartFill.svg'
 import Heart from '../../public/icons/Heart.svg'
 import {useState} from "react";
 import ModalDeleteCard from "./ModalDeleteCard";
+import {useRouter} from "next/router";
 
 const Card = ({cards, width, setRecoilState, page = ""}) => {
   const [state, setState] = useState({
-    modalDelete: false
+    modalDelete: false,
+    loading: false,
   })
+  const router = useRouter()
 
   if (!cards) return <div/>
   if (!cards.length) return <h3 className={styles.noContent}>Нет публикаций</h3>
 
   function onClickEdit(e, id) {
     e.stopPropagation()
+    router.push({
+      pathname: '/detail/[pid]',
+      query: {pid: id, edit: true},
+    })
   }
 
   function onClickDelete(e) {
@@ -66,7 +73,7 @@ const Card = ({cards, width, setRecoilState, page = ""}) => {
                 </div>
               </Link>
             </div>
-            <ModalDeleteCard modalState={state.modalDelete} id={item.id} setState={setState}/>
+            <ModalDeleteCard state={state} id={item.id} setState={setState}/>
             <CardFooter created_at={item.created_at} comment_count={item.comment_count}
                         viewed={item.viewed}/>
           </div>

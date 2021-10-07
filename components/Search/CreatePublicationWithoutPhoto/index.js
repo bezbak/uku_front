@@ -12,10 +12,11 @@ import Spinner from "../../Spinner/Spinner";
 const CreatePublicationWithoutPhoto = () => {
   const category = useRecoilValue(categoryAtom)
   const resetCategory = useResetRecoilState(categoryAtom)
-  const [{locationID}] = useRecoilState(locationAtom)
   const [, setPhotos] = useRecoilState(photosAtom)
   const [description, setDescription] = useRecoilState(textAtom)
   const [loading, setLoading] = useState(false)
+  const [location] = useRecoilState(locationAtom)
+
   const router = useRouter()
 
   useEffect(() => {
@@ -61,7 +62,7 @@ const CreatePublicationWithoutPhoto = () => {
         rows="1"/>
       <button
         disabled={!!!description}
-        onClick={() => onClickSendPublication(category.id, locationID, description)}>
+        onClick={() => onClickSendPublication(category.id, location?.region?.id, description)}>
         {loading ? <Spinner/> : "Опубликовать"}
       </button>
     </div>

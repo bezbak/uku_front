@@ -6,11 +6,14 @@ import Favourite from "./Favourite/Favourite";
 import Profile from "./Profile/Profile";
 import Location from "./Location";
 import {useRouter} from "next/router";
-import LocationModal from "../UI/Modal/Modal";
+import LocationModal from "../UI/Modal/LocationModal";
 import React, {useState} from "react";
+import {useRecoilState} from "recoil";
+import {locationAtom} from "../Search/state";
 
 const HeaderNavbar = () => {
   const [locationModal, setLocationModal] = useState(false)
+  const [location, setLocation] = useRecoilState(locationAtom)
 
   const router = useRouter()
 
@@ -23,7 +26,7 @@ const HeaderNavbar = () => {
         </div>
         <div className={styles.navbarRight}>
           {router.route === "/search" || router.route === "/createPublication" ?
-            <Location modal={locationModal} setModal={setLocationModal}/> : null}
+            <Location modal={locationModal} setModal={setLocationModal} locationAtom={location}/> : null}
           <SearchPublication/>
           <Favourite
             state={typeof window !== "undefined" && !!window.localStorage.getItem("token") ? "authorized" : "nonAuthorized"}/>
@@ -31,7 +34,8 @@ const HeaderNavbar = () => {
             state={typeof window !== "undefined" && !!window.localStorage.getItem("token") ? "authorized" : "nonAuthorized"}/>
         </div>
       </div>
-      <LocationModal title="Выберите город" modal={locationModal} setModal={setLocationModal}/>
+      <LocationModal title="Выберите город" modal={locationModal} setModal={setLocationModal}
+                     setLocation={setLocation}/>
     </div>
 
   )

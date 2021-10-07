@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import styles from './styles.module.scss'
 import cs from 'classnames'
+import {useRecoilState} from "recoil";
+import {locationAtom} from "../../Search/state";
 
-const LocationPicker = ({setLocation, items}) => {
+const LocationPicker = ({items, setLocation, setModal}) => {
   const [displayChildren, setDisplayChildren] = useState({})
 
   const listHandler = (e, name) => {
@@ -13,11 +15,11 @@ const LocationPicker = ({setLocation, items}) => {
       [name]: !displayChildren[name],
     });
   }
-
   const onClickPlace = (e, place) => {
-    console.log(place)
     e.preventDefault()
     e.stopPropagation()
+    setLocation(old => ({...old, region: place}))
+    setModal(false)
   }
 
   const arrowClass = active => {
@@ -41,7 +43,8 @@ const LocationPicker = ({setLocation, items}) => {
                   </button> : null
               )}
             </div>
-            {displayChildren[item.name] && item.children.length && <LocationPicker items={item.children}/>}
+            {displayChildren[item.name] && item.children.length &&
+            <LocationPicker items={item.children} setLocation={setLocation} setModal={setModal}/>}
           </li>
         );
       })}

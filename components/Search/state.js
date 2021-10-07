@@ -13,5 +13,15 @@ export const searchData = atom({
   dangerouslyAllowMutability: true,
 })
 
+export const locationAtom = atom({
+  key: "locationAtom",
+  default: {}
+})
+
+export const searchInputAtom = atom({
+  key: "searchInputAtom",
+  default: ""
+})
+
 
 

@@ -3,14 +3,14 @@
   top: 0;
   left: 0;
   width: 100vw;
+  z-index: 1000 !important;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
   padding: 15px;
-  z-index: 100;
 }
 
 .modalContent {
@@ -23,7 +23,8 @@
   position: relative;
   height: 150px;
   overflow: auto;
-  h2{
+
+  h2 {
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
@@ -41,21 +42,26 @@
   font-weight: bold;
   cursor: pointer;
 }
-.btnBlock{
+
+.btnBlock {
   margin-top: 24px;
   display: flex;
   justify-content: space-between;
-  button{
+  height: 40px;
+
+  button {
     padding: 11px 54px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
   }
-  .delete{
+
+  .delete {
     background: #E56366;
     color: #fff;
   }
-  .cancel{
+
+  .cancel {
     background: #FFFFFF;
     border: 1px solid #E56366;
     color: #E56366;

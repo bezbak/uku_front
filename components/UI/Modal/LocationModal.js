@@ -3,12 +3,7 @@ import styles from './styles.module.scss'
 import LocationPicker from "../LocationPicker/LocationPicker";
 import {getLocations} from "../LocationPicker/getLocations";
 
-
-const LocationModal = ({title, modal, setModal}) => {
-  const [, setLocation] = useState({
-    name: "Выбор",
-    id: "",
-  })
+const LocationModal = ({title, modal, setModal, setLocation}) => {
   const [items, setItem] = useState([])
 
   useEffect(() => {
@@ -24,7 +19,7 @@ const LocationModal = ({title, modal, setModal}) => {
           <span>{title}</span>
           <span className={styles.close} onClick={() => setModal(old => !old)}>&times;</span>
         </div>
-        <LocationPicker setLocation={setLocation} items={items}/>
+        <LocationPicker items={items} setLocation={setLocation} setModal={setModal}/>
       </div>
     </div>
   )

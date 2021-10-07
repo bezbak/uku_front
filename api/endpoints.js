@@ -23,7 +23,7 @@ export const endpoints = {
   profileID: "/publication/user/", //id
   postPublication: "/publication/create/",
   uploadImages: "/publication/image/upload/",
-  fetchCategoryID: "/publication/category/", //id
+  fetchCategoryID: "/publication/search/", //id
   updateProfile: "/account/profile/update/",
   uploadAvatar: "/account/avatar/",
   oldPhoneConfirm: "/account/old-phone-confirm/",
