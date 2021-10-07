@@ -1,18 +1,24 @@
 import styles from './styles.module.scss'
-import {useRecoilState, useRecoilValue} from "recoil";
-import {categoryAtom, photosAtom} from "./state";
+import {useRecoilState} from "recoil";
+import {categoryAtom, photosAtom, textAtom} from "./state";
 import {createPublication, uploadImages} from "./functions";
 import {locationAtom} from "../HeaderNavbar/Location/state";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {useRouter} from "next/router";
+import Spinner from "../Spinner/Spinner";
 
 const CreatePublication = () => {
   const [photos, setPhotos] = useRecoilState(photosAtom)
-  const category = useRecoilValue(categoryAtom)
+  const [category, setCategory] = useRecoilState(categoryAtom)
   const [{locationID}] = useRecoilState(locationAtom)
-  const [description, setDescription] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [description, setDescription] = useRecoilState(textAtom)
   const router = useRouter()
+
+  useEffect(() => {
+    setCategory(null)
+  }, [])
 
 
   const onInputFile = file => {
@@ -40,7 +46,7 @@ const CreatePublication = () => {
       toast.error("Выберите категорию")
       return
     }
-
+    setLoading(true)
     uploadImages(images).then(images => {
       createPublication(categoryID, locationID, description, images).then(data => {
         if (data.is_created) {
@@ -48,6 +54,8 @@ const CreatePublication = () => {
         } else {
           toast.error("Что-то пошло не так")
         }
+      }).finally(() => {
+        setLoading(false)
       })
     })
   }
@@ -55,6 +63,17 @@ const CreatePublication = () => {
   const onClickImageForPreview = index => {
     setPhotos(old => ({...old, preview: index}))
   }
+
+  const onClickDeletePhoto = (e, photo, index) => {
+    e.stopPropagation()
+    if (photos.files.length === 1) {
+      toast.error("Нельзя опубликовать без фото")
+      return
+    }
+    setPhotos(old => ({...old, files: old.files.splice(index, 1)}))
+  }
+
+  console.log(description.length / 2 > 150)
 
   return (
     <div>
@@ -83,27 +102,33 @@ const CreatePublication = () => {
             </>
             : null}
           {Array.from(photos.files).map((image, index) => {
-            return <img
-              style={photos.preview === index ? {border: "1px solid red"} : {}}
-              onClick={() => onClickImageForPreview(index)}
-              className={styles.imagesList}
-              key={index}
-              src={URL.createObjectURL(image)}
-              alt=""
-            />
+            return <div key={index} className={styles.imageItem}>
+              <img
+                style={photos.preview === index ? {border: "1px solid red"} : {}}
+                onClick={() => onClickImageForPreview(index)}
+                className={styles.imagesList}
+                src={URL.createObjectURL(image)}
+                alt=""
+              />
+              <span onClick={e => onClickDeletePhoto(e, image, index)}>&times;</span>
+            </div>
+
           })}
         </div>
         <div className={styles.bottomPanel}>
           <textarea
+            style={{height: (description.length / 2) > 90 ? "90px" : `${description.length / 2}px`}}
             name="text"
             id="text"
             cols="80"
-            rows="1"
+            rows="3"
+            value={description}
             onChange={({target: {value}}) => setDescription(value)}
           />
           <button
+            disabled={!!!description || !!!category}
             onClick={() => onClickCreatePublication(category && category.id, locationID, description, photos.files)}>
-            Опубликовать
+            {loading ? <Spinner/> : "Опубликовать"}
           </button>
         </div>
       </div>

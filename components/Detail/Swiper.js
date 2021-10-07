@@ -14,9 +14,11 @@ const SwiperContainer = () => {
   const [recoilState] = useRecoilState(detailPublicationState)
   const [images, setImages] = useState([])
   const {user, location} = recoilState
-  console.log(images)
+
+
   React.useEffect(() => {
     setImages(recoilState.images)
+    console.log(images)
   }, [recoilState.images])
 
   return (
@@ -32,17 +34,19 @@ const SwiperContainer = () => {
         </div>
       </div>
       <div>
-        <Swiper
-          navigation={images?.length > 1 ?? false}
-          pagination={{clickable: true}}
-          scrollbar={{draggable: true}}
-          className={styles.swiper}>
-          {images && images.map((image, index) => {
-            return <SwiperSlide key={index}>
-              <img src={image && image.image} alt="image"/>
-            </SwiperSlide>
-          })}
-        </Swiper>
+        {images && images.length === 0 ?
+          <img className={styles.noImages} src="/images/noImages.svg" alt=""/> : <Swiper
+            navigation={images?.length > 1 ?? false}
+            pagination={{clickable: true}}
+            scrollbar={{draggable: true}}
+            className={styles.swiper}>
+            {images && images.map((image, index) => {
+              return <SwiperSlide key={index}>
+                <img src={image && image.image} alt="image"/>
+              </SwiperSlide>
+            })}
+          </Swiper>}
+
       </div>
     </div>
   )
