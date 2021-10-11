@@ -13,6 +13,9 @@ const SearchBar = () => {
   const [search, setSearch] = useRecoilState(searchInputAtom)
 
   useEffect(() => {
+    if (!text.trim()) {
+      return
+    }
     fetch(uku + endpoints.searchUser + `?q=${text}`)
       .then(res => res.json().then(data => {
         setData(data)
@@ -26,19 +29,19 @@ const SearchBar = () => {
     }, 200)
   }
 
-  const onChangeInput = value => {
+  const onChangeInput = e => {
     if (router.pathname.includes("search")) {
-      setSearch(value)
+      setSearch(e.target.value)
       return
     }
-    setText(value)
+    setText(e.target.value)
   }
 
   return (
     <div className={styles.searchBar}>
       <div className={styles.searchBarContent}>
         <input
-          onChange={({target: {value}}) => onChangeInput(value)}
+          onChange={(e) => onChangeInput(e)}
           type="text"
           value={router.pathname.includes("search") ? search : text}
           width={200}/>
