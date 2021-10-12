@@ -3,12 +3,12 @@ import {useEffect, useState} from "react";
 import cs from 'classnames'
 import classNames from "classnames";
 import {useRecoilState, useResetRecoilState, useSetRecoilState} from "recoil";
-import {categoryAtom} from "../../CreatePublication/state";
+import {categoryAtom, displayChildrenAtom} from "../../CreatePublication/state";
 import {currentCategoryAtom, searchData} from "../state";
 
 
 const Category = ({items}) => {
-  const [displayChildren, setDisplayChildren] = useState({})
+  const [displayChildren, setDisplayChildren] = useRecoilState(displayChildrenAtom)
   const [selectedCategory, setSelectedCategory] = useRecoilState(categoryAtom)
   const resetSearchData = useResetRecoilState(searchData)
 

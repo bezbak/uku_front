@@ -15,8 +15,13 @@ const CreatePublicationPage = () => {
     <div>
       <Header/>
       <div className={classNames("container", styles.createPublicationPage)}>
-        <Category items={data}/>
-        <CreatePublication/>
+        <div className={styles.leftBox}>
+          <h3>Категории</h3>
+          <Category items={data}/>
+        </div>
+        <div className={styles.rightBox}>
+          <CreatePublication/>
+        </div>
       </div>
     </div>
   )
