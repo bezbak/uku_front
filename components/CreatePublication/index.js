@@ -10,23 +10,18 @@ import Spinner from "../Spinner/Spinner";
 
 const CreatePublication = () => {
   const [photos, setPhotos] = useRecoilState(photosAtom)
-  const [category, setCategory] = useRecoilState(categoryAtom)
+  const [category] = useRecoilState(categoryAtom)
   const [loading, setLoading] = useState(false)
   const [description, setDescription] = useRecoilState(textAtom)
   const [location] = useRecoilState(locationAtom)
   const router = useRouter()
 
-  useEffect(() => {
-    setCategory(null)
-  }, [])
-
-
-  const onInputFile = file => {
-    setPhotos(old => ({...old, files: [...old.files, ...file]}))
+  const onInputFile = event => {
+    setPhotos(old => ({...old, files: [...old.files, ...event.target.files]}))
+    event.target.value = '';
   }
 
   const onClickCreatePublication = (categoryID, locationID, description, images) => {
-
     if (images.length !== 1) {
       setPhotos(old => {
         let newObj = {...old}
@@ -50,6 +45,7 @@ const CreatePublication = () => {
     uploadImages(images).then(images => {
       createPublication(categoryID, locationID, description, images).then(data => {
         if (data.is_created) {
+          setDescription("")
           router.push(`/detail/${data.publication_id}`)
         } else {
           toast.error("Что-то пошло не так")
@@ -64,16 +60,10 @@ const CreatePublication = () => {
     setPhotos(old => ({...old, preview: index}))
   }
 
-  const onClickDeletePhoto = (e, photo, index) => {
+  const onClickDeletePhoto = (e, photo) => {
     e.stopPropagation()
-    if (photos.files.length === 1) {
-      toast.error("Нельзя опубликовать без фото")
-      return
-    }
-    setPhotos(old => ({...old, files: old.files.splice(index, 1)}))
+    setPhotos(old => ({...old, files: Array.from(old.files).filter(item => item !== photo)}))
   }
-
-  console.log(description.length / 2 > 150)
 
   return (
     <div>
@@ -89,25 +79,24 @@ const CreatePublication = () => {
           {!!photos.files.length ? <img src={URL.createObjectURL(photos.files[photos.preview])} alt=""/> : null}
         </div>
         <div className={styles.images}>
-          {photos.files.length && photos.files.length < 10 ?
-            <>
-              <label
-                className={styles.addMoreImage}
-                htmlFor="upload-photo"/>
-              <input
-                onChange={({target: {files}}) => onInputFile(files)}
-                type="file"
-                name="photo"
-                id="upload-photo"/>
-            </>
-            : null}
+          <>
+            <label
+              className={styles.addMoreImage}
+              htmlFor="upload-photo"/>
+            <input
+              onChange={(event) => onInputFile(event)}
+              type="file"
+              name="photo"
+              accept=".png, .jpg, .jpeg"
+              id="upload-photo"/>
+          </>
           {Array.from(photos.files).map((image, index) => {
             return <div key={index} className={styles.imageItem}>
               <img
                 style={photos.preview === index ? {border: "1px solid red"} : {}}
                 onClick={() => onClickImageForPreview(index)}
                 className={styles.imagesList}
-                src={URL.createObjectURL(image)}
+                src={URL.createObjectURL(image ?? "")}
                 alt=""
               />
               <span onClick={e => onClickDeletePhoto(e, image, index)}>&times;</span>

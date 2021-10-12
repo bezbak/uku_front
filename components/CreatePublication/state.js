@@ -23,3 +23,8 @@ export const textAtom = atom({
   key: "textAtom",
   default: ""
 })
+
+export const displayChildrenAtom = atom({
+  key: "displayAtom",
+  default: {},
+})

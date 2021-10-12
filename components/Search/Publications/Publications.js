@@ -27,7 +27,6 @@ const SearchPublication = () => {
     })
   }, [currentPage, selectedCategory?.id, location?.region, search])
 
-  console.log(selectedCategory?.name)
 
 
   useEffect(() => {
