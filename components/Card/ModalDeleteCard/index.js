@@ -16,11 +16,14 @@ const ModalDeleteCard = ({state, id, setState}) => {
       },
     }
     setState(old => ({...old, loading: true}))
-    fetch(uku + `/publication/delete/${id}/`, deleteMethod)
+    fetch(uku + `/publication/${id}/delete/`, deleteMethod)
       .then(res => {
         if (res.ok === true) {
           setState(old => ({...old, modalDelete: !old.modalDelete}))
           toast.success('Успешно удалено')
+          setTimeout(() => {
+            window.location.reload()
+          }, 500)
         } else {
           toast.error('Что-то пошло не так...')
         }
@@ -28,7 +31,6 @@ const ModalDeleteCard = ({state, id, setState}) => {
       .catch(err => toast.error('Что-то пошло не так...'))
       .finally(() => {
         setState({modalState: false, loading: false})
-        window.location.reload()
       })
   }
 
