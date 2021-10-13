@@ -2,7 +2,6 @@ import React from 'react';
 import styles from "../../MyProfile/styles.module.scss";
 
 const ProfileSocial = ({profile}) => {
-  console.log(profile)
   return (
     <div className={styles.social}>
       <a href={`http://t.me/${profile?.telegram}`} target={"_blank"}>

@@ -13,7 +13,11 @@
 
 .description {
   margin: 5px 0;
-  @include font(14px, 400, 18px)
+
+  p {
+    @include font(14px, 400, 18px);
+    word-break: break-word;
+  }
 }
 
 .comments {
@@ -35,7 +39,8 @@
 .views {
   display: flex;
   align-items: center;
-  span{
+
+  span {
     margin: 0 10px;
   }
 }
