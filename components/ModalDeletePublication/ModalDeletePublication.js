@@ -26,7 +26,6 @@ const ModalDeletePublication = () => {
     }
     fetch(uku + `/publication/${id}/delete/`, deleteMethod)
       .then(res => {
-        console.log(res)
         if (res.ok === true) {
           modalHandler("deletePublicationModal", false)
           toast.success('Успешно удалено')
