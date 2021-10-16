@@ -15,7 +15,7 @@ const Navigation = () => {
     <div className={styles.navigation}>
       <div>
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push("/")}
           className={styles.navBack}><img src="/icons/leftArrow.png" alt="#"/>Назад
         </button>
       </div>
