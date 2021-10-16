@@ -18,11 +18,10 @@
   background-color: #fefefe;
   border: 1px solid #888;
   overflow: hidden;
-  width: 80%;
-  position: absolute;
-  top: 20px;
-  height: 90vh;
+  position: fixed;
+  top: 10px;
   bottom: 0;
+  height: 90vh;
 }
 
 .content_head {
@@ -69,15 +68,19 @@
 .content_main {
   padding: 16px;
   min-height: 30vh;
+  min-width: 80vw;
 
   .prev_image {
-    width: 100%;
-    padding-left: 20%;
+    display: flex;
+    justify-content: center;
 
     img {
       border-radius: 6px;
-      width: 60%;
-      height: auto;
+      height: 500px;
+      width: 600px;
+      object-fit: cover;
+      //width: 60%;
+      //height: auto;
     }
   }
 
@@ -94,6 +97,7 @@
         border-radius: 6px;
         width: 74px;
         height: 74px;
+        object-fit: cover;
       }
 
       .deleteImage {

@@ -18,8 +18,6 @@ const ModalUpdatePublication = () => {
   const publicationId = recoilState?.id
   const router = useRouter()
 
-  console.log(router.query)
-
   React.useEffect(() => {
     setPhotosId(recoilState?.images?.map(item => {
       return item.id
@@ -77,8 +75,7 @@ const ModalUpdatePublication = () => {
                 <span className={styles.content_head_text}>Просмотр</span>
               </div>
               <div>
-                <button>Вещи</button>
-                <button>Уфа</button>
+                <button>{recoilState?.category?.name ?? "..."}</button>
               </div>
             </div>
             <div className={styles.content_main}>
