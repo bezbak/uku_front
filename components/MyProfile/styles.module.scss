@@ -183,7 +183,7 @@
   padding-top: 150px;
   transition: transform .5s;
   position: fixed;
-  width: 600px;
+  width: 33vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -192,7 +192,7 @@
   height: 100vh;
   z-index: 10;
   top: -10px;
-  left: 0;
+  left: -8px;
 
   @media (max-width: 600px) {
     padding-top: 200px;
@@ -420,6 +420,10 @@
 }
 
 .myProfileFeed {
+  h1 {
+    margin-left: 20px;
+  }
+
   @media (max-width: 600px) {
     h1 {
       text-align: center;
@@ -448,11 +452,12 @@
   }
 }
 
-.profileAvatar{
-  img{
+.profileAvatar {
+  img {
     object-fit: cover;
   }
 }
-.profilePhoto{
+
+.profilePhoto {
   object-fit: cover !important;
 }

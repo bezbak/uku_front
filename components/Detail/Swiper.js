@@ -18,7 +18,6 @@ const SwiperContainer = () => {
 
   React.useEffect(() => {
     setImages(recoilState.images)
-    console.log(images)
   }, [recoilState.images])
 
   return (
