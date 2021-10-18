@@ -47,6 +47,7 @@
   .avatar {
     margin: 0 10px;
     border-radius: 50%;
+    object-fit: cover;
   }
 }
 
@@ -145,6 +146,7 @@
     }
 
     .imagesInComment {
+      object-fit: cover;
       width: 240px;
       height: 180px;
       border-right: 6px;
@@ -157,6 +159,10 @@
     display: flex;
     overflow: auto;
     margin-top: 10px;
+
+    img {
+      object-fit: cover;
+    }
   }
 
   .info_times {

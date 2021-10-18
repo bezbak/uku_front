@@ -83,3 +83,11 @@ html {
   opacity: 1;
   transition: opacity 1s;
 }
+
+:global(.swiper-button-next:after) {
+  font-size: 32px !important;
+}
+
+:global(.swiper-button-prev:after) {
+  font-size: 32px !important;
+}
