@@ -89,7 +89,6 @@
 .feed {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
   @media (max-width: 600px) {
     justify-content: center;
   }

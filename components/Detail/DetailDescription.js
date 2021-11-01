@@ -7,12 +7,15 @@ import {toast} from "react-toastify";
 import classNames from "classnames";
 import {useRecoilState} from "recoil";
 import {detailPublicationState} from "./state";
+import {useRouter} from "next/router";
+import {getDetailPublication} from "./request";
 
 const DetailDescription = () => {
     const [file, setFile] = useState(null)
+    const router = useRouter()
     const inputRef = createRef()
     const [recoilState, setRecoilState] = useRecoilState(detailPublicationState)
-    const id = recoilState.id
+    const id = router.query.detail
     const [comments, setComments] = useState([])
     const [selectedOption, setSelectedOption] = useState({
         options: "input",
@@ -23,12 +26,12 @@ const DetailDescription = () => {
         showMoreId: null
     })
 
+
     React.useEffect(() => {
         setComments(recoilState.comments)
     }, [recoilState.comments])
 
     const handleSelectedOptions = (options, id, value) => {
-
         setSelectedOption(old => ({...old, options: options, id: id, onFocus: false, value: value}))
 
         if (value === '') {
@@ -42,18 +45,18 @@ const DetailDescription = () => {
             {...oldState, [flag]: !oldState[flag], showMoreId: id}
         ))
     }
-    const handleFile = fileList => {
-        setFile(fileList[0])
-    }
 
     const addCommentHandler = () => {
         const token = JSON.parse(window.localStorage.getItem("token"))
         const formData = new FormData()
+
         if (file) {
             formData.append("image", file ? file : null)
         }
+
         formData.append("text", selectedOption.value)
         formData.append("id", selectedOption.id || id)
+
         if (!token) {
             toast.error('Вы не авторизованы')
             return
@@ -69,7 +72,10 @@ const DetailDescription = () => {
                     body: formData
                 })
                 .then((res) => res.json())
-                .then((data) => setRecoilState(old => ({...old, comments: [...old.comments, data]})))
+                .then((data) => {
+                    console.log(data)
+                    setRecoilState(old => ({...old, comments: [...old.comments, data]}))
+                })
                 .then(() => setSelectedOption({
                     options: "input",
                     id: null,
@@ -87,7 +93,12 @@ const DetailDescription = () => {
                 },
                 body: formData
             })
-                .then(() => setSelectedOption({options: "input", id: null, onFocus: false, value: '', showMore: true,}))
+                .then(() => {
+                    setSelectedOption({options: "input", id: null, onFocus: false, value: '', showMore: true,})
+                    getDetailPublication().then(data => {
+                        setRecoilState(data)
+                    })
+                })
                 .then(() => setFile(null))
                 .catch(err => toast.error(err.message))
         }
@@ -119,7 +130,7 @@ const DetailDescription = () => {
                     <div className={styles.fileHover}>
                         {file ? <img src={URL.createObjectURL(file)} alt="#" width={"100px"} height={'100px'}/>
                             : <img src={'/icons/load-img.png'} alt="#" width={"22px"} height={"19px"}/>}
-                        <input type="file" onChange={e => handleFile(e.target.files)}/>
+                        <input type="file" accept="image/*" onChange={e => setFile(e.target.files[0])}/>
                     </div>
                     <form>
                         <input
@@ -130,7 +141,7 @@ const DetailDescription = () => {
                             ref={inputRef}
                         />
                         <button
-                            disabled={selectedOption.value || file ? false : true}
+                            disabled={!(selectedOption.value || file)}
                             className={classNames(selectedOption.value || file ? styles.btnActive : styles.btn)}
                             type='button'
                             onClick={addCommentHandler}>
