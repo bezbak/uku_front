@@ -11,8 +11,7 @@ export const getDetailPublication = async () => {
         }
     }
     const response = await fetch(uku + endpoints.publicationDetails + window.location.href.split('/').pop(), token ? header : null)
-    const data = await response.json()
-    return data
+    return await response.json()
 }
 
 export const deleteImages = (id) => {

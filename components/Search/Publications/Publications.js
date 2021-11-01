@@ -18,12 +18,14 @@ const SearchPublication = () => {
 
   useEffect(() => {
     getPublications(selectedCategory?.id, currentPage, location?.region?.id, search).then(response => {
-      setSearchState(old => ({
-        ...old, data: {
-          ...response,
-          results: old.currentPage !== currentPage ? [...old.data.results, ...response.results] : [...response.results]
-        }
-      }))
+      if(response?.results?.length){
+        setSearchState(old => ({
+          ...old, data: {
+            ...response,
+            results: old.currentPage !== currentPage ? [...old.data.results, ...response.results] : [...response.results]
+          }
+        }))
+      }
     })
   }, [currentPage, selectedCategory?.id, location?.region, search])
 
