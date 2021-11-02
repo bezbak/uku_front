@@ -47,7 +47,8 @@ const Card = ({cards, width, setRecoilState, page = ""}) => {
           return <div
             key={index}
             className={styles.card}
-            style={{width}}>
+            style={{width, minWidth: "220px"}}
+          >
             <div>
               {item.user && !item.is_owner ?
                 <CardHead user={item.user} setRecoilState={setRecoilState} index={index}/> : null}

@@ -4,7 +4,7 @@ const CardBody = ({categories, description}) => {
   return (
     <div className={styles.cardBody}>
       <div className={styles.category}>
-        {categories.length > 120 ? categories.slice(0, 120) + "..." : categories}
+        {categories.length > 120 ? categories.slice(0, 120).replaceAll(","," "+"/") + "..." : categories.replaceAll(",","/")}
       </div>
       <div className={styles.description}>
         <p>
