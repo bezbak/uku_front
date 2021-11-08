@@ -31,6 +31,15 @@
   border-radius: 6px;
   margin: 30px 0;
   display: flex;
+  @media (max-width: 600px) {
+    flex-direction: column;
+    .left{
+      width: 100% !important;
+    }
+    .right{
+      width: 100% !important;
+    }
+  }
 
   .left {
     width: 54%;

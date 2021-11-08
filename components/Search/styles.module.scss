@@ -6,6 +6,9 @@
 
 .leftBox {
   width: 25%;
+  @media (max-width: 600px) {
+    display: none;
+  }
 }
 
 .category {
