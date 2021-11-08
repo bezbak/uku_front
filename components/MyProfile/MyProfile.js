@@ -8,7 +8,6 @@ import {myProfileFeed} from "../Card/state";
 import {getMyProfileInfo} from "./getMyProfileInfo";
 import MyProfileInfo from "./MyProfileInfo";
 import {getMyProfileFeed} from "./getMyProfileFeed";
-import {useMediaQuery} from "react-responsive";
 
 
 const MyProfile = () => {
@@ -17,10 +16,6 @@ const MyProfile = () => {
   })
   const [{data, loading, currentPage}, setData] = useRecoilState(myProfileFeed)
   const ref = useRef(null)
-
-  const isMediumWidth = useMediaQuery({
-    query:'(min-width: 1000px)'
-  })
 
   useEffect(() => {
     getMyProfileInfo().then(res => res.json().then(data => setProfile(old => ({...old, ...data}))))
