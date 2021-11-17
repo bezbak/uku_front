@@ -7,6 +7,7 @@ import {useState} from "react";
 import {useRouter} from "next/router";
 import {toast} from "react-toastify";
 import Spinner from "../../Spinner/Spinner";
+import ReactDOM from 'react-dom'
 
 
 const CreatePublicationWithoutPhoto = () => {
@@ -39,8 +40,11 @@ const CreatePublicationWithoutPhoto = () => {
     setPhotos(old => ({...old, files}))
     router.push("/createPublication")
   }
+  if(typeof document === 'undefined'){
+    return null
+  }
 
-  return (
+  return ReactDOM.createPortal(
     <div className={category ? styles.bottomPanel : "hide"}>
       <label htmlFor="upload-photo"/>
       <input
@@ -61,7 +65,8 @@ const CreatePublicationWithoutPhoto = () => {
         onClick={() => onClickSendPublication(category.id, location?.region?.id, description)}>
         {loading ? <Spinner/> : "Опубликовать"}
       </button>
-    </div>
+    </div>,
+    document.querySelector("#__next")
   )
 }
 

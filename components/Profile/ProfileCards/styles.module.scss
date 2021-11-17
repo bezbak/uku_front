@@ -5,6 +5,9 @@
   > div {
     margin: 10px;
   }
+  @media (max-width: 600px) {
+    justify-content: center;
+  }
 }
 
 .profileFeedTitle {

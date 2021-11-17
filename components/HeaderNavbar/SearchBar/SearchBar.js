@@ -9,7 +9,7 @@ import {searchInputAtom} from "../../Search/state";
 const SearchBar = () => {
   const router = useRouter()
   const [text, setText] = useState("")
-  const [data, setData] = useState([])
+  const [data, setData] = useState(null)
   const [search, setSearch] = useRecoilState(searchInputAtom)
 
   useEffect(() => {
@@ -43,10 +43,11 @@ const SearchBar = () => {
         <input
           onChange={(e) => onChangeInput(e)}
           type="text"
+          placeholder="Кого будем искать?"
           value={router.pathname.includes("search") ? search : text}
           width={200}/>
-        <div className={text && data.length !== 0 ? styles.dropDown : styles.hide}>
-          {data.map((item) => {
+        <div className={text && data && data.results.length !== 0 ? styles.dropDown : styles.hide}>
+          {data && data.results.map((item) => {
             return <div
               onClick={() => onClickUser(item.id)}
               key={item.id}
