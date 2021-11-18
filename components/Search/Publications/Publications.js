@@ -8,12 +8,16 @@ import {getPublications} from "./getPublications";
 import {categoryAtom} from "../../CreatePublication/state";
 import {locationAtom, searchData, searchInputAtom} from "../state";
 import NewsCard from "../../News";
+import MediaQuery from "react-responsive";
+import MobileCreatePublication from "../MobileCreatePublication";
+import {mobileCreateAtom} from "../MobileCreatePublication/state";
 
 const SearchPublication = () => {
   const [{data, loading, currentPage}, setSearchState] = useRecoilState(searchData)
   const [selectedCategory] = useRecoilState(categoryAtom)
   const [location] = useRecoilState(locationAtom)
   const [search] = useRecoilState(searchInputAtom)
+  const [state, setState] = useRecoilState(mobileCreateAtom)
   const ref = useRef(null)
 
   useEffect(() => {
@@ -56,6 +60,10 @@ const SearchPublication = () => {
       </div>
       <div ref={ref}/>
       <CreatePublicationWithoutPhoto/>
+      <img onClick={()=>setState(old=>({...old, showCreateModal: true}))} className={styles.addMobile} src="icons/addMobile.svg" alt=""/>
+      <MediaQuery maxWidth={600}>
+        <MobileCreatePublication/>
+      </MediaQuery>
     </div>
   )
 }

@@ -11,9 +11,9 @@ import Spinner from "../Spinner/Spinner";
 const CreatePublication = () => {
   const [photos, setPhotos] = useRecoilState(photosAtom)
   const [category] = useRecoilState(categoryAtom)
+  const [location] = useRecoilState(locationAtom)
   const [loading, setLoading] = useState(false)
   const [description, setDescription] = useRecoilState(textAtom)
-  const [location] = useRecoilState(locationAtom)
   const router = useRouter()
 
   const onInputFile = event => {
