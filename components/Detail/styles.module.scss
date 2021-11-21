@@ -295,6 +295,9 @@
 
 .detail {
   padding-top: 150px;
+  @media(max-width: 600px) {
+    padding-top: 100px;
+  }
 }
 
 .noImages {

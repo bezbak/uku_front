@@ -16,7 +16,10 @@
     width: 400px;
     height: 46px;
     text-indent: 16px;
-
+    @media (max-width: 600px) {
+      margin-top: 10px;
+      width: 90%;
+    }
     &:focus {
       outline: none;
     }
@@ -93,4 +96,8 @@
   right: 15px;
   top: 12px;
   cursor: pointer;
+  @media (max-width: 600px) {
+    right: 15%;
+    top: 40%;
+  }
 }

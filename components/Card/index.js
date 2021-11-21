@@ -12,12 +12,14 @@ import Heart from '../../public/icons/Heart.svg'
 import {useState} from "react";
 import ModalDeleteCard from "./ModalDeleteCard";
 import {useRouter} from "next/router";
+import {useMediaQuery} from "react-responsive";
 
 const Card = ({cards, width, setRecoilState, page = ""}) => {
   const [state, setState] = useState({
     modalDelete: false,
     loading: false,
   })
+  const isMobile = useMediaQuery({ maxWidth: 767 })
   const router = useRouter()
 
   if (!cards) return <div/>
@@ -47,7 +49,7 @@ const Card = ({cards, width, setRecoilState, page = ""}) => {
           return <div
             key={index}
             className={styles.card}
-            style={{width, minWidth: "220px"}}
+            style={{width, minWidth: isMobile ? "80%" : "220px"}}
           >
             <div>
               {item.user && !item.is_owner ?
