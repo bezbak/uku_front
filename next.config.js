@@ -12,6 +12,6 @@ module.exports = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   env: {
-    baseURL: "http://api.uku.kg/api/v1"
+    baseURL: "https://api.uku.kg/api/v1"
   }
 }
