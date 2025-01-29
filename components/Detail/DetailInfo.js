@@ -5,11 +5,11 @@ import {useResetRecoilState} from "recoil";
 import {categoryAtom} from "../CreatePublication/state";
 import {useEffect} from "react";
 
-const DetailInfo = () => {
+const DetailInfo = ({initialData }) => {
   const resetCategory = useResetRecoilState(categoryAtom)
 
   useEffect(() => {
-    resetCategory()
+    resetCategory()    
   }, [])
 
   return (
@@ -18,7 +18,7 @@ const DetailInfo = () => {
         <SwiperContainer/>
       </div>
       <div className={styles.right}>
-        <DetailDescription/>
+        <DetailDescription initialData={initialData}/>
       </div>
     </div>
   )
